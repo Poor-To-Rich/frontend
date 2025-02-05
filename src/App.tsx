@@ -1,9 +1,10 @@
 import './App.css';
+import DefaultHeader from '@/components/header/DefaultHeader';
 
 function App() {
   return (
     <>
-      <div>글씨요</div>
+      <DefaultHeader label="회원가입" />
     </>
   );
 }
