@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Pretendard';
+  src:
+    url('/font/Pretendard-Regular.subset.woff2') format('woff2'),
+    url('/font/Pretendard-Regular.subset.woff') format('woff'),
+    url('/font/Pretendard-Regular.subset.otf') format('truetype'),
+    url('/font/Pretendard-Regular.subset.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Pretendard', sans-serif;
+}
