@@ -12,6 +12,17 @@
   font-display: swap;
 }
 
+@theme {
+  --color-oliveGreen: #a1c377;
+  --color-pastelLime: #e7f6d1;
+  --color-vanillaCream: #feffe9;
+  --color-sunsetRose: #eb6060;
+  --color-pointRed: #fe9588;
+  --color-oceanBlue: #81aaf6;
+  --color-defaultGrey: #adadad;
+  --color-strokeGray: #e6e6e6;
+}
+
 html {
   font-size: 62.5%;
 }
