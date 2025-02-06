@@ -11,7 +11,7 @@ interface Props {
 
 const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton }: Props) => {
   return (
-    <header className="w-full h-[43px] relative flex justify-center items-center bg-white border-b border-strokeGray font-bold">
+    <header className="header-common">
       {hasBackButton && (
         <span className="absolute left-0 h-full aspect-square">
           <LeftArrowButton />
