@@ -2,7 +2,6 @@
   "name": "poor-to-rich",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -25,10 +24,14 @@
     "@storybook/react": "8.5.3",
     "@storybook/react-vite": "8.5.3",
     "@storybook/test": "8.5.3",
+    "@tailwindcss/postcss": "^4.0.3",
+    "@tailwindcss/vite": "^4.0.3",
+    "@types/node": "^22.13.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^8.2.0",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.19.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-html": "^8.1.2",
@@ -37,11 +40,14 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "eslint-plugin-storybook": "^0.11.2",
     "globals": "^15.14.0",
+    "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "storybook": "8.5.3",
+    "tailwindcss": "^4.0.3",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "eslintConfig": {
     "extends": [
