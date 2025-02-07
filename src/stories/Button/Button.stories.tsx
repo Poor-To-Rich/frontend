@@ -23,14 +23,7 @@ function Button() {
       </div>
       <br />
       <h2>지출, 수입 버튼</h2>
-      <div>
-        <IncomeExpenseButton label="지출" isClicked />
-        <IncomeExpenseButton label="수입" />
-      </div>
-      <div>
-        <IncomeExpenseButton label="지출" />
-        <IncomeExpenseButton label="수입" isClicked />
-      </div>
+      <IncomeExpenseButton />
       <div>
         <ReportTypeButton />
       </div>
