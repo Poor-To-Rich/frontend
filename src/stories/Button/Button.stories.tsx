@@ -1,3 +1,4 @@
+import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import SignButton from '@/components/button/SignButton';
@@ -18,6 +19,16 @@ function Button() {
       <div className="flex gap-3">
         <SignButton label="로그인" />
         <SignButton label="회원가입" />
+      </div>
+      <br />
+      <h2>지출, 수입 버튼</h2>
+      <div>
+        <IncomeExpenseButton label="지출" isClicked />
+        <IncomeExpenseButton label="수입" />
+      </div>
+      <div>
+        <IncomeExpenseButton label="지출" />
+        <IncomeExpenseButton label="수입" isClicked />
       </div>
     </div>
   );

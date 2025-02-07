@@ -11,7 +11,7 @@ const SignButton = ({ label, onClick }: Props) => {
       className={clsx(
         'w-[20rem] h-[3.6rem] rounded-lg text-md',
         label === '로그인' && 'bg-pastelLime text-oliveGreen',
-        label === '회원가입' && 'bg-[#FFCBC4] text-sunsetRose',
+        label === '회원가입' && 'bg-pinkRed text-sunsetRose',
       )}
       onClick={onClick}>
       {label}
