@@ -1,6 +1,7 @@
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
+import ReportTypeButton from '@/components/button/ReportTypeButton';
 import SignButton from '@/components/button/SignButton';
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -29,6 +30,9 @@ function Button() {
       <div>
         <IncomeExpenseButton label="지출" />
         <IncomeExpenseButton label="수입" isClicked />
+      </div>
+      <div>
+        <ReportTypeButton />
       </div>
     </div>
   );
