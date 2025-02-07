@@ -23,6 +23,18 @@
   --color-strokeGray: #e6e6e6;
 }
 
+@layer utilities {
+  .text-xs {
+    font-size: 0.8rem;
+  }
+  .text-sm {
+    font-size: 1rem;
+  }
+  .text-md {
+    font-size: 1.4rem;
+  }
+}
+
 html {
   font-size: 62.5%;
 }

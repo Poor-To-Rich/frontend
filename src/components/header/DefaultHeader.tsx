@@ -1,6 +1,6 @@
-import LeftArrowButton from '@/components/button/LeftArrowButton';
-import PlusButton from '@/components/button/PlusButton';
-import TrashButton from '@/components/button/TrashButton';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import PlusButton from '@/components/button/icon/PlusButton';
+import TrashButton from '@/components/button/icon/TrashButton';
 
 interface Props {
   label: string;
