@@ -5,6 +5,7 @@ import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/ReportTypeButton';
 import SignButton from '@/components/button/SignButton';
+import ToggleSwitch from '@/components/button/ToggleSwitch';
 import VerifyButton from '@/components/button/VerifyButton';
 import type { Meta, StoryObj } from '@storybook/react';
 
@@ -35,6 +36,7 @@ function Button() {
       <h2>기타 버튼</h2>
       <PlusCircleButton />
       <RepeatCircleButton />
+      <ToggleSwitch />
     </div>
   );
 }
