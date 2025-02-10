@@ -3,6 +3,7 @@ import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/ReportTypeButton';
 import SignButton from '@/components/button/SignButton';
+import VerifyButton from '@/components/button/VerifyButton';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function Button() {
@@ -24,9 +25,11 @@ function Button() {
       <br />
       <h2>지출, 수입 버튼</h2>
       <IncomeExpenseButton />
-      <div>
-        <ReportTypeButton />
-      </div>
+      <ReportTypeButton />
+      <h2>검증 버튼</h2>
+      <VerifyButton label="인증" />
+      <VerifyButton label="확인" />
+      <VerifyButton label="중복확인" />
     </div>
   );
 }

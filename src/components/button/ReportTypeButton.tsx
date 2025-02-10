@@ -17,7 +17,7 @@ const ReportTypeButton = () => {
           value={label}
           onClick={() => setType(label)}
           className={clsx(
-            'w-1/2 border border-strokeGray ',
+            'w-1/2 border border-strokeGray text-md',
             label === '지출' ? 'text-sunsetRose rounded-l-lg' : 'text-oceanBlue rounded-r-lg',
             label === type && color,
           )}>
