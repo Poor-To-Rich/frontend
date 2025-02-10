@@ -10,7 +10,9 @@ const PeriodReport = ({ period, balance }: Props) => {
         <span className="text-22">구간 지출 금액</span>
         <span className="text-md">({period})</span>
       </div>
-      <span className="text-xl font-semibold">{balance.toLocaleString()}원</span>
+      <span className="text-xl font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
+        {balance.toLocaleString()}원
+      </span>
     </div>
   );
 };
