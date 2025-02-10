@@ -1,10 +1,19 @@
 import './App.css';
-import PeriodReport from '@/components/summary/PeriodReport ';
+
+import TransactionDetailItem from './components/detailItem/TransactionDetailItem';
 
 function App() {
   return (
     <>
-      <PeriodReport period="25.01~25.02" balance={456784654688617} />
+      <TransactionDetailItem
+        id={1}
+        color={'#ff55ad'}
+        category="식비"
+        title={'상하이버거세트'}
+        isIteration
+        type="EXPENSE"
+        cost={45678}
+      />
     </>
   );
 }
