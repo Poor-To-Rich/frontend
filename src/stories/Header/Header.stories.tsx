@@ -4,7 +4,7 @@ import DateControlHeader from '@/components/header/DateControlHeader';
 
 function Header() {
   return (
-    <div className="w-[500px] flex flex-col gap-1.5">
+    <div className="flex flex-col gap-1.5">
       <h2>DefaultHeader</h2>
       <DefaultHeader label="환경설정" />
       <DefaultHeader label="회원가입" hasBackButton />

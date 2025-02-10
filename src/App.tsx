@@ -1,10 +1,10 @@
 import './App.css';
-import DefaultHeader from '@/components/header/DefaultHeader';
+import PeriodReport from '@/components/summary/PeriodReport ';
 
 function App() {
   return (
     <>
-      <DefaultHeader label="회원가입" />
+      <PeriodReport period="25.01~25.02" balance={456784654688617} />
     </>
   );
 }

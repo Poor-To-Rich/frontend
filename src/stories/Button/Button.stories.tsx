@@ -14,7 +14,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 function Button() {
   return (
-    <div className="w-[500px] flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <h2> 기본 버튼 </h2>
       <div className="flex gap-3">
         <PrimaryButton label="회원가입" />

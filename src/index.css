@@ -35,15 +35,21 @@
   .text-md {
     font-size: 1.4rem;
   }
+  .text-lg {
+    font-size: 1.8rem;
+  }
+  .text-xl {
+    font-size: 2.2rem;
+  }
 }
 
-html {
+:root {
   font-size: 62.5%;
-}
 
-body {
-  font-family: 'Pretendard', sans-serif;
-  font-size: 1.6rem;
+  body {
+    font-family: 'Pretendard', sans-serif;
+    @apply m-0 mx-auto max-w-[500px] max-h-screen text-[1.6rem];
+  }
 }
 
 .header-common {
