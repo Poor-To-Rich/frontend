@@ -1,3 +1,6 @@
+import CategoryEditButton from '@/components/button/icon/CategoryEditButton';
+import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
+import MinusCircleButton from '@/components/button/icon/MinusCircleButton';
 import PlusCircleButton from '@/components/button/icon/PlusCircleButton';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
@@ -37,6 +40,9 @@ function Button() {
       <PlusCircleButton />
       <RepeatCircleButton />
       <ToggleSwitch />
+      <CategoryLinkButton />
+      <MinusCircleButton />
+      <CategoryEditButton />
     </div>
   );
 }
