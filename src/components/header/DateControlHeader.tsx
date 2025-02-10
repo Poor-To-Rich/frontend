@@ -1,5 +1,5 @@
-import LeftArrowButton from '@/components/button/LeftArrowButton';
-import RightArrowButton from '@/components/button/RightArrowButton';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import RightArrowButton from '@/components/button/icon/RightArrowButton';
 
 interface Props {
   date: string;

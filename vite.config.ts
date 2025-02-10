@@ -3,14 +3,19 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import svgr from 'vite-plugin-svgr';
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from '@tailwindcss/postcss';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr(), tailwindcss()],
+  plugins: [react(), svgr()],
+  css: {
+    postcss: {
+      plugins: [tailwindcss()],
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
