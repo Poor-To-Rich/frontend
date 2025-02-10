@@ -1,3 +1,5 @@
+import PlusCircleButton from '@/components/button/icon/PlusCircleButton';
+import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
@@ -30,6 +32,9 @@ function Button() {
       <VerifyButton label="인증" />
       <VerifyButton label="확인" />
       <VerifyButton label="중복확인" />
+      <h2>기타 버튼</h2>
+      <PlusCircleButton />
+      <RepeatCircleButton />
     </div>
   );
 }
