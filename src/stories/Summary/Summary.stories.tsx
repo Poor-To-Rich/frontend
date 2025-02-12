@@ -6,7 +6,7 @@ function Summary() {
   return (
     <div className="flex flex-col gap-2.5">
       <PeriodReport period="25.01~25.02" balance={45678465468} />
-      <TransactionSummary income={865133} expense={1564865133} total={4685165} />
+      <TransactionSummary income={865133} expense={15648124124444444465133} total={4685165} />
       <TransactionSummary
         income={865133}
         expense={1564865133}

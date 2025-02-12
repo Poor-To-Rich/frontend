@@ -11,7 +11,7 @@ function DetailItem() {
         title={'상하이버거세트'}
         isIteration
         type="EXPENSE"
-        cost={45678}
+        cost={45626546888798978}
       />
       <TransactionDetailItem
         id={1}
