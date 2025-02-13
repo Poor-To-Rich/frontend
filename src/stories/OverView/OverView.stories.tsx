@@ -1,4 +1,5 @@
 import MonthlyOverview from '@/components/overview/MonthlyOverview';
+import WeeklyOverview from '@/components/overview/WeeklyOverview';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function Overview() {
@@ -27,8 +28,9 @@ function Overview() {
   ];
 
   return (
-    <div>
+    <div className="flex flex-col items-end">
       <MonthlyOverview monthlyLogs={monthlyReport} />
+      <WeeklyOverview weeklyLogs={monthlyReport} />
     </div>
   );
 }
