@@ -3,8 +3,12 @@ interface Props {
   onClick?: () => void;
 }
 
-const ModalButton = ({ label }: Props) => {
-  return <button className="w-[9rem] h-[3rem] rounded-lg text-md bg-pastelLime text-oliveGreen">{label}</button>;
+const ModalButton = ({ label, onClick }: Props) => {
+  return (
+    <button className="w-[9rem] h-[3rem] rounded-lg text-md bg-pastelLime text-oliveGreen" onClick={onClick}>
+      {label}
+    </button>
+  );
 };
 
 export default ModalButton;
