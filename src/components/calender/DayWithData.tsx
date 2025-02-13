@@ -12,8 +12,8 @@ const DayWithData = ({ transactions, targetDate }: Props) => {
   return (
     transaction && (
       <div className="flex flex-col grow justify-center max-w-[90%] text-sm">
-        <span className="text-oceanBlue truncate-text">{transaction.incomesAmount.toLocaleString()}</span>
-        <span className="text-sunsetRose truncate-text">{transaction.expenseAmount.toLocaleString()}</span>
+        <span className="text-oceanBlue truncate">{transaction.incomesAmount.toLocaleString()}</span>
+        <span className="text-sunsetRose truncate">{transaction.expenseAmount.toLocaleString()}</span>
       </div>
     )
   );

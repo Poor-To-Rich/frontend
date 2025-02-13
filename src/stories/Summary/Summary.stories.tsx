@@ -1,11 +1,11 @@
-import PeriodReport from '@/components/summary/PeriodReport ';
+import PeriodSummary from '@/components/summary/PeriodSummary';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function Summary() {
   return (
     <div className="flex flex-col gap-2.5">
-      <PeriodReport period="25.01~25.02" balance={45678465468} />
+      <PeriodSummary period="25.01~25.02" balance={45678465468} />
       <TransactionSummary income={865133} expense={15648124124444444465133} total={4685165} />
       <TransactionSummary
         income={865133}
