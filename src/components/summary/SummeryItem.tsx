@@ -11,7 +11,7 @@ const SummeryItem = ({ label, amount }: Props) => {
       <span className="min-w-fit">{label}: </span>
       <span
         className={clsx(
-          'truncate-text',
+          'truncate',
           label === '수입' && 'text-oceanBlue',
           label === '지출' && 'text-sunsetRose',
           label === '합계' && 'text-defaultGrey',
