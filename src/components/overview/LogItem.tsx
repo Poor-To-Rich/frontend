@@ -14,8 +14,10 @@ const LogItem = ({ type, order, log, hasUnderLine }: Props) => {
   return (
     <button
       className={clsx(
-        'flex w-full px-2.5 py-1.5 justify-between items-center',
+        'flex w-full px-2.5 justify-between items-center',
         hasUnderLine && 'border-b border-strokeGray',
+        type === 'month' && 'py-2.5',
+        type === 'week' && 'py-1.5',
       )}>
       <div className="flex flex-col items-start">
         <span>
