@@ -11,3 +11,5 @@ export type OverviewLogType = {
   totalExpense: number;
   totalBalance: number;
 };
+
+export type TapBarType = 'main' | 'monthWeek' | 'chart' | 'talk' | 'setting';

@@ -1,7 +1,12 @@
 import './App.css';
+import TapBar from './components/tapbar/TapBar';
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <TapBar page="main" />
+    </>
+  );
 }
 
 export default App;
