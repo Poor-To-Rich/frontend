@@ -1,7 +1,7 @@
 import SignButton from '@/components/button/SignButton';
 import Logo from '/image/Logo.png';
 import { useNavigate } from 'react-router-dom';
-import FloatingLabelInput from '../components/FloatingLabelInput';
+import FloatingLabelInput from '@/pages/components/FloatingLabelInput';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,7 +26,7 @@ const index = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen items-center justify-center gap-40 bg-vanillaCream">
+    <div className="flex flex-col h-screen items-center justify-center gap-36 bg-vanillaCream">
       <img src={Logo} className="w-[20rem]" />
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-3/5 gap-10">
         <div className="flex flex-col w-full gap-7">
