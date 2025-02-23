@@ -1,11 +1,14 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import TapBar from './components/tapbar/TapBar';
+import LoginPage from '@/pages/LoginPage/index';
 
 function App() {
   return (
-    <>
-      <TapBar page="main" />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+      </Routes>
+    </Router>
   );
 }
 
