@@ -9,7 +9,7 @@ const SignButton = ({ label, onClick }: Props) => {
   return (
     <button
       className={clsx(
-        'w-[20rem] h-[3.6rem] rounded-lg text-md',
+        'w-full h-[3.6rem] rounded-lg text-md cursor-pointer',
         label === '로그인' && 'bg-pastelLime text-oliveGreen',
         label === '회원가입' && 'bg-pinkRed text-sunsetRose',
       )}
