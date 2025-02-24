@@ -1,5 +1,6 @@
 import CameraIcon from '@/components/icon/CameraIcon';
 import { forwardRef, useState } from 'react';
+import TrashButton from '@/components/button/icon/TrashButton';
 
 interface Props {
   value: string;
@@ -25,12 +26,20 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange
     }
   };
 
+  const handleImageDelete = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setImage('');
+    onChange('');
+  };
+
   return (
-    <button className="relative w-[15rem] aspect-square rounded-2xl bg-lightGray cursor-pointer">
+    <div className="relative w-[15rem] flex justify-center items-center aspect-square rounded-2xl bg-lightGray cursor-pointer">
       {image ? <img src={image} className="w-full h-full rounded-2xl object-cover" /> : <span>비어있음</span>}
-      <div className="absolute -right-3 -bottom-3 w-[3.2rem] h-[3.3rem] rounded-full bg-strokeGray flex items-center justify-center">
-        <CameraIcon />
-      </div>
+      {!image && (
+        <div className="profileImage-icon-common">
+          <CameraIcon />
+        </div>
+      )}
       <input
         type="file"
         accept=".jpg, .jpeg, .png"
@@ -38,7 +47,12 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange
         onChange={handleImageChange}
         ref={ref}
       />
-    </button>
+      {image && (
+        <div className="profileImage-icon-common">
+          <TrashButton onClick={handleImageDelete} />
+        </div>
+      )}
+    </div>
   );
 });
 

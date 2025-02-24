@@ -1,8 +1,8 @@
 interface Props {
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
 }
 
-const TrashButton = ({ onClick }: Props) => {
+const TrashIcon = ({ onClick }: Props) => {
   return (
     <button className="w-full h-full flex items-center justify-center" onClick={onClick}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -35,4 +35,4 @@ const TrashButton = ({ onClick }: Props) => {
   );
 };
 
-export default TrashButton;
+export default TrashIcon;

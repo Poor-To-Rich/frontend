@@ -60,3 +60,7 @@
 .input-common {
   @apply flex-1 min-w-0 border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
 }
+
+.profileImage-icon-common {
+  @apply absolute -right-3 -bottom-3 w-[3.2rem] h-[3.3rem] rounded-full bg-strokeGray flex items-center justify-center;
+}

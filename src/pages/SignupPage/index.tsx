@@ -127,7 +127,7 @@ const index = () => {
           />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="회원가입" type="submit" />
+          <PrimaryButton label="회원가입" type="submit" disabled={!isValid} />
         </div>
       </form>
     </div>
