@@ -3,13 +3,17 @@ import DefaultHeader from '@/components/header/DefaultHeader';
 import SelectBox from '@/components/input/SelectBox';
 import PrimaryInput from '@/components/input/PrimaryInput';
 import { GENDER_OPTIONS, JOB_OPTIONS } from '@/constants/options';
+import ProfileImageInput from '@/components/input/ProfileImageInput';
 
 const index = () => {
   return (
     <div>
       <DefaultHeader label="회원가입" hasBackButton />
-      <form className="px-5">
-        <div className="flex flex-col gap-3 my-20">
+      <form className="px-5 py-15">
+        <div className="w-full flex justify-center">
+          <ProfileImageInput />
+        </div>
+        <div className="flex flex-col gap-3 my-15">
           <PrimaryInput label="이름" isRequired type="text" />
           <PrimaryInput label="닉네임" isRequired type="text" />
           <PrimaryInput label="아이디" isRequired type="text" buttonLabel="중복확인" />

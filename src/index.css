@@ -23,6 +23,7 @@
   --color-lightBlue: #d1e1ff;
   --color-defaultGrey: #adadad;
   --color-strokeGray: #e6e6e6;
+  --color-lightGray: #f6f6f6;
 }
 
 @layer utilities {
@@ -57,5 +58,5 @@
 }
 
 .input-common {
-  @apply flex-1 min-w-0 border border-strokeGray rounded-lg focus:outline-none focus:bg-[#F6F6F6] px-3;
+  @apply flex-1 min-w-0 border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
 }
