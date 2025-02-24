@@ -1,8 +1,13 @@
 import CameraIcon from '@/components/icon/CameraIcon';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 
-const ProfileImageInput = () => {
-  const [image, setImage] = useState<string>();
+interface Props {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange }, ref) => {
+  const [image, setImage] = useState<string>(value);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -13,7 +18,9 @@ const ProfileImageInput = () => {
       reader.readAsDataURL(file);
 
       reader.onloadend = () => {
-        setImage(reader.result as string);
+        const imageUrl = reader.result as string;
+        setImage(imageUrl);
+        onChange(imageUrl);
       };
     }
   };
@@ -29,9 +36,10 @@ const ProfileImageInput = () => {
         accept=".jpg, .jpeg, .png"
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         onChange={handleImageChange}
+        ref={ref}
       />
     </button>
   );
-};
+});
 
 export default ProfileImageInput;
