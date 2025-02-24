@@ -1,7 +1,7 @@
 import SignButton from '@/components/button/SignButton';
 import Logo from '/image/Logo.png';
 import { useNavigate } from 'react-router-dom';
-import FloatingLabelInput from '@/pages/components/FloatingLabelInput';
+import FloatingLabelInput from '@/pages/LoginPage/components/FloatingLabelInput';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
