@@ -1,9 +1,9 @@
 import SignButton from '@/components/button/SignButton';
 import Logo from '/image/Logo.png';
 import { useNavigate } from 'react-router-dom';
-import FloatingLabelInput from '@/pages/components/FloatingLabelInput';
+import FloatingLabelInput from '@/pages/LoginPage/components/FloatingLabelInput';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schemas/authSchema';
 
@@ -13,7 +13,7 @@ const index = () => {
   type FormData = z.infer<typeof loginSchema>;
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<FormData>({
@@ -30,17 +30,19 @@ const index = () => {
       <img src={Logo} className="w-[20rem]" />
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-3/5 gap-10">
         <div className="flex flex-col w-full gap-7">
-          <FloatingLabelInput
-            label="아이디"
-            type="text"
-            {...register('username')}
-            errorMessage={errors.username?.message}
+          <Controller
+            name="username"
+            control={control}
+            render={({ field }) => (
+              <FloatingLabelInput label="아이디" type="text" {...field} errorMessage={errors.username?.message} />
+            )}
           />
-          <FloatingLabelInput
-            label="비밀번호"
-            type="password"
-            {...register('password')}
-            errorMessage={errors.password?.message}
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <FloatingLabelInput label="비밀번호" type="password" {...field} errorMessage={errors.password?.message} />
+            )}
           />
         </div>
         <div className="flex flex-col w-full gap-5">

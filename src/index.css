@@ -23,6 +23,7 @@
   --color-lightBlue: #d1e1ff;
   --color-defaultGrey: #adadad;
   --color-strokeGray: #e6e6e6;
+  --color-lightGray: #f6f6f6;
 }
 
 @layer utilities {
@@ -54,4 +55,12 @@
 
 .header-common {
   @apply w-full h-[43px] relative flex justify-center items-center bg-white border-b border-strokeGray font-bold;
+}
+
+.input-common {
+  @apply flex-1 min-w-0 border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
+}
+
+.profileImage-icon-common {
+  @apply absolute -right-3 -bottom-3 w-[3.2rem] h-[3.3rem] rounded-full bg-strokeGray flex items-center justify-center;
 }
