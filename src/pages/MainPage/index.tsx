@@ -29,12 +29,14 @@ const index = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen relative">
+    <div className="w-full min-h-screen flex flex-col relative">
       <DateControlHeader date={format(new Date(), 'yyyy년 M월')} />
-      <TransactionSummary income={0} expense={0} total={0} />
-      <Calender />
-      <DailyTransactionList transactions={transactions} total={0} />
-      <PlusCircleButton />
+      <div className="grow">
+        <TransactionSummary income={0} expense={0} total={0} />
+        <Calender />
+        <DailyTransactionList transactions={transactions} total={0} />
+        <PlusCircleButton />
+      </div>
       <TapBar page="main" />
     </div>
   );

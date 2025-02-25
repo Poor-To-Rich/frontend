@@ -75,7 +75,7 @@
 }
 
 .header-common {
-  @apply w-full h-[43px] sticky top-0 flex justify-center items-center bg-white border-b border-strokeGray font-bold;
+  @apply w-full h-[4.5rem] sticky top-0 flex justify-center items-center bg-white border-b border-strokeGray font-bold;
 }
 
 .input-common {
