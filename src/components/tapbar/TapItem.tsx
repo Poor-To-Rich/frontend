@@ -14,7 +14,7 @@ const TapItem = ({ currentTap, targetTap, icon, onClick }: Props) => {
       onClick={() => onClick(targetTap)}
       className={clsx(
         currentTap === targetTap ? 'text-oliveGreen' : 'text-black',
-        'flex items-center justify-center h-full aspect-square',
+        'flex items-center justify-center h-full aspect-square cursor-pointer',
       )}>
       {icon}
     </button>

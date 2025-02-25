@@ -10,7 +10,7 @@ const Calender = () => {
   };
 
   return (
-    <div className="w-full bg-white flex flex-col gap-2.5 p-1.5">
+    <div className="w-full bg-white flex flex-col gap-2.5 p-1.5 my-5">
       <Weekdays />
       <DaysContainer
         activeDate={activeDate}
