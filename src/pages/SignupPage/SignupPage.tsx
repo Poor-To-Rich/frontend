@@ -9,14 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/schemas/authSchema';
 import { z } from 'zod';
 
-const index = () => {
+const SignupPage = () => {
   type SignupData = z.infer<typeof signupSchema>;
 
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm({
+  } = useForm<SignupData>({
     defaultValues: {
       profileImage: '',
       name: '',
@@ -134,4 +134,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default SignupPage;

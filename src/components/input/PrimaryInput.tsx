@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import VerifyButton from '@/components/button/VerifyButton';
 import clsx from 'clsx';
 
-interface Props {
+interface PrimaryInputProps {
   label: string;
   isRequired?: boolean;
   buttonLabel?: VerifyButtonType;
@@ -11,7 +11,7 @@ interface Props {
   message?: string;
 }
 
-const PrimaryInput = forwardRef<HTMLInputElement, Props & React.InputHTMLAttributes<HTMLInputElement>>(
+const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
   ({ label, isRequired, buttonLabel, message, handleClick, ...rest }, ref) => {
     return (
       <div className={clsx(message ? 'items-start' : 'items-center', 'w-full flex justify-between ')}>

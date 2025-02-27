@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import DailyTransactionList from '@/pages/MainPage/components/DailyTransactionList';
 import { TransactionItemType } from '@/types/types';
 
-const index = () => {
+const MainPage = () => {
   const transactions: TransactionItemType[] = [
     {
       id: 1,
@@ -42,4 +42,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default MainPage;

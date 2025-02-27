@@ -1,10 +1,13 @@
+import { IncomeExpenseButtonType } from '@/types/types';
 import clsx from 'clsx';
-import { useState } from 'react';
 
-const IncomeExpenseButton = () => {
-  const [type, setType] = useState<string>('지출');
+interface Props {
+  type: IncomeExpenseButtonType;
+  onClick: (value: IncomeExpenseButtonType) => void;
+}
 
-  const options = [
+const IncomeExpenseButton = ({ type, onClick }: Props) => {
+  const options: { label: IncomeExpenseButtonType; color: string }[] = [
     { label: '지출', color: 'bg-pinkRed font-bold' },
     { label: '수입', color: 'bg-lightBlue font-bold' },
   ];
@@ -15,13 +18,14 @@ const IncomeExpenseButton = () => {
         <button
           key={label}
           value={label}
+          type="button"
           className={clsx(
-            'w-[45%] h-[3rem] rounded-lg ',
+            'w-1/2 h-[3rem] rounded-lg cursor-pointer',
             label === '지출' && 'text-sunsetRose',
             label === '수입' && 'text-oceanBlue',
             type === label ? color : 'border border-strokeGray',
           )}
-          onClick={() => setType(label)}>
+          onClick={() => onClick(label)}>
           {label}
         </button>
       ))}
