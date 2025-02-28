@@ -2,15 +2,13 @@ import { SelectOptionsType } from '@/types/types';
 import DropdownIcon from '@/components/icon/DropdownIcon';
 import { forwardRef } from 'react';
 
-interface Props {
+interface SelectBoxProps {
   label: string;
   isRequired?: boolean;
   options: SelectOptionsType[];
-  value?: string;
-  onChange?: (value: string) => void;
 }
 
-const SelectBox = forwardRef<HTMLSelectElement, Props>(({ label, isRequired, options, value, onChange }, ref) => {
+const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(({ label, isRequired, options, ...rest }, ref) => {
   return (
     <div className="w-full flex justify-between items-center">
       <label className="relative w-fit h-fit">
@@ -19,11 +17,7 @@ const SelectBox = forwardRef<HTMLSelectElement, Props>(({ label, isRequired, opt
       </label>
       <div className="w-3/5 relative">
         <div className="w-full h-[3.2rem] flex gap-2">
-          <select
-            className="input-common appearance-none"
-            value={value}
-            onChange={e => onChange?.(e.target.value)}
-            ref={ref}>
+          <select className="input-common appearance-none" {...rest} ref={ref}>
             {options.map(({ label, value }) => (
               <option key={value} value={value}>
                 {label}

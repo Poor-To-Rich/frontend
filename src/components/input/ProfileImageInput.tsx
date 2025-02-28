@@ -3,11 +3,11 @@ import { forwardRef, useState } from 'react';
 import TrashButton from '@/components/button/icon/TrashButton';
 
 interface Props {
-  value: string;
-  onChange: (value: string) => void;
+  value: string | undefined;
+  onChange: (value: string | undefined) => void;
 }
 
-const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange }, ref) => {
+const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onChange }, ref) => {
   const [image, setImage] = useState<string>(value);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,3 +1,5 @@
+export const userNameRegex = /^[A-Za-z0-9]+$/;
+
 export const passwordRegex =
   /^(?=(.*[a-zA-Z]))(?=(.*\d))(?=(.*[!@#$%^&*()_+={}[\]:;"'<>,.?/\\|-]))[a-zA-Z\d!@#$%^&*()_+={}[\]:;"'<>,.?/\\|-]+$/;
 

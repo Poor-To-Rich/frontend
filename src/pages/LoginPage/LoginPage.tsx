@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schemas/authSchema';
 
-const index = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
 
   type FormData = z.infer<typeof loginSchema>;
@@ -54,4 +54,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default LoginPage;

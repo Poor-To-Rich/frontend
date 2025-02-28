@@ -1,3 +1,7 @@
+import { ITERATION_CYCLE } from '@/constants/repeatSchedule';
+import { baseSchema } from '@/schemas/transactionSchema';
+import { z } from 'zod';
+
 export type TransactionType = {
   date: Date;
   incomesAmount: number;
@@ -30,3 +34,9 @@ export type TransactionItemType = {
 export type TapBarType = 'main' | 'monthWeek' | 'chart' | 'talk' | 'setting';
 
 export type VerifyButtonType = '인증' | '확인' | '중복확인';
+
+export type IncomeExpenseButtonType = '지출' | '수입';
+
+export type TransactionFormData = z.infer<typeof baseSchema>;
+
+export type IterationCycleType = (typeof ITERATION_CYCLE)[number];

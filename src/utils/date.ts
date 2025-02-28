@@ -1,4 +1,5 @@
-import { format } from 'date-fns';
+import { format, isValid, parse } from 'date-fns';
+import { dayRegex } from './regex';
 
 export const isSameDate = (today: Date, targetDate: Date) => {
   return (
@@ -10,4 +11,12 @@ export const isSameDate = (today: Date, targetDate: Date) => {
 
 export const formatDate = (date: Date) => {
   return format(date, 'MM.dd');
+};
+
+export const validateDate = (value: string): boolean => {
+  if (!dayRegex.test(value)) {
+    return false;
+  }
+  const parsedDate = parse(value, 'yyyy.MM.dd', new Date());
+  return isValid(parsedDate);
 };

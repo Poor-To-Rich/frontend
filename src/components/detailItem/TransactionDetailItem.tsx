@@ -1,12 +1,15 @@
 import clsx from 'clsx';
 import IterationIcon from '@/components/icon/IterationIcon';
 import { TransactionItemType } from '@/types/types';
+import { Link } from 'react-router-dom';
 
 interface Props extends TransactionItemType {}
 
 const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: Props) => {
   return (
-    <div className="w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray bg-white rounded-lg">
+    <Link
+      to={{ pathname: '/add-transaction', search: `?type=edit&id=${id}` }}
+      className="w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray bg-white rounded-lg">
       <div className="flex items-center gap-2.5">
         <span style={{ color }} className="font-semibold min-w-fit">
           {category}
@@ -22,7 +25,7 @@ const TransactionDetailItem = ({ id, color, category, title, isIteration, type, 
         )}>
         {cost.toLocaleString()}원
       </span>
-    </div>
+    </Link>
   );
 };
 
