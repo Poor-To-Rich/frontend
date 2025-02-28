@@ -4,9 +4,10 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 interface Props {
   content: string;
   onClose?: () => void;
+  onClick?: () => void;
 }
 
-const DefaultModal = ({ content, onClose }: Props) => {
+const DefaultModal = ({ content, onClose, onClick }: Props) => {
   return (
     <ModalDimmed onClose={onClose}>
       <div
@@ -14,7 +15,7 @@ const DefaultModal = ({ content, onClose }: Props) => {
         onClick={e => e.stopPropagation()}>
         <span className="text-center text-md">{content}</span>
         <div className="flex justify-center gap-4">
-          <ModalButton label={'예'} />
+          <ModalButton label={'예'} onClick={onClick} />
           <ModalButton label={'아니요'} onClick={onClose} />
         </div>
       </div>

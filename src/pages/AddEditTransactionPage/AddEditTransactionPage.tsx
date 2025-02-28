@@ -12,12 +12,21 @@ import { format } from 'date-fns';
 import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
 import IterationCycleModal from '@/components/modal/IterationCycleModal';
 import useModal from '@/hooks/useModal';
+import { useLocation } from 'react-router-dom';
+import DefaultModal from '@/components/modal/DefaultModal';
 
 const AddEditTransactionPage = () => {
   const [type, setType] = useState<IncomeExpenseButtonType>('지출');
   const [iterationType, setIterationType] = useState<IterationCycleType>('반복없음');
   const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const [costValue, setCostValue] = useState<string>('');
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const pageType = queryParams.get('type');
+  const transactionId = pageType ? queryParams.get('id') : '';
+  const isEditPage = pageType === 'edit';
 
   const {
     control,
@@ -57,7 +66,7 @@ const AddEditTransactionPage = () => {
     setValue('date', currentDate);
   };
 
-  const handleClick = (value: IterationCycleType) => {
+  const handleRepeatCircleClick = (value: IterationCycleType) => {
     setIterationType(value);
     setValue('iterationType', value);
     closeModal();
@@ -69,7 +78,12 @@ const AddEditTransactionPage = () => {
 
   return (
     <div className="flex flex-col w-full h-screen max-h-fit relative">
-      <DefaultHeader label="가계부 추가" hasBackButton />
+      <DefaultHeader
+        label={isEditPage ? '가계부 편집' : '가계부 추가'}
+        hasBackButton
+        hasTrashButton={isEditPage}
+        onClick={openDeleteModal}
+      />
       <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
         <IncomeExpenseButton type={type} onClick={handleTypeChange} />
         <TransactionForm
@@ -83,7 +97,10 @@ const AddEditTransactionPage = () => {
           <RepeatCircleButton openModal={openModal} />
           <PrimaryButton label="저장" type="submit" disabled={!isValid} />
         </div>
-        {isOpen && <IterationCycleModal iterationType={iterationType} onClose={closeModal} onClick={handleClick} />}
+        {isOpen && (
+          <IterationCycleModal iterationType={iterationType} onClose={closeModal} onClick={handleRepeatCircleClick} />
+        )}
+        {isDeleteModalOpen && <DefaultModal content="해당 내역을 삭제하시겠습니까?" onClose={closeDeleteModal} />}
       </form>
     </div>
   );

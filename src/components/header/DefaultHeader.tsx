@@ -8,9 +8,10 @@ interface Props {
   hasBackButton?: boolean;
   hasPlusButton?: boolean;
   hasTrashButton?: boolean;
+  onClick?: () => void;
 }
 
-const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton }: Props) => {
+const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, onClick }: Props) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -27,12 +28,12 @@ const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton }: 
       <span>{label}</span>
       {hasPlusButton && (
         <span className="absolute right-0 h-full aspect-square">
-          <PlusButton />
+          <PlusButton onClick={onClick} />
         </span>
       )}
       {hasTrashButton && (
         <span className="absolute right-0 h-full aspect-square">
-          <TrashButton />
+          <TrashButton onClick={onClick} />
         </span>
       )}
     </header>
