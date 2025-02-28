@@ -5,14 +5,18 @@ import DefaultHeader from '@/components/header/DefaultHeader';
 import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { IncomeExpenseButtonType, TransactionFormData } from '@/types/types';
+import { IncomeExpenseButtonType, IterationCycleType, TransactionFormData } from '@/types/types';
 import { baseSchema } from '@/schemas/transactionSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
+import IterationCycleModal from '@/components/modal/IterationCycleModal';
+import useModal from '@/hooks/useModal';
 
 const AddEditTransactionPage = () => {
   const [type, setType] = useState<IncomeExpenseButtonType>('지출');
+  const [iterationType, setIterationType] = useState<IterationCycleType>('반복없음');
+  const { isOpen, openModal, closeModal } = useModal();
   const [costValue, setCostValue] = useState<string>('');
 
   const {
@@ -30,6 +34,7 @@ const AddEditTransactionPage = () => {
       cost: 0,
       expenseMethod: EXPENSE_METHODS[0].value,
       memo: '',
+      iterationType: '반복없음',
     },
     resolver: zodResolver(baseSchema),
     mode: 'onChange',
@@ -52,12 +57,18 @@ const AddEditTransactionPage = () => {
     setValue('date', currentDate);
   };
 
+  const handleClick = (value: IterationCycleType) => {
+    setIterationType(value);
+    setValue('iterationType', value);
+    closeModal();
+  };
+
   useEffect(() => {
     setValue('name', type === '지출' ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
   }, [type]);
 
   return (
-    <div className="flex flex-col w-full h-screen">
+    <div className="flex flex-col w-full h-screen max-h-fit relative">
       <DefaultHeader label="가계부 추가" hasBackButton />
       <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
         <IncomeExpenseButton type={type} onClick={handleTypeChange} />
@@ -69,9 +80,10 @@ const AddEditTransactionPage = () => {
           errors={errors}
         />
         <div className="w-full flex justify-between items-center">
-          <RepeatCircleButton />
+          <RepeatCircleButton openModal={openModal} />
           <PrimaryButton label="저장" type="submit" disabled={!isValid} />
         </div>
+        {isOpen && <IterationCycleModal iterationType={iterationType} onClose={closeModal} onClick={handleClick} />}
       </form>
     </div>
   );

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ITERATION_CYCLE } from '@/constants/repeatSchedule';
 
 export const baseSchema = z.object({
   date: z.string(),
@@ -7,4 +8,5 @@ export const baseSchema = z.object({
   cost: z.number().min(1).max(100000000, { message: '1억 이하의 값을 입력해주세요' }),
   expenseMethod: z.string().optional(),
   memo: z.string().optional(),
+  iterationType: z.enum(ITERATION_CYCLE).optional(),
 });
