@@ -1,8 +1,12 @@
-const MinusCircleButton = () => {
+interface Props {
+  onClick: () => void;
+}
+
+const MinusCircleButton = ({ onClick }: Props) => {
   return (
-    <button className="w-fit h-fit">
+    <button className="w-fit h-fit cursor-pointer" onClick={onClick}>
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_26_553)">
+        <g clipPath="url(#clip0_26_553)">
           <path
             fillRule="evenodd"
             clipRule="evenodd"

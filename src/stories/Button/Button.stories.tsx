@@ -18,7 +18,6 @@ function Button() {
       <h2> 기본 버튼 </h2>
       <div className="flex gap-3">
         <PrimaryButton label="회원가입" />
-        <PrimaryButton label="회원가입" isActive />
       </div>
       <div className="flex gap-3">
         <ModalButton label="예" />
@@ -30,7 +29,7 @@ function Button() {
       </div>
       <br />
       <h2>지출, 수입 버튼</h2>
-      <IncomeExpenseButton />
+      {/* <IncomeExpenseButton /> */}
       <ReportTypeButton />
       <h2>검증 버튼</h2>
       <VerifyButton label="인증" />
@@ -38,9 +37,9 @@ function Button() {
       <VerifyButton label="중복확인" />
       <h2>기타 버튼</h2>
       <PlusCircleButton />
-      <RepeatCircleButton />
+      {/* <RepeatCircleButton />
       <ToggleSwitch />
-      <CategoryLinkButton />
+      <CategoryLinkButton /> */}
       <MinusCircleButton />
       <CategoryEditButton />
     </div>
