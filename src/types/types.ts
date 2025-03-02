@@ -31,6 +31,19 @@ export type TransactionItemType = {
   cost: number;
 };
 
+export type BaseCategoriesType = {
+  color: string;
+  name: string;
+};
+
+export type DefaultCategoriesType = BaseCategoriesType & {
+  visibility: boolean;
+};
+
+export type UserCategoriesType = BaseCategoriesType & {
+  id: number;
+};
+
 export type TapBarType = 'main' | 'monthWeek' | 'chart' | 'talk' | 'setting';
 
 export type VerifyButtonType = '인증' | '확인' | '중복확인';

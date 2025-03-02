@@ -37,6 +37,8 @@ const TransactionForm = ({ costValue, setCostValue, type, errors, control }: Pro
             label="카테고리"
             isRequired
             options={type === '지출' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
+            type={type}
+            hasEditButton
           />
         )}
       />

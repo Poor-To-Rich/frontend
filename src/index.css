@@ -63,6 +63,11 @@
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #888;
   }
+
+  .custom-color-input::-webkit-color-swatch {
+    border-color: #e6e6e6;
+    border-radius: 10px;
+  }
 }
 
 :root {
@@ -84,4 +89,8 @@
 
 .profileImage-icon-common {
   @apply absolute -right-3 -bottom-3 w-[3.2rem] h-[3.3rem] rounded-full bg-strokeGray flex items-center justify-center;
+}
+
+.category-common {
+  @apply flex w-full items-center justify-between px-5;
 }
