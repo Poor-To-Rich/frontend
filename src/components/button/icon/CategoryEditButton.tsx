@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+
 const CategoryEditButton = () => {
   return (
-    <button className="w-fit h-fit cursor-pointer">
+    <Link to={{ pathname: '/category', search: '?type=edit' }} className="w-fit h-fit cursor-pointer">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fillRule="evenodd"
@@ -17,7 +19,7 @@ const CategoryEditButton = () => {
           fillOpacity="0.8"
         />
       </svg>
-    </button>
+    </Link>
   );
 };
 

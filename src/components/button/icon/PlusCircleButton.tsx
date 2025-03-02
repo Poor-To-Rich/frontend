@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 const PlusCircleButton = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => navigate('/add-Transaction?type=add');
+  const handleClick = () => navigate('/transaction?type=add');
 
   return (
     <button className="w-fit h-fit absolute right-3 bottom-[6rem] cursor-pointer" onClick={handleClick}>
