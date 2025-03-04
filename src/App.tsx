@@ -6,6 +6,7 @@ import MainPage from '@/pages/MainPage/MainPage';
 import AddEditTransactionPage from '@/pages/AddEditTransactionPage/AddEditTransactionPage';
 import CategoriesPage from '@/pages/CategoriesPage.tsx/CategoriesPage';
 import AddEditCategoryPage from '@/pages/AddEditCategoryPage/AddEditCategoryPage';
+import MonthWeekPage from '@/pages/MonthWeekPage/MonthWeekPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/transaction" element={<AddEditTransactionPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/category" element={<AddEditCategoryPage />} />
+        <Route path="/monthWeek" element={<MonthWeekPage />} />
       </Routes>
     </Router>
   );

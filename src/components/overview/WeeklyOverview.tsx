@@ -10,6 +10,7 @@ const WeeklyOverview = ({ weeklyLogs }: Props) => {
     <div className="w-[90%] mr-[5%] border border-strokeGray">
       {weeklyLogs.map((log, index) => (
         <LogItem
+          key={index}
           order={index + 1}
           log={log}
           type="week"
