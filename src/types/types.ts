@@ -31,6 +31,11 @@ export type TransactionItemType = {
   cost: number;
 };
 
+export type WeeklyDetailType = {
+  date: Date;
+  transactions: TransactionItemType[];
+};
+
 export type BaseCategoriesType = {
   color: string;
   name: string;

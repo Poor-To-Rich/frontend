@@ -8,17 +8,19 @@ interface Props {
   order: number;
   log: OverviewLogType;
   hasUnderLine?: boolean;
+  onClick?: () => void;
 }
 
-const LogItem = ({ type, order, log, hasUnderLine }: Props) => {
+const LogItem = ({ type, order, log, hasUnderLine, onClick }: Props) => {
   return (
     <button
       className={clsx(
-        'flex w-full px-2.5 justify-between items-center',
+        'flex w-full justify-between items-center cursor-pointer',
         hasUnderLine && 'border-b border-strokeGray',
-        type === 'month' && 'py-2.5',
-        type === 'week' && 'py-1.5',
-      )}>
+        type === 'month' && 'py-5 px-4',
+        type === 'week' && 'py-1.5 px-2.5',
+      )}
+      onClick={onClick}>
       <div className="flex flex-col items-start">
         <span>
           {order}
