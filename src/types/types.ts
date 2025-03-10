@@ -56,7 +56,7 @@ export type SettingOptionType = {
   externalUrl?: string;
 };
 
-export type TapBarType = 'main' | 'monthWeek' | 'chart' | 'talk' | 'setting';
+export type TapBarType = 'main' | 'month-week' | 'chart' | 'talk' | 'setting';
 
 export type VerifyButtonType = '인증' | '확인' | '중복확인';
 

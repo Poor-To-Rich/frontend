@@ -79,7 +79,7 @@ const MonthWeekPage = () => {
         <TransactionSummary income={0} expense={0} total={0} />
         <MonthlyOverview monthlyLogs={monthlyReport} />
       </div>
-      <TapBar page="monthWeek" />
+      <TapBar page="month-week" />
     </div>
   );
 };

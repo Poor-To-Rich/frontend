@@ -40,7 +40,7 @@ const SignupPage = () => {
   return (
     <div>
       <DefaultHeader label="회원가입" hasBackButton />
-      <form className="px-5 py-15" onSubmit={handleSubmit(onSubmit)}>
+      <form className="px-5 pt-15 pb-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex justify-center">
           <Controller name="profileImage" control={control} render={({ field }) => <ProfileImageInput {...field} />} />
         </div>

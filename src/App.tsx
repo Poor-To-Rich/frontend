@@ -9,6 +9,7 @@ import AddEditCategoryPage from '@/pages/AddEditCategoryPage/AddEditCategoryPage
 import MonthWeekPage from '@/pages/MonthWeekPage/MonthWeekPage';
 import WeeklyDetailsPage from '@/pages/WeeklyDetailsPage/WeeklyDetailsPage';
 import SettingPage from '@/pages/SettingPage/SettingPage';
+import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 
 function App() {
   return (
@@ -20,9 +21,10 @@ function App() {
         <Route path="/transaction" element={<AddEditTransactionPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/category" element={<AddEditCategoryPage />} />
-        <Route path="/monthWeek" element={<MonthWeekPage />} />
+        <Route path="/month-week" element={<MonthWeekPage />} />
         <Route path="/weeklyDetails" element={<WeeklyDetailsPage />} />
         <Route path="/setting" element={<SettingPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );
