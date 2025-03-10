@@ -58,8 +58,8 @@ export const ACCOUNT_OPTIONS: SettingOptionType[] = [
 export const DATA_OPTIONS: SettingOptionType[] = [
   { title: '수입 카테고리', to: '/categories?type=수입' },
   { title: '지출 카테고리', to: '/categories?type=지출' },
-  { title: '반복 수입 데이터', to: '/iteration-data?type="수입' },
-  { title: '반복 지출 데이터', to: '/iteration-data?type="지출' },
+  { title: '반복 수입 데이터', to: '/iteration-data?type=수입' },
+  { title: '반복 지출 데이터', to: '/iteration-data?type=지출' },
   { title: '전체 데이터 초기화', modalType: 'dataReset' },
 ];
 
