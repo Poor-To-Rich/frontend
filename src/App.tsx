@@ -12,6 +12,7 @@ import SettingPage from '@/pages/SettingPage/SettingPage';
 import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 import UpdatePasswordPage from '@/pages/UpdatePasswordPage/UpdatePasswordPage';
 import UpdateEmailPage from '@/pages/UpdateEmailPage/UpdateEmailPage';
+import IterationDataPage from '@/pages/IterationDataPage/IterationDataPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/update-password" element={<UpdatePasswordPage />} />
         <Route path="/update-email" element={<UpdateEmailPage />} />
+        <Route path="/iteration-data" element={<IterationDataPage />} />
       </Routes>
     </Router>
   );
