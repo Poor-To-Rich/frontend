@@ -49,6 +49,13 @@ export type UserCategoriesType = BaseCategoriesType & {
   id: number;
 };
 
+export type SettingOptionType = {
+  title: string;
+  to?: string;
+  modalType?: ModalType;
+  externalUrl?: string;
+};
+
 export type TapBarType = 'main' | 'monthWeek' | 'chart' | 'talk' | 'setting';
 
 export type VerifyButtonType = '인증' | '확인' | '중복확인';
@@ -58,3 +65,5 @@ export type IncomeExpenseButtonType = '지출' | '수입';
 export type TransactionFormData = z.infer<typeof baseSchema>;
 
 export type IterationCycleType = (typeof ITERATION_CYCLE)[number];
+
+export type ModalType = 'logout' | 'dataReset' | null;
