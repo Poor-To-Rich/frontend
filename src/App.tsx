@@ -10,6 +10,8 @@ import MonthWeekPage from '@/pages/MonthWeekPage/MonthWeekPage';
 import WeeklyDetailsPage from '@/pages/WeeklyDetailsPage/WeeklyDetailsPage';
 import SettingPage from '@/pages/SettingPage/SettingPage';
 import ProfilePage from '@/pages/ProfilePage/ProfilePage';
+import UpdatePasswordPage from '@/pages/UpdatePasswordPage/UpdatePasswordPage';
+import UpdateEmailPage from '@/pages/UpdateEmailPage/UpdateEmailPage';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/weeklyDetails" element={<WeeklyDetailsPage />} />
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/update-password" element={<UpdatePasswordPage />} />
+        <Route path="/update-email" element={<UpdateEmailPage />} />
       </Routes>
     </Router>
   );
