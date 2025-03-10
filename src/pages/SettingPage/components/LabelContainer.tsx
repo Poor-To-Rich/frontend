@@ -12,8 +12,9 @@ const LabelContainer = ({ label, options, handleClick }: Props) => {
     <div className="w-full flex flex-col gap-2.5 px-8 my-4">
       <span className="font-bold text-lg">{label}</span>
       <div className="w-full flex flex-col px-8">
-        {options.map(({ title, to, modalType, externalUrl }) => (
+        {options.map(({ title, to, modalType, externalUrl }, index) => (
           <div
+            key={index}
             className="w-full flex justify-between cursor-pointer py-3.5"
             onClick={() => handleClick({ to, modalType, externalUrl })}>
             <span>{title}</span>
