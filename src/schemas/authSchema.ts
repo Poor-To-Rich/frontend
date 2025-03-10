@@ -43,3 +43,10 @@ export const signupSchema = loginSchema
     message: '비밀번호가 일치하지 않습니다',
     path: ['confirmPassword'],
   });
+
+export const profileSchema = signupSchema.innerType().omit({
+  username: true,
+  password: true,
+  confirmPassword: true,
+  email: true,
+});
