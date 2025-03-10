@@ -58,3 +58,7 @@ export const changePasswordSchema = passwordMatchRefinement(
     confirmPassword: z.string().min(1, { message: '값을 입력해주세요' }),
   }),
 );
+
+export const emailChangeSchema = baseSignupSchema.pick({
+  email: true,
+});
