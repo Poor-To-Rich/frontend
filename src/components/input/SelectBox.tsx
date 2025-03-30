@@ -1,28 +1,33 @@
 import { IncomeExpenseButtonType, SelectOptionsType } from '@/types/types';
 import DropdownIcon from '@/components/icon/DropdownIcon';
-import { forwardRef } from 'react';
+import { ChangeEvent, forwardRef } from 'react';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import clsx from 'clsx';
+import { ReportType } from '@/types/reportTypes';
 
 interface SelectBoxProps {
-  label: string;
+  label?: string;
   isRequired?: boolean;
   options: SelectOptionsType[];
   type?: IncomeExpenseButtonType;
   hasEditButton?: boolean;
+  value?: ReportType | string;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(
-  ({ label, isRequired, options, type, hasEditButton, ...rest }, ref) => {
+  ({ label, isRequired, options, type, hasEditButton, value, onChange, ...rest }, ref) => {
     return (
-      <div className="w-full flex justify-between items-center">
-        <label className="relative w-fit h-fit">
-          <span>{label}</span>
-          {isRequired && <span className="text-sunsetRose absolute top-[-0.5rem]">*</span>}
-        </label>
-        <div className="w-3/5 relative">
-          <div className="w-full h-[3.2rem] flex gap-2">
-            <select className="input-common appearance-none" {...rest} ref={ref}>
+      <div className={`w-full flex ${label && 'justify-between'} items-center`}>
+        {label && (
+          <label className="relative w-fit h-fit">
+            <span>{label}</span>
+            {isRequired && <span className="text-sunsetRose absolute top-[-0.5rem]">*</span>}
+          </label>
+        )}
+        <div className="w-3/5 relative ">
+          <div className="w-full h-[3.2rem] flex gap-2 cursor-pointer">
+            <select className="input-common appearance-none cursor-pointer" {...rest} ref={ref} onChange={onChange}>
               {options.map(({ label, value }) => (
                 <option key={value} value={value}>
                   {label}

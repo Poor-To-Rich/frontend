@@ -74,7 +74,7 @@ const MonthWeekPage = () => {
 
   return (
     <div className="w-full h-fit min-h-screen max-h-fit flex flex-col relative">
-      <DateControlHeader date={format(new Date(), 'yyyy년 MM월')} />
+      <DateControlHeader />
       <div className="grow">
         <TransactionSummary income={0} expense={0} total={0} />
         <MonthlyOverview monthlyLogs={monthlyReport} />

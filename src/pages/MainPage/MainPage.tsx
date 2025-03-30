@@ -30,7 +30,7 @@ const MainPage = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
-      <DateControlHeader date={format(new Date(), 'yyyy년 M월')} />
+      <DateControlHeader />
       <div className="grow">
         <TransactionSummary income={0} expense={0} total={0} />
         <Calender />

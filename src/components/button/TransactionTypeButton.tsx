@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const ReportTypeButton = () => {
+const TransactionTypeButton = () => {
   const [type, setType] = useState<string>('지출');
 
   const options = [
@@ -17,7 +17,7 @@ const ReportTypeButton = () => {
           value={label}
           onClick={() => setType(label)}
           className={clsx(
-            'w-1/2 border border-strokeGray text-md',
+            'w-1/2 border border-strokeGray text-md cursor-pointer',
             label === '지출' ? 'text-sunsetRose rounded-l-lg' : 'text-oceanBlue rounded-r-lg',
             label === type && color,
           )}>
@@ -28,4 +28,4 @@ const ReportTypeButton = () => {
   );
 };
 
-export default ReportTypeButton;
+export default TransactionTypeButton;

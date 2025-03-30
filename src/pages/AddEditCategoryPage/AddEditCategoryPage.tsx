@@ -18,8 +18,9 @@ const AddEditCategoryPage = () => {
   const {
     control,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm({
+    mode: 'onChange',
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: '',
@@ -32,6 +33,8 @@ const AddEditCategoryPage = () => {
   const onSubmit = (data: categoryFormType) => {
     console.log(data);
   };
+
+  console.log();
 
   return (
     <div className="w-full h-screen flex flex-col relative">
@@ -46,7 +49,18 @@ const AddEditCategoryPage = () => {
           <Controller
             name="name"
             control={control}
-            render={({ field }) => <PrimaryInput {...field} label="카테고리명" />}
+            render={({ field }) => (
+              <PrimaryInput
+                {...field}
+                label="카테고리명"
+                message={errors.name?.message}
+                onChange={e => {
+                  if (e.target.value.length <= 10) {
+                    field.onChange(e);
+                  }
+                }}
+              />
+            )}
           />
           <Controller name="color" control={control} render={({ field }) => <ColorInput {...field} />} />
         </div>
