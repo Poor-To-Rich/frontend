@@ -1,4 +1,4 @@
-import { TransactionType } from '@/types/TransactionTypes';
+import { TransactionType } from '@/types/transactionTypes';
 
 interface Props {
   transactions: TransactionType[];

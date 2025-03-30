@@ -5,7 +5,7 @@ import DefaultHeader from '@/components/header/DefaultHeader';
 import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { IncomeExpenseButtonType, IterationCycleType, TransactionFormData } from '@/types/types';
+import { IterationCycleType } from '@/types/types';
 import { baseSchema } from '@/schemas/transactionSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -14,6 +14,7 @@ import IterationCycleModal from '@/components/modal/IterationCycleModal';
 import useModal from '@/hooks/useModal';
 import { useLocation } from 'react-router-dom';
 import DefaultModal from '@/components/modal/DefaultModal';
+import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
 
 const AddEditTransactionPage = () => {
   const [type, setType] = useState<IncomeExpenseButtonType>('지출');

@@ -1,4 +1,4 @@
-import { TransactionType } from '@/types/types';
+import { TransactionType } from '@/types/transactionTypes';
 import clsx from 'clsx';
 import { addDays, differenceInCalendarDays, endOfMonth, endOfWeek, startOfMonth, startOfWeek } from 'date-fns';
 import DayWithData from './DayWithData';

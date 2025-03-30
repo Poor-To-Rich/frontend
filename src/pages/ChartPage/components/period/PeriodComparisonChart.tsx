@@ -1,36 +1,38 @@
 import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import PeriodSummary from '@/pages/ChartPage/components/period/PeriodSummary';
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
+import { useReportTypeStore } from '@/stores/useReportTypeStore';
 
 const PeriodComparisonChart = () => {
   const { currentTransactionType } = useTransactionTypeStore();
+  const { currentReportType } = useReportTypeStore();
   const data = {
-    extraAmount: 3000000,
-    averageAmount: 255000000,
+    extraAmount: 300,
+    averageAmount: 255,
     monthlyExpenses: [
       {
         date: '2025-08',
-        totalExpenseAmount: 100,
-      },
-      {
-        date: '2025-09',
-        totalExpenseAmount: 200,
-      },
-      {
-        date: '2025-10',
-        totalExpenseAmount: 50,
-      },
-      {
-        date: '2025-11',
         totalExpenseAmount: 250,
       },
       {
-        date: '2025-12',
+        date: '2025-09',
         totalExpenseAmount: 180,
       },
       {
+        date: '2025-10',
+        totalExpenseAmount: 500,
+      },
+      {
+        date: '2025-11',
+        totalExpenseAmount: 300,
+      },
+      {
+        date: '2025-12',
+        totalExpenseAmount: 100,
+      },
+      {
         date: '2025-01',
-        totalExpenseAmount: 130,
+        totalExpenseAmount: 100,
       },
     ],
   };
@@ -39,6 +41,7 @@ const PeriodComparisonChart = () => {
     <div>
       <PeriodSummary
         currentTransactionType={currentTransactionType}
+        currentReportType={currentReportType}
         extraAmount={data.extraAmount}
         averageAmount={data.averageAmount}
       />
@@ -53,9 +56,11 @@ const PeriodComparisonChart = () => {
               type="category"
               axisLine={false}
               tickLine={false}
-              tickFormatter={tickItem => `${tickItem.slice(-2)}월`}
+              tickFormatter={tickItem =>
+                `${currentReportType === '월별' ? `${tickItem.slice(-2)}월` : `${tickItem.slice(0, 4)}년`}`
+              }
             />
-            <YAxis type="number" hide />
+            <YAxis type="number" hide scale="pow" exponent={0.5} domain={[1, 'auto']} />
             <Bar
               dataKey={'totalExpenseAmount'}
               label={{ position: 'top', fill: '#000000', fontSize: 14 }}

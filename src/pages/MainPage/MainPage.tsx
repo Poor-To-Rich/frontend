@@ -5,7 +5,7 @@ import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
 import { format } from 'date-fns';
 import DailyTransactionList from '@/pages/MainPage/components/DailyTransactionList';
-import { TransactionItemType } from '@/types/types';
+import { TransactionItemType } from '@/types/transactionTypes';
 
 const MainPage = () => {
   const transactions: TransactionItemType[] = [

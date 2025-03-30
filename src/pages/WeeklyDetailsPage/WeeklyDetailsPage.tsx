@@ -1,7 +1,8 @@
 import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import TransactionSummary from '@/components/summary/TransactionSummary';
-import { WeeklyDetailType } from '@/types/types';
+import { WeeklyDetailType } from '@/types/transactionTypes';
+
 import { format } from 'date-fns';
 import { useLocation } from 'react-router-dom';
 

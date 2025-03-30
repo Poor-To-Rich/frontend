@@ -1,6 +1,6 @@
 import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem';
 import DefaultHeader from '@/components/header/DefaultHeader';
-import { TransactionItemType } from '@/types/types';
+import { TransactionItemType } from '@/types/transactionTypes';
 import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
 
