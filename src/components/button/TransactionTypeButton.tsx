@@ -1,10 +1,11 @@
+import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
+import { IncomeExpenseButtonType } from '@/types/transactionTypes';
 import clsx from 'clsx';
-import { useState } from 'react';
 
 const TransactionTypeButton = () => {
-  const [type, setType] = useState<string>('지출');
+  const { currentTransactionType, setCurrentTransactionType } = useTransactionTypeStore();
 
-  const options = [
+  const options: { label: IncomeExpenseButtonType; color: string }[] = [
     { label: '지출', color: 'bg-pinkRed' },
     { label: '수입', color: 'bg-lightBlue' },
   ];
@@ -15,11 +16,11 @@ const TransactionTypeButton = () => {
         <button
           key={label}
           value={label}
-          onClick={() => setType(label)}
+          onClick={() => setCurrentTransactionType(label)}
           className={clsx(
             'w-1/2 border border-strokeGray text-md cursor-pointer',
             label === '지출' ? 'text-sunsetRose rounded-l-lg' : 'text-oceanBlue rounded-r-lg',
-            label === type && color,
+            label === currentTransactionType && color,
           )}>
           {label}
         </button>

@@ -1,7 +1,9 @@
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import PeriodSummary from '@/pages/ChartPage/components/period/PeriodSummary';
+import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 
 const PeriodComparisonChart = () => {
+  const { currentTransactionType } = useTransactionTypeStore();
   const data = {
     extraAmount: 3000000,
     averageAmount: 255000000,
@@ -35,7 +37,11 @@ const PeriodComparisonChart = () => {
 
   return (
     <div>
-      <PeriodSummary />
+      <PeriodSummary
+        currentTransactionType={currentTransactionType}
+        extraAmount={data.extraAmount}
+        averageAmount={data.averageAmount}
+      />
       <div className="w-full h-[300px] flex justify-center items-center p-5">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -52,10 +58,13 @@ const PeriodComparisonChart = () => {
             <YAxis type="number" hide />
             <Bar
               dataKey={'totalExpenseAmount'}
-              fill="#e7f6d1"
               label={{ position: 'top', fill: '#000000', fontSize: 14 }}
-              onClick={() => console.log('클릭됨')}
-            />
+              onClick={target => console.log(target.date)}
+              className="cursor-pointer">
+              {data.monthlyExpenses.map((entry, index) => (
+                <Cell key={entry.date} fill={index === data.monthlyExpenses.length - 1 ? '#e7f6d1' : '#E6E6E6'} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>

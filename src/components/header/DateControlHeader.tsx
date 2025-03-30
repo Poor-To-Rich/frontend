@@ -8,12 +8,20 @@ import DateInput from '@/components/header/DateInput';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
 import { useDateControl } from '@/hooks/useDateControl';
 import { useDateStore } from '@/stores/useDateStore';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const DateControlHeader = () => {
+  const { pathname } = useLocation();
   const { currentReportType } = useReportTypeStore();
-  const { currentDate, setCurrentDate } = useDateStore();
-  const isMonthType = currentReportType === '월별';
+  const { currentDate, setCurrentDate, clearCurrentDate } = useDateStore();
   const { prevYearHandler, nextYearHandler, prevMonthHandler, nextMonthHandler } = useDateControl();
+
+  const isMonthType = currentReportType === '월별' && pathname !== '/month-week';
+
+  useEffect(() => {
+    return () => clearCurrentDate();
+  }, []);
 
   return (
     <header className="header-common">
@@ -22,6 +30,7 @@ const DateControlHeader = () => {
       </span>
       <DatePicker
         locale={ko}
+        disabled={pathname !== '/chart'}
         selected={currentDate}
         onChange={date => {
           if (date) setCurrentDate(date);
