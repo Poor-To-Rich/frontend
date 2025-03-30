@@ -13,6 +13,7 @@ import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 import UpdatePasswordPage from '@/pages/UpdatePasswordPage/UpdatePasswordPage';
 import UpdateEmailPage from '@/pages/UpdateEmailPage/UpdateEmailPage';
 import IterationDataPage from '@/pages/IterationDataPage/IterationDataPage';
+import ChartPage from '@/pages/ChartPage/ChartPage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/update-password" element={<UpdatePasswordPage />} />
         <Route path="/update-email" element={<UpdateEmailPage />} />
         <Route path="/iteration-data" element={<IterationDataPage />} />
+        <Route path="/chart" element={<ChartPage />} />
       </Routes>
     </Router>
   );

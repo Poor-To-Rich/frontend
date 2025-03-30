@@ -2,7 +2,7 @@ import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
 import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
-import { IncomeExpenseButtonType, TransactionFormData } from '@/types/types';
+import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
 import { formatNumber } from '@/utils/number';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 

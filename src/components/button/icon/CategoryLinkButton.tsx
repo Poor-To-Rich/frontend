@@ -1,4 +1,4 @@
-import { IncomeExpenseButtonType } from '@/types/types';
+import { IncomeExpenseButtonType } from '@/types/transactionTypes';
 import { Link } from 'react-router-dom';
 
 interface Props {

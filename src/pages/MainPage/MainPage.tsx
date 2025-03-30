@@ -5,7 +5,7 @@ import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
 import { format } from 'date-fns';
 import DailyTransactionList from '@/pages/MainPage/components/DailyTransactionList';
-import { TransactionItemType } from '@/types/types';
+import { TransactionItemType } from '@/types/transactionTypes';
 
 const MainPage = () => {
   const transactions: TransactionItemType[] = [
@@ -30,7 +30,7 @@ const MainPage = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
-      <DateControlHeader date={format(new Date(), 'yyyy년 M월')} />
+      <DateControlHeader />
       <div className="grow">
         <TransactionSummary income={0} expense={0} total={0} />
         <Calender />

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import IterationIcon from '@/components/icon/IterationIcon';
-import { TransactionItemType } from '@/types/types';
 import { Link } from 'react-router-dom';
+import { TransactionItemType } from '@/types/transactionTypes';
 
 interface Props extends TransactionItemType {}
 
