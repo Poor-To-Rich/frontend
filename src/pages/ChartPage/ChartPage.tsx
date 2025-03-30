@@ -1,12 +1,12 @@
 import TransactionTypeButton from '@/components/button/TransactionTypeButton';
 import DateControlHeader from '@/components/header/DateControlHeader';
-import ReportSummary from '@/pages/ChartPage/components/ReportSummary';
 import StackedBarChart from '@/pages/ChartPage/components/categories/StackedBarChart';
 import CategorySummary from '@/pages/ChartPage/components/categories/CategorySummary';
 import PeriodComparisonChart from '@/pages/ChartPage/components/period/PeriodComparisonChart';
 import Divider from '@/components/Divider';
 import TapBar from '@/components/tapbar/TapBar';
 import ReportTypeSelection from '@/pages/ChartPage/components/ReportTypeSelection';
+import ReportSummary from '@/pages/ChartPage/components/summary/ReportSummary';
 
 const ChartPage = () => {
   return (
@@ -17,7 +17,7 @@ const ChartPage = () => {
           <ReportTypeSelection />
           <TransactionTypeButton />
         </div>
-        <ReportSummary totalAmount={16216565465423156} totalSavingAmount={162165654654} />
+        <ReportSummary />
         <StackedBarChart />
         <CategorySummary />
         <Divider />
