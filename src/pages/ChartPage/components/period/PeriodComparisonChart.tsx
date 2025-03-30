@@ -45,7 +45,7 @@ const PeriodComparisonChart = () => {
         extraAmount={data.extraAmount}
         averageAmount={data.averageAmount}
       />
-      <div className="w-full h-[300px] flex justify-center items-center p-5">
+      <div className="w-full h-[300px] flex justify-center items-center ">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data.monthlyExpenses}
@@ -56,8 +56,9 @@ const PeriodComparisonChart = () => {
               type="category"
               axisLine={false}
               tickLine={false}
+              interval={0}
               tickFormatter={tickItem =>
-                `${currentReportType === '월별' ? `${tickItem.slice(-2)}월` : `${tickItem.slice(0, 4)}년`}`
+                `${currentReportType === '월별' ? `${tickItem.slice(-2)}월` : `${tickItem.slice(0, 4)}`}`
               }
             />
             <YAxis type="number" hide scale="pow" exponent={0.5} domain={[1, 'auto']} />
