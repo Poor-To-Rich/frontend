@@ -1,5 +1,6 @@
 import PeriodSummary from '@/components/summary/PeriodSummary';
 import CategoryLineChart from '@/pages/CategoryDetailsPage/components/lineChart/CategoryLineChart';
+import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarChart';
 
 interface Props {
   type: string;
@@ -37,6 +38,7 @@ const CategoryOverviewChart = ({ type }: Props) => {
       <PeriodSummary period="01.01~01.31" balance={periodSummaryData.totalBalance} type={type || ' '} />
       <div className="w-full h-[300px] p-5">
         <CategoryLineChart weeklyBalances={periodSummaryData.weeklyBalances} />
+        <CategoryBarChart />
       </div>
     </div>
   );
