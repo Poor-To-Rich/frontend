@@ -14,6 +14,7 @@ import UpdatePasswordPage from '@/pages/UpdatePasswordPage/UpdatePasswordPage';
 import UpdateEmailPage from '@/pages/UpdateEmailPage/UpdateEmailPage';
 import IterationDataPage from '@/pages/IterationDataPage/IterationDataPage';
 import ChartPage from '@/pages/ChartPage/ChartPage';
+import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/update-email" element={<UpdateEmailPage />} />
         <Route path="/iteration-data" element={<IterationDataPage />} />
         <Route path="/chart" element={<ChartPage />} />
+        <Route path="/category/details/:categoryId" element={<CategoryDetailsPage />} />
       </Routes>
     </Router>
   );

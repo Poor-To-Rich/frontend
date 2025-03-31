@@ -1,7 +1,18 @@
 import RightArrowButton from '@/components/button/icon/RightArrowButton';
+import { useDateStore } from '@/stores/useDateStore';
+import { useReportTypeStore } from '@/stores/useReportTypeStore';
+import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { formatNumber } from '@/utils/number';
+import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
-const CategorySummary = () => {
+const CategoryDashBoard = () => {
+  const { currentDate } = useDateStore();
+  const { currentTransactionType } = useTransactionTypeStore();
+  const { currentReportType } = useReportTypeStore();
+  const navigate = useNavigate();
+
+  const date = format(currentDate, currentReportType === '월별' ? 'yyyy-MM' : 'yyyy');
   const categoryCharts = [
     {
       id: 1,
@@ -43,7 +54,14 @@ const CategorySummary = () => {
   return (
     <div className="flex flex-col pl-8 pr-5 pb-4">
       {categoryCharts.map(categoryItem => (
-        <div className="flex justify-between gap-3.5 cursor-pointer py-3" key={categoryItem.id}>
+        <div
+          className="flex justify-between gap-3.5 cursor-pointer py-3"
+          key={categoryItem.id}
+          onClick={() =>
+            navigate(
+              `/category/details/${categoryItem.id}?name=${categoryItem.name}&type=${currentTransactionType}&date=${date}`,
+            )
+          }>
           <div className="flex w-fit gap-4.5">
             <span style={{ color: categoryItem.color }}>{categoryItem.name}</span>
             <span>{categoryItem.rate}%</span>
@@ -60,4 +78,4 @@ const CategorySummary = () => {
   );
 };
 
-export default CategorySummary;
+export default CategoryDashBoard;
