@@ -47,10 +47,7 @@ const PeriodComparisonChart = () => {
       />
       <div className="w-full h-[300px] flex justify-center items-center ">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data.monthlyExpenses}
-            margin={{ top: 20, right: 10, bottom: 0, left: 10 }}
-            barCategoryGap="10%">
+          <BarChart data={data.monthlyExpenses} margin={{ top: 20, right: 10, bottom: 0, left: 10 }}>
             <XAxis
               dataKey="date"
               type="category"

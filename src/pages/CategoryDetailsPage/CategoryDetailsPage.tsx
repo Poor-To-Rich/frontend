@@ -5,13 +5,14 @@ import CategoryOverviewChart from '@/pages/CategoryDetailsPage/components/Catego
 const CategoryDetailsPage = () => {
   const [searchParams] = useSearchParams();
   const categoryName = searchParams.get('name') || '';
-  const type = searchParams.get('type');
+  const reportType = searchParams.get('reportType') || '';
+  const transactionType = searchParams.get('transactionType') || '';
   const date = searchParams.get('date');
 
   return (
     <div>
       <DefaultHeader label={categoryName} hasBackButton />
-      <CategoryOverviewChart type={type || ''} />
+      <CategoryOverviewChart reportType={reportType} transactionType={transactionType} />
     </div>
   );
 };

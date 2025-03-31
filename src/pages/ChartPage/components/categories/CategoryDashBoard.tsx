@@ -59,7 +59,7 @@ const CategoryDashBoard = () => {
           key={categoryItem.id}
           onClick={() =>
             navigate(
-              `/category/details/${categoryItem.id}?name=${categoryItem.name}&type=${currentTransactionType}&date=${date}`,
+              `/category/details/${categoryItem.id}?name=${categoryItem.name}&transactionType=${currentTransactionType}&reportType=${currentReportType}&date=${date}`,
             )
           }>
           <div className="flex w-fit gap-4.5">

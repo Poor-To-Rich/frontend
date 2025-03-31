@@ -1,7 +1,7 @@
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import CustomizedXAxisTick from '@/pages/CategoryDetailsPage/components/lineChart/CustomizedXAxisTick';
 import { WeeklyBalanceType } from '@/types/chartTypes';
-import CustomTooltip from '@/pages/CategoryDetailsPage/components/CustomTooltip';
+import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/lineChart/CustomizedTooltip';
 
 interface Props {
   weeklyBalances: WeeklyBalanceType[];
@@ -20,7 +20,7 @@ const CategoryLineChart = ({ weeklyBalances }: Props) => {
           tick={CustomizedXAxisTick}
         />
         <YAxis dataKey="amount" type="number" scale="pow" exponent={0.5} hide domain={[1, 'auto']} />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip content={<CustomizedTooltip />} />
         <Line type="linear" dataKey="amount" stroke="#eb6060" strokeWidth={2} />
       </LineChart>
     </ResponsiveContainer>

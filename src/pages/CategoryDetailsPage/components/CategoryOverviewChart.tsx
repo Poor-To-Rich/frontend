@@ -3,10 +3,11 @@ import CategoryLineChart from '@/pages/CategoryDetailsPage/components/lineChart/
 import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarChart';
 
 interface Props {
-  type: string;
+  reportType: string;
+  transactionType: string;
 }
 
-const CategoryOverviewChart = ({ type }: Props) => {
+const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
   const periodSummaryData = {
     totalBalance: 200000000,
     weeklyBalances: [
@@ -35,10 +36,17 @@ const CategoryOverviewChart = ({ type }: Props) => {
 
   return (
     <div>
-      <PeriodSummary period="01.01~01.31" balance={periodSummaryData.totalBalance} type={type || ' '} />
+      <PeriodSummary
+        period="01.01~01.31"
+        balance={periodSummaryData.totalBalance}
+        transactionType={transactionType || ' '}
+      />
       <div className="w-full h-[300px] p-5">
-        <CategoryLineChart weeklyBalances={periodSummaryData.weeklyBalances} />
-        <CategoryBarChart />
+        {reportType === '월별' ? (
+          <CategoryLineChart weeklyBalances={periodSummaryData.weeklyBalances} />
+        ) : (
+          <CategoryBarChart />
+        )}
       </div>
     </div>
   );
