@@ -24,7 +24,6 @@ const AddEditTransactionPage = () => {
   const [costValue, setCostValue] = useState<string>('');
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-
   const pageType = queryParams.get('type');
   const transactionId = pageType ? queryParams.get('id') : '';
   const isEditPage = pageType === 'edit';

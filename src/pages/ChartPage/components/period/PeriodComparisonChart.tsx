@@ -45,7 +45,7 @@ const PeriodComparisonChart = () => {
         extraAmount={data.extraAmount}
         averageAmount={data.averageAmount}
       />
-      <div className="w-full h-[300px] flex justify-center items-center ">
+      <div className="w-full h-[250px] flex justify-center items-center ">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data.monthlyExpenses} margin={{ top: 20, right: 10, bottom: 0, left: 10 }}>
             <XAxis

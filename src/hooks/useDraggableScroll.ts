@@ -30,7 +30,6 @@ export const useDraggableScroll = () => {
     setIsDragging(true);
     setStartX(e.touches[0].pageX - scrollRef.current.offsetLeft);
     setScrollLeft(scrollRef.current.scrollLeft);
-    console.log(scrollRef.current.scrollLeft);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -38,7 +37,6 @@ export const useDraggableScroll = () => {
     const x = e.touches[0].pageX - scrollRef.current.offsetLeft;
     const walk = (x - startX) * 1;
     scrollRef.current.scrollLeft = scrollLeft - walk;
-    console.log(scrollRef.current.scrollLeft);
   };
 
   const handleEnd = () => setIsDragging(false);

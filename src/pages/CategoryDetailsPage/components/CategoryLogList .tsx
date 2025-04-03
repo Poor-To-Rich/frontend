@@ -2,12 +2,14 @@ import SortingButton from '@/components/button/icon/SortingButton';
 import { useState } from 'react';
 import { formatNumber } from '@/utils/number';
 import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   transactionType: string;
 }
 
 const CategoryLogList = ({ transactionType }: Props) => {
+  const navigate = useNavigate();
   const [isDescending, setIsDescending] = useState<boolean>(true);
   const { countOf, categoryLogs } = {
     countOf: 7,
@@ -63,7 +65,8 @@ const CategoryLogList = ({ transactionType }: Props) => {
                       transactionType === '지출' && 'text-sunsetRose',
                       transactionType === '수입' && 'text-oceanBlue',
                       `flex items-center px-8 gap-8  h-[4.8rem] cursor-pointer hover:bg-strokeGray active:bg-strokeGray`,
-                    )}>
+                    )}
+                    onClick={() => navigate(`/transaction?type=edit&id=${id}`)}>
                     {index === 0 && <span className="text-[#555555]">{date}</span>}
                     <span className="text-lg truncate">{formatNumber(amount)}원</span>
                   </div>

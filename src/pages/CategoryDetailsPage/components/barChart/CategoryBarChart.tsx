@@ -8,9 +8,9 @@ const CategoryBarChart = () => {
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
   const monthlyBalances = [
-    { month: '1월', amount: 12000 },
+    { month: '1월', amount: 11000 },
     { month: '2월', amount: 9000 },
-    { month: '3월', amount: 1500000000 },
+    { month: '3월', amount: 15000 },
     { month: '4월', amount: 8000 },
     { month: '5월', amount: 11000 },
     { month: '6월', amount: 9500 },
@@ -34,9 +34,9 @@ const CategoryBarChart = () => {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleEnd}>
-      <div className="min-w-[800px]">
+      <div className="min-w-[700px]">
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={monthlyBalances} margin={{ top: 30, right: 20, bottom: 0, left: 20 }} barSize={25}>
+          <BarChart data={monthlyBalances} margin={{ top: 30, right: 10, bottom: 0, left: 10 }} barSize={25}>
             <XAxis type="category" dataKey="month" axisLine={false} tickLine={false} interval={0} />
             <YAxis type="number" dataKey="amount" hide domain={[1, maxAmount]} />
             <Tooltip content={<CustomizedTooltip />} />
