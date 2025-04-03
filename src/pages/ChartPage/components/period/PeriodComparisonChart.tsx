@@ -1,4 +1,4 @@
-import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import PeriodSummary from '@/pages/ChartPage/components/period/PeriodSummary';
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
@@ -28,11 +28,11 @@ const PeriodComparisonChart = () => {
       },
       {
         date: '2025-12',
-        totalExpenseAmount: 100,
+        totalExpenseAmount: 300,
       },
       {
         date: '2025-01',
-        totalExpenseAmount: 100,
+        totalExpenseAmount: 300,
       },
     ],
   };

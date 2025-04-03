@@ -10,7 +10,7 @@ const CategoryDetailsPage = () => {
   const date = searchParams.get('date');
 
   return (
-    <div>
+    <div className="w-full min-h-screen flex flex-col">
       <DefaultHeader label={categoryName} hasBackButton />
       <CategoryOverviewChart reportType={reportType} transactionType={transactionType} />
     </div>
