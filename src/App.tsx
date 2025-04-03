@@ -14,10 +14,13 @@ import UpdatePasswordPage from '@/pages/UpdatePasswordPage/UpdatePasswordPage';
 import UpdateEmailPage from '@/pages/UpdateEmailPage/UpdateEmailPage';
 import IterationDataPage from '@/pages/IterationDataPage/IterationDataPage';
 import ChartPage from '@/pages/ChartPage/ChartPage';
+import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage';
+import ScrollToUp from '@/utils/ScrollToUp';
 
 function App() {
   return (
     <Router>
+      <ScrollToUp />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
@@ -33,6 +36,7 @@ function App() {
         <Route path="/update-email" element={<UpdateEmailPage />} />
         <Route path="/iteration-data" element={<IterationDataPage />} />
         <Route path="/chart" element={<ChartPage />} />
+        <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
       </Routes>
     </Router>
   );

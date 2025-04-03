@@ -28,7 +28,12 @@ const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(
         )}
         <div className="w-3/5 relative ">
           <div className="w-full h-[3.2rem] flex gap-2 cursor-pointer">
-            <select className="input-common appearance-none cursor-pointer" {...rest} ref={ref} onChange={onChange}>
+            <select
+              className="input-common appearance-none cursor-pointer"
+              value={value}
+              {...rest}
+              ref={ref}
+              onChange={onChange}>
               {options.map(({ label, value }) => (
                 <option key={value} value={value}>
                   {label}

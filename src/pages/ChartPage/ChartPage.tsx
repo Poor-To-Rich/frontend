@@ -1,7 +1,7 @@
 import TransactionTypeButton from '@/components/button/TransactionTypeButton';
 import DateControlHeader from '@/components/header/DateControlHeader';
 import StackedBarChart from '@/pages/ChartPage/components/categories/StackedBarChart';
-import CategorySummary from '@/pages/ChartPage/components/categories/CategorySummary';
+import CategoryDashBoard from '@/pages/ChartPage/components/categories/CategoryDashBoard';
 import PeriodComparisonChart from '@/pages/ChartPage/components/period/PeriodComparisonChart';
 import Divider from '@/components/Divider';
 import TapBar from '@/components/tapbar/TapBar';
@@ -19,7 +19,7 @@ const ChartPage = () => {
         </div>
         <ReportSummary />
         <StackedBarChart />
-        <CategorySummary />
+        <CategoryDashBoard />
         <Divider />
         <PeriodComparisonChart />
       </div>

@@ -1,0 +1,5 @@
+.recharts-line,
+.recharts-active-dot {
+  transform: scaleY(0.95);
+  transform-origin: top;
+}

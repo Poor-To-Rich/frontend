@@ -8,8 +8,8 @@ import DateInput from '@/components/header/DateInput';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
 import { useDateControl } from '@/hooks/useDateControl';
 import { useDateStore } from '@/stores/useDateStore';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const DateControlHeader = () => {
   const { pathname } = useLocation();
@@ -30,7 +30,6 @@ const DateControlHeader = () => {
       </span>
       <DatePicker
         locale={ko}
-        disabled={pathname !== '/chart'}
         selected={currentDate}
         onChange={date => {
           if (date) setCurrentDate(date);

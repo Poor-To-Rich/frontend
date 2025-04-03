@@ -13,7 +13,7 @@ interface Props {
 const PeriodSummary = ({ currentTransactionType, currentReportType, extraAmount, averageAmount }: Props) => {
   const { currentDate } = useDateStore();
   return (
-    <div className="p-5">
+    <div className="p-5 mb-10">
       <div className="text-xl">
         {format(currentDate, currentReportType === '월별' ? 'M' : 'yyyy')}
         {currentReportType === '월별' ? '월' : '년'}에는 {currentReportType === '월별' ? '전월' : '작년'}보다{' '}

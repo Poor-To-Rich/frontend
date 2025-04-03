@@ -1,4 +1,4 @@
-import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import PeriodSummary from '@/pages/ChartPage/components/period/PeriodSummary';
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
@@ -28,11 +28,11 @@ const PeriodComparisonChart = () => {
       },
       {
         date: '2025-12',
-        totalExpenseAmount: 100,
+        totalExpenseAmount: 300,
       },
       {
         date: '2025-01',
-        totalExpenseAmount: 100,
+        totalExpenseAmount: 300,
       },
     ],
   };
@@ -45,12 +45,9 @@ const PeriodComparisonChart = () => {
         extraAmount={data.extraAmount}
         averageAmount={data.averageAmount}
       />
-      <div className="w-full h-[300px] flex justify-center items-center ">
+      <div className="w-full h-[250px] flex justify-center items-center ">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data.monthlyExpenses}
-            margin={{ top: 20, right: 10, bottom: 0, left: 10 }}
-            barCategoryGap="10%">
+          <BarChart data={data.monthlyExpenses} margin={{ top: 20, right: 10, bottom: 0, left: 10 }}>
             <XAxis
               dataKey="date"
               type="category"
