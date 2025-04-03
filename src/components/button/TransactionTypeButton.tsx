@@ -1,14 +1,19 @@
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
 import clsx from 'clsx';
+import { useEffect } from 'react';
 
 const TransactionTypeButton = () => {
-  const { currentTransactionType, setCurrentTransactionType } = useTransactionTypeStore();
+  const { currentTransactionType, setCurrentTransactionType, clearTransactionType } = useTransactionTypeStore();
 
   const options: { label: IncomeExpenseButtonType; color: string }[] = [
     { label: '지출', color: 'bg-pinkRed' },
     { label: '수입', color: 'bg-lightBlue' },
   ];
+
+  useEffect(() => {
+    return () => clearTransactionType();
+  }, []);
 
   return (
     <div className="flex w-[11rem] h-[3rem]">

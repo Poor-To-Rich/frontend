@@ -3,7 +3,6 @@ import MonthlyOverview from '@/components/overview/MonthlyOverview';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
 import { OverviewLogType } from '@/types/types';
-import { format } from 'date-fns';
 
 const MonthWeekPage = () => {
   const monthlyReport: OverviewLogType[] = [

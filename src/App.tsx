@@ -34,7 +34,7 @@ function App() {
         <Route path="/update-email" element={<UpdateEmailPage />} />
         <Route path="/iteration-data" element={<IterationDataPage />} />
         <Route path="/chart" element={<ChartPage />} />
-        <Route path="/category/details/:categoryId" element={<CategoryDetailsPage />} />
+        <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
       </Routes>
     </Router>
   );

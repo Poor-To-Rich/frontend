@@ -1,7 +1,6 @@
 import PeriodSummary from '@/components/summary/PeriodSummary';
 import CategoryLineChart from '@/pages/CategoryDetailsPage/components/lineChart/CategoryLineChart';
 import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarChart';
-import CategoryLogList from '@/pages/CategoryDetailsPage/components/CategoryLogList ';
 
 interface Props {
   reportType: string;
@@ -37,7 +36,7 @@ const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
   };
 
   return (
-    <div className="w-full flex flex-col grow">
+    <div className="w-full">
       <PeriodSummary
         period="25.01.01~25.01.31"
         balance={periodSummaryData.totalBalance}
@@ -50,7 +49,6 @@ const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
           <CategoryBarChart />
         )}
       </div>
-      <CategoryLogList transactionType={transactionType} />
     </div>
   );
 };

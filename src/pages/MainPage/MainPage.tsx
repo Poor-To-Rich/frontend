@@ -3,7 +3,6 @@ import Calender from '@/components/calender/Calender';
 import DateControlHeader from '@/components/header/DateControlHeader';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
-import { format } from 'date-fns';
 import DailyTransactionList from '@/pages/MainPage/components/DailyTransactionList';
 import { TransactionItemType } from '@/types/transactionTypes';
 
