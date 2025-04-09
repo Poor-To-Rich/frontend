@@ -1,5 +1,3 @@
-import { ITERATION_CYCLE } from '@/constants/repeatSchedule';
-
 export type OverviewLogType = {
   startDate: Date;
   endDate: Date;
@@ -36,7 +34,5 @@ export type SettingOptionType = {
 export type TapBarType = 'main' | 'month-week' | 'chart' | 'talk' | 'setting';
 
 export type VerifyButtonType = '인증' | '확인' | '중복확인';
-
-export type IterationCycleType = (typeof ITERATION_CYCLE)[number];
 
 export type ModalType = 'logout' | 'dataReset' | null;
