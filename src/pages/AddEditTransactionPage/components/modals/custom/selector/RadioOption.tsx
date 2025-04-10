@@ -11,7 +11,7 @@ interface Props {
 
 const RadioOption = forwardRef<HTMLInputElement, Props>(({ radioId, label, checked, input, value, onChange }, ref) => {
   return (
-    <label htmlFor={radioId} className="flex w-full h-12 items-center gap-3.5">
+    <label htmlFor={radioId} className="flex w-fit h-12 items-center gap-3.5">
       <input
         id={radioId}
         type="radio"

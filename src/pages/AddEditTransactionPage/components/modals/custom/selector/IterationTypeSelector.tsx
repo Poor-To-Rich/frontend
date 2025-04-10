@@ -15,7 +15,7 @@ const IterationTypeSelector = ({ type, setValue }: Props) => {
         <span
           key={value}
           className={clsx(type === value && 'bg-pastelLime', 'w-1/5 text-center py-1.5  rounded-3xl cursor-pointer')}
-          onClick={() => setValue('customIteration.type', value)}>
+          onClick={() => setValue('customIteration.type', value, { shouldValidate: true })}>
           {label}
         </span>
       ))}

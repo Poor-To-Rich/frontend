@@ -23,8 +23,14 @@ const IterationEndOptionSelector = () => {
             inputMode="numeric"
             pattern="[0-9]*"
             defaultValue={10}
-            className="w-[40px] text-center text-defaultGrey focus:outline-none"
-            {...register('customIteration.ends.count')}
+            placeholder="10"
+            className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
+            {...register('customIteration.ends.count', { valueAsNumber: true })}
+            onBlur={e => {
+              if (!e.target.value) {
+                setValue('customIteration.ends.count', 10, { shouldValidate: true });
+              }
+            }}
           />
           <span>회 반복</span>
         </>
@@ -37,26 +43,14 @@ const IterationEndOptionSelector = () => {
         <>
           <input
             type="date"
-            className="w-fit text-center text-defaultGrey focus:outline-none"
+            defaultValue="2025-04-10"
+            className="w-fit text-center focus:outline-none"
             {...register('customIteration.ends.date')}
           />
         </>
       ),
     },
   ];
-
-  const handleRadioChange = (value: string) => {
-    setValue('customIteration.ends.type', value);
-
-    if (value === 'never') {
-      setValue('customIteration.ends.count', undefined);
-      setValue('customIteration.ends.date', undefined);
-    } else if (value === 'after') {
-      setValue('customIteration.ends.date', undefined);
-    } else if (value === 'until') {
-      setValue('customIteration.ends.count', undefined);
-    }
-  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -72,7 +66,7 @@ const IterationEndOptionSelector = () => {
               checked={ends.type === value}
               input={input}
               value={value}
-              onChange={() => handleRadioChange(value)}
+              onChange={() => setValue('customIteration.ends.type', value)}
             />
           );
         })}

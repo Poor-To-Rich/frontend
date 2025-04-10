@@ -12,14 +12,17 @@ import useModal from '@/hooks/useModal';
 import { useLocation } from 'react-router-dom';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
-import { IterationCycleValue } from '@/types/iterationTypes';
+import { CustomIterationEndsType, IterationCycleValue } from '@/types/iterationTypes';
 import { transactionSchema } from '@/schemas/transactionSchema';
+import CustomIterationModal from './components/modals/custom/CustomIterationModal';
 
 const AddEditTransactionPage = () => {
+  const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationEndsType | null>(null);
   const [type, setType] = useState<IncomeExpenseButtonType>('지출');
   const [costValue, setCostValue] = useState<string>('');
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
+  const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pageType = queryParams.get('type');
@@ -29,14 +32,13 @@ const AddEditTransactionPage = () => {
   const methods = useForm<TransactionFormData>({
     defaultValues: {
       memo: '',
-      iterationType: 'custom',
+      iterationType: 'none',
       customIteration: {
-        type: 'daily',
-        interval: 2,
-        daysOfWeek: ['월', '수', '금'],
+        type: 'weekly',
+        daysOfWeek: ['월'],
+        interval: 1,
         ends: {
-          type: 'after',
-          count: 20,
+          type: 'never',
         },
       },
     },
@@ -47,17 +49,23 @@ const AddEditTransactionPage = () => {
   const {
     handleSubmit,
     setValue,
+    getValues,
     formState: { isValid, errors },
   } = methods;
 
-  console.log(errors);
-
   const onSubmit = (data: TransactionFormData) => {
-    if (type === '수입') {
-      const { paymentMethod, ...incomeData } = data;
+    const isIncome = type === '수입';
+    const isCustom = data.iterationType === 'custom';
+    let formData = (() => {
+      const { customIteration, ...formData } = data;
+      return isCustom ? data : formData;
+    })();
+
+    if (isIncome) {
+      const { paymentMethod, ...incomeData } = formData;
       console.log(incomeData);
     } else {
-      console.log(data);
+      console.log(formData);
     }
   };
 
@@ -66,8 +74,14 @@ const AddEditTransactionPage = () => {
   };
 
   const handleRepeatCircleClick = (value: IterationCycleValue) => {
-    setValue('iterationType', value);
-    if (value !== 'custom') closeModal();
+    if (value !== 'custom') {
+      setValue('iterationType', value);
+      closeModal();
+    } else {
+      const current = JSON.parse(JSON.stringify(getValues('customIteration')));
+      setBackupCustomIteration(current);
+      openCustom();
+    }
   };
 
   useEffect(() => {
@@ -91,6 +105,13 @@ const AddEditTransactionPage = () => {
             <PrimaryButton label="저장" type="submit" disabled={!isValid} />
           </div>
           {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
+          {isCustomOpen && backupCustomIteration && (
+            <CustomIterationModal
+              backUpCustomIteration={backupCustomIteration}
+              closeIteration={closeModal}
+              closeCustom={closeCustom}
+            />
+          )}
           {isDeleteModalOpen && <DefaultModal content="해당 내역을 삭제하시겠습니까?" onClose={closeDeleteModal} />}
         </form>
       </FormProvider>
