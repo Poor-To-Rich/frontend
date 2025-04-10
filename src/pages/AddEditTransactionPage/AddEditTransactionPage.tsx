@@ -15,6 +15,7 @@ import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactio
 import { CustomIterationEndsType, IterationCycleValue } from '@/types/iterationTypes';
 import { transactionSchema } from '@/schemas/transactionSchema';
 import CustomIterationModal from './components/modals/custom/CustomIterationModal';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 
 const AddEditTransactionPage = () => {
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationEndsType | null>(null);
@@ -23,15 +24,19 @@ const AddEditTransactionPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
+  const { calenderDate, setCalenderDate } = useCalenderDateStore();
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const pageType = queryParams.get('type');
+  const transactionDate = queryParams.get('date');
   const transactionId = pageType ? queryParams.get('id') : '';
   const isEditPage = pageType === 'edit';
 
   const methods = useForm<TransactionFormData>({
     defaultValues: {
       memo: '',
+      date: transactionDate!,
       iterationType: 'none',
       customIteration: {
         type: 'weekly',
@@ -50,7 +55,7 @@ const AddEditTransactionPage = () => {
     handleSubmit,
     setValue,
     getValues,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = methods;
 
   const onSubmit = (data: TransactionFormData) => {
@@ -87,6 +92,10 @@ const AddEditTransactionPage = () => {
   useEffect(() => {
     setValue('categoryName', type === '지출' ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
   }, [type]);
+
+  useEffect(() => {
+    if (transactionDate) setCalenderDate(new Date(transactionDate));
+  }, []);
 
   return (
     <div className="flex flex-col w-full h-screen max-h-fit relative">

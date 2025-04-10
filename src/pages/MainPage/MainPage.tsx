@@ -1,12 +1,14 @@
-import PlusCircleButton from '@/components/button/icon/PlusCircleButton';
-import Calender from '@/components/calender/Calender';
+import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
+import Calender from '@/pages/MainPage/components/calender/Calender';
 import DateControlHeader from '@/components/header/DateControlHeader';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
 import DailyTransactionList from '@/pages/MainPage/components/DailyTransactionList';
 import { TransactionItemType } from '@/types/transactionTypes';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 
 const MainPage = () => {
+  const { mainHeaderDate, setMainHeaderDate } = useHeaderDateStore();
   const transactions: TransactionItemType[] = [
     {
       id: 1,
@@ -29,7 +31,7 @@ const MainPage = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
-      <DateControlHeader />
+      <DateControlHeader headerDate={mainHeaderDate} setHeaderDate={setMainHeaderDate} />
       <div className="grow">
         <TransactionSummary income={0} expense={0} total={0} />
         <Calender />

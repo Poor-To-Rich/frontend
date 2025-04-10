@@ -2,9 +2,11 @@ import DateControlHeader from '@/components/header/DateControlHeader';
 import MonthlyOverview from '@/components/overview/MonthlyOverview';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { OverviewLogType } from '@/types/types';
 
 const MonthWeekPage = () => {
+  const { monthWeekHeaderDate, setMonthWeekHeaderDate } = useHeaderDateStore();
   const monthlyReport: OverviewLogType[] = [
     {
       startDate: new Date('2025-01-01'),
@@ -73,7 +75,7 @@ const MonthWeekPage = () => {
 
   return (
     <div className="w-full h-fit min-h-screen max-h-fit flex flex-col relative">
-      <DateControlHeader />
+      <DateControlHeader headerDate={monthWeekHeaderDate} setHeaderDate={setMonthWeekHeaderDate} />
       <div className="grow">
         <TransactionSummary income={0} expense={0} total={0} />
         <MonthlyOverview monthlyLogs={monthlyReport} />

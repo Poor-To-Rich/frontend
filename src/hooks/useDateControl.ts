@@ -1,23 +1,25 @@
-import { useDateStore } from '@/stores/useDateStore';
 import { addMonths, addYears, subMonths, subYears } from 'date-fns';
 
-export const useDateControl = () => {
-  const { currentDate, setCurrentDate } = useDateStore();
+interface Props {
+  headerDate: Date;
+  setHeaderDate: (date: Date) => void;
+}
 
+export const useDateControl = ({ headerDate, setHeaderDate }: Props) => {
   const prevYearHandler = () => {
-    setCurrentDate(subYears(currentDate, 1));
+    setHeaderDate(subYears(headerDate, 1));
   };
 
   const nextYearHandler = () => {
-    setCurrentDate(addYears(currentDate, 1));
+    setHeaderDate(addYears(headerDate, 1));
   };
 
   const prevMonthHandler = () => {
-    setCurrentDate(subMonths(currentDate, 1));
+    setHeaderDate(subMonths(headerDate, 1));
   };
 
   const nextMonthHandler = () => {
-    setCurrentDate(addMonths(currentDate, 1));
+    setHeaderDate(addMonths(headerDate, 1));
   };
 
   return { prevYearHandler, nextYearHandler, prevMonthHandler, nextMonthHandler };

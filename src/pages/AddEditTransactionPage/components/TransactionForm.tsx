@@ -2,6 +2,7 @@ import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
 import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
 import { formatNumber } from '@/utils/number';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
+  const { setCalenderDate } = useCalenderDateStore();
   const {
     control,
     register,
@@ -27,7 +29,17 @@ const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
 
   return (
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
-      <PrimaryInput label="날짜" isRequired type="date" message={errors.date?.message} {...register('date')} />
+      <PrimaryInput
+        label="날짜"
+        isRequired
+        type="date"
+        message={errors.date?.message}
+        {...register('date')}
+        onChange={e => {
+          register('date').onChange(e);
+          setCalenderDate(new Date(e.target.value));
+        }}
+      />
       <SelectBox
         label="카테고리"
         isRequired
