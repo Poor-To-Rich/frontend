@@ -1,3 +1,5 @@
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+
 export type OverviewLogType = {
   startDate: Date;
   endDate: Date;
@@ -30,6 +32,8 @@ export type SettingOptionType = {
   modalType?: ModalType;
   externalUrl?: string;
 };
+
+export type ErrorMessageType = string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 
 export type TapBarType = 'main' | 'month-week' | 'chart' | 'talk' | 'setting';
 

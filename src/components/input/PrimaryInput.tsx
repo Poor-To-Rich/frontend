@@ -1,4 +1,4 @@
-import { VerifyButtonType } from '@/types/types';
+import { ErrorMessageType, VerifyButtonType } from '@/types/types';
 import { forwardRef } from 'react';
 import VerifyButton from '@/components/button/VerifyButton';
 import clsx from 'clsx';
@@ -8,7 +8,7 @@ interface PrimaryInputProps {
   isRequired?: boolean;
   buttonLabel?: VerifyButtonType;
   handleClick?: () => void;
-  message?: string;
+  message?: ErrorMessageType;
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
@@ -29,7 +29,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
             />
             {buttonLabel && <VerifyButton label={buttonLabel} onClick={handleClick} />}
           </div>
-          {message && <span className="w-fit h-fit text-sm text-sunsetRose">{message}</span>}
+          {typeof message === 'string' && <span className="w-fit h-fit text-sm text-sunsetRose">{message}</span>}
         </div>
       </div>
     );

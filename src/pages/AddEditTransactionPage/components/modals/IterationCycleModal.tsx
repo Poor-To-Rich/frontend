@@ -2,32 +2,25 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 import { ITERATION_CYCLE } from '@/constants/repeatSchedule';
 import clsx from 'clsx';
 import CheckIcon from '@/components/icon/CheckIcon';
-import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes';
+import { IterationCycleValue } from '@/types/iterationTypes';
 import useModal from '@/hooks/useModal';
-import CustomIterationModal from '@/components/modal/CustomIterationModal';
+import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
+import { useFormContext } from 'react-hook-form';
 
 interface Props {
   onClose: () => void;
   onClick: (value: IterationCycleValue) => void;
-  iterationType: string;
 }
 
-const IterationCycleModal = ({ onClose, onClick, iterationType }: Props) => {
+const IterationCycleModal = ({ onClose, onClick }: Props) => {
+  const { getValues } = useFormContext();
+  const { iterationType } = getValues();
   const { isOpen, openModal, closeModal } = useModal();
-
-  const customIteration: CustomIterationType = {
-    type: 'weekly',
-    interval: 2,
-    daysOfWeek: ['월', '수', '금'],
-    ends: {
-      type: 'never',
-    },
-  };
 
   return (
     <ModalDimmed onClose={onClose}>
       {isOpen ? (
-        <CustomIterationModal customIteration={customIteration} />
+        <CustomIterationModal closeModal={closeModal} />
       ) : (
         <div className="w-[48%] min-w-fit">
           <div className="flex flex-col bg-white" onClick={e => e.stopPropagation()}>

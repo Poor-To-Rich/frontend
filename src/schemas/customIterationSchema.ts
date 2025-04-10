@@ -10,7 +10,7 @@ const monthlyOptionSchema = z.union([
   z.object({ mode: z.literal('weekdayOfMonth'), week: z.number().min(1).max(5), dayOfWeek: daysOfWeekEnum }),
 ]);
 
-const endsSchema = z.union([
+export const endsSchema = z.union([
   z.object({ type: z.literal('never') }),
   z.object({ type: z.literal('after'), count: z.number().min(1).max(999) }),
   z.object({ type: z.literal('until'), date: z.string() }),
