@@ -1,28 +1,46 @@
 import { useId } from 'react';
 import RadioOption from './RadioOption';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { getKoreanWeek } from '@/utils/date';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { getDate } from 'date-fns';
 
 const MonthlyOptionSelector = () => {
+  const { control } = useFormContext();
   const { calenderDate } = useCalenderDateStore();
+  const { mode, day, week, dayOfWeek } = useWatch({ control, name: 'customIteration.iterationRule.monthlyOption' });
+
   const options = [
     {
-      label: `매월 ${getDate(calenderDate)}일`,
+      label: `매월 ${day}일`,
       value: 'dayOfMonth',
     },
     {
-      label: `매월 `,
+      label: `매월 ${getKoreanWeek(calenderDate, week)} ${dayOfWeek}요일`,
       value: 'weekdayOfMonth',
     },
   ];
 
   return (
-    <div>
-      {options.map(({ label, value }) => {
-        const radioId = useId();
-        return <RadioOption checked={false} radioId={radioId} label={label} value={value} key={value} />;
-      })}
-    </div>
+    <Controller
+      name={'customIteration.iterationRule.monthlyOption.mode'}
+      control={control}
+      render={({ field }) => (
+        <div>
+          {options.map(({ label, value }) => {
+            const radioId = useId();
+            return (
+              <RadioOption
+                key={value}
+                checked={mode === value}
+                radioId={radioId}
+                label={label}
+                onChange={() => field.onChange(value)}
+              />
+            );
+          })}
+        </div>
+      )}
+    />
   );
 };
 

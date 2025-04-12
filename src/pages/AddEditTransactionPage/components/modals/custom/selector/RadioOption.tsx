@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 interface Props {
   radioId: string;
   label: string;
-  value: string;
+  value?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   checked: boolean;
   input?: React.ReactNode;

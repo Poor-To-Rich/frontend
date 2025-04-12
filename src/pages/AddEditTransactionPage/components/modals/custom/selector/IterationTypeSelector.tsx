@@ -24,7 +24,9 @@ const IterationTypeSelector = ({ type }: Props) => {
                 type === value && 'bg-pastelLime',
                 'w-1/5 text-center py-1.5  rounded-3xl cursor-pointer',
               )}
-              onClick={() => field.onChange(value)}
+              onClick={() => {
+                field.onChange(value);
+              }}
               {...field}>
               {label}
             </button>

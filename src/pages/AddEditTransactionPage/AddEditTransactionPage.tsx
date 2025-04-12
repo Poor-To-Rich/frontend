@@ -16,7 +16,7 @@ import { CustomIterationEndsType, IterationCycleValue } from '@/types/iterationT
 import { transactionSchema } from '@/schemas/transactionSchema';
 import CustomIterationModal from './components/modals/custom/CustomIterationModal';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { getKoreanDay } from '@/utils/date';
+import { useIterationRuleDefaults } from '@/hooks/useIterationRuleDefaults';
 
 const AddEditTransactionPage = () => {
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationEndsType | null>(null);
@@ -25,7 +25,8 @@ const AddEditTransactionPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
-  const { calenderDate, setCalenderDate } = useCalenderDateStore();
+  const { setCalenderDate } = useCalenderDateStore();
+  const { iterationRuleDefaults } = useIterationRuleDefaults();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -39,22 +40,13 @@ const AddEditTransactionPage = () => {
       memo: '',
       date: transactionDate!,
       iterationType: 'none',
-      customIteration: {
-        iterationRule: {
-          type: 'weekly',
-          daysOfWeek: [getKoreanDay(calenderDate)],
-        },
-        interval: 1,
-        ends: {
-          type: 'never',
-        },
-      },
     },
     resolver: zodResolver(transactionSchema),
     mode: 'onChange',
   });
 
   const {
+    reset,
     handleSubmit,
     setValue,
     getValues,
@@ -95,6 +87,22 @@ const AddEditTransactionPage = () => {
   useEffect(() => {
     setValue('categoryName', type === '지출' ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
   }, [type]);
+
+  useEffect(() => {
+    if (!iterationRuleDefaults) return;
+    const prevValues = getValues();
+
+    reset({
+      ...prevValues,
+      customIteration: {
+        iterationRule: iterationRuleDefaults,
+        interval: 1,
+        ends: {
+          type: 'never',
+        },
+      },
+    });
+  }, [iterationRuleDefaults]);
 
   useEffect(() => {
     if (transactionDate) setCalenderDate(new Date(transactionDate));

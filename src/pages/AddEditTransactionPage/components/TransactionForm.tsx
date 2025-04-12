@@ -5,9 +5,9 @@ import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
-import { getKoreanDay } from '@/utils/date';
+import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
-import { addMonths, format } from 'date-fns';
+import { addMonths, format, getDate } from 'date-fns';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -42,11 +42,17 @@ const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
         {...register('date')}
         onChange={e => {
           const currentDate = new Date(e.target.value);
+          const koreanDay = getKoreanDay(currentDate);
+
           register('date').onChange(e);
+
           setCalenderDate(currentDate);
           setMainHeaderDate(currentDate);
           setValue('customIteration.ends.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
-          setValue('customIteration.iterationRule.daysOfWeek', [getKoreanDay(currentDate)]);
+          setValue('customIteration.iterationRule.daysOfWeek', [koreanDay]);
+          setValue('customIteration.iterationRule.monthlyOption.day', getDate(currentDate));
+          setValue('customIteration.iterationRule.monthlyOption.week', getKoreanWeekOfMonth(currentDate));
+          setValue('customIteration.iterationRule.monthlyOption.dayOfWeek', koreanDay);
         }}
       />
       <SelectBox
