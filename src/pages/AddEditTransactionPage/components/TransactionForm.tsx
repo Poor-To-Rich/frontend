@@ -3,8 +3,11 @@ import SelectBox from '@/components/input/SelectBox';
 import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { getKoreanDay } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
+import { addMonths, format } from 'date-fns';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -14,10 +17,12 @@ interface Props {
 }
 
 const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
+  const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
   const {
     control,
     register,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
@@ -36,8 +41,12 @@ const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
         message={errors.date?.message}
         {...register('date')}
         onChange={e => {
+          const currentDate = new Date(e.target.value);
           register('date').onChange(e);
-          setCalenderDate(new Date(e.target.value));
+          setCalenderDate(currentDate);
+          setMainHeaderDate(currentDate);
+          setValue('customIteration.ends.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
+          setValue('customIteration.iterationRule.daysOfWeek', [getKoreanDay(currentDate)]);
         }}
       />
       <SelectBox

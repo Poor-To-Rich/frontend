@@ -17,7 +17,7 @@ interface Props {
 const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIteration }: Props) => {
   const { control, setValue, getValues } = useFormContext();
   const { iterationType } = getValues();
-  const type = useWatch({ control, name: 'customIteration.type' });
+  const type = useWatch({ control, name: 'customIteration.iterationRule.type' });
 
   const handleCancel = () => {
     setValue('iterationType', iterationType);
@@ -34,11 +34,11 @@ const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIterati
   return (
     <ModalDimmed>
       <div className="w-[85%] min-h-[350px] bg-white py-10 px-5" onClick={e => e.stopPropagation()}>
-        <IterationTypeSelector type={type} setValue={setValue} />
+        <IterationTypeSelector type={type} />
         <div className="flex flex-col gap-10">
           <IterationInterval type={type} />
           {type === 'weekly' && <DayOfWeekSelector />}
-          {type === 'monthly' && <MonthlyOptionSelector day={16} weekday="두 번째 화요일" />}
+          {type === 'monthly' && <MonthlyOptionSelector />}
           <IterationEndOptionSelector />
         </div>
         <div className="flex w-full mt-10 justify-around gap-7">

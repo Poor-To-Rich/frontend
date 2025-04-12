@@ -11,6 +11,6 @@ export const transactionSchema = z.object({
     .max(100000000, { message: '1억 이하의 값을 입력해주세요' }),
   paymentMethod: z.string().optional(),
   memo: z.string().optional(),
-  iterationType: z.string().optional(),
+  iterationType: z.string(),
   customIteration: customIterationSchema.optional(),
 });

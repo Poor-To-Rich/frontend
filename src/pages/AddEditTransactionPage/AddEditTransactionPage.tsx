@@ -16,6 +16,7 @@ import { CustomIterationEndsType, IterationCycleValue } from '@/types/iterationT
 import { transactionSchema } from '@/schemas/transactionSchema';
 import CustomIterationModal from './components/modals/custom/CustomIterationModal';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { getKoreanDay } from '@/utils/date';
 
 const AddEditTransactionPage = () => {
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationEndsType | null>(null);
@@ -39,8 +40,10 @@ const AddEditTransactionPage = () => {
       date: transactionDate!,
       iterationType: 'none',
       customIteration: {
-        type: 'weekly',
-        daysOfWeek: ['월'],
+        iterationRule: {
+          type: 'weekly',
+          daysOfWeek: [getKoreanDay(calenderDate)],
+        },
         interval: 1,
         ends: {
           type: 'never',

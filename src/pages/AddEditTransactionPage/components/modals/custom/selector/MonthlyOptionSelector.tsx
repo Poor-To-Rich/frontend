@@ -1,19 +1,17 @@
 import { useId } from 'react';
 import RadioOption from './RadioOption';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { getDate } from 'date-fns';
 
-interface Props {
-  day: number;
-  weekday: string;
-}
-
-const MonthlyOptionSelector = ({ day, weekday }: Props) => {
+const MonthlyOptionSelector = () => {
+  const { calenderDate } = useCalenderDateStore();
   const options = [
     {
-      label: `매월 ${day}일`,
+      label: `매월 ${getDate(calenderDate)}일`,
       value: 'dayOfMonth',
     },
     {
-      label: `매월 ${weekday}`,
+      label: `매월 `,
       value: 'weekdayOfMonth',
     },
   ];

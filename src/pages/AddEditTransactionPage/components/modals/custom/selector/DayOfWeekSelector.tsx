@@ -7,7 +7,7 @@ const DayOfWeekSelector = () => {
 
   return (
     <Controller
-      name="customIteration.daysOfWeek"
+      name="customIteration.iterationRule.daysOfWeek"
       control={control}
       render={({ field }) => {
         const { value, onChange } = field;

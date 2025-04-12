@@ -1,5 +1,7 @@
 import { format, isValid, parse } from 'date-fns';
 import { dayRegex } from './regex';
+import { DAYS } from '@/constants/days';
+import { DaysOfWeekType } from '@/types/iterationTypes';
 
 export const isSameDate = (today: Date, targetDate: Date) => {
   return (
@@ -9,7 +11,7 @@ export const isSameDate = (today: Date, targetDate: Date) => {
   );
 };
 
-export const formatDate = (date: Date) => {
+export const monthDayFormatter = (date: Date) => {
   return format(date, 'MM.dd');
 };
 
@@ -20,3 +22,11 @@ export const validateDate = (value: string): boolean => {
   const parsedDate = parse(value, 'yyyy.MM.dd', new Date());
   return isValid(parsedDate);
 };
+
+export const getKoreanDay = (date: Date): DaysOfWeekType => {
+  return DAYS[date.getDay()];
+};
+
+// export const getKoreanWeekday = (date: Date) => {
+
+// }

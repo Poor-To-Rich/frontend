@@ -2,8 +2,11 @@ import { useId } from 'react';
 import RadioOption from './RadioOption';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { CustomIterationEndsType } from '@/types/iterationTypes';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { format, addMonths } from 'date-fns';
 
 const IterationEndOptionSelector = () => {
+  const { calenderDate } = useCalenderDateStore();
   const { control, register, setValue } = useFormContext();
   const ends: CustomIterationEndsType = useWatch({ control, name: 'customIteration.ends' });
 
@@ -43,7 +46,8 @@ const IterationEndOptionSelector = () => {
         <>
           <input
             type="date"
-            defaultValue="2025-04-10"
+            defaultValue={format(addMonths(calenderDate, 2), 'yyyy-MM-dd')}
+            min={format(calenderDate, 'yyyy-MM-dd')}
             className="w-fit text-center focus:outline-none"
             {...register('customIteration.ends.date')}
           />
