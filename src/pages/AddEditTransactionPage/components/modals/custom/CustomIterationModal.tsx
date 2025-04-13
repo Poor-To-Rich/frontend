@@ -7,6 +7,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import IterationTypeSelector from './selector/IterationTypeSelector';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import { CustomIterationType } from '@/types/iterationTypes';
+import { TransactionFormData } from '@/types/transactionTypes';
 
 interface Props {
   closeIteration: () => void;
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIteration }: Props) => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue } = useFormContext<TransactionFormData>();
   const type = useWatch({ control, name: 'customIteration.iterationRule.type' });
 
   const handleCancel = () => {
@@ -32,7 +33,7 @@ const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIterati
   return (
     <ModalDimmed>
       <div className="w-[85%] min-h-[350px] bg-white py-10 px-5" onClick={e => e.stopPropagation()}>
-        <IterationTypeSelector type={type} />
+        <IterationTypeSelector />
         <div className="flex flex-col gap-10">
           <IterationInterval type={type} />
           {type === 'weekly' && <DayOfWeekSelector />}

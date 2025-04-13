@@ -1,14 +1,14 @@
 import { useId } from 'react';
 import RadioOption from './RadioOption';
-import { useFormContext, useWatch } from 'react-hook-form';
-import { CustomIterationEndsType } from '@/types/iterationTypes';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format, addMonths } from 'date-fns';
+import { TransactionFormData } from '@/types/transactionTypes';
 
 const IterationEndOptionSelector = () => {
   const { calenderDate } = useCalenderDateStore();
-  const { control, register, setValue } = useFormContext();
-  const ends: CustomIterationEndsType = useWatch({ control, name: 'customIteration.ends' });
+  const { control, register, setValue } = useFormContext<TransactionFormData>();
+  const ends = useWatch({ control, name: 'customIteration.ends' });
 
   const options = [
     {
@@ -57,25 +57,30 @@ const IterationEndOptionSelector = () => {
   ];
 
   return (
-    <div className="flex flex-col gap-5">
-      <span>반복 종료</span>
-      <div>
-        {options.map(({ label, value, input }) => {
-          const radioId = useId();
-          return (
-            <RadioOption
-              key={radioId}
-              radioId={radioId}
-              label={label}
-              checked={ends.type === value}
-              input={input}
-              value={value}
-              onChange={() => setValue('customIteration.ends.type', value)}
-            />
-          );
-        })}
-      </div>
-    </div>
+    <Controller
+      control={control}
+      name={'customIteration.ends.type'}
+      render={({ field }) => (
+        <div className="flex flex-col gap-5">
+          <span>반복 종료</span>
+          <div>
+            {options.map(({ label, value, input }) => {
+              const radioId = useId();
+              return (
+                <RadioOption
+                  key={radioId}
+                  radioId={radioId}
+                  label={label}
+                  checked={ends.type === value}
+                  input={input}
+                  onChange={() => field.onChange(value)}
+                />
+              );
+            })}
+          </div>
+        </div>
+      )}
+    />
   );
 };
 

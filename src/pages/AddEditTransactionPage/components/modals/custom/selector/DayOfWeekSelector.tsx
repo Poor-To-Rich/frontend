@@ -1,9 +1,11 @@
 import { DAYS } from '@/constants/days';
+import { DaysOfWeekType } from '@/types/iterationTypes';
+import { TransactionFormData } from '@/types/transactionTypes';
 import clsx from 'clsx';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const DayOfWeekSelector = () => {
-  const { control } = useFormContext();
+  const { control } = useFormContext<TransactionFormData>();
 
   return (
     <Controller
@@ -12,9 +14,9 @@ const DayOfWeekSelector = () => {
       render={({ field }) => {
         const { value, onChange } = field;
 
-        const toggleDay = (day: string) => {
+        const toggleDay = (day: DaysOfWeekType) => {
           if (value.includes(day)) {
-            onChange(value.filter((d: string) => d !== day));
+            onChange(value.filter(d => d !== day));
           } else {
             onChange([...value, day]);
           }

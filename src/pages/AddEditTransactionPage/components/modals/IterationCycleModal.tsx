@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import CheckIcon from '@/components/icon/CheckIcon';
 import { IterationCycleValue } from '@/types/iterationTypes';
 import { useFormContext } from 'react-hook-form';
+import { TransactionFormData } from '@/types/transactionTypes';
 
 interface Props {
   onClose: () => void;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const IterationCycleModal = ({ onClose, onClick }: Props) => {
-  const { getValues } = useFormContext();
+  const { getValues } = useFormContext<TransactionFormData>();
   const { iterationType } = getValues();
 
   return (

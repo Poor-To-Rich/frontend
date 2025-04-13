@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const daysOfWeekEnum = z.enum(['월', '화', '수', '목', '금', '토', '일']);
 
-const monthlyOptionSchema = z.union([
+const monthlyOptionSchema = z.discriminatedUnion('mode', [
   z.object({
     mode: z.literal('dayOfMonth'),
     day: z.number(),

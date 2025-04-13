@@ -4,7 +4,7 @@ import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/consta
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
@@ -25,7 +25,7 @@ const TransactionForm = ({ type }: Props) => {
     register,
     setValue,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<TransactionFormData>();
 
   const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
     const formattedValue = value.replace(/[^\d]/g, '');
