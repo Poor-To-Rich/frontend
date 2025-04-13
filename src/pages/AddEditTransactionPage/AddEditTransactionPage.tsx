@@ -3,7 +3,7 @@ import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
@@ -12,7 +12,7 @@ import useModal from '@/hooks/useModal';
 import { useLocation } from 'react-router-dom';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
-import { CustomIterationEndsType, IterationCycleValue } from '@/types/iterationTypes';
+import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes';
 import { transactionSchema } from '@/schemas/transactionSchema';
 import CustomIterationModal from './components/modals/custom/CustomIterationModal';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
@@ -20,7 +20,7 @@ import { useIterationRuleDefaults } from '@/hooks/useIterationRuleDefaults';
 import IterationChangeModal from '@/components/modal/IterationChangeModal';
 
 const AddEditTransactionPage = () => {
-  const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationEndsType | null>(null);
+  const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
   const [type, setType] = useState<IncomeExpenseButtonType>('지출');
   const [costValue, setCostValue] = useState<string>('');
   const { isOpen, openModal, closeModal } = useModal();

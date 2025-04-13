@@ -6,21 +6,19 @@ import MonthlyOptionSelector from './selector/MonthlyOptionSelector';
 import { useFormContext, useWatch } from 'react-hook-form';
 import IterationTypeSelector from './selector/IterationTypeSelector';
 import ModalDimmed from '@/components/modal/ModalDimmed';
-import { CustomIterationEndsType } from '@/types/iterationTypes';
+import { CustomIterationType } from '@/types/iterationTypes';
 
 interface Props {
   closeIteration: () => void;
   closeCustom: () => void;
-  backUpCustomIteration: CustomIterationEndsType;
+  backUpCustomIteration: CustomIterationType;
 }
 
 const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIteration }: Props) => {
-  const { control, setValue, getValues } = useFormContext();
-  const { iterationType } = getValues();
+  const { control, setValue } = useFormContext();
   const type = useWatch({ control, name: 'customIteration.iterationRule.type' });
 
   const handleCancel = () => {
-    setValue('iterationType', iterationType);
     setValue('customIteration', backUpCustomIteration);
     closeCustom();
   };
