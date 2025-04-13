@@ -3,8 +3,8 @@ import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
 import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modals/IterationCycleModal';
@@ -17,6 +17,7 @@ import { transactionSchema } from '@/schemas/transactionSchema';
 import CustomIterationModal from './components/modals/custom/CustomIterationModal';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useIterationRuleDefaults } from '@/hooks/useIterationRuleDefaults';
+import IterationChangeModal from '@/components/modal/IterationChangeModal';
 
 const AddEditTransactionPage = () => {
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationEndsType | null>(null);
@@ -25,6 +26,7 @@ const AddEditTransactionPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
+  const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
   const { setCalenderDate } = useCalenderDateStore();
   const { iterationRuleDefaults } = useIterationRuleDefaults();
 
@@ -53,19 +55,25 @@ const AddEditTransactionPage = () => {
     formState: { isValid },
   } = methods;
 
+  const initialIterationTypeRef = useRef(getValues('iterationType'));
+
   const onSubmit = (data: TransactionFormData) => {
     const isIncome = type === '수입';
     const isCustom = data.iterationType === 'custom';
+
     let formData = (() => {
       const { customIteration, ...formData } = data;
       return isCustom ? data : formData;
     })();
 
-    if (isIncome) {
-      const { paymentMethod, ...incomeData } = formData;
-      console.log(incomeData);
-    } else {
-      console.log(formData);
+    if (isEditPage && initialIterationTypeRef.current !== 'none') openEdit();
+    else {
+      if (isIncome) {
+        const { paymentMethod, ...incomeData } = formData;
+        console.log(incomeData);
+      } else {
+        console.log(formData);
+      }
     }
   };
 
@@ -132,7 +140,15 @@ const AddEditTransactionPage = () => {
               closeCustom={closeCustom}
             />
           )}
-          {isDeleteModalOpen && <DefaultModal content="해당 내역을 삭제하시겠습니까?" onClose={closeDeleteModal} />}
+          {isDeleteModalOpen &&
+            (initialIterationTypeRef.current === 'none' ? (
+              <DefaultModal content="해당 내역을 삭제하시겠습니까?" onClose={closeDeleteModal} />
+            ) : (
+              <IterationChangeModal type="delete" onClose={closeDeleteModal} />
+            ))}
+          {isEditOpen && initialIterationTypeRef.current !== 'none' && (
+            <IterationChangeModal type="edit" onClose={closeEdit} />
+          )}
         </form>
       </FormProvider>
     </div>
