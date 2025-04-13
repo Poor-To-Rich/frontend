@@ -6,7 +6,6 @@ import TransactionForm from '@/pages/AddEditTransactionPage/components/Transacti
 import { FormProvider, useForm } from 'react-hook-form';
 import { useEffect, useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
 import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modals/IterationCycleModal';
 import useModal from '@/hooks/useModal';
 import { useLocation } from 'react-router-dom';
@@ -21,8 +20,7 @@ import IterationChangeModal from '@/components/modal/IterationChangeModal';
 
 const AddEditTransactionPage = () => {
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
-  const [type, setType] = useState<IncomeExpenseButtonType>('지출');
-  const [costValue, setCostValue] = useState<string>('');
+  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>('지출');
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
@@ -58,7 +56,7 @@ const AddEditTransactionPage = () => {
   const initialIterationTypeRef = useRef(getValues('iterationType'));
 
   const onSubmit = (data: TransactionFormData) => {
-    const isIncome = type === '수입';
+    const isIncome = transactionType === '수입';
     const isCustom = data.iterationType === 'custom';
 
     let formData = (() => {
@@ -77,10 +75,6 @@ const AddEditTransactionPage = () => {
     }
   };
 
-  const handleTypeChange = (value: IncomeExpenseButtonType) => {
-    setType(value);
-  };
-
   const handleRepeatCircleClick = (value: IterationCycleValue) => {
     if (value !== 'custom') {
       setValue('iterationType', value);
@@ -91,10 +85,6 @@ const AddEditTransactionPage = () => {
       openCustom();
     }
   };
-
-  useEffect(() => {
-    setValue('categoryName', type === '지출' ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
-  }, [type]);
 
   useEffect(() => {
     if (!iterationRuleDefaults) return;
@@ -126,8 +116,11 @@ const AddEditTransactionPage = () => {
       />
       <FormProvider {...methods}>
         <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
-          <IncomeExpenseButton type={type} onClick={handleTypeChange} />
-          <TransactionForm type={type} costValue={costValue} setCostValue={setCostValue} />
+          <IncomeExpenseButton
+            type={transactionType}
+            onClick={(value: IncomeExpenseButtonType) => setTransactionType(value)}
+          />
+          <TransactionForm type={transactionType} />
           <div className="w-full flex justify-between items-center">
             <RepeatCircleButton openModal={openModal} />
             <PrimaryButton label="저장" type="submit" disabled={!isValid} />

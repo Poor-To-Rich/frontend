@@ -8,15 +8,16 @@ import { IncomeExpenseButtonType } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
   type: IncomeExpenseButtonType;
-  costValue: string;
-  setCostValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
+const TransactionForm = ({ type }: Props) => {
+  const [costValue, setCostValue] = useState<string>('');
+  const isExpense = type === '지출';
   const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
   const {
@@ -31,6 +32,10 @@ const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
     setCostValue(formatNumber(formattedValue));
     onChange(Number(formattedValue));
   };
+
+  useEffect(() => {
+    setValue('categoryName', isExpense ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
+  }, [type]);
 
   return (
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
@@ -58,7 +63,7 @@ const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
       <SelectBox
         label="카테고리"
         isRequired
-        options={type === '지출' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
+        options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
         type={type}
         hasEditButton
         {...register('categoryName')}
@@ -81,9 +86,7 @@ const TransactionForm = ({ type, costValue, setCostValue }: Props) => {
           />
         )}
       />
-      {type === '지출' && (
-        <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />
-      )}
+      {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
       <Controller name="memo" render={({ field }) => <MemoInput {...field} />} />
     </div>
   );
