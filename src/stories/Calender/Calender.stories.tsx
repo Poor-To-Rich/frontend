@@ -1,4 +1,4 @@
-import Calender from '@/components/calender/Calender';
+import Calender from '@/pages/MainPage/components/calender/Calender';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function CalenderStory() {

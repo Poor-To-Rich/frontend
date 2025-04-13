@@ -1,11 +1,11 @@
 import { TransactionType } from '@/types/transactionTypes';
 import clsx from 'clsx';
 import { addDays, differenceInCalendarDays, endOfMonth, endOfWeek, startOfMonth, startOfWeek } from 'date-fns';
-import DayWithData from './DayWithData';
+import DayWithData from '@/pages/MainPage/components/calender/DayWithData';
 import { isSameDate } from '@/utils/date';
 
 interface Props {
-  activeDate: Date | undefined;
+  activeDate: Date;
   handleDateClick: (date: Date) => void;
   currentDay: Date;
   transactions: TransactionType[];
@@ -33,17 +33,17 @@ const DaysContainer = ({ activeDate, handleDateClick, currentDay, transactions }
   return (
     <div className="grid grid-cols-7 w-full h-full">
       {datesOfCurrentMonth.map((day, index) => {
-        const isActive = activeDate && activeDate.getTime() === day.getTime();
         const isToday = isSameDate(today, day);
+        const isActive = isSameDate(activeDate, day);
 
         return (
-          <button key={index} onClick={() => handleDateClick(day)}>
+          <button key={index} onClick={() => handleDateClick(day)} className="cursor-pointer">
             <div
               className={clsx(
                 'flex flex-col flex-1 aspect-square items-center text-[1.2rem] ',
                 currentDay.getMonth() !== day.getMonth() && 'text-defaultGrey',
-                isToday && 'bg-pastelLime',
                 isActive && 'bg-vanillaCream',
+                isToday && 'bg-pastelLime',
               )}>
               <span
                 className={clsx(

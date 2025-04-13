@@ -1,4 +1,4 @@
-import { useDateStore } from '@/stores/useDateStore';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { ReportType } from '@/types/reportTypes';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
 import { format } from 'date-fns';
@@ -11,11 +11,11 @@ interface Props {
 }
 
 const PeriodSummary = ({ currentTransactionType, currentReportType, extraAmount, averageAmount }: Props) => {
-  const { currentDate } = useDateStore();
+  const { chartHeaderDate } = useHeaderDateStore();
   return (
     <div className="p-5 mb-10">
       <div className="text-xl">
-        {format(currentDate, currentReportType === '월별' ? 'M' : 'yyyy')}
+        {format(chartHeaderDate, currentReportType === '월별' ? 'M' : 'yyyy')}
         {currentReportType === '월별' ? '월' : '년'}에는 {currentReportType === '월별' ? '전월' : '작년'}보다{' '}
         {extraAmount}
         만원 {extraAmount > 0 ? '더' : '덜'} {currentTransactionType === '지출' ? '썼어요' : '벌었어요'}

@@ -1,9 +1,14 @@
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
 const PlusCircleButton = () => {
+  const { calenderDate } = useCalenderDateStore();
   const navigate = useNavigate();
 
-  const handleClick = () => navigate('/transaction?type=add');
+  const handleClick = () => {
+    navigate(`/transaction?type=add&date=${format(calenderDate, 'yyyy-MM-dd')}`);
+  };
 
   return (
     <button className="w-fit h-fit absolute right-3 bottom-[6rem] cursor-pointer" onClick={handleClick}>

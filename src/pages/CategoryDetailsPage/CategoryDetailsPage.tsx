@@ -4,20 +4,17 @@ import CategoryOverviewChart from '@/pages/CategoryDetailsPage/components/Catego
 import { useEffect } from 'react';
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
-import { useDateStore } from '@/stores/useDateStore';
 import CategoryLogList from '@/pages/CategoryDetailsPage/components/CategoryLogList ';
 
 const CategoryDetailsPage = () => {
   const location = useLocation();
-  const { categoryName, transactionType, reportType, date } = location.state || {};
+  const { categoryName, transactionType, reportType } = location.state || {};
   const { setCurrentReportType } = useReportTypeStore();
   const { setCurrentTransactionType } = useTransactionTypeStore();
-  const { setCurrentDate } = useDateStore();
 
   useEffect(() => {
     setCurrentReportType(reportType);
     setCurrentTransactionType(transactionType);
-    setCurrentDate(date);
   }, []);
 
   return (

@@ -7,11 +7,13 @@ import Divider from '@/components/Divider';
 import TapBar from '@/components/tapbar/TapBar';
 import ReportTypeSelection from '@/pages/ChartPage/components/ReportTypeSelection';
 import ReportSummary from '@/pages/ChartPage/components/summary/ReportSummary';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 
 const ChartPage = () => {
+  const { chartHeaderDate, setChartHeaderDate } = useHeaderDateStore();
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <DateControlHeader />
+      <DateControlHeader headerDate={chartHeaderDate} setHeaderDate={setChartHeaderDate} />
       <div className="grow">
         <div className="w-full flex justify-between items-center p-5">
           <ReportTypeSelection />

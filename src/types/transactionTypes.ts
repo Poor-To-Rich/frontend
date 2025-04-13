@@ -1,4 +1,4 @@
-import { baseSchema } from '@/schemas/transactionSchema';
+import { transactionSchema } from '@/schemas/transactionSchema';
 import { z } from 'zod';
 
 export type TransactionType = {
@@ -24,4 +24,4 @@ export type WeeklyDetailType = {
 
 export type IncomeExpenseButtonType = '지출' | '수입';
 
-export type TransactionFormData = z.infer<typeof baseSchema>;
+export type TransactionFormData = z.infer<typeof transactionSchema>;

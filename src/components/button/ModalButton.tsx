@@ -6,7 +6,7 @@ interface Props {
 const ModalButton = ({ label, onClick }: Props) => {
   return (
     <button
-      className="w-[9rem] h-[3rem] rounded-lg text-md bg-pastelLime text-oliveGreen cursor-pointer"
+      className="w-fit min-w-[9rem] h-[3rem] px-8 rounded-lg text-md bg-pastelLime text-oliveGreen cursor-pointer"
       type="button"
       onClick={onClick}>
       {label}

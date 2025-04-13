@@ -7,21 +7,22 @@ import { ko } from 'date-fns/locale';
 import DateInput from '@/components/header/DateInput';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
 import { useDateControl } from '@/hooks/useDateControl';
-import { useDateStore } from '@/stores/useDateStore';
 import { useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 
-const DateControlHeader = () => {
+interface Props {
+  headerDate: Date;
+  setHeaderDate: (date: Date) => void;
+}
+
+const DateControlHeader = ({ headerDate, setHeaderDate }: Props) => {
   const { pathname } = useLocation();
   const { currentReportType } = useReportTypeStore();
-  const { currentDate, setCurrentDate, clearCurrentDate } = useDateStore();
-  const { prevYearHandler, nextYearHandler, prevMonthHandler, nextMonthHandler } = useDateControl();
+  const { prevYearHandler, nextYearHandler, prevMonthHandler, nextMonthHandler } = useDateControl({
+    headerDate,
+    setHeaderDate,
+  });
 
   const isMonthType = currentReportType === '월별' && pathname !== '/month-week';
-
-  useEffect(() => {
-    return () => clearCurrentDate();
-  }, []);
 
   return (
     <header className="header-common">
@@ -30,9 +31,9 @@ const DateControlHeader = () => {
       </span>
       <DatePicker
         locale={ko}
-        selected={currentDate}
+        selected={headerDate}
         onChange={date => {
-          if (date) setCurrentDate(date);
+          if (date) setHeaderDate(date);
         }}
         showMonthYearPicker={isMonthType}
         showYearPicker={!isMonthType}

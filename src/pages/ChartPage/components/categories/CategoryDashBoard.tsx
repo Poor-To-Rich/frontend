@@ -1,12 +1,12 @@
 import RightArrowButton from '@/components/button/icon/RightArrowButton';
-import { useDateStore } from '@/stores/useDateStore';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { useReportTypeStore } from '@/stores/useReportTypeStore';
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { formatNumber } from '@/utils/number';
 import { useNavigate } from 'react-router-dom';
 
 const CategoryDashBoard = () => {
-  const { currentDate } = useDateStore();
+  const { headerDate } = useHeaderDateStore();
   const { currentTransactionType } = useTransactionTypeStore();
   const { currentReportType } = useReportTypeStore();
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ const CategoryDashBoard = () => {
           className="flex justify-between gap-3.5 cursor-pointer py-3"
           key={categoryItem.id}
           onClick={() =>
-            handleClick(categoryItem.id, categoryItem.name, currentTransactionType, currentReportType, currentDate)
+            handleClick(categoryItem.id, categoryItem.name, currentTransactionType, currentReportType, headerDate)
           }>
           <div className="flex w-fit gap-4.5">
             <span style={{ color: categoryItem.color }}>{categoryItem.name}</span>

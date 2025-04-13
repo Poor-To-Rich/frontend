@@ -2,76 +2,92 @@ import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
 import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
+import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { addMonths, format, getDate } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
-  costValue: string;
-  setCostValue: React.Dispatch<React.SetStateAction<string>>;
   type: IncomeExpenseButtonType;
-  errors: FieldErrors<TransactionFormData>;
-  control: Control<TransactionFormData, any>;
 }
 
-const TransactionForm = ({ costValue, setCostValue, type, errors, control }: Props) => {
-  const handleCostChange = (value: string, onChange: (val: number) => void) => {
+const TransactionForm = ({ type }: Props) => {
+  const [costValue, setCostValue] = useState<string>('');
+  const isExpense = type === '지출';
+  const { setMainHeaderDate } = useHeaderDateStore();
+  const { setCalenderDate } = useCalenderDateStore();
+  const {
+    control,
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext<TransactionFormData>();
+
+  const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
     const formattedValue = value.replace(/[^\d]/g, '');
     setCostValue(formatNumber(formattedValue));
     onChange(Number(formattedValue));
   };
 
+  useEffect(() => {
+    setValue('categoryName', isExpense ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
+  }, [type]);
+
   return (
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
-      <Controller
-        name="date"
-        control={control}
-        render={({ field }) => <PrimaryInput {...field} label="날짜" isRequired type="date" />}
+      <PrimaryInput
+        label="날짜"
+        isRequired
+        type="date"
+        message={errors.date?.message}
+        {...register('date')}
+        onChange={e => {
+          const currentDate = new Date(e.target.value);
+          const koreanDay = getKoreanDay(currentDate);
+
+          register('date').onChange(e);
+
+          setCalenderDate(currentDate);
+          setMainHeaderDate(currentDate);
+          setValue('customIteration.ends.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
+          setValue('customIteration.iterationRule.daysOfWeek', [koreanDay]);
+          setValue('customIteration.iterationRule.monthlyOption.day', getDate(currentDate));
+          setValue('customIteration.iterationRule.monthlyOption.week', getKoreanWeekOfMonth(currentDate));
+          setValue('customIteration.iterationRule.monthlyOption.dayOfWeek', koreanDay);
+        }}
       />
-      <Controller
-        name="name"
-        control={control}
-        render={({ field }) => (
-          <SelectBox
-            {...field}
-            label="카테고리"
-            isRequired
-            options={type === '지출' ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
-            type={type}
-            hasEditButton
-          />
-        )}
+      <SelectBox
+        label="카테고리"
+        isRequired
+        options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
+        type={type}
+        hasEditButton
+        {...register('categoryName')}
       />
-      <Controller
-        name="title"
-        control={control}
-        render={({ field }) => (
-          <PrimaryInput {...field} label={`${type}명`} type="text" message={errors.title?.message} />
-        )}
-      />
+      <PrimaryInput label={`${type}명`} type="text" message={errors.title?.message} {...register('title')} />
       <Controller
         name="cost"
         control={control}
         render={({ field }) => (
           <PrimaryInput
-            {...field}
             label="금액"
             isRequired
             type="tel"
-            value={costValue}
-            onChange={e => handleCostChange(e.target.value, field.onChange)}
+            inputMode="numeric"
+            value={formatNumber(costValue)}
+            onChange={e => {
+              handleCostChange(e.target.value, field.onChange);
+            }}
             message={errors.cost?.message}
           />
         )}
       />
-      {type === '지출' && (
-        <Controller
-          name="expenseMethod"
-          control={control}
-          render={({ field }) => <SelectBox {...field} label="지출 수단" isRequired options={EXPENSE_METHODS} />}
-        />
-      )}
-      <Controller name="memo" control={control} render={({ field }) => <MemoInput {...field} />} />
+      {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
+      <Controller name="memo" render={({ field }) => <MemoInput {...field} />} />
     </div>
   );
 };

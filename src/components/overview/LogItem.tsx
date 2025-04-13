@@ -1,5 +1,5 @@
 import { OverviewLogType } from '@/types/types';
-import { formatDate } from '@/utils/date';
+import { monthDayFormatter } from '@/utils/date';
 import { formatSignedNumber } from '@/utils/number';
 import clsx from 'clsx';
 
@@ -28,7 +28,7 @@ const LogItem = ({ type, order, log, hasUnderLine, onClick }: Props) => {
           {type === 'week' && '주차'}
         </span>
         <span className="text-sm">
-          {formatDate(log.startDate)}~{formatDate(log.endDate)}
+          {monthDayFormatter(log.startDate)}~{monthDayFormatter(log.endDate)}
         </span>
       </div>
       <div className="flex flex-col items-end w-[60%] text-md">
