@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/postcss';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,5 +21,13 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+  },
+  server: {
+    https: process.env.VERCEL
+      ? undefined
+      : {
+          key: fs.readFileSync(path.resolve(__dirname, 'localhost+2-key.pem')),
+          cert: fs.readFileSync(path.resolve(__dirname, 'localhost+2.pem')),
+        },
   },
 });
