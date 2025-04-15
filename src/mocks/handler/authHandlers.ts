@@ -11,7 +11,7 @@ export const authHandlers = [
     }
     return new Response(JSON.stringify({ status: 200, message: '사용할 수 있는 아이디입니다.' }), { status: 200 });
   }),
-  http.post(AUTH.CHECK_USERNAME_DUPLICATE, async ({ request }) => {
+  http.post(AUTH.CHECK_NICKNAME_DUPLICATE, async ({ request }) => {
     const { nickname } = await parseRequestBody<{ nickname: string }>(request);
 
     if (nickname === '데굴') {

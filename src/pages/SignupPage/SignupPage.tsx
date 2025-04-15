@@ -9,6 +9,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/schemas/authSchema';
 import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplication';
 import { SignupData } from '@/types/authTypes';
+import { useFieldStatus } from '@/hooks/useFieldStatus';
+import useCheckNicknameDuplication from '@/hooks/auth/useCheckNicknameDuplication';
 
 const SignupPage = () => {
   const {
@@ -35,14 +37,25 @@ const SignupPage = () => {
     mode: 'onChange',
   });
 
-  const { mutate: checkUsername } = useCheckUsernameDuplication({ setError });
+  const { status: nicknameStatus, setStatus: setNicknameStatus, resetStatus: resetNicknameStatus } = useFieldStatus();
+  const { status: usernameStatus, setStatus: setUsernameStatus, resetStatus: resetUsernameStatus } = useFieldStatus();
+  const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
+  const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
+
+  const buttonDisabled =
+    !isValid || Object.keys(errors).length > 0 || !nicknameStatus.isVerify || !usernameStatus.isVerify;
 
   const onSubmit = (data: SignupData) => {
     console.log(data);
   };
 
-  const handleClick = () => {
-    const username: string = getValues('username');
+  const handleNicknameDuplication = () => {
+    const nickname = getValues('nickname');
+    checkNickname({ nickname });
+  };
+
+  const handleUsernameDuplication = () => {
+    const username = getValues('username');
     checkUsername({ username });
   };
 
@@ -54,14 +67,20 @@ const SignupPage = () => {
           <Controller name="profileImage" control={control} render={({ field }) => <ProfileImageInput {...field} />} />
         </div>
         <div className="flex flex-col gap-3 my-15">
-          <PrimaryInput {...register('name')} label="이름" isRequired type="text" message={errors.name?.message} />
+          <PrimaryInput {...register('name')} label="이름" isRequired type="text" errorMessage={errors.name?.message} />
           <PrimaryInput
             {...register('nickname')}
             label="닉네임"
             isRequired
             type="text"
             buttonLabel="중복확인"
-            message={errors.nickname?.message}
+            onChange={e => {
+              register('nickname').onChange(e);
+              resetNicknameStatus();
+            }}
+            errorMessage={errors.nickname?.message}
+            successMessage={nicknameStatus.message}
+            handleClick={handleNicknameDuplication}
           />
           <PrimaryInput
             {...register('username')}
@@ -69,29 +88,34 @@ const SignupPage = () => {
             isRequired
             type="text"
             buttonLabel="중복확인"
-            message={errors.username?.message}
-            handleClick={handleClick}
+            onChange={e => {
+              register('username').onChange(e);
+              resetUsernameStatus();
+            }}
+            errorMessage={errors.username?.message}
+            successMessage={usernameStatus.message}
+            handleClick={handleUsernameDuplication}
           />
           <PrimaryInput
             {...register('password')}
             label="비밀번호"
             isRequired
             type="password"
-            message={errors.password?.message}
+            errorMessage={errors.password?.message}
           />
           <PrimaryInput
             {...register('confirmPassword')}
             label="비밀번호 재입력"
             isRequired
             type="password"
-            message={errors.confirmPassword?.message}
+            errorMessage={errors.confirmPassword?.message}
           />
           <PrimaryInput
             {...register('birth')}
             label="생년월일"
             isRequired
             type="text"
-            message={errors.birth?.message}
+            errorMessage={errors.birth?.message}
           />
           <PrimaryInput
             {...register('email')}
@@ -99,14 +123,14 @@ const SignupPage = () => {
             isRequired
             type="email"
             buttonLabel="인증"
-            message={errors.email?.message}
+            errorMessage={errors.email?.message}
           />
           <PrimaryInput label="인증 코드" isRequired type="text" buttonLabel="확인" />
           <SelectBox {...register('gender')} label="성별" isRequired options={GENDER_OPTIONS} />
           <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="회원가입" type="submit" disabled={!isValid || Object.keys(errors).length > 0} />
+          <PrimaryButton label="회원가입" type="submit" disabled={buttonDisabled} />
         </div>
       </form>
     </div>

@@ -1,17 +1,12 @@
 import { checkUsernameDuplication } from '@/api/authService';
-import { SignupData } from '@/types/authTypes';
+import { CheckVerifyFieldProps } from '@/types/propsTypes';
 import { useMutation } from '@tanstack/react-query';
-import { UseFormSetError } from 'react-hook-form';
 
-interface Props {
-  setError: UseFormSetError<SignupData>;
-}
-
-const useCheckUsernameDuplication = ({ setError }: Props) => {
+const useCheckUsernameDuplication = ({ setError, setFieldStatus }: CheckVerifyFieldProps) => {
   return useMutation({
     mutationFn: checkUsernameDuplication,
     onSuccess: data => {
-      console.log('Username check success:', data);
+      setFieldStatus({ message: data.message, isVerify: true });
     },
     onError: error => {
       setError('username', {

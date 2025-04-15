@@ -43,7 +43,7 @@ const TransactionForm = ({ type }: Props) => {
         label="날짜"
         isRequired
         type="date"
-        message={errors.date?.message}
+        errorMessage={errors.date?.message}
         {...register('date')}
         onChange={e => {
           const currentDate = new Date(e.target.value);
@@ -68,7 +68,7 @@ const TransactionForm = ({ type }: Props) => {
         hasEditButton
         {...register('categoryName')}
       />
-      <PrimaryInput label={`${type}명`} type="text" message={errors.title?.message} {...register('title')} />
+      <PrimaryInput label={`${type}명`} type="text" errorMessage={errors.title?.message} {...register('title')} />
       <Controller
         name="cost"
         control={control}
@@ -82,7 +82,7 @@ const TransactionForm = ({ type }: Props) => {
             onChange={e => {
               handleCostChange(e.target.value, field.onChange);
             }}
-            message={errors.cost?.message}
+            errorMessage={errors.cost?.message}
           />
         )}
       />
