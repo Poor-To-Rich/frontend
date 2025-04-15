@@ -19,7 +19,8 @@ export const validateDate = (value: string): boolean => {
   if (!dayRegex.test(value)) {
     return false;
   }
-  const parsedDate = parse(value, 'yyyy.MM.dd', new Date());
+
+  const parsedDate = parse(value, 'yyyy-MM-dd', new Date());
   return isValid(parsedDate);
 };
 

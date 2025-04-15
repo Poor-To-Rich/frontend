@@ -53,7 +53,7 @@ const TransactionForm = ({ type }: Props) => {
 
           setCalenderDate(currentDate);
           setMainHeaderDate(currentDate);
-          setValue('customIteration.ends.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
+          setValue('customIteration.end.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
           setValue('customIteration.iterationRule.daysOfWeek', [koreanDay]);
           setValue('customIteration.iterationRule.monthlyOption.day', getDate(currentDate));
           setValue('customIteration.iterationRule.monthlyOption.week', getKoreanWeekOfMonth(currentDate));

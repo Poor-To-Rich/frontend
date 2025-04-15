@@ -8,7 +8,7 @@ import { TransactionFormData } from '@/types/transactionTypes';
 const IterationEndOptionSelector = () => {
   const { calenderDate } = useCalenderDateStore();
   const { control, register, setValue } = useFormContext<TransactionFormData>();
-  const ends = useWatch({ control, name: 'customIteration.ends' });
+  const end = useWatch({ control, name: 'customIteration.end' });
 
   const options = [
     {
@@ -28,10 +28,10 @@ const IterationEndOptionSelector = () => {
             defaultValue={10}
             placeholder="10"
             className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
-            {...register('customIteration.ends.count', { valueAsNumber: true })}
+            {...register('customIteration.end.count', { valueAsNumber: true })}
             onBlur={e => {
               if (!e.target.value) {
-                setValue('customIteration.ends.count', 10, { shouldValidate: true });
+                setValue('customIteration.end.count', 10, { shouldValidate: true });
               }
             }}
           />
@@ -49,7 +49,7 @@ const IterationEndOptionSelector = () => {
             defaultValue={format(addMonths(calenderDate, 2), 'yyyy-MM-dd')}
             min={format(calenderDate, 'yyyy-MM-dd')}
             className="w-fit text-center focus:outline-none"
-            {...register('customIteration.ends.date')}
+            {...register('customIteration.end.date')}
           />
         </>
       ),
@@ -59,7 +59,7 @@ const IterationEndOptionSelector = () => {
   return (
     <Controller
       control={control}
-      name={'customIteration.ends.type'}
+      name={'customIteration.end.type'}
       render={({ field }) => (
         <div className="flex flex-col gap-5">
           <span>반복 종료</span>
@@ -71,7 +71,7 @@ const IterationEndOptionSelector = () => {
                   key={radioId}
                   radioId={radioId}
                   label={label}
-                  checked={ends.type === value}
+                  checked={end.type === value}
                   input={input}
                   onChange={() => field.onChange(value)}
                 />

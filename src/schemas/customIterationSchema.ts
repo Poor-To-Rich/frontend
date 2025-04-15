@@ -23,7 +23,7 @@ const iterationRuleSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('yearly') }),
 ]);
 
-export const endsSchema = z.discriminatedUnion('type', [
+export const endSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('never') }),
   z.object({ type: z.literal('after'), count: z.number().min(1).max(999) }),
   z.object({ type: z.literal('until'), date: z.string().min(1) }),
@@ -32,5 +32,5 @@ export const endsSchema = z.discriminatedUnion('type', [
 export const customIterationSchema = z.object({
   iterationRule: iterationRuleSchema,
   interval: z.number().min(1).max(999),
-  ends: endsSchema,
+  end: endSchema,
 });

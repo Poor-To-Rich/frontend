@@ -13,6 +13,7 @@ const SignupPage = () => {
   type SignupData = z.infer<typeof signupSchema>;
 
   const {
+    register,
     control,
     handleSubmit,
     formState: { errors, isValid },
@@ -45,86 +46,55 @@ const SignupPage = () => {
           <Controller name="profileImage" control={control} render={({ field }) => <ProfileImageInput {...field} />} />
         </div>
         <div className="flex flex-col gap-3 my-15">
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="이름" isRequired type="text" message={errors.name?.message} />
-            )}
+          <PrimaryInput {...register('name')} label="이름" isRequired type="text" message={errors.name?.message} />
+          <PrimaryInput
+            {...register('nickname')}
+            label="닉네임"
+            isRequired
+            type="text"
+            buttonLabel="중복확인"
+            message={errors.nickname?.message}
           />
-          <Controller
-            name="nickname"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="닉네임" isRequired type="text" message={errors.nickname?.message} />
-            )}
+          <PrimaryInput
+            {...register('username')}
+            label="아이디"
+            isRequired
+            type="text"
+            buttonLabel="중복확인"
+            message={errors.username?.message}
           />
-          <Controller
-            name="username"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput
-                {...field}
-                label="아이디"
-                isRequired
-                type="text"
-                buttonLabel="중복확인"
-                message={errors.username?.message}
-              />
-            )}
+          <PrimaryInput
+            {...register('password')}
+            label="비밀번호"
+            isRequired
+            type="password"
+            message={errors.password?.message}
           />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="비밀번호" isRequired type="password" message={errors.password?.message} />
-            )}
+          <PrimaryInput
+            {...register('confirmPassword')}
+            label="비밀번호 재입력"
+            isRequired
+            type="password"
+            message={errors.confirmPassword?.message}
           />
-          <Controller
-            name="confirmPassword"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput
-                {...field}
-                label="비밀번호 재입력"
-                isRequired
-                type="password"
-                message={errors.confirmPassword?.message}
-              />
-            )}
+          <PrimaryInput
+            {...register('birth')}
+            label="생년월일"
+            isRequired
+            type="text"
+            message={errors.birth?.message}
           />
-          <Controller
-            name="birth"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="생년월일" isRequired type="text" message={errors.birth?.message} />
-            )}
-          />
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput
-                {...field}
-                label="이메일"
-                isRequired
-                type="email"
-                buttonLabel="인증"
-                message={errors.email?.message}
-              />
-            )}
+          <PrimaryInput
+            {...register('email')}
+            label="이메일"
+            isRequired
+            type="email"
+            buttonLabel="인증"
+            message={errors.email?.message}
           />
           <PrimaryInput label="인증 코드" isRequired type="text" buttonLabel="확인" />
-          <Controller
-            name="gender"
-            control={control}
-            render={({ field }) => <SelectBox {...field} label="성별" isRequired options={GENDER_OPTIONS} />}
-          />
-          <Controller
-            name="job"
-            control={control}
-            render={({ field }) => <SelectBox {...field} label="직업" options={JOB_OPTIONS} />}
-          />
+          <SelectBox {...register('gender')} label="성별" isRequired options={GENDER_OPTIONS} />
+          <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>
         <div className="w-full flex justify-end">
           <PrimaryButton label="회원가입" type="submit" disabled={!isValid} />

@@ -14,11 +14,11 @@ interface PrimaryInputProps {
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
   ({ label, isRequired, buttonLabel, message, handleClick, ...rest }, ref) => {
     return (
-      <div className={clsx(message ? 'items-start' : 'items-center', 'w-full flex justify-between ')}>
-        <label className="relative w-fit h-fit">
+      <label className={clsx(message ? 'items-start' : 'items-center', 'w-full flex justify-between ')}>
+        <div className="relative w-fit h-fit">
           <span>{label}</span>
           {isRequired && <span className="text-sunsetRose absolute top-[-0.5rem]">*</span>}
-        </label>
+        </div>
         <div className="w-3/5">
           <div className="w-full h-[3.2rem] flex gap-2">
             <input
@@ -27,11 +27,11 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
               className={clsx(message && 'border-sunsetRose!', 'input-common')}
               autoComplete="off"
             />
-            {buttonLabel && <VerifyButton label={buttonLabel} onClick={handleClick} />}
+            {buttonLabel && <VerifyButton type="button" label={buttonLabel} onClick={handleClick} />}
           </div>
           {typeof message === 'string' && <span className="w-fit h-fit text-sm text-sunsetRose">{message}</span>}
         </div>
-      </div>
+      </label>
     );
   },
 );

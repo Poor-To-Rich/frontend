@@ -24,6 +24,8 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onC
         onChange(imageUrl);
       };
     }
+
+    e.target.value = '';
   };
 
   const handleImageDelete = (event: React.MouseEvent) => {
