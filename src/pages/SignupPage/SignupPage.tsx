@@ -7,14 +7,15 @@ import ProfileImageInput from '@/components/input/ProfileImageInput';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/schemas/authSchema';
-import { z } from 'zod';
+import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplication';
+import { SignupData } from '@/types/authTypes';
 
 const SignupPage = () => {
-  type SignupData = z.infer<typeof signupSchema>;
-
   const {
     register,
     control,
+    getValues,
+    setError,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<SignupData>({
@@ -34,8 +35,15 @@ const SignupPage = () => {
     mode: 'onChange',
   });
 
+  const { mutate: checkUsername } = useCheckUsernameDuplication({ setError });
+
   const onSubmit = (data: SignupData) => {
     console.log(data);
+  };
+
+  const handleClick = () => {
+    const username: string = getValues('username');
+    checkUsername({ username });
   };
 
   return (
@@ -62,6 +70,7 @@ const SignupPage = () => {
             type="text"
             buttonLabel="중복확인"
             message={errors.username?.message}
+            handleClick={handleClick}
           />
           <PrimaryInput
             {...register('password')}
@@ -97,7 +106,7 @@ const SignupPage = () => {
           <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="회원가입" type="submit" disabled={!isValid} />
+          <PrimaryButton label="회원가입" type="submit" disabled={!isValid || Object.keys(errors).length > 0} />
         </div>
       </form>
     </div>

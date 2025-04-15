@@ -16,29 +16,39 @@ import IterationDataPage from '@/pages/IterationDataPage/IterationDataPage';
 import ChartPage from '@/pages/ChartPage/ChartPage';
 import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage';
 import ScrollToUp from '@/utils/ScrollToUp';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+if (import.meta.env.DEV) {
+  const { worker } = await import('@/mocks/browser');
+  await worker.start();
+}
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Router>
-      <ScrollToUp />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/" element={<MainPage />} />
-        <Route path="/transaction" element={<AddEditTransactionPage />} />
-        <Route path="/categories" element={<CategoriesPage />} />
-        <Route path="/category" element={<AddEditCategoryPage />} />
-        <Route path="/month-week" element={<MonthWeekPage />} />
-        <Route path="/weeklyDetails" element={<WeeklyDetailsPage />} />
-        <Route path="/setting" element={<SettingPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/update-password" element={<UpdatePasswordPage />} />
-        <Route path="/update-email" element={<UpdateEmailPage />} />
-        <Route path="/iteration-data" element={<IterationDataPage />} />
-        <Route path="/chart" element={<ChartPage />} />
-        <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <ScrollToUp />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/" element={<MainPage />} />
+          <Route path="/transaction" element={<AddEditTransactionPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="/category" element={<AddEditCategoryPage />} />
+          <Route path="/month-week" element={<MonthWeekPage />} />
+          <Route path="/weeklyDetails" element={<WeeklyDetailsPage />} />
+          <Route path="/setting" element={<SettingPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/update-password" element={<UpdatePasswordPage />} />
+          <Route path="/update-email" element={<UpdateEmailPage />} />
+          <Route path="/iteration-data" element={<IterationDataPage />} />
+          <Route path="/chart" element={<ChartPage />} />
+          <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
+        </Routes>
+      </Router>
+    </QueryClientProvider>
   );
 }
 
