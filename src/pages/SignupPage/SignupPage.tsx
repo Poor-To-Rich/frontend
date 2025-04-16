@@ -11,7 +11,8 @@ import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplicatio
 import { SignupData } from '@/types/authTypes';
 import { useFieldStatus } from '@/hooks/useFieldStatus';
 import useCheckNicknameDuplication from '@/hooks/auth/useCheckNicknameDuplication';
-import useEmailSend from '@/hooks/auth/useEmailSend';
+import useSendEmail from '@/hooks/auth/useSendEmail';
+import useVerifyEmail from '@/hooks/auth/useVerifyEmail';
 
 const SignupPage = () => {
   const {
@@ -23,7 +24,7 @@ const SignupPage = () => {
     formState: { errors, isValid },
   } = useForm<SignupData>({
     defaultValues: {
-      profileImage: '',
+      profileImage: undefined,
       name: '',
       nickname: '',
       username: '',
@@ -31,6 +32,7 @@ const SignupPage = () => {
       confirmPassword: '',
       birth: '',
       email: '',
+      verificationCode: 0,
       gender: GENDER_OPTIONS[0].value,
       job: JOB_OPTIONS[0].value,
     },
@@ -45,30 +47,61 @@ const SignupPage = () => {
     setStatus: setEmailSendStatus,
     resetStatus: resetEmailSendStatus,
   } = useFieldStatus();
+  const {
+    status: emailCodeStatus,
+    setStatus: setEmailCodeStatus,
+    resetStatus: resetEmailCodeStatus,
+  } = useFieldStatus();
+
   const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
   const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
-  const { mutate: emailSend } = useEmailSend({ setError, setFieldStatus: setEmailSendStatus });
+  const { mutate: emailSend } = useSendEmail({ setError, setFieldStatus: setEmailSendStatus });
+  const { mutate: verifyCode } = useVerifyEmail({ setError, setFieldStatus: setEmailCodeStatus });
 
   const buttonDisabled =
-    !isValid || Object.keys(errors).length > 0 || !nicknameStatus.isVerify || !usernameStatus.isVerify;
+    !isValid ||
+    Object.keys(errors).length > 0 ||
+    !nicknameStatus.isVerify ||
+    !usernameStatus.isVerify ||
+    !emailSendStatus.isVerify ||
+    !emailCodeStatus.isVerify;
 
   const onSubmit = (data: SignupData) => {
-    console.log(data);
+    const { confirmPassword, verificationCode, ...postData } = data;
+    console.log(postData);
   };
 
   const handleNicknameDuplication = () => {
+    const nicknameError = errors.nickname;
     const nickname = getValues('nickname');
-    checkNickname({ nickname });
+    if (nickname && !nicknameError) {
+      checkNickname({ nickname });
+    }
   };
 
   const handleUsernameDuplication = () => {
+    const usernameError = errors.username;
     const username = getValues('username');
-    checkUsername({ username });
+    if (username && !usernameError) {
+      checkUsername({ username });
+    }
   };
 
   const handleEmailSend = () => {
+    const emailError = errors.email;
     const email = getValues('email');
-    emailSend({ email, purpose: 'register' });
+    if (email && !emailError && !emailCodeStatus.isVerify) {
+      emailSend({ email, purpose: 'register' });
+    }
+  };
+
+  const handleEmailCode = () => {
+    const { email: emailError, verificationCode: codeError } = errors;
+    const email = getValues('email');
+    const verificationCode = getValues('verificationCode');
+    if (email && verificationCode && !emailError && !codeError && !emailCodeStatus.isVerify) {
+      verifyCode({ email, purpose: 'register', verificationCode });
+    }
   };
 
   return (
@@ -135,6 +168,7 @@ const SignupPage = () => {
             {...register('email')}
             label="이메일"
             isRequired
+            readOnly={emailCodeStatus.isVerify}
             type="email"
             onChange={e => {
               register('email').onChange(e);
@@ -145,7 +179,37 @@ const SignupPage = () => {
             handleClick={handleEmailSend}
             buttonLabel={emailSendStatus.isVerify ? '재발급' : '인증'}
           />
-          <PrimaryInput label="인증 코드" isRequired type="text" buttonLabel="확인" />
+          <Controller
+            name="verificationCode"
+            control={control}
+            render={({ field }) => (
+              <PrimaryInput
+                label="인증 코드"
+                isRequired
+                readOnly={!emailSendStatus.isVerify || emailCodeStatus.isVerify}
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                minLength={6}
+                maxLength={6}
+                value={field.value === 0 ? '' : field.value}
+                onChange={e => {
+                  const value = e.target.value;
+
+                  if (/^\d*$/.test(value)) {
+                    field.onChange(Number(value));
+                    resetEmailCodeStatus();
+                  }
+                }}
+                hasCheckIcon={emailCodeStatus.isVerify}
+                errorMessage={errors.verificationCode?.message}
+                successMessage={emailCodeStatus.message}
+                handleClick={handleEmailCode}
+                buttonLabel="확인"
+              />
+            )}
+          />
+
           <SelectBox {...register('gender')} label="성별" isRequired options={GENDER_OPTIONS} />
           <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>

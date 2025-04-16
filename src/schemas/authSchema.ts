@@ -38,6 +38,7 @@ export const baseSignupSchema = loginSchema.extend({
     .min(1, { message: '값을 입력해주세요' })
     .refine(validateDate, '올바른 날짜 형식(YYYY-MM-DD)을 입력해주세요'),
   email: z.string().min(1, { message: '값을 입력해주세요' }).regex(emailRegex, '올바른 이메일 형식을 입력해주세요'),
+  verificationCode: z.number({ message: '숫자를 입력해주세요' }).min(1, { message: '값을 입력해주세요' }),
   gender: z.string(),
   job: z.string().optional(),
 });

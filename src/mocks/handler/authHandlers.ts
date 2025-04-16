@@ -1,5 +1,5 @@
 import { AUTH } from '@/api/endpoints';
-import { parseRequestBody } from '@/utils/parseRequestBody';
+import { parseRequestBody } from '@/mocks/utils/parseRequestBody';
 import { http } from 'msw';
 
 export const authHandlers = [

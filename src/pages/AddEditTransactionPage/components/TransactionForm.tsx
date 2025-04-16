@@ -78,6 +78,7 @@ const TransactionForm = ({ type }: Props) => {
             isRequired
             type="tel"
             inputMode="numeric"
+            pattern="[0-9]*"
             value={formatNumber(costValue)}
             onChange={e => {
               handleCostChange(e.target.value, field.onChange);

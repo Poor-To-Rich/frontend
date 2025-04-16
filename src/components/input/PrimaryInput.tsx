@@ -15,7 +15,10 @@ interface PrimaryInputProps {
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ label, isRequired, hasCheckIcon, buttonLabel, successMessage, errorMessage, handleClick, ...rest }, ref) => {
+  (
+    { label, isRequired, hasCheckIcon, buttonLabel, successMessage, errorMessage, handleClick, readOnly, ...rest },
+    ref,
+  ) => {
     return (
       <label
         className={clsx(
@@ -31,8 +34,10 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
             <div className="flex grow gap-2 relative">
               <input
                 ref={ref}
+                readOnly={readOnly}
                 {...rest}
                 className={clsx(
+                  readOnly && 'bg-strokeGray',
                   successMessage && 'border-oliveGreen!',
                   errorMessage && 'border-sunsetRose!',
                   'input-common',
