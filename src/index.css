@@ -87,7 +87,7 @@
 }
 
 .input-common {
-  @apply flex-1 min-w-0 border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
+  @apply w-full border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
 }
 
 .profileImage-icon-common {

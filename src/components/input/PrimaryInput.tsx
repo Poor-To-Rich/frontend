@@ -7,6 +7,7 @@ import CheckIcon from '@/components/icon/CheckIcon';
 interface PrimaryInputProps {
   label: string;
   isRequired?: boolean;
+  hasCheckIcon?: boolean;
   buttonLabel?: VerifyButtonType;
   handleClick?: () => void;
   successMessage?: string;
@@ -14,7 +15,7 @@ interface PrimaryInputProps {
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ label, isRequired, buttonLabel, successMessage, errorMessage, handleClick, ...rest }, ref) => {
+  ({ label, isRequired, hasCheckIcon, buttonLabel, successMessage, errorMessage, handleClick, ...rest }, ref) => {
     return (
       <label
         className={clsx(
@@ -27,21 +28,23 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
         </div>
         <div className="w-3/5">
           <div className="w-full h-[3.2rem] flex gap-2 relative">
-            <input
-              ref={ref}
-              {...rest}
-              className={clsx(
-                successMessage && 'border-oliveGreen!',
-                errorMessage && 'border-sunsetRose!',
-                'input-common',
+            <div className="flex grow gap-2 relative">
+              <input
+                ref={ref}
+                {...rest}
+                className={clsx(
+                  successMessage && 'border-oliveGreen!',
+                  errorMessage && 'border-sunsetRose!',
+                  'input-common',
+                )}
+                autoComplete="off"
+              />
+              {hasCheckIcon && (
+                <span className="absolute top-1/2 -translate-y-1/2 right-3">
+                  <CheckIcon color="#a1c377" />
+                </span>
               )}
-              autoComplete="off"
-            />
-            {successMessage && (
-              <span className="absolute top-1/2 -translate-y-1/2 right-32">
-                <CheckIcon color="#a1c377" />
-              </span>
-            )}
+            </div>
             {buttonLabel && <VerifyButton type="button" label={buttonLabel} onClick={handleClick} />}
           </div>
           {typeof errorMessage === 'string' && (

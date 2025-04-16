@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { API_BASE_URL } from '@/api/endpoints';
+import { ResponseDefaultType } from '@/types/responseType';
 
 const apiClient = (() =>
   axios.create({
@@ -10,26 +11,26 @@ const apiClient = (() =>
     withCredentials: true,
   }))();
 
-export const fetchData = async <ResponseType, RequestType = undefined>(
+export const fetchData = async <RequestType = undefined>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
   data?: RequestType,
   config?: AxiosRequestConfig,
-): Promise<ResponseType> => {
+): Promise<ResponseDefaultType> => {
   try {
-    let response: AxiosResponse<ResponseType>;
+    let response: AxiosResponse<ResponseDefaultType>;
     switch (method) {
       case 'GET':
-        response = await apiClient.get<ResponseType>(endpoint, config);
+        response = await apiClient.get<ResponseDefaultType>(endpoint, config);
         break;
       case 'POST':
-        response = await apiClient.post<ResponseType>(endpoint, data, config);
+        response = await apiClient.post<ResponseDefaultType>(endpoint, data, config);
         break;
       case 'PUT':
-        response = await apiClient.put<ResponseType>(endpoint, data, config);
+        response = await apiClient.put<ResponseDefaultType>(endpoint, data, config);
         break;
       case 'DELETE':
-        response = await apiClient.delete<ResponseType>(endpoint);
+        response = await apiClient.delete<ResponseDefaultType>(endpoint);
         break;
       default:
         throw new Error('Invalid HTTP method');

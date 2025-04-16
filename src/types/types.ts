@@ -37,6 +37,6 @@ export type ErrorMessageType = string | FieldError | Merge<FieldError, FieldErro
 
 export type TapBarType = 'main' | 'month-week' | 'chart' | 'talk' | 'setting';
 
-export type VerifyButtonType = '인증' | '확인' | '중복확인';
+export type VerifyButtonType = '인증' | '재발급' | '확인' | '중복확인';
 
 export type ModalType = 'logout' | 'dataReset' | null;

@@ -11,6 +11,7 @@ import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplicatio
 import { SignupData } from '@/types/authTypes';
 import { useFieldStatus } from '@/hooks/useFieldStatus';
 import useCheckNicknameDuplication from '@/hooks/auth/useCheckNicknameDuplication';
+import useEmailSend from '@/hooks/auth/useEmailSend';
 
 const SignupPage = () => {
   const {
@@ -39,8 +40,14 @@ const SignupPage = () => {
 
   const { status: nicknameStatus, setStatus: setNicknameStatus, resetStatus: resetNicknameStatus } = useFieldStatus();
   const { status: usernameStatus, setStatus: setUsernameStatus, resetStatus: resetUsernameStatus } = useFieldStatus();
+  const {
+    status: emailSendStatus,
+    setStatus: setEmailSendStatus,
+    resetStatus: resetEmailSendStatus,
+  } = useFieldStatus();
   const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
   const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
+  const { mutate: emailSend } = useEmailSend({ setError, setFieldStatus: setEmailSendStatus });
 
   const buttonDisabled =
     !isValid || Object.keys(errors).length > 0 || !nicknameStatus.isVerify || !usernameStatus.isVerify;
@@ -57,6 +64,11 @@ const SignupPage = () => {
   const handleUsernameDuplication = () => {
     const username = getValues('username');
     checkUsername({ username });
+  };
+
+  const handleEmailSend = () => {
+    const email = getValues('email');
+    emailSend({ email, purpose: 'register' });
   };
 
   return (
@@ -78,6 +90,7 @@ const SignupPage = () => {
               register('nickname').onChange(e);
               resetNicknameStatus();
             }}
+            hasCheckIcon={nicknameStatus.isVerify}
             errorMessage={errors.nickname?.message}
             successMessage={nicknameStatus.message}
             handleClick={handleNicknameDuplication}
@@ -92,6 +105,7 @@ const SignupPage = () => {
               register('username').onChange(e);
               resetUsernameStatus();
             }}
+            hasCheckIcon={usernameStatus.isVerify}
             errorMessage={errors.username?.message}
             successMessage={usernameStatus.message}
             handleClick={handleUsernameDuplication}
@@ -122,8 +136,14 @@ const SignupPage = () => {
             label="이메일"
             isRequired
             type="email"
-            buttonLabel="인증"
+            onChange={e => {
+              register('email').onChange(e);
+              resetEmailSendStatus();
+            }}
             errorMessage={errors.email?.message}
+            successMessage={emailSendStatus.message}
+            handleClick={handleEmailSend}
+            buttonLabel={emailSendStatus.isVerify ? '재발급' : '인증'}
           />
           <PrimaryInput label="인증 코드" isRequired type="text" buttonLabel="확인" />
           <SelectBox {...register('gender')} label="성별" isRequired options={GENDER_OPTIONS} />
