@@ -3,7 +3,7 @@ class CustomError<T = undefined> extends Error {
 
   constructor(message: string, data?: T) {
     super(message);
-    this.name = 'CustomError';
+    this.name = this.constructor.name;
     this.data = data;
   }
 }

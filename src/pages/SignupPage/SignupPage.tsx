@@ -59,7 +59,7 @@ const SignupPage = () => {
   const { mutate: sendEmail } = useSendEmail({ setError, setFieldStatus: setSendEmailStatus });
   const { mutate: verifyCode } = useVerifyEmail({ setError, setFieldStatus: setEmailCodeStatus });
   const { mutate: signup, isPending } = useSignup({ setError });
-  console.log(isPending);
+
   const buttonDisabled =
     !isValid ||
     Object.keys(errors).length > 0 ||
@@ -74,7 +74,7 @@ const SignupPage = () => {
     Object.entries(postData).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    signup(formData);
+    if (!isPending) signup(formData);
   };
 
   const handleNicknameDuplication = () => {
@@ -219,7 +219,7 @@ const SignupPage = () => {
           <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="회원가입" type="submit" disabled={buttonDisabled} />
+          <PrimaryButton label="회원가입" type="submit" isPending={isPending} disabled={buttonDisabled} />
         </div>
       </form>
     </div>

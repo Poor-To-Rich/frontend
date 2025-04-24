@@ -21,7 +21,7 @@ export const authHandlers = [
     return new Response(JSON.stringify({ status: 200, message: '사용할 수 있는 닉네임입니다.' }), { status: 200 });
   }),
   http.post(endpoints.auth.signup, async ({ request }) => {
-    await delay(1000);
+    await delay(5000);
 
     const formData = await request.formData();
 
