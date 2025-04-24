@@ -6,7 +6,7 @@ export type FieldStatusType = {
   isVerify: boolean;
 };
 
-export type SignupData = z.infer<typeof signupSchema>;
+export type SignupFormType = z.infer<typeof signupSchema>;
 
 export type UsernameDuplicationReq = {
   username: string;
@@ -20,6 +20,8 @@ export const emailPurposeList = ['register', 'changeEmail'] as const;
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];
 
-export type EmailCodeSendReq = { email: string; purpose: EmailPurposeType };
+export type SendEmailReq = { email: string; purpose: EmailPurposeType };
 
-export type EmailCodeVerifyReq = EmailCodeSendReq & { verificationCode: number };
+export type EmailCountRes = { remainingAttempts: string };
+
+export type VerifyEmailCodeReq = SendEmailReq & { verificationCode: number };

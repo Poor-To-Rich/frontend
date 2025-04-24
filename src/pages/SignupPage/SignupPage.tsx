@@ -8,11 +8,12 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/schemas/authSchema';
 import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplication';
-import { SignupData } from '@/types/authTypes';
+import { SignupFormType } from '@/types/authTypes';
 import { useFieldStatus } from '@/hooks/useFieldStatus';
 import useCheckNicknameDuplication from '@/hooks/auth/useCheckNicknameDuplication';
 import useSendEmail from '@/hooks/auth/useSendEmail';
 import useVerifyEmail from '@/hooks/auth/useVerifyEmail';
+import useSignup from '@/hooks/auth/useSignup';
 
 const SignupPage = () => {
   const {
@@ -22,7 +23,7 @@ const SignupPage = () => {
     setError,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignupData>({
+  } = useForm<SignupFormType>({
     defaultValues: {
       profileImage: undefined,
       name: '',
@@ -43,9 +44,9 @@ const SignupPage = () => {
   const { status: nicknameStatus, setStatus: setNicknameStatus, resetStatus: resetNicknameStatus } = useFieldStatus();
   const { status: usernameStatus, setStatus: setUsernameStatus, resetStatus: resetUsernameStatus } = useFieldStatus();
   const {
-    status: emailSendStatus,
-    setStatus: setEmailSendStatus,
-    resetStatus: resetEmailSendStatus,
+    status: sendEmailStatus,
+    setStatus: setSendEmailStatus,
+    resetStatus: resetSendEmailStatus,
   } = useFieldStatus();
   const {
     status: emailCodeStatus,
@@ -55,20 +56,25 @@ const SignupPage = () => {
 
   const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
   const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
-  const { mutate: emailSend } = useSendEmail({ setError, setFieldStatus: setEmailSendStatus });
+  const { mutate: sendEmail } = useSendEmail({ setError, setFieldStatus: setSendEmailStatus });
   const { mutate: verifyCode } = useVerifyEmail({ setError, setFieldStatus: setEmailCodeStatus });
-
+  const { mutate: signup, isPending } = useSignup({ setError });
+  console.log(isPending);
   const buttonDisabled =
     !isValid ||
     Object.keys(errors).length > 0 ||
     !nicknameStatus.isVerify ||
     !usernameStatus.isVerify ||
-    !emailSendStatus.isVerify ||
+    !sendEmailStatus.isVerify ||
     !emailCodeStatus.isVerify;
 
-  const onSubmit = (data: SignupData) => {
+  const onSubmit = (data: SignupFormType) => {
     const { confirmPassword, verificationCode, ...postData } = data;
-    console.log(postData);
+    const formData = new FormData();
+    Object.entries(postData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    signup(formData);
   };
 
   const handleNicknameDuplication = () => {
@@ -91,7 +97,7 @@ const SignupPage = () => {
     const emailError = errors.email;
     const email = getValues('email');
     if (email && !emailError && !emailCodeStatus.isVerify) {
-      emailSend({ email, purpose: 'register' });
+      sendEmail({ email, purpose: 'register' });
     }
   };
 
@@ -172,12 +178,12 @@ const SignupPage = () => {
             type="email"
             onChange={e => {
               register('email').onChange(e);
-              resetEmailSendStatus();
+              resetSendEmailStatus();
             }}
             errorMessage={errors.email?.message}
-            successMessage={emailSendStatus.message}
+            successMessage={sendEmailStatus.message}
             handleClick={handleEmailSend}
-            buttonLabel={emailSendStatus.isVerify ? '재발급' : '인증'}
+            buttonLabel={sendEmailStatus.isVerify ? '재발급' : '인증'}
           />
           <Controller
             name="verificationCode"
@@ -186,7 +192,7 @@ const SignupPage = () => {
               <PrimaryInput
                 label="인증 코드"
                 isRequired
-                readOnly={!emailSendStatus.isVerify || emailCodeStatus.isVerify}
+                readOnly={!sendEmailStatus.isVerify || emailCodeStatus.isVerify}
                 type="tel"
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -209,7 +215,6 @@ const SignupPage = () => {
               />
             )}
           />
-
           <SelectBox {...register('gender')} label="성별" isRequired options={GENDER_OPTIONS} />
           <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>

@@ -1,11 +1,11 @@
-import { EmailCodeSendReq } from '@/types/authTypes';
+import { SendEmailReq } from '@/types/authTypes';
 import { emailPurposeList } from '@/types/authTypes';
 import { emailRegex } from '@/utils/regex';
 
 export const checkCommonEmailErrors = ({
   email,
   purpose,
-}: Pick<EmailCodeSendReq, 'email' | 'purpose'>): Response | null => {
+}: Pick<SendEmailReq, 'email' | 'purpose'>): Response | null => {
   if (!emailPurposeList.includes(purpose)) {
     return new Response(JSON.stringify({ status: 400, message: '유효하지 않은 인증 목적입니다.' }), { status: 409 });
   }

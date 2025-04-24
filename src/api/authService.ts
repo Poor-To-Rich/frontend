@@ -1,32 +1,52 @@
 import { fetchData } from '@/api/axios';
-import { AUTH, EMAIL } from '@/api/endpoints';
+import { endpoints } from '@/api/endpoints';
 import {
-  EmailCodeSendReq,
+  SendEmailReq,
   NicknameDuplicationReq,
   UsernameDuplicationReq,
-  EmailCodeVerifyReq,
+  VerifyEmailCodeReq,
+  EmailCountRes,
 } from '@/types/authTypes';
 
 export const checkUsernameDuplication = async ({ username }: UsernameDuplicationReq) => {
-  const res = await fetchData<UsernameDuplicationReq>('POST', AUTH.CHECK_USERNAME_DUPLICATE, {
+  const res = await fetchData<UsernameDuplicationReq>('POST', endpoints.auth.checkUsernameDuplicate, {
     username,
   });
   return res;
 };
 
 export const checkNicknameDuplication = async ({ nickname }: NicknameDuplicationReq) => {
-  const res = await fetchData<NicknameDuplicationReq>('POST', AUTH.CHECK_NICKNAME_DUPLICATE, {
+  const res = await fetchData<NicknameDuplicationReq>('POST', endpoints.auth.checkNicknameDuplicate, {
     nickname,
   });
   return res;
 };
 
-export const sendEmailCode = async ({ email, purpose }: EmailCodeSendReq) => {
-  const res = await fetchData<EmailCodeSendReq>('POST', EMAIL.EMAIL_SEND, { email, purpose });
+export const sendEmailCode = async ({ email, purpose }: SendEmailReq) => {
+  const res = await fetchData<SendEmailReq>('POST', endpoints.email.sendEmail, { email, purpose });
   return res;
 };
 
-export const verifyEmailCode = async ({ email, purpose, verificationCode }: EmailCodeVerifyReq) => {
-  const res = await fetchData<EmailCodeVerifyReq>('POST', EMAIL.CODE_VERIFY, { email, purpose, verificationCode });
+export const getSendEmailCount = async (email: string) => {
+  const res = await fetchData<undefined, EmailCountRes>('GET', endpoints.email.getSendEmailCount(email));
+  return res;
+};
+
+export const verifyEmailCode = async ({ email, purpose, verificationCode }: VerifyEmailCodeReq) => {
+  const res = await fetchData<VerifyEmailCodeReq>('POST', endpoints.email.verifyCode, {
+    email,
+    purpose,
+    verificationCode,
+  });
+  return res;
+};
+
+export const getVerifyEmailCodeCount = async (email: string) => {
+  const res = await fetchData<undefined, EmailCountRes>('GET', endpoints.email.getVerifyEmailCodeCount(email));
+  return res;
+};
+
+export const signup = async (body: FormData) => {
+  const res = await fetchData<FormData, undefined, { field: string }>('POST', endpoints.auth.signup, body);
   return res;
 };

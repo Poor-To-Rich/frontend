@@ -1,11 +1,14 @@
-import { sendEmailCode } from '@/api/authService';
+import { getSendEmailCount, sendEmailCode } from '@/api/authService';
 import { CheckVerifyFieldProps } from '@/types/propsTypes';
 import { useMutation } from '@tanstack/react-query';
 
-const useEmailSend = ({ setError, setFieldStatus }: CheckVerifyFieldProps) => {
+const useSendEmail = ({ setError, setFieldStatus }: CheckVerifyFieldProps) => {
   return useMutation({
     mutationFn: sendEmailCode,
-    onSuccess: data => setFieldStatus({ message: data.message, isVerify: true }),
+    onSuccess: async (data, { email }) => {
+      const res = await getSendEmailCount(email);
+      setFieldStatus({ message: `${data.message} / 남은 요청 횟수: ${res.data?.remainingAttempts}회`, isVerify: true });
+    },
     onError: error =>
       setError('email', {
         type: 'server',
@@ -14,4 +17,4 @@ const useEmailSend = ({ setError, setFieldStatus }: CheckVerifyFieldProps) => {
   });
 };
 
-export default useEmailSend;
+export default useSendEmail;

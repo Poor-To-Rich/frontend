@@ -20,23 +20,37 @@ const IterationEndOptionSelector = () => {
       label: '횟수',
       value: 'after',
       input: (
-        <>
-          <input
-            type="tel"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            defaultValue={10}
-            placeholder="10"
-            className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
-            {...register('customIteration.end.count', { valueAsNumber: true })}
-            onBlur={e => {
-              if (!e.target.value) {
-                setValue('customIteration.end.count', 10, { shouldValidate: true });
-              }
-            }}
-          />
-          <span>회 반복</span>
-        </>
+        <Controller
+          name="customIteration.end.count"
+          control={control}
+          defaultValue={10}
+          render={({ field }) => (
+            <>
+              <input
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                defaultValue={10}
+                placeholder="10"
+                className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
+                value={field.value}
+                onChange={e => {
+                  const value = e.target.value;
+
+                  if (/^\d*$/.test(value)) {
+                    field.onChange(value === '' ? '' : Number(value));
+                  }
+                }}
+                onBlur={e => {
+                  if (!e.target.value) {
+                    setValue('customIteration.end.count', 10, { shouldValidate: true });
+                  }
+                }}
+              />
+              <span>회 반복</span>
+            </>
+          )}
+        />
       ),
     },
     {

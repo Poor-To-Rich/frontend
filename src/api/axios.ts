@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { API_BASE_URL } from '@/api/endpoints';
 import { ResponseDefaultType } from '@/types/responseType';
+import CustomError from '@/utils/CustomError';
 
 const apiClient = (() =>
   axios.create({
@@ -11,32 +12,44 @@ const apiClient = (() =>
     withCredentials: true,
   }))();
 
-export const fetchData = async <RequestType = undefined>(
+apiClient.interceptors.request.use(config => {
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  }
+
+  return config;
+});
+
+export const fetchData = async <RequestType = undefined, ResponseDataType = undefined, ErrorType = unknown>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   endpoint: string,
   data?: RequestType,
   config?: AxiosRequestConfig,
-): Promise<ResponseDefaultType> => {
+): Promise<ResponseDefaultType<ResponseDataType>> => {
   try {
-    let response: AxiosResponse<ResponseDefaultType>;
+    let response: AxiosResponse<ResponseDefaultType<ResponseDataType>>;
+
     switch (method) {
       case 'GET':
-        response = await apiClient.get<ResponseDefaultType>(endpoint, config);
+        response = await apiClient.get(endpoint, config);
         break;
       case 'POST':
-        response = await apiClient.post<ResponseDefaultType>(endpoint, data, config);
+        response = await apiClient.post(endpoint, data, config);
         break;
       case 'PUT':
-        response = await apiClient.put<ResponseDefaultType>(endpoint, data, config);
+        response = await apiClient.put(endpoint, data, config);
         break;
       case 'DELETE':
-        response = await apiClient.delete<ResponseDefaultType>(endpoint);
+        response = await apiClient.delete(endpoint);
         break;
       default:
         throw new Error('Invalid HTTP method');
     }
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.message || error.message || 'An unknown error occurred');
+    throw new CustomError<ErrorType>(
+      error.response?.data?.message || error.message || 'An unknown error occurred',
+      error.response?.data.data,
+    );
   }
 };

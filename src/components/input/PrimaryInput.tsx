@@ -1,4 +1,4 @@
-import { ErrorMessageType, VerifyButtonType } from '@/types/types';
+import { VerifyButtonType } from '@/types/types';
 import { forwardRef } from 'react';
 import VerifyButton from '@/components/button/VerifyButton';
 import clsx from 'clsx';
@@ -11,7 +11,7 @@ interface PrimaryInputProps {
   buttonLabel?: VerifyButtonType;
   handleClick?: () => void;
   successMessage?: string;
-  errorMessage?: ErrorMessageType;
+  errorMessage?: string;
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
@@ -19,6 +19,8 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
     { label, isRequired, hasCheckIcon, buttonLabel, successMessage, errorMessage, handleClick, readOnly, ...rest },
     ref,
   ) => {
+    const message = successMessage || errorMessage;
+
     return (
       <label
         className={clsx(
@@ -52,10 +54,16 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
             </div>
             {buttonLabel && <VerifyButton type="button" label={buttonLabel} onClick={handleClick} />}
           </div>
-          {typeof errorMessage === 'string' && (
-            <span className="w-fit h-fit text-sm text-sunsetRose">{errorMessage}</span>
+          {message && (
+            <p
+              className={clsx(
+                errorMessage && 'text-sunsetRose',
+                successMessage && 'text-oliveGreen',
+                'w-fit h-fit text-sm mt-1.5',
+              )}>
+              {message}
+            </p>
           )}
-          {successMessage && <span className="w-fit h-fit text-sm text-oliveGreen">{successMessage}</span>}
         </div>
       </label>
     );
