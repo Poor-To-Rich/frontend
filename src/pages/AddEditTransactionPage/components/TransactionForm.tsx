@@ -43,7 +43,7 @@ const TransactionForm = ({ type }: Props) => {
         label="날짜"
         isRequired
         type="date"
-        message={errors.date?.message}
+        errorMessage={errors.date?.message}
         {...register('date')}
         onChange={e => {
           const currentDate = new Date(e.target.value);
@@ -53,7 +53,7 @@ const TransactionForm = ({ type }: Props) => {
 
           setCalenderDate(currentDate);
           setMainHeaderDate(currentDate);
-          setValue('customIteration.ends.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
+          setValue('customIteration.end.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
           setValue('customIteration.iterationRule.daysOfWeek', [koreanDay]);
           setValue('customIteration.iterationRule.monthlyOption.day', getDate(currentDate));
           setValue('customIteration.iterationRule.monthlyOption.week', getKoreanWeekOfMonth(currentDate));
@@ -68,7 +68,7 @@ const TransactionForm = ({ type }: Props) => {
         hasEditButton
         {...register('categoryName')}
       />
-      <PrimaryInput label={`${type}명`} type="text" message={errors.title?.message} {...register('title')} />
+      <PrimaryInput label={`${type}명`} type="text" errorMessage={errors.title?.message} {...register('title')} />
       <Controller
         name="cost"
         control={control}
@@ -78,11 +78,12 @@ const TransactionForm = ({ type }: Props) => {
             isRequired
             type="tel"
             inputMode="numeric"
+            pattern="[0-9]*"
             value={formatNumber(costValue)}
             onChange={e => {
               handleCostChange(e.target.value, field.onChange);
             }}
-            message={errors.cost?.message}
+            errorMessage={errors.cost?.message}
           />
         )}
       />

@@ -95,7 +95,7 @@ const AddEditTransactionPage = () => {
       customIteration: {
         iterationRule: iterationRuleDefaults,
         interval: 1,
-        ends: {
+        end: {
           type: 'never',
         },
       },

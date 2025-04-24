@@ -26,6 +26,16 @@
   --color-lightGray: #f6f6f6;
 }
 
+@layer base {
+  :root {
+    font-size: 62.5%;
+  }
+  body {
+    font-family: 'Pretendard', sans-serif;
+    @apply m-0 mx-auto w-full max-w-[500px] h-full min-h-screen text-[1.6rem] shadow-md;
+  }
+}
+
 @layer utilities {
   .text-xs {
     font-size: 0.8rem;
@@ -73,27 +83,20 @@
   }
 }
 
-:root {
-  font-size: 62.5%;
-
-  body {
-    font-family: 'Pretendard', sans-serif;
-    @apply m-0 mx-auto w-full max-w-[500px] h-full min-h-screen text-[1.6rem] shadow-md;
+@layer components {
+  .header-common {
+    @apply w-full h-[4.5rem] sticky top-0 flex justify-center items-center bg-white border-b border-strokeGray font-bold z-10;
   }
-}
 
-.header-common {
-  @apply w-full h-[4.5rem] sticky top-0 flex justify-center items-center bg-white border-b border-strokeGray font-bold z-10;
-}
+  .input-common {
+    @apply w-full border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
+  }
 
-.input-common {
-  @apply flex-1 min-w-0 border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
-}
+  .profileImage-icon-common {
+    @apply absolute -right-3 -bottom-3 w-[3.2rem] h-[3.3rem] rounded-full bg-strokeGray flex items-center justify-center;
+  }
 
-.profileImage-icon-common {
-  @apply absolute -right-3 -bottom-3 w-[3.2rem] h-[3.3rem] rounded-full bg-strokeGray flex items-center justify-center;
-}
-
-.category-common {
-  @apply flex w-full items-center justify-between px-5;
+  .category-common {
+    @apply flex w-full items-center justify-between px-5;
+  }
 }

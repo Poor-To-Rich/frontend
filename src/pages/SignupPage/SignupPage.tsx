@@ -7,18 +7,25 @@ import ProfileImageInput from '@/components/input/ProfileImageInput';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/schemas/authSchema';
-import { z } from 'zod';
+import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplication';
+import { SignupFormType } from '@/types/authTypes';
+import { useFieldStatus } from '@/hooks/useFieldStatus';
+import useCheckNicknameDuplication from '@/hooks/auth/useCheckNicknameDuplication';
+import useSendEmail from '@/hooks/auth/useSendEmail';
+import useVerifyEmail from '@/hooks/auth/useVerifyEmail';
+import useSignup from '@/hooks/auth/useSignup';
 
 const SignupPage = () => {
-  type SignupData = z.infer<typeof signupSchema>;
-
   const {
+    register,
     control,
+    getValues,
+    setError,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignupData>({
+  } = useForm<SignupFormType>({
     defaultValues: {
-      profileImage: '',
+      profileImage: undefined,
       name: '',
       nickname: '',
       username: '',
@@ -26,6 +33,7 @@ const SignupPage = () => {
       confirmPassword: '',
       birth: '',
       email: '',
+      verificationCode: 0,
       gender: GENDER_OPTIONS[0].value,
       job: JOB_OPTIONS[0].value,
     },
@@ -33,8 +41,73 @@ const SignupPage = () => {
     mode: 'onChange',
   });
 
-  const onSubmit = (data: SignupData) => {
-    console.log(data);
+  const { status: nicknameStatus, setStatus: setNicknameStatus, resetStatus: resetNicknameStatus } = useFieldStatus();
+  const { status: usernameStatus, setStatus: setUsernameStatus, resetStatus: resetUsernameStatus } = useFieldStatus();
+  const {
+    status: sendEmailStatus,
+    setStatus: setSendEmailStatus,
+    resetStatus: resetSendEmailStatus,
+  } = useFieldStatus();
+  const {
+    status: emailCodeStatus,
+    setStatus: setEmailCodeStatus,
+    resetStatus: resetEmailCodeStatus,
+  } = useFieldStatus();
+
+  const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
+  const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
+  const { mutate: sendEmail } = useSendEmail({ setError, setFieldStatus: setSendEmailStatus });
+  const { mutate: verifyCode } = useVerifyEmail({ setError, setFieldStatus: setEmailCodeStatus });
+  const { mutate: signup, isPending } = useSignup({ setError });
+
+  const buttonDisabled =
+    !isValid ||
+    Object.keys(errors).length > 0 ||
+    !nicknameStatus.isVerify ||
+    !usernameStatus.isVerify ||
+    !sendEmailStatus.isVerify ||
+    !emailCodeStatus.isVerify;
+
+  const onSubmit = (data: SignupFormType) => {
+    const { confirmPassword, verificationCode, ...postData } = data;
+    const formData = new FormData();
+    Object.entries(postData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    if (!isPending) signup(formData);
+  };
+
+  const handleNicknameDuplication = () => {
+    const nicknameError = errors.nickname;
+    const nickname = getValues('nickname');
+    if (nickname && !nicknameError) {
+      checkNickname({ nickname });
+    }
+  };
+
+  const handleUsernameDuplication = () => {
+    const usernameError = errors.username;
+    const username = getValues('username');
+    if (username && !usernameError) {
+      checkUsername({ username });
+    }
+  };
+
+  const handleEmailSend = () => {
+    const emailError = errors.email;
+    const email = getValues('email');
+    if (email && !emailError && !emailCodeStatus.isVerify) {
+      sendEmail({ email, purpose: 'register' });
+    }
+  };
+
+  const handleEmailCode = () => {
+    const { email: emailError, verificationCode: codeError } = errors;
+    const email = getValues('email');
+    const verificationCode = getValues('verificationCode');
+    if (email && verificationCode && !emailError && !codeError && !emailCodeStatus.isVerify) {
+      verifyCode({ email, purpose: 'register', verificationCode });
+    }
   };
 
   return (
@@ -45,89 +118,108 @@ const SignupPage = () => {
           <Controller name="profileImage" control={control} render={({ field }) => <ProfileImageInput {...field} />} />
         </div>
         <div className="flex flex-col gap-3 my-15">
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="이름" isRequired type="text" message={errors.name?.message} />
-            )}
+          <PrimaryInput {...register('name')} label="이름" isRequired type="text" errorMessage={errors.name?.message} />
+          <PrimaryInput
+            {...register('nickname')}
+            label="닉네임"
+            isRequired
+            type="text"
+            buttonLabel="중복확인"
+            onChange={e => {
+              register('nickname').onChange(e);
+              resetNicknameStatus();
+            }}
+            hasCheckIcon={nicknameStatus.isVerify}
+            errorMessage={errors.nickname?.message}
+            successMessage={nicknameStatus.message}
+            handleClick={handleNicknameDuplication}
+          />
+          <PrimaryInput
+            {...register('username')}
+            label="아이디"
+            isRequired
+            type="text"
+            buttonLabel="중복확인"
+            onChange={e => {
+              register('username').onChange(e);
+              resetUsernameStatus();
+            }}
+            hasCheckIcon={usernameStatus.isVerify}
+            errorMessage={errors.username?.message}
+            successMessage={usernameStatus.message}
+            handleClick={handleUsernameDuplication}
+          />
+          <PrimaryInput
+            {...register('password')}
+            label="비밀번호"
+            isRequired
+            type="password"
+            errorMessage={errors.password?.message}
+          />
+          <PrimaryInput
+            {...register('confirmPassword')}
+            label="비밀번호 재입력"
+            isRequired
+            type="password"
+            errorMessage={errors.confirmPassword?.message}
+          />
+          <PrimaryInput
+            {...register('birth')}
+            label="생년월일"
+            isRequired
+            type="text"
+            errorMessage={errors.birth?.message}
+          />
+          <PrimaryInput
+            {...register('email')}
+            label="이메일"
+            isRequired
+            readOnly={emailCodeStatus.isVerify}
+            type="email"
+            onChange={e => {
+              register('email').onChange(e);
+              resetSendEmailStatus();
+            }}
+            errorMessage={errors.email?.message}
+            successMessage={sendEmailStatus.message}
+            handleClick={handleEmailSend}
+            buttonLabel={sendEmailStatus.isVerify ? '재발급' : '인증'}
           />
           <Controller
-            name="nickname"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="닉네임" isRequired type="text" message={errors.nickname?.message} />
-            )}
-          />
-          <Controller
-            name="username"
+            name="verificationCode"
             control={control}
             render={({ field }) => (
               <PrimaryInput
-                {...field}
-                label="아이디"
+                label="인증 코드"
                 isRequired
-                type="text"
-                buttonLabel="중복확인"
-                message={errors.username?.message}
+                readOnly={!sendEmailStatus.isVerify || emailCodeStatus.isVerify}
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                minLength={6}
+                maxLength={6}
+                value={field.value === 0 ? '' : field.value}
+                onChange={e => {
+                  const value = e.target.value;
+
+                  if (/^\d*$/.test(value)) {
+                    field.onChange(Number(value));
+                    resetEmailCodeStatus();
+                  }
+                }}
+                hasCheckIcon={emailCodeStatus.isVerify}
+                errorMessage={errors.verificationCode?.message}
+                successMessage={emailCodeStatus.message}
+                handleClick={handleEmailCode}
+                buttonLabel="확인"
               />
             )}
           />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="비밀번호" isRequired type="password" message={errors.password?.message} />
-            )}
-          />
-          <Controller
-            name="confirmPassword"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput
-                {...field}
-                label="비밀번호 재입력"
-                isRequired
-                type="password"
-                message={errors.confirmPassword?.message}
-              />
-            )}
-          />
-          <Controller
-            name="birth"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput {...field} label="생년월일" isRequired type="text" message={errors.birth?.message} />
-            )}
-          />
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <PrimaryInput
-                {...field}
-                label="이메일"
-                isRequired
-                type="email"
-                buttonLabel="인증"
-                message={errors.email?.message}
-              />
-            )}
-          />
-          <PrimaryInput label="인증 코드" isRequired type="text" buttonLabel="확인" />
-          <Controller
-            name="gender"
-            control={control}
-            render={({ field }) => <SelectBox {...field} label="성별" isRequired options={GENDER_OPTIONS} />}
-          />
-          <Controller
-            name="job"
-            control={control}
-            render={({ field }) => <SelectBox {...field} label="직업" options={JOB_OPTIONS} />}
-          />
+          <SelectBox {...register('gender')} label="성별" isRequired options={GENDER_OPTIONS} />
+          <SelectBox {...register('job')} label="직업" options={JOB_OPTIONS} />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="회원가입" type="submit" disabled={!isValid} />
+          <PrimaryButton label="회원가입" type="submit" isPending={isPending} disabled={buttonDisabled} />
         </div>
       </form>
     </div>

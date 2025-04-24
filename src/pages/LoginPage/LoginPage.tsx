@@ -1,13 +1,16 @@
 import SignButton from '@/components/button/SignButton';
 import Logo from '/image/Logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import FloatingLabelInput from '@/pages/LoginPage/components/FloatingLabelInput';
 import { z } from 'zod';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schemas/authSchema';
+import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
+  const location = useLocation();
   const navigate = useNavigate();
 
   type FormData = z.infer<typeof loginSchema>;
@@ -24,6 +27,14 @@ const LoginPage = () => {
   const onSubmit = (data: FormData) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    const message = location.state?.successMessage;
+    if (message) {
+      toast.success(message);
+      window.history.replaceState({}, document.title);
+    }
+  }, []);
 
   return (
     <div className="flex flex-col h-screen items-center justify-center gap-36 bg-vanillaCream">

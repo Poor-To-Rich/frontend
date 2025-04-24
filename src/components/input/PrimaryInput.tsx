@@ -1,37 +1,71 @@
-import { ErrorMessageType, VerifyButtonType } from '@/types/types';
+import { VerifyButtonType } from '@/types/types';
 import { forwardRef } from 'react';
 import VerifyButton from '@/components/button/VerifyButton';
 import clsx from 'clsx';
+import CheckIcon from '@/components/icon/CheckIcon';
 
 interface PrimaryInputProps {
   label: string;
   isRequired?: boolean;
+  hasCheckIcon?: boolean;
   buttonLabel?: VerifyButtonType;
   handleClick?: () => void;
-  message?: ErrorMessageType;
+  successMessage?: string;
+  errorMessage?: string;
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ label, isRequired, buttonLabel, message, handleClick, ...rest }, ref) => {
+  (
+    { label, isRequired, hasCheckIcon, buttonLabel, successMessage, errorMessage, handleClick, readOnly, ...rest },
+    ref,
+  ) => {
+    const message = successMessage || errorMessage;
+
     return (
-      <div className={clsx(message ? 'items-start' : 'items-center', 'w-full flex justify-between ')}>
-        <label className="relative w-fit h-fit">
+      <label
+        className={clsx(
+          errorMessage || successMessage ? 'items-start' : 'items-center',
+          'w-full flex justify-between ',
+        )}>
+        <div className="relative w-fit h-fit">
           <span>{label}</span>
           {isRequired && <span className="text-sunsetRose absolute top-[-0.5rem]">*</span>}
-        </label>
-        <div className="w-3/5">
-          <div className="w-full h-[3.2rem] flex gap-2">
-            <input
-              ref={ref}
-              {...rest}
-              className={clsx(message && 'border-sunsetRose!', 'input-common')}
-              autoComplete="off"
-            />
-            {buttonLabel && <VerifyButton label={buttonLabel} onClick={handleClick} />}
-          </div>
-          {typeof message === 'string' && <span className="w-fit h-fit text-sm text-sunsetRose">{message}</span>}
         </div>
-      </div>
+        <div className="w-3/5">
+          <div className="w-full h-[3.2rem] flex gap-2 relative">
+            <div className="flex grow gap-2 relative">
+              <input
+                ref={ref}
+                readOnly={readOnly}
+                {...rest}
+                className={clsx(
+                  readOnly && 'bg-strokeGray',
+                  successMessage && 'border-oliveGreen!',
+                  errorMessage && 'border-sunsetRose!',
+                  'input-common',
+                )}
+                autoComplete="off"
+              />
+              {hasCheckIcon && (
+                <span className="absolute top-1/2 -translate-y-1/2 right-3">
+                  <CheckIcon color="#a1c377" />
+                </span>
+              )}
+            </div>
+            {buttonLabel && <VerifyButton type="button" label={buttonLabel} onClick={handleClick} />}
+          </div>
+          {message && (
+            <p
+              className={clsx(
+                errorMessage && 'text-sunsetRose',
+                successMessage && 'text-oliveGreen',
+                'w-fit h-fit text-sm mt-1.5',
+              )}>
+              {message}
+            </p>
+          )}
+        </div>
+      </label>
     );
   },
 );
