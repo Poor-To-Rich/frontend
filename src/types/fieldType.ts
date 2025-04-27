@@ -8,13 +8,7 @@ export type FieldStatusType = {
 
 export interface CheckVerifyFieldProps {
   setError: UseFormSetError<SignupFormType>;
-  setFieldStatus: React.Dispatch<React.SetStateAction<FieldStatusType>>;
-}
-
-export interface FieldProps {
-  status: FieldStatusType;
-  setStatus: React.Dispatch<React.SetStateAction<FieldStatusType>>;
-  resetStatus: () => void;
+  setFieldStatus: (status: FieldStatusType) => void;
 }
 
 export type VerifyButtonType = '인증' | '재발급' | '확인' | '중복확인';

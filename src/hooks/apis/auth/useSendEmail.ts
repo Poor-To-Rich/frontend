@@ -1,5 +1,5 @@
 import { getSendEmailCount, sendEmailCode } from '@/api/authService';
-import { CheckVerifyFieldProps } from '@/types/propsTypes';
+import { CheckVerifyFieldProps } from '@/types/fieldType';
 import { useMutation } from '@tanstack/react-query';
 
 const useSendEmail = ({ setError, setFieldStatus }: CheckVerifyFieldProps) => {

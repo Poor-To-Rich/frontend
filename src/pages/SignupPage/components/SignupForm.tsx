@@ -11,13 +11,13 @@ import PrimaryButton from '@/components/button/PrimaryButton';
 import useSignup from '@/hooks/apis/auth/useSignup';
 import { useFormContext } from 'react-hook-form';
 import { SignupFormType } from '@/types/authTypes';
-import useButtonValidation from '@/hooks/field/useButtonValidation';
+import useSignFormValidation from '@/hooks/field/useSignFormValidation';
 
 const SignupForm = () => {
   const { setError, handleSubmit } = useFormContext<SignupFormType>();
 
   const { mutate: signup, isPending } = useSignup({ setError });
-  const { buttonDisabled } = useButtonValidation();
+  const { buttonDisabled } = useSignFormValidation();
 
   const onSubmit = (data: SignupFormType) => {
     const { confirmPassword, verificationCode, ...postData } = data;
