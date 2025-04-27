@@ -1,10 +1,10 @@
-import { SelectOptionsType } from '@/types/types';
 import DropdownIcon from '@/components/icon/DropdownIcon';
 import { ChangeEvent, forwardRef } from 'react';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { ReportType } from '@/types/reportTypes';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { SelectOptionsType } from '@/types/fieldType';
 
 interface SelectBoxProps {
   label?: string;

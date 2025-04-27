@@ -11,6 +11,7 @@ const PasswordField = () => {
     <>
       <PrimaryInput
         {...register('password')}
+        data-testid="password-input"
         label="비밀번호"
         isRequired
         type="password"
@@ -18,6 +19,7 @@ const PasswordField = () => {
       />
       <PrimaryInput
         {...register('confirmPassword')}
+        data-testid="confirm-password-input"
         label="비밀번호 재입력"
         isRequired
         type="password"

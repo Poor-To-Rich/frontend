@@ -1,9 +1,9 @@
-import { VerifyButtonType } from '@/types/types';
 import { forwardRef } from 'react';
 import VerifyButton from '@/components/button/VerifyButton';
 import { clsx } from 'clsx';
 import CheckIcon from '@/components/icon/CheckIcon';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { VerifyButtonType } from '@/types/fieldType';
 
 interface PrimaryInputProps {
   label: string;

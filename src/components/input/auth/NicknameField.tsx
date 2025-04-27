@@ -1,26 +1,15 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
-import useCheckNicknameDuplication from '@/hooks/auth/useCheckNicknameDuplication';
-import { useFieldStatus } from '@/hooks/useFieldStatus';
+import useNicknameVerification from '@/hooks/field/useNicknameVerification ';
 import { useFormContext } from 'react-hook-form';
 
 const NicknameField = () => {
   const {
     register,
-    getValues,
-    setError,
     formState: { errors },
   } = useFormContext();
 
-  const { status: nicknameStatus, setStatus: setNicknameStatus, resetStatus: resetNicknameStatus } = useFieldStatus();
-  const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
+  const { nicknameStatus, resetNicknameStatus, handleNicknameDuplication } = useNicknameVerification();
 
-  const handleNicknameDuplication = () => {
-    const nicknameError = errors.nickname;
-    const nickname = getValues('nickname');
-    if (nickname && !nicknameError) {
-      checkNickname({ nickname });
-    }
-  };
   return (
     <PrimaryInput
       {...register('nickname')}

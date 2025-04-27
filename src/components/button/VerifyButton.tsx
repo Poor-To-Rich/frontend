@@ -1,4 +1,4 @@
-import { VerifyButtonType } from '@/types/types';
+import { VerifyButtonType } from '@/types/fieldType';
 
 interface Props {
   label: VerifyButtonType;

@@ -1,48 +1,22 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
-import useSendEmail from '@/hooks/auth/useSendEmail';
-import useVerifyEmail from '@/hooks/auth/useVerifyEmail';
-import { useFieldStatus } from '@/hooks/useFieldStatus';
+import useEmailVerification from '@/hooks/field/useEmailVerification';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const EmailField = () => {
   const {
     register,
     control,
-    getValues,
-    setError,
     formState: { errors },
   } = useFormContext();
 
   const {
-    status: sendEmailStatus,
-    setStatus: setSendEmailStatus,
-    resetStatus: resetSendEmailStatus,
-  } = useFieldStatus();
-  const {
-    status: emailCodeStatus,
-    setStatus: setEmailCodeStatus,
-    resetStatus: resetEmailCodeStatus,
-  } = useFieldStatus();
-
-  const { mutate: sendEmail } = useSendEmail({ setError, setFieldStatus: setSendEmailStatus });
-  const { mutate: verifyCode } = useVerifyEmail({ setError, setFieldStatus: setEmailCodeStatus });
-
-  const handleEmailSend = () => {
-    const emailError = errors.email;
-    const email = getValues('email');
-    if (email && !emailError && !emailCodeStatus.isVerify) {
-      sendEmail({ email, purpose: 'register' });
-    }
-  };
-
-  const handleEmailCode = () => {
-    const { email: emailError, verificationCode: codeError } = errors;
-    const email = getValues('email');
-    const verificationCode = getValues('verificationCode');
-    if (email && verificationCode && !emailError && !codeError && !emailCodeStatus.isVerify) {
-      verifyCode({ email, purpose: 'register', verificationCode });
-    }
-  };
+    sendEmailStatus,
+    emailCodeStatus,
+    resetSendEmailStatus,
+    resetEmailCodeStatus,
+    handleEmailSend,
+    handleEmailCode,
+  } = useEmailVerification();
 
   return (
     <>
@@ -66,6 +40,7 @@ const EmailField = () => {
         control={control}
         render={({ field }) => (
           <PrimaryInput
+            data-testid="verification-code-input"
             label="인증 코드"
             isRequired
             readOnly={!sendEmailStatus.isVerify || emailCodeStatus.isVerify}
@@ -84,7 +59,7 @@ const EmailField = () => {
               }
             }}
             hasCheckIcon={emailCodeStatus.isVerify}
-            errorMessage={errors.email?.message}
+            errorMessage={errors.verificationCode?.message}
             successMessage={emailCodeStatus.message}
             handleClick={handleEmailCode}
             buttonLabel="확인"

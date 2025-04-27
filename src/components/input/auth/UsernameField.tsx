@@ -1,26 +1,15 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
-import useCheckUsernameDuplication from '@/hooks/auth/useCheckUsernameDuplication';
-import { useFieldStatus } from '@/hooks/useFieldStatus';
+import useUsernameVerification from '@/hooks/field/useUsernameVerification';
+
 import { useFormContext } from 'react-hook-form';
 
 const UsernameField = () => {
   const {
     register,
-    getValues,
-    setError,
     formState: { errors },
   } = useFormContext();
 
-  const { status: usernameStatus, setStatus: setUsernameStatus, resetStatus: resetUsernameStatus } = useFieldStatus();
-  const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
-
-  const handleUsernameDuplication = () => {
-    const usernameError = errors.username;
-    const username = getValues('username');
-    if (username && !usernameError) {
-      checkUsername({ username });
-    }
-  };
+  const { usernameStatus, resetUsernameStatus, handleUsernameDuplication } = useUsernameVerification();
 
   return (
     <PrimaryInput

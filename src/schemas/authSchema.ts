@@ -25,6 +25,7 @@ export const baseSignupSchema = loginSchema.extend({
   name: z
     .string()
     .min(1, { message: '값을 입력해주세요' })
+    .min(2, { message: '두글자 이상 입력해주세요' })
     .max(10, { message: '최대 10자입니다' })
     .regex(koreanOnlyRegex, '한글만 가능합니다'),
   nickname: z
