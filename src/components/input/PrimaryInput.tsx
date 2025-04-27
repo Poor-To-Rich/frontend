@@ -1,8 +1,9 @@
 import { VerifyButtonType } from '@/types/types';
 import { forwardRef } from 'react';
 import VerifyButton from '@/components/button/VerifyButton';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import CheckIcon from '@/components/icon/CheckIcon';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
 interface PrimaryInputProps {
   label: string;
@@ -11,7 +12,7 @@ interface PrimaryInputProps {
   buttonLabel?: VerifyButtonType;
   handleClick?: () => void;
   successMessage?: string;
-  errorMessage?: string;
+  errorMessage?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
@@ -54,7 +55,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
             </div>
             {buttonLabel && <VerifyButton type="button" label={buttonLabel} onClick={handleClick} />}
           </div>
-          {message && (
+          {typeof message === 'string' && message && (
             <p
               className={clsx(
                 errorMessage && 'text-sunsetRose',
