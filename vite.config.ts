@@ -9,9 +9,18 @@ import fs from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const vitestConfig = {
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTest.ts',
+  },
+};
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
+
   css: {
     postcss: {
       plugins: [tailwindcss()],
@@ -30,4 +39,5 @@ export default defineConfig({
           cert: fs.readFileSync(path.resolve(__dirname, 'localhost+2.pem')),
         },
   },
+  ...vitestConfig,
 });

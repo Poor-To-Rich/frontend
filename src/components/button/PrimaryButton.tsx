@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {

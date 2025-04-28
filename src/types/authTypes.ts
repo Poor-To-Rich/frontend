@@ -1,11 +1,6 @@
 import { z } from 'zod';
 import { signupSchema } from '@/schemas/authSchema';
 
-export type FieldStatusType = {
-  message: string | undefined;
-  isVerify: boolean;
-};
-
 export type SignupFormType = z.infer<typeof signupSchema>;
 
 export type UsernameDuplicationReq = {

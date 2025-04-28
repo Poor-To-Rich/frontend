@@ -1,6 +1,6 @@
 import { signup } from '@/api/authService';
 import { SignupFormType } from '@/types/authTypes';
-import { CheckVerifyFieldProps } from '@/types/propsTypes';
+import { CheckVerifyFieldProps } from '@/types/fieldType';
 import CustomError from '@/utils/CustomError';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
