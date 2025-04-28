@@ -1,5 +1,6 @@
 import useCheckNicknameDuplication from '@/hooks/apis/auth/useCheckNicknameDuplication';
 import { useNicknameFieldStore } from '@/stores/fields/useNicknameFieldStore';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const useNicknameVerification = () => {
@@ -19,6 +20,10 @@ const useNicknameVerification = () => {
       checkNickname({ nickname });
     }
   };
+
+  useEffect(() => {
+    return () => resetNicknameStatus();
+  }, []);
 
   return { nicknameStatus, resetNicknameStatus, handleNicknameDuplication };
 };

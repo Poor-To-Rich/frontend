@@ -1,6 +1,7 @@
 import useSendEmail from '@/hooks/apis/auth/useSendEmail';
 import useVerifyEmail from '@/hooks/apis/auth/useVerifyEmail';
 import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const useEmailVerification = () => {
@@ -38,6 +39,13 @@ const useEmailVerification = () => {
       verifyCode({ email, purpose: 'register', verificationCode });
     }
   };
+
+  useEffect(() => {
+    return () => {
+      resetEmailCodeStatus();
+      resetSendEmailStatus();
+    };
+  }, []);
 
   return {
     sendEmailStatus,

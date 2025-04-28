@@ -2,21 +2,22 @@ import { SendEmailReq } from '@/types/authTypes';
 import { emailPurposeList } from '@/types/authTypes';
 import { emailRegex } from '@/utils/regex';
 import { HttpResponse } from 'msw';
+import { DUPLICATE_EMAIL_MSG, NOT_VALID_PURPOSE, WRONG_EMAIL_MSG } from '@/mocks//constants/email';
 
 export const checkCommonEmailErrors = ({
   email,
   purpose,
 }: Pick<SendEmailReq, 'email' | 'purpose'>): Response | null => {
   if (!emailPurposeList.includes(purpose)) {
-    return HttpResponse.json({ status: 400, message: '유효하지 않은 인증 목적입니다.' }, { status: 409 });
+    return HttpResponse.json({ status: 400, message: NOT_VALID_PURPOSE }, { status: 409 });
   }
 
   if (!emailRegex.test(email)) {
-    return HttpResponse.json({ status: 400, message: '잘못된 이메일 형식입니다.' }, { status: 409 });
+    return HttpResponse.json({ status: 400, message: WRONG_EMAIL_MSG }, { status: 409 });
   }
 
   if (email === 'existing@example.com') {
-    return HttpResponse.json({ status: 400, message: '이미 사용중인 이메일입니다.' }, { status: 409 });
+    return HttpResponse.json({ status: 400, message: DUPLICATE_EMAIL_MSG }, { status: 409 });
   }
 
   if (email === 'retrySending@example.com') {

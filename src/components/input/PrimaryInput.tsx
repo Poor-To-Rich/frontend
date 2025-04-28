@@ -53,7 +53,9 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
                 </span>
               )}
             </div>
-            {buttonLabel && <VerifyButton type="button" label={buttonLabel} onClick={handleClick} />}
+            {buttonLabel && (
+              <VerifyButton data-testid="verify-button" type="button" label={buttonLabel} onClick={handleClick} />
+            )}
           </div>
           {typeof message === 'string' && message && (
             <p

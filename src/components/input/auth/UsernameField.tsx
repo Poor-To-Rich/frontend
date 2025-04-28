@@ -14,6 +14,7 @@ const UsernameField = () => {
   return (
     <PrimaryInput
       {...register('username')}
+      data-testid="username-input"
       label="아이디"
       isRequired
       type="text"

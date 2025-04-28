@@ -22,6 +22,7 @@ const EmailField = () => {
     <>
       <PrimaryInput
         {...register('email')}
+        data-testid="email-input"
         label="이메일"
         isRequired
         readOnly={emailCodeStatus.isVerify}
@@ -38,6 +39,7 @@ const EmailField = () => {
       <Controller
         name="verificationCode"
         control={control}
+        defaultValue=""
         render={({ field }) => (
           <PrimaryInput
             data-testid="verification-code-input"

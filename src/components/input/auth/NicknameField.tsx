@@ -13,6 +13,7 @@ const NicknameField = () => {
   return (
     <PrimaryInput
       {...register('nickname')}
+      data-testid="nickname-input"
       label="닉네임"
       isRequired
       type="text"

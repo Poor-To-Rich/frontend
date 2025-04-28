@@ -31,15 +31,6 @@ const useSignFormValidation = () => {
     emailCodeStatus.isVerify,
   ]);
 
-  useEffect(() => {
-    return () => {
-      resetNicknameStatus();
-      resetUsernameStatus();
-      resetSendEmailStatus();
-      resetEmailCodeStatus();
-    };
-  }, []);
-
   return { buttonDisabled };
 };
 

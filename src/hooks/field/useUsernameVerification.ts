@@ -1,5 +1,6 @@
 import useCheckUsernameDuplication from '@/hooks/apis/auth/useCheckUsernameDuplication';
 import { useUsernameFieldStore } from '@/stores/fields/useUsernameFieldStore';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const useUsernameVerification = () => {
@@ -19,6 +20,10 @@ const useUsernameVerification = () => {
       checkUsername({ username });
     }
   };
+
+  useEffect(() => {
+    return () => resetUsernameStatus();
+  }, []);
 
   return { usernameStatus, resetUsernameStatus, handleUsernameDuplication };
 };
