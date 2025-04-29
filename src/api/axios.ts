@@ -4,7 +4,7 @@ import CustomError from '@/utils/CustomError';
 
 const apiClient = (() =>
   axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
+    baseURL: import.meta.env.DEV ? '' : import.meta.env.VITE_API_BASE_URL,
     headers: {
       'Content-Type': 'application/json',
     },

@@ -1,6 +1,6 @@
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import { ITERATION_CYCLE } from '@/constants/repeatSchedule';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import CheckIcon from '@/components/icon/CheckIcon';
 import { IterationCycleValue } from '@/types/iterationTypes';
 import { useFormContext } from 'react-hook-form';

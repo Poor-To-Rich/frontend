@@ -1,7 +1,7 @@
 import { OverviewLogType } from '@/types/types';
 import { monthDayFormatter } from '@/utils/date';
 import { formatSignedNumber } from '@/utils/number';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 interface Props {
   type: 'month' | 'week';

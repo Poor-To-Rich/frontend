@@ -1,5 +1,5 @@
 import { TransactionType } from '@/types/transactionTypes';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { addDays, differenceInCalendarDays, endOfMonth, endOfWeek, startOfMonth, startOfWeek } from 'date-fns';
 import DayWithData from '@/pages/MainPage/components/calender/DayWithData';
 import { isSameDate } from '@/utils/date';

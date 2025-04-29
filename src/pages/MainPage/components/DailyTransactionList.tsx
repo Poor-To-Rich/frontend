@@ -1,6 +1,6 @@
 import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem';
 import { TransactionItemType } from '@/types/transactionTypes';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 interface Props {
   transactions: TransactionItemType[];

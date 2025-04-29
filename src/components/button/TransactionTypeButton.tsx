@@ -1,6 +1,6 @@
 import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { useEffect } from 'react';
 
 const TransactionTypeButton = () => {

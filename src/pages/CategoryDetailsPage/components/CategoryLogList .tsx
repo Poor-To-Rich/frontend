@@ -1,7 +1,7 @@
 import SortingButton from '@/components/button/icon/SortingButton';
 import { useState } from 'react';
 import { formatNumber } from '@/utils/number';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {

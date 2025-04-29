@@ -6,6 +6,7 @@ import {
   UsernameDuplicationReq,
   VerifyEmailCodeReq,
   EmailCountRes,
+  LoginFormType,
 } from '@/types/authTypes';
 
 export const checkUsernameDuplication = async ({ username }: UsernameDuplicationReq) => {
@@ -48,5 +49,10 @@ export const getVerifyEmailCodeCount = async (email: string) => {
 
 export const signup = async (body: FormData) => {
   const res = await fetchData<FormData, undefined, { field: string }>('POST', endpoints.auth.signup, body);
+  return res;
+};
+
+export const login = async (body: LoginFormType) => {
+  const res = await fetchData<LoginFormType, undefined>('POST', endpoints.auth.login, body);
   return res;
 };

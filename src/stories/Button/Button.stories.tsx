@@ -7,7 +7,7 @@ import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/TransactionTypeButton';
-import SignButton from '@/components/button/SignButton';
+import SignButton from '@/pages/LoginPage/components/SignButton';
 import ToggleSwitch from '@/components/button/ToggleSwitch';
 import VerifyButton from '@/components/button/VerifyButton';
 import type { Meta, StoryObj } from '@storybook/react';
