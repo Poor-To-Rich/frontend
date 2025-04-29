@@ -1,6 +1,6 @@
 import { formatSignedNumber } from '@/utils/number';
 import SummeryItem from '@/components/summary/SummeryItem';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 interface Props {
   income: number;

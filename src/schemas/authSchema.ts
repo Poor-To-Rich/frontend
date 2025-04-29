@@ -12,20 +12,22 @@ const passwordSchema = z
   .regex(passwordRegex, '대문자 ,소문자 , 숫자, 특수문자가 각각 하나 이상 포함되어야 합니다');
 
 export const loginSchema = z.object({
+  username: z.string({ message: '아이디를 입력해주세요.' }).min(1, { message: '아이디를 입력해주세요.' }),
+  password: z.string({ message: '비밀번호를 입력해주세요.' }).min(1, { message: '비밀번호를 입력해주세요.' }),
+});
+
+export const baseSignupSchema = z.object({
+  profileImage: z.string().optional(),
   username: z
     .string()
     .min(4, { message: '아이디는 최소 4자 이상입니다' })
     .max(10, { message: '아이디는 최대 10자 입니다' })
     .regex(userNameRegex, '영문자 숫자만 가능합니다'),
   password: passwordSchema,
-});
-
-export const baseSignupSchema = loginSchema.extend({
-  profileImage: z.string().optional(),
   name: z
     .string()
     .min(1, { message: '값을 입력해주세요' })
-    .min(2, { message: '두글자 이상 입력해주세요' })
+    .min(2, { message: '두 글자 이상 입력해주세요' })
     .max(10, { message: '최대 10자입니다' })
     .regex(koreanOnlyRegex, '한글만 가능합니다'),
   nickname: z

@@ -1,5 +1,5 @@
 import { IncomeExpenseButtonType } from '@/types/transactionTypes';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 interface Props {
   type: IncomeExpenseButtonType;

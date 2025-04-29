@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import { CUSTOM_ITERATION_CYCLE } from '@/constants/repeatSchedule';
 import { Controller, useFormContext } from 'react-hook-form';
 import { TransactionFormData } from '@/types/transactionTypes';

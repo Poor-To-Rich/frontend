@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 import IterationIcon from '@/components/icon/IterationIcon';
 import { Link } from 'react-router-dom';
 import { TransactionItemType } from '@/types/transactionTypes';

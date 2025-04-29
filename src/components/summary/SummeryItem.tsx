@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 interface Props {
   label: '수입' | '지출' | '합계';

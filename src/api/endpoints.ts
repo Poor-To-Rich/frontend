@@ -1,5 +1,3 @@
-export const API_BASE_URL = '';
-
 export const endpoints = {
   auth: {
     signup: '/register',

@@ -1,5 +1,5 @@
 import { TapBarType } from '@/types/types';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 interface Props {
   currentTap: TapBarType;

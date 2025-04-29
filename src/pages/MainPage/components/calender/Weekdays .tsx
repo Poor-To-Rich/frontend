@@ -1,5 +1,5 @@
 import { DAYS } from '@/constants/days';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 const Weekdays = () => {
   return (
