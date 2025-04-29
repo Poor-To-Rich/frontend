@@ -1,11 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { API_BASE_URL } from '@/api/endpoints';
 import { ResponseDefaultType } from '@/types/responseType';
 import CustomError from '@/utils/CustomError';
 
 const apiClient = (() =>
   axios.create({
-    baseURL: API_BASE_URL,
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     headers: {
       'Content-Type': 'application/json',
     },

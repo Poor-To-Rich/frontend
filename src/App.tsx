@@ -17,10 +17,10 @@ import ChartPage from '@/pages/ChartPage/ChartPage';
 import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage';
 import ScrollToUp from '@/utils/ScrollToUp';
 
-if (import.meta.env.DEV) {
-  const { worker } = await import('@/mocks/browser');
-  await worker.start();
-}
+// if (import.meta.env.DEV) {
+//   const { worker } = await import('@/mocks/browser');
+//   await worker.start();
+// }
 
 function App() {
   return (
