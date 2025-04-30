@@ -18,6 +18,7 @@ const SignButton = ({ label, onClick, isPending, disabled, type = 'button' }: Pr
         label === '회원가입' && 'bg-pinkRed text-sunsetRose',
       )}
       type={type}
+      disabled={isPending}
       onClick={onClick}>
       {isPending ? <LoadingSpinner size={18} /> : label}
     </button>

@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ResponseDefaultType } from '@/types/responseType';
 import CustomError from '@/utils/CustomError';
+import { tokenManager } from '@/utils/tokenManager';
 
 const apiClient = (() =>
   axios.create({
@@ -12,6 +13,12 @@ const apiClient = (() =>
   }))();
 
 apiClient.interceptors.request.use(config => {
+  const token = tokenManager.getToken();
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
   if (config.data instanceof FormData) {
     delete config.headers['Content-Type'];
   }

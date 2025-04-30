@@ -16,7 +16,7 @@ const PrimaryButton = ({ label, isPending, disabled, onClick, type = 'button' }:
         'w-fit min-w-[12rem] h-[3.6rem] flex justify-center items-center rounded-lg text-md cursor-pointer relative',
         disabled ? 'text-defaultGrey bg-strokeGray' : 'bg-pastelLime text-oliveGreen',
       )}
-      disabled={disabled}
+      disabled={isPending}
       type={type}
       onClick={onClick}>
       {isPending ? <LoadingSpinner size={20} /> : label}

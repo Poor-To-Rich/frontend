@@ -14,6 +14,9 @@ export const loginHandlers = [
         {
           status: 200,
           message: LOGIN_SUCCESS_MSG,
+          data: {
+            accessToken: 'accessToken',
+          },
         },
         { status: 200 },
       );
