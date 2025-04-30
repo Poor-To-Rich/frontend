@@ -23,6 +23,6 @@ export type VerifyEmailCodeReq = SendEmailReq & { verificationCode: number };
 
 export type LoginFormType = z.infer<typeof loginSchema>;
 
-export type LoginRes = {
+export type TokenRes = {
   accessToken: string;
 };

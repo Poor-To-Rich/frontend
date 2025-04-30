@@ -7,8 +7,9 @@ import {
   VerifyEmailCodeReq,
   EmailCountRes,
   LoginFormType,
-  LoginRes,
+  TokenRes,
 } from '@/types/authTypes';
+import { tokenManager } from '@/utils/tokenManager';
 
 export const checkUsernameDuplication = async ({ username }: UsernameDuplicationReq) => {
   const res = await fetchData<UsernameDuplicationReq>('POST', endpoints.auth.checkUsernameDuplicate, {
@@ -54,6 +55,16 @@ export const signup = async (body: FormData) => {
 };
 
 export const login = async (body: LoginFormType) => {
-  const res = await fetchData<LoginFormType, LoginRes>('POST', endpoints.auth.login, body);
+  const res = await fetchData<LoginFormType, TokenRes>('POST', endpoints.auth.login, body);
   return res;
+};
+
+export const refreshToken = async () => {
+  const res = await fetchData<undefined, TokenRes>('POST', endpoints.auth.refreshToken);
+
+  if (res.data) {
+    const newToken = res.data.accessToken;
+    tokenManager.setToken(newToken);
+    return newToken;
+  }
 };

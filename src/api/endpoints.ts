@@ -6,6 +6,7 @@ export const endpoints = {
     deleteUser: '/user/leave',
     checkNicknameDuplicate: '/user/exists/nickname',
     checkUsernameDuplicate: '/user/exists/username',
+    refreshToken: '/auth/refresh',
   },
   email: {
     getEmail: '/user/email',
