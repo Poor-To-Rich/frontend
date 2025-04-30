@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { LoginFormType } from '@/types/authTypes';
 import useLogin from '@/hooks/apis/auth/useLogin';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 const useLoginForm = () => {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const failMessage = searchParams.get('failMessage');
 
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -34,10 +36,18 @@ const useLoginForm = () => {
     });
 
   useEffect(() => {
-    const message = location.state?.successMessage;
-    if (message) {
-      toast.success(message);
+    const successMessage = location.state?.successMessage;
+    if (successMessage) {
+      toast.success(successMessage);
       window.history.replaceState({}, document.title);
+    }
+    if (failMessage) {
+      toast.error(failMessage, {
+        style: {
+          textAlign: 'center',
+        },
+      });
+      window.history.replaceState({}, document.title, location.pathname);
     }
   }, []);
 

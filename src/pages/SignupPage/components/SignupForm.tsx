@@ -25,7 +25,7 @@ const SignupForm = () => {
     Object.entries(postData).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    if (!isPending) signup(formData);
+    signup(formData);
   };
 
   return (

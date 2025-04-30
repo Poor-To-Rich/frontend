@@ -22,3 +22,7 @@ export type EmailCountRes = { remainingAttempts: string };
 export type VerifyEmailCodeReq = SendEmailReq & { verificationCode: number };
 
 export type LoginFormType = z.infer<typeof loginSchema>;
+
+export type TokenRes = {
+  accessToken: string;
+};
