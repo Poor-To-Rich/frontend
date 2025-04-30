@@ -9,7 +9,7 @@ export const createMockToken = (expInSec: number = 60 * 60) => {
   const now = Math.floor(Date.now() / 1000);
   const payload = {
     sub: 'mock-user-id',
-    username: 'woic',
+    username: 'user',
     iat: now,
     exp: now + expInSec,
   };
@@ -17,5 +17,5 @@ export const createMockToken = (expInSec: number = 60 * 60) => {
   return `${encode(header)}.${encode(payload)}.signature`;
 };
 
-export const createMockAccessToken = () => createMockToken(10); // 5분
+export const createMockAccessToken = () => createMockToken(60 * 5); // 5분
 export const createMockRefreshToken = () => createMockToken(60 * 60 * 24 * 7); // 7일
