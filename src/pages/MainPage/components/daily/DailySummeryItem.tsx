@@ -7,7 +7,7 @@ const DailySummeryItem = ({ label, amount }: SummaryItemProps) => {
       <span className="min-w-fit">{label}: </span>
       <span
         className={clsx(
-          'truncate text-sm sm:text-md',
+          'truncate text-md',
           label === '수입' && 'text-oceanBlue',
           label === '지출' && 'text-sunsetRose',
           label === '합계' && 'text-defaultGrey',
