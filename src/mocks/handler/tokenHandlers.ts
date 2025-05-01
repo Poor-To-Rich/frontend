@@ -5,7 +5,7 @@ import { CREATE_TOKEN_SUCCESS_MSG, TOKEN_ERROR_MSG } from '@/mocks/constants/log
 import { isTokenValid } from '@/mocks/utils/checkTokenValid';
 import { createMockAccessToken, createMockRefreshToken } from '@/mocks/utils/createMockToken';
 
-export const tokenHandler = [
+export const tokenHandlers = [
   http.post(endpoints.auth.refreshToken, async () => {
     const token = Cookies.get('refreshToken');
 

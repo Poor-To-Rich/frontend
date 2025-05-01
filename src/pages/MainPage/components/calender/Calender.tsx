@@ -2,8 +2,13 @@ import Weekdays from '@/pages/MainPage/components/calender/Weekdays ';
 import DaysContainer from '@/pages/MainPage/components/calender/DaysContainer';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
+import { TransactionType } from '@/types/transactionTypes';
 
-const Calender = () => {
+interface Props {
+  transactions: TransactionType[];
+}
+
+const Calender = ({ transactions }: Props) => {
   const { mainHeaderDate } = useHeaderDateStore();
   const { calenderDate, setCalenderDate } = useCalenderDateStore();
   const handleDateClick = (date: Date) => {
@@ -17,23 +22,7 @@ const Calender = () => {
         activeDate={calenderDate}
         currentDay={mainHeaderDate}
         handleDateClick={handleDateClick}
-        transactions={[
-          {
-            date: new Date('2025-02-12'),
-            incomesAmount: 150001216546824424,
-            expenseAmount: 30000,
-          },
-          {
-            date: new Date('2025-02-18'),
-            incomesAmount: 15000,
-            expenseAmount: 30000,
-          },
-          {
-            date: new Date('2025-02-28'),
-            incomesAmount: 15000,
-            expenseAmount: 30000,
-          },
-        ]}
+        transactions={transactions}
       />
     </div>
   );

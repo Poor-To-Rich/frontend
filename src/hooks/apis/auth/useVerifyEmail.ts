@@ -1,4 +1,4 @@
-import { getVerifyEmailCodeCount, verifyEmailCode } from '@/api/authService';
+import { getVerifyEmailCodeCount, verifyEmailCode } from '@/api/services/authService';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
 import { useMutation } from '@tanstack/react-query';
 

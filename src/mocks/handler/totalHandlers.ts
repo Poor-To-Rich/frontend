@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { createMockMonthlyTransactions, createRandomAmount } from '../utils/createRandomValue';
 import { format } from 'date-fns';
 
-export const totalHandler = [
+export const totalHandlers = [
   http.get('/report/monthly/total', async ({ request }) => {
     const url = new URL(request.url);
     const date = url.searchParams.get('date');

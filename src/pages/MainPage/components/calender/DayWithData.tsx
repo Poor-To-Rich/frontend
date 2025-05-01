@@ -7,7 +7,10 @@ interface Props {
 
 // 가계부 데이터가 있는 날짜 컴포넌트
 const DayWithData = ({ transactions, targetDate }: Props) => {
-  const transaction = transactions.find(transaction => transaction.date.getDate() === targetDate.getDate());
+  const transaction = transactions.find(transaction => {
+    const dataDay = new Date(transaction.date);
+    return dataDay.getDate() === targetDate.getDate() && dataDay.getMonth() === targetDate.getMonth();
+  });
 
   return (
     transaction && (

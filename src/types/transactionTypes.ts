@@ -2,9 +2,16 @@ import { transactionSchema } from '@/schemas/transactionSchema';
 import { z } from 'zod';
 
 export type TransactionType = {
-  date: Date;
+  date: string;
   incomesAmount: number;
   expenseAmount: number;
+};
+
+export type MonthlyTotalTransactionType = {
+  totalAmount: number;
+  totalIncome: number;
+  totalExpense: number;
+  transactions: TransactionType[];
 };
 
 export type TransactionItemType = {
