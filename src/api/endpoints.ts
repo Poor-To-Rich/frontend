@@ -16,4 +16,10 @@ export const endpoints = {
     getVerifyEmailCodeCount: (email: string) => `/email/verify?email=${email}`,
     getEmailBlockTime: '/email/block',
   },
+  total: {
+    getMonthlyTotal: (date: string) => `/report/monthly/total?date=${date}`,
+  },
+  transaction: {
+    getDailyDetails: (date: string) => `/report/daily/details?date=${date}`,
+  },
 };
