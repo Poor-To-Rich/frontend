@@ -1,4 +1,4 @@
-import { signup } from '@/api/authService';
+import { signup } from '@/api/services/authService';
 import { SignupFormType } from '@/types/authTypes';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
 import CustomError from '@/utils/CustomError';

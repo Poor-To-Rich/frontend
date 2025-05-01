@@ -1,4 +1,4 @@
-import { refreshToken } from '@/api/authService';
+import { refreshToken } from '@/api/services/authService';
 import { tokenManager } from '@/utils/tokenManager';
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';

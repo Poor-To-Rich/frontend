@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ResponseDefaultType } from '@/types/responseType';
 import CustomError from '@/utils/CustomError';
 import { tokenManager } from '@/utils/tokenManager';
-import { refreshToken } from './authService';
+import { refreshToken } from './services/authService';
 import { endpoints } from './endpoints';
 
 const apiClient = (() =>

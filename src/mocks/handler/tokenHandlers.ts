@@ -5,7 +5,7 @@ import { CREATE_TOKEN_SUCCESS_MSG, TOKEN_ERROR_MSG } from '@/mocks/constants/log
 import { isTokenValid } from '@/mocks/utils/checkTokenValid';
 import { createMockAccessToken, createMockRefreshToken } from '@/mocks/utils/createMockToken';
 
-export const tokenHandler = [
+export const tokenHandlers = [
   http.post(endpoints.auth.refreshToken, async () => {
     const token = Cookies.get('refreshToken');
 
@@ -33,6 +33,19 @@ export const tokenHandler = [
     );
   }),
   http.get(endpoints.email.sendEmail, async ({ request }) => {
+    const authHeader = request.headers.get('authorization');
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+
+    if (!isTokenValid(token)) {
+      return HttpResponse.json({ status: 401, message: '액세스 토큰이 만료되었습니다.' }, { status: 401 });
+    }
+  }),
+  http.get('*', async ({ request }) => {
     const authHeader = request.headers.get('authorization');
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {

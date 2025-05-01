@@ -2,9 +2,16 @@ import { transactionSchema } from '@/schemas/transactionSchema';
 import { z } from 'zod';
 
 export type TransactionType = {
-  date: Date;
+  date: string;
   incomesAmount: number;
   expenseAmount: number;
+};
+
+export type MonthlyTotalTransactionType = {
+  totalAmount: number;
+  totalIncome: number;
+  totalExpense: number;
+  transactions: TransactionType[];
 };
 
 export type TransactionItemType = {
@@ -17,6 +24,13 @@ export type TransactionItemType = {
   cost: number;
 };
 
+export type DailyTransactionType = {
+  totalAmount: number;
+  totalIncome: number;
+  totalExpense: number;
+  dailyDetails: TransactionItemType[];
+};
+
 export type WeeklyDetailType = {
   date: Date;
   transactions: TransactionItemType[];
@@ -25,3 +39,8 @@ export type WeeklyDetailType = {
 export type IncomeExpenseButtonType = '지출' | '수입';
 
 export type TransactionFormData = z.infer<typeof transactionSchema>;
+
+export interface SummaryItemProps {
+  label: '수입' | '지출' | '합계';
+  amount: string;
+}

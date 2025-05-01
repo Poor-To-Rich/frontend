@@ -1,4 +1,3 @@
-import { formatSignedNumber } from '@/utils/number';
 import SummeryItem from '@/components/summary/SummeryItem';
 import { clsx } from 'clsx';
 
@@ -28,7 +27,7 @@ const TransactionSummary = ({ income, expense, total, isWeekSummary, startDate, 
         <SummeryItem label="지출" amount={expense.toLocaleString()} />
       </div>
       <div className="w-full flex gap-3.5">
-        <SummeryItem label="합계" amount={formatSignedNumber(total)} />
+        <SummeryItem label="합계" amount={total.toLocaleString()} />
         <div className="w-1/2" />
       </div>
     </div>

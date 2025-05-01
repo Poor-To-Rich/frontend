@@ -1,4 +1,4 @@
-import { login } from '@/api/authService';
+import { login } from '@/api/services/authService';
 import { tokenManager } from '@/utils/tokenManager';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';

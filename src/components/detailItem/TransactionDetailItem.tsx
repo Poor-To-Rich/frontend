@@ -19,7 +19,7 @@ const TransactionDetailItem = ({ id, color, category, title, isIteration, type, 
       </div>
       <span
         className={clsx(
-          'truncate max-w-1/2',
+          'truncate max-w-1/2 text-md sm:text-base',
           type === 'INCOME' && 'text-oceanBlue',
           type === 'EXPENSE' && 'text-sunsetRose',
         )}>
