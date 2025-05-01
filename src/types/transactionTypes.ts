@@ -24,6 +24,11 @@ export type TransactionItemType = {
   cost: number;
 };
 
+export type DailyTransactionType = {
+  totalAmount: number;
+  dailyDetails: TransactionItemType[];
+};
+
 export type WeeklyDetailType = {
   date: Date;
   transactions: TransactionItemType[];

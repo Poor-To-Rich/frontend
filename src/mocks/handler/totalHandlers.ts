@@ -1,9 +1,11 @@
-import { http, HttpResponse } from 'msw';
-import { createMockMonthlyTransactions, createRandomAmount } from '../utils/createRandomValue';
+import { delay, http, HttpResponse } from 'msw';
+import { createMockMonthlyTransactions, createRandomAmount } from '../utils/createMockTransaction';
 import { format } from 'date-fns';
 
 export const totalHandlers = [
   http.get('/report/monthly/total', async ({ request }) => {
+    await delay(3000);
+
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
