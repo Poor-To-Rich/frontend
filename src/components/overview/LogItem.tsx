@@ -1,6 +1,5 @@
 import { OverviewLogType } from '@/types/types';
 import { monthDayFormatter } from '@/utils/date';
-import { formatSignedNumber } from '@/utils/number';
 import { clsx } from 'clsx';
 
 interface Props {
@@ -36,7 +35,7 @@ const LogItem = ({ type, order, log, hasUnderLine, onClick }: Props) => {
           <span className="text-oceanBlue truncate max-w-1/2">{log.totalIncome.toLocaleString()}원</span>
           <span className="text-sunsetRose truncate max-w-1/2">{log.totalExpense.toLocaleString()}원</span>
         </div>
-        <span className="text-defaultGrey truncate">{formatSignedNumber(log.totalBalance)}원</span>
+        <span className="text-defaultGrey truncate">{log.totalBalance.toLocaleString()}원</span>
       </div>
     </button>
   );

@@ -2,9 +2,9 @@ import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem
 import useGetDailyDetails from '@/hooks/apis/transaction/useGetDailyDetails';
 import { clsx } from 'clsx';
 import { useEffect, useState } from 'react';
-import { formatNumber } from '@/utils/number';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
+import DailySummeryItem from '@/pages/MainPage/components/daily/DailySummeryItem';
 
 const DailyTransactionList = () => {
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
@@ -22,16 +22,16 @@ const DailyTransactionList = () => {
   return (
     <div
       className={clsx(
-        isEmpty && 'justify-center',
+        (isEmpty || isPending) && 'justify-center items-center',
         'flex flex-col w-full min-h-[20rem] max-h-[25rem] items-center gap-5 border-t py-5 pb-7 border-strokeGray overflow-y-auto custom-scrollbar',
       )}>
       {isPending ? (
-        <div>로딩중...</div>
+        <span>로딩중...</span>
       ) : isEmpty || !dailyDetails ? (
         <span className="text-defaultGrey">내역이 없습니다.</span>
       ) : (
         <>
-          <div className="w-full flex flex-col items-center gap-2.5 mb-5">
+          <div className="w-full flex flex-col items-center gap-2.5">
             {dailyDetails.dailyDetails.map(({ id, color, category, title, isIteration, type, cost }) => (
               <TransactionDetailItem
                 key={id}
@@ -45,9 +45,10 @@ const DailyTransactionList = () => {
               />
             ))}
           </div>
-          <div className="w-[95%]">
-            <span className="text-[#4c4c4c] text-lg">합계 : </span>
-            <span className="text-defaultGrey ">{formatNumber(dailyDetails.totalAmount)}원</span>
+          <div className="w-[95%] flex flex-col gap-1.5">
+            <DailySummeryItem label="수입" amount={dailyDetails.totalIncome.toLocaleString()} />
+            <DailySummeryItem label="지출" amount={dailyDetails.totalExpense.toLocaleString()} />
+            <DailySummeryItem label="합계" amount={dailyDetails.totalAmount.toLocaleString()} />
           </div>
         </>
       )}

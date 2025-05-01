@@ -26,6 +26,8 @@ export type TransactionItemType = {
 
 export type DailyTransactionType = {
   totalAmount: number;
+  totalIncome: number;
+  totalExpense: number;
   dailyDetails: TransactionItemType[];
 };
 
@@ -37,3 +39,8 @@ export type WeeklyDetailType = {
 export type IncomeExpenseButtonType = '지출' | '수입';
 
 export type TransactionFormData = z.infer<typeof transactionSchema>;
+
+export interface SummaryItemProps {
+  label: '수입' | '지출' | '합계';
+  amount: string;
+}
