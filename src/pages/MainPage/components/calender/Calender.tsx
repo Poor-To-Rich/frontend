@@ -2,10 +2,10 @@ import Weekdays from '@/pages/MainPage/components/calender/Weekdays ';
 import DaysContainer from '@/pages/MainPage/components/calender/DaysContainer';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { TransactionType } from '@/types/transactionTypes';
+import { DateTransactionType } from '@/types/transactionTypes';
 
 interface Props {
-  transactions: TransactionType[];
+  transactions: DateTransactionType[];
 }
 
 const Calender = ({ transactions }: Props) => {

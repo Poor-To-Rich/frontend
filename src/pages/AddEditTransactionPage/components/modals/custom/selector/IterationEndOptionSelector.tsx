@@ -22,15 +22,14 @@ const IterationEndOptionSelector = () => {
       input: (
         <Controller
           name="customIteration.end.count"
-          control={control}
           defaultValue={10}
+          control={control}
           render={({ field }) => (
             <>
               <input
                 type="tel"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                defaultValue={10}
                 placeholder="10"
                 className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
                 value={field.value}

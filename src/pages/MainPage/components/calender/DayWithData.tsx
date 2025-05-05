@@ -1,7 +1,7 @@
-import { TransactionType } from '@/types/transactionTypes';
+import { DateTransactionType } from '@/types/transactionTypes';
 
 interface Props {
-  transactions: TransactionType[];
+  transactions: DateTransactionType[];
   targetDate: Date;
 }
 

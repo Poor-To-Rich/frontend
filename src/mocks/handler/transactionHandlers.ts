@@ -73,4 +73,56 @@ export const transactionHandlers = [
       { status: 201 },
     );
   }),
+  http.get('/expense/:id', async ({ params }) => {
+    const { id } = params;
+    const response = {
+      date: '2025-02-09',
+      name: '주거비',
+      title: '월세',
+      cost: 30000,
+      paymentMethod: '계좌이체',
+      memo: '이응',
+      iterationType: 'custom',
+      customIteration: {
+        iterationRule: {
+          type: 'weekly',
+          daysOfWeek: ['월', '금'],
+        },
+        interval: 2,
+        end: {
+          type: 'until',
+          date: '2025-05-01',
+        },
+      },
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${id}번 가계부가 성공적으로 조회되었습니다.`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+  http.get('/income/:id', async ({ params }) => {
+    const { id } = params;
+    const response = {
+      date: '2025-02-09',
+      name: '용돈',
+      title: '용돈',
+      cost: 300000,
+      memo: '엄마가 줌',
+      iterationType: 'none',
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${id}번 가계부가 성공적으로 조회되었습니다.`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
 ];

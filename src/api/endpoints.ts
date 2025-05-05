@@ -22,10 +22,10 @@ export const endpoints = {
   transaction: {
     getDailyDetails: (date: string) => `/report/daily/details?date=${date}`,
     addExpense: '/expense',
-    getExpense: (id: number) => `/expense/${id}`,
-    updateExpense: (id: number) => `/expense/${id}`,
+    getExpense: (id: string) => `/expense/${id}`,
+    updateExpense: (id: string) => `/expense/${id}`,
     addIncome: '/income',
-    getIncome: (id: number) => `/income/${id}`,
-    updateIncome: (id: number) => `/income/${id}`,
+    getIncome: (id: string) => `/income/${id}`,
+    updateIncome: (id: string) => `/income/${id}`,
   },
 };

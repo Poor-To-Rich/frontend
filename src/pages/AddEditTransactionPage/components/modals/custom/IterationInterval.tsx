@@ -7,7 +7,7 @@ interface Props {
 }
 
 const IterationInterval = ({ type }: Props) => {
-  const { control, register, setValue } = useFormContext<TransactionFormDataType>();
+  const { control, setValue } = useFormContext<TransactionFormDataType>();
   const durationUnit = (() => {
     switch (type) {
       case 'daily':
@@ -25,7 +25,6 @@ const IterationInterval = ({ type }: Props) => {
     <Controller
       control={control}
       name={'customIteration.interval'}
-      defaultValue={1}
       render={({ field }) => (
         <div className="flex gap-3.5">
           <span>반복 주기</span>

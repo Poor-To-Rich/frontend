@@ -21,3 +21,13 @@ export const addIncome = async (body: TransactionFormDataType) => {
   const res = await fetchData<TransactionFormDataType>('POST', endpoints.transaction.addIncome, body);
   return res;
 };
+
+export const getExpenseTransaction = async (id: string) => {
+  const res = await fetchData<undefined, TransactionFormDataType>('GET', endpoints.transaction.getExpense(id));
+  return res.data;
+};
+
+export const getIncomeTransaction = async (id: string) => {
+  const res = await fetchData<undefined, TransactionFormDataType>('GET', endpoints.transaction.getIncome(id));
+  return res.data;
+};

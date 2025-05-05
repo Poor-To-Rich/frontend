@@ -9,17 +9,20 @@ import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import IterationChangeModal from '@/components/modal/IterationChangeModal';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
+import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 
 const AddEditTransactionPage = () => {
   const { transactionDate, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
+  const { customIteration } = useResetCustomIteration();
 
   const methods = useForm<TransactionFormDataType>({
     defaultValues: {
       memo: '',
       date: transactionDate!,
       iterationType: 'none',
+      customIteration: customIteration,
     },
     resolver: zodResolver(transactionSchema),
     mode: 'onChange',
@@ -38,7 +41,6 @@ const AddEditTransactionPage = () => {
       <FormProvider {...methods}>
         <TransactionForm openEdit={openEdit} initialIterationTypeRef={initialIterationTypeRef} />
       </FormProvider>
-
       {isDeleteModalOpen &&
         (initialIterationTypeRef.current === 'none' ? (
           <DefaultModal content="해당 내역을 삭제하시겠습니까?" onClose={closeDeleteModal} />

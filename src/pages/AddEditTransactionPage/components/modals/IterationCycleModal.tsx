@@ -5,8 +5,6 @@ import CheckIcon from '@/components/icon/CheckIcon';
 import { IterationCycleValue } from '@/types/iterationTypes';
 import { useFormContext } from 'react-hook-form';
 import { TransactionFormDataType } from '@/types/transactionTypes';
-import { useIterationRuleDefaults } from '@/hooks/useIterationRuleDefaults';
-import { useEffect } from 'react';
 
 interface Props {
   onClose: () => void;
@@ -14,26 +12,8 @@ interface Props {
 }
 
 const IterationCycleModal = ({ onClose, onClick }: Props) => {
-  const { iterationRuleDefaults } = useIterationRuleDefaults();
-  const { reset, getValues } = useFormContext<TransactionFormDataType>();
+  const { getValues } = useFormContext<TransactionFormDataType>();
   const { iterationType } = getValues();
-
-  useEffect(() => {
-    if (!iterationRuleDefaults) return;
-
-    const prevValues = getValues();
-
-    reset({
-      ...prevValues,
-      customIteration: {
-        iterationRule: iterationRuleDefaults,
-        interval: 1,
-        end: {
-          type: 'never',
-        },
-      },
-    });
-  }, [iterationRuleDefaults]);
 
   return (
     <ModalDimmed onClose={onClose}>

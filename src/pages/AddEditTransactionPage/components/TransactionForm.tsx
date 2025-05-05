@@ -19,13 +19,15 @@ interface Props {
 }
 
 const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
+  const { isEditPage, transactionMode } = useTransactionParams();
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
-  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>('지출');
+  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>(
+    (transactionMode as IncomeExpenseButtonType | null) || '지출',
+  );
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
-  const { isEditPage } = useTransactionParams();
   const { mutate: addTransaction, isPending } = useAddTransaction(transactionType);
-  //   useTransactionForm();
+  useTransactionForm({ transactionType, initialIterationTypeRef });
 
   const {
     handleSubmit,

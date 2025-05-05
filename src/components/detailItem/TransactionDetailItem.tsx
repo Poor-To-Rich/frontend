@@ -8,7 +8,10 @@ interface Props extends TransactionItemType {}
 const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: Props) => {
   return (
     <Link
-      to={{ pathname: '/transaction', search: `?type=edit&id=${id}` }}
+      to={{
+        pathname: '/transaction',
+        search: `?type=edit&transactionType=${type === 'EXPENSE' ? '지출' : '수입'}&id=${id}`,
+      }}
       className="w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray bg-white rounded-lg">
       <div className="flex items-center gap-2.5">
         <span style={{ color }} className="font-semibold min-w-fit">
