@@ -38,7 +38,7 @@ export type WeeklyDetailType = {
 
 export type IncomeExpenseButtonType = '지출' | '수입';
 
-export type TransactionFormData = z.infer<typeof transactionSchema>;
+export type TransactionFormDataType = z.infer<typeof transactionSchema>;
 
 export interface SummaryItemProps {
   label: '수입' | '지출' | '합계';

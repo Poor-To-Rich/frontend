@@ -10,13 +10,14 @@ import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modal
 import useModal from '@/hooks/useModal';
 import { useLocation } from 'react-router-dom';
 import DefaultModal from '@/components/modal/DefaultModal';
-import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
+import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
 import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes';
 import { transactionSchema } from '@/schemas/transactionSchema';
 import CustomIterationModal from './components/modals/custom/CustomIterationModal';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useIterationRuleDefaults } from '@/hooks/useIterationRuleDefaults';
 import IterationChangeModal from '@/components/modal/IterationChangeModal';
+import useAddTransaction from '@/hooks/apis/transaction/useAddTransaction';
 
 const AddEditTransactionPage = () => {
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
@@ -27,6 +28,7 @@ const AddEditTransactionPage = () => {
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
   const { setCalenderDate } = useCalenderDateStore();
   const { iterationRuleDefaults } = useIterationRuleDefaults();
+  const { mutate: addTransaction, isPending } = useAddTransaction(transactionType);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -35,7 +37,7 @@ const AddEditTransactionPage = () => {
   const transactionId = pageType ? queryParams.get('id') : '';
   const isEditPage = pageType === 'edit';
 
-  const methods = useForm<TransactionFormData>({
+  const methods = useForm<TransactionFormDataType>({
     defaultValues: {
       memo: '',
       date: transactionDate!,
@@ -55,7 +57,7 @@ const AddEditTransactionPage = () => {
 
   const initialIterationTypeRef = useRef(getValues('iterationType'));
 
-  const onSubmit = (data: TransactionFormData) => {
+  const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
     const isCustom = data.iterationType === 'custom';
 
@@ -68,9 +70,9 @@ const AddEditTransactionPage = () => {
     else {
       if (isIncome) {
         const { paymentMethod, ...incomeData } = formData;
-        console.log(incomeData);
+        addTransaction(incomeData);
       } else {
-        console.log(formData);
+        addTransaction(formData);
       }
     }
   };
@@ -123,7 +125,7 @@ const AddEditTransactionPage = () => {
           <TransactionForm type={transactionType} />
           <div className="w-full flex justify-between items-center">
             <RepeatCircleButton openModal={openModal} />
-            <PrimaryButton label="저장" type="submit" disabled={!isValid} />
+            <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isPending} />
           </div>
           {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
           {isCustomOpen && backupCustomIteration && (

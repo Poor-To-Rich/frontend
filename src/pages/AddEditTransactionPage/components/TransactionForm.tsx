@@ -4,7 +4,7 @@ import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/consta
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { IncomeExpenseButtonType, TransactionFormData } from '@/types/transactionTypes';
+import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
@@ -25,7 +25,7 @@ const TransactionForm = ({ type }: Props) => {
     register,
     setValue,
     formState: { errors },
-  } = useFormContext<TransactionFormData>();
+  } = useFormContext<TransactionFormDataType>();
 
   const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
     const formattedValue = value.replace(/[^\d]/g, '');
@@ -68,7 +68,13 @@ const TransactionForm = ({ type }: Props) => {
         hasEditButton
         {...register('categoryName')}
       />
-      <PrimaryInput label={`${type}명`} type="text" errorMessage={errors.title?.message} {...register('title')} />
+      <PrimaryInput
+        label={`${type}명`}
+        type="text"
+        errorMessage={errors.title?.message}
+        maxLength={15}
+        {...register('title')}
+      />
       <Controller
         name="cost"
         control={control}
@@ -78,7 +84,6 @@ const TransactionForm = ({ type }: Props) => {
             isRequired
             type="tel"
             inputMode="numeric"
-            pattern="[0-9]*"
             value={formatNumber(costValue)}
             onChange={e => {
               handleCostChange(e.target.value, field.onChange);
@@ -88,7 +93,7 @@ const TransactionForm = ({ type }: Props) => {
         )}
       />
       {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
-      <Controller name="memo" render={({ field }) => <MemoInput {...field} />} />
+      <Controller name="memo" render={({ field }) => <MemoInput maxLength={100} {...field} />} />
     </div>
   );
 };

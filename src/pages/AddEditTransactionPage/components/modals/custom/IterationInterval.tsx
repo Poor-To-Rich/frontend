@@ -1,5 +1,5 @@
 import { CustomIterationCycleValue } from '@/types/iterationTypes';
-import { TransactionFormData } from '@/types/transactionTypes';
+import { TransactionFormDataType } from '@/types/transactionTypes';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const IterationInterval = ({ type }: Props) => {
-  const { control, register, setValue } = useFormContext<TransactionFormData>();
+  const { control, register, setValue } = useFormContext<TransactionFormDataType>();
   const durationUnit = (() => {
     switch (type) {
       case 'daily':

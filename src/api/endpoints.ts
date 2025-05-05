@@ -21,5 +21,11 @@ export const endpoints = {
   },
   transaction: {
     getDailyDetails: (date: string) => `/report/daily/details?date=${date}`,
+    addExpense: '/expense',
+    getExpense: (id: number) => `/expense/${id}`,
+    updateExpense: (id: number) => `/expense/${id}`,
+    addIncome: '/income',
+    getIncome: (id: number) => `/income/${id}`,
+    updateIncome: (id: number) => `/income/${id}`,
   },
 };

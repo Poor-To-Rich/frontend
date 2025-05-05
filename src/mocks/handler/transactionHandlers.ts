@@ -1,10 +1,9 @@
 import { delay, http, HttpResponse } from 'msw';
 import { createRandomAmount } from '../utils/createMockTransaction';
+import { endpoints } from '@/api/endpoints';
 
 export const transactionHandlers = [
   http.get('/report/daily/details', async ({ request }) => {
-    await delay(3000);
-
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -43,10 +42,35 @@ export const transactionHandlers = [
       dailyDetails: details,
     };
 
-    return HttpResponse.json({
-      status: 200,
-      message: `${date} 일별 가계부 내역이 조회 되었습니다.`,
-      data: { ...response },
-    });
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 일별 가계부 내역이 조회 되었습니다.`,
+        data: { ...response },
+      },
+      { status: 200 },
+    );
+  }),
+  http.post(endpoints.transaction.addExpense, async () => {
+    await delay(3000);
+
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: `지출 가계부를 성공적으로 등록하였습니다.`,
+      },
+      { status: 201 },
+    );
+  }),
+  http.post(endpoints.transaction.addIncome, async () => {
+    await delay(3000);
+
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: `수입 가계부를 성공적으로 등록하였습니다.`,
+      },
+      { status: 201 },
+    );
   }),
 ];

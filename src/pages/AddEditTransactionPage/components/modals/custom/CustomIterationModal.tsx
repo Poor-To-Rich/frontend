@@ -7,7 +7,7 @@ import { useFormContext, useWatch } from 'react-hook-form';
 import IterationTypeSelector from './selector/IterationTypeSelector';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import { CustomIterationType } from '@/types/iterationTypes';
-import { TransactionFormData } from '@/types/transactionTypes';
+import { TransactionFormDataType } from '@/types/transactionTypes';
 
 interface Props {
   closeIteration: () => void;
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIteration }: Props) => {
-  const { control, setValue } = useFormContext<TransactionFormData>();
+  const { control, setValue } = useFormContext<TransactionFormDataType>();
   const type = useWatch({ control, name: 'customIteration.iterationRule.type' });
 
   const handleCancel = () => {
