@@ -1,100 +1,91 @@
-import PrimaryInput from '@/components/input/PrimaryInput';
-import SelectBox from '@/components/input/SelectBox';
-import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
-import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
-import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
+import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
-import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
-import { formatNumber } from '@/utils/number';
-import { addMonths, format, getDate } from 'date-fns';
-import { useEffect, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import TransactionInputs from './TransactionInputs';
+import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
+import PrimaryButton from '@/components/button/PrimaryButton';
+import useTransactionForm from '@/hooks/transaction/useTransactionForm';
+import useAddTransaction from '@/hooks/apis/transaction/useAddTransaction';
+import { useFormContext } from 'react-hook-form';
+import useTransactionParams from '@/hooks/transaction/useTransactionParams';
+import { useState } from 'react';
+import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes';
+import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modals/IterationCycleModal';
+import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
+import useModal from '@/hooks/useModal';
 
 interface Props {
-  type: IncomeExpenseButtonType;
+  openEdit: () => void;
+  initialIterationTypeRef: React.MutableRefObject<string>;
 }
 
-const TransactionForm = ({ type }: Props) => {
-  const [costValue, setCostValue] = useState<string>('');
-  const isExpense = type === '지출';
-  const { setMainHeaderDate } = useHeaderDateStore();
-  const { setCalenderDate } = useCalenderDateStore();
+const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
+  const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
+  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>('지출');
+  const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
+  const { isEditPage } = useTransactionParams();
+  const { mutate: addTransaction, isPending } = useAddTransaction(transactionType);
+  //   useTransactionForm();
+
   const {
-    control,
-    register,
+    handleSubmit,
     setValue,
-    formState: { errors },
+    getValues,
+    formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
 
-  const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
-    const formattedValue = value.replace(/[^\d]/g, '');
-    setCostValue(formatNumber(formattedValue));
-    onChange(Number(formattedValue));
+  const getPayload = (data: TransactionFormDataType) => {
+    const isCustom = data.iterationType === 'custom';
+    const { customIteration, ...rest } = data;
+    return isCustom ? data : rest;
   };
 
-  useEffect(() => {
-    setValue('categoryName', isExpense ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
-  }, [type]);
+  const onSubmit = (data: TransactionFormDataType) => {
+    const isIncome = transactionType === '수입';
+    const formData = getPayload(data);
+
+    if (isEditPage && initialIterationTypeRef.current !== 'none') openEdit();
+    else {
+      if (isIncome) {
+        const { paymentMethod, ...incomeData } = formData;
+        addTransaction(incomeData);
+      } else {
+        addTransaction(formData);
+      }
+    }
+  };
+
+  const handleRepeatCircleClick = (value: IterationCycleValue) => {
+    if (value !== 'custom') {
+      setValue('iterationType', value);
+      closeModal();
+    } else {
+      const current = JSON.parse(JSON.stringify(getValues('customIteration')));
+      setBackupCustomIteration(current);
+      openCustom();
+    }
+  };
 
   return (
-    <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
-      <PrimaryInput
-        label="날짜"
-        isRequired
-        type="date"
-        errorMessage={errors.date?.message}
-        {...register('date')}
-        onChange={e => {
-          const currentDate = new Date(e.target.value);
-          const koreanDay = getKoreanDay(currentDate);
-
-          register('date').onChange(e);
-
-          setCalenderDate(currentDate);
-          setMainHeaderDate(currentDate);
-          setValue('customIteration.end.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
-          setValue('customIteration.iterationRule.daysOfWeek', [koreanDay]);
-          setValue('customIteration.iterationRule.monthlyOption.day', getDate(currentDate));
-          setValue('customIteration.iterationRule.monthlyOption.week', getKoreanWeekOfMonth(currentDate));
-          setValue('customIteration.iterationRule.monthlyOption.dayOfWeek', koreanDay);
-        }}
+    <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
+      <IncomeExpenseButton
+        type={transactionType}
+        onClick={(value: IncomeExpenseButtonType) => setTransactionType(value)}
       />
-      <SelectBox
-        label="카테고리"
-        isRequired
-        options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
-        type={type}
-        hasEditButton
-        {...register('categoryName')}
-      />
-      <PrimaryInput
-        label={`${type}명`}
-        type="text"
-        errorMessage={errors.title?.message}
-        maxLength={15}
-        {...register('title')}
-      />
-      <Controller
-        name="cost"
-        control={control}
-        render={({ field }) => (
-          <PrimaryInput
-            label="금액"
-            isRequired
-            type="tel"
-            inputMode="numeric"
-            value={formatNumber(costValue)}
-            onChange={e => {
-              handleCostChange(e.target.value, field.onChange);
-            }}
-            errorMessage={errors.cost?.message}
-          />
-        )}
-      />
-      {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
-      <Controller name="memo" render={({ field }) => <MemoInput maxLength={100} {...field} />} />
-    </div>
+      <TransactionInputs type={transactionType} />
+      <div className="w-full flex justify-between items-center">
+        <RepeatCircleButton openModal={openModal} />
+        <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isPending} />
+      </div>
+      {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
+      {isCustomOpen && backupCustomIteration && (
+        <CustomIterationModal
+          backUpCustomIteration={backupCustomIteration}
+          closeIteration={closeModal}
+          closeCustom={closeCustom}
+        />
+      )}
+    </form>
   );
 };
 
