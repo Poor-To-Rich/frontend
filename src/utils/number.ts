@@ -3,6 +3,7 @@ export const formatSignedNumber = (num: number): string => {
 };
 
 export const formatNumber = (value: string | number): string => {
+  console.log(value);
   if (typeof value === 'number') {
     value = BigInt(value).toString();
   }

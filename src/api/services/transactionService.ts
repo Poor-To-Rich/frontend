@@ -12,12 +12,12 @@ export const getDailyDetails = async (date: string) => {
   return res.data;
 };
 
-export const addExpense = async (body: TransactionFormDataType) => {
+export const addExpenseTransaction = async (body: TransactionFormDataType) => {
   const res = await fetchData<TransactionFormDataType>('POST', endpoints.transaction.addExpense, body);
   return res;
 };
 
-export const addIncome = async (body: TransactionFormDataType) => {
+export const addIncomeTransaction = async (body: TransactionFormDataType) => {
   const res = await fetchData<TransactionFormDataType>('POST', endpoints.transaction.addIncome, body);
   return res;
 };
@@ -30,4 +30,14 @@ export const getExpenseTransaction = async (id: string) => {
 export const getIncomeTransaction = async (id: string) => {
   const res = await fetchData<undefined, TransactionFormDataType>('GET', endpoints.transaction.getIncome(id));
   return res.data;
+};
+
+export const updateExpenseTransaction = async (id: string, body: TransactionFormDataType) => {
+  const res = await fetchData<TransactionFormDataType>('PUT', endpoints.transaction.updateExpense(id), body);
+  return res;
+};
+
+export const updateIncomeTransaction = async (id: string, body: TransactionFormDataType) => {
+  const res = await fetchData<TransactionFormDataType>('PUT', endpoints.transaction.updateIncome(id), body);
+  return res;
 };

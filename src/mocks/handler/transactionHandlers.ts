@@ -125,4 +125,26 @@ export const transactionHandlers = [
       { status: 200 },
     );
   }),
+  http.put('/expense/:id', async () => {
+    await delay(3000);
+
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: `지출 가계부를 성공적으로 수정정하였습니다.`,
+      },
+      { status: 201 },
+    );
+  }),
+  http.put('/income/:id', async () => {
+    await delay(3000);
+
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: `수입 가계부를 성공적으로 수정하였습니다.`,
+      },
+      { status: 201 },
+    );
+  }),
 ];

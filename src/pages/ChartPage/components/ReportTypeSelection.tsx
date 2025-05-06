@@ -1,5 +1,5 @@
 import SelectBox from '@/components/input/SelectBox';
-import { useReportTypeStore } from '@/stores/useReportTypeStore';
+import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
 import { ReportType } from '@/types/reportTypes';
 import { useEffect } from 'react';
 

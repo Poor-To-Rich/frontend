@@ -8,7 +8,7 @@ import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transa
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -16,7 +16,6 @@ interface Props {
 }
 
 const TransactionInputs = ({ type }: Props) => {
-  const [costValue, setCostValue] = useState<string>('');
   const isExpense = type === '지출';
   const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
@@ -29,7 +28,6 @@ const TransactionInputs = ({ type }: Props) => {
 
   const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
     const formattedValue = value.replace(/[^\d]/g, '');
-    setCostValue(formatNumber(formattedValue));
     onChange(Number(formattedValue));
   };
 
@@ -84,7 +82,7 @@ const TransactionInputs = ({ type }: Props) => {
             isRequired
             type="tel"
             inputMode="numeric"
-            value={formatNumber(costValue)}
+            value={formatNumber(field.value === 0 ? '' : field.value)}
             onChange={e => {
               handleCostChange(e.target.value, field.onChange);
             }}

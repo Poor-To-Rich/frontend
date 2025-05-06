@@ -1,5 +1,5 @@
 import { endSchema } from '@/schemas/customIterationSchema';
-import { transactionSchema } from '@/schemas/transactionSchema';
+import { IterationActionEnum, transactionSchema } from '@/schemas/transactionSchema';
 import { z } from 'zod';
 
 export type DateTransactionType = {
@@ -44,6 +44,8 @@ export type TransactionType = 'INCOME' | 'EXPENSE';
 export type TransactionFormDataType = z.infer<typeof transactionSchema>;
 
 export type EndType = z.infer<typeof endSchema>;
+
+export type IterationActionEnumType = z.infer<typeof IterationActionEnum>;
 
 export interface SummaryItemProps {
   label: '수입' | '지출' | '합계';

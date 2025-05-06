@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import '@/styles/datepicker.css';
 import { ko } from 'date-fns/locale';
 import DateInput from '@/components/header/DateInput';
-import { useReportTypeStore } from '@/stores/useReportTypeStore';
+import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
 import { useDateControl } from '@/hooks/useDateControl';
 import { useLocation } from 'react-router-dom';
 

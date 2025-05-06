@@ -1,17 +1,24 @@
 import { clsx } from 'clsx';
 import IterationIcon from '@/components/icon/IterationIcon';
-import { Link } from 'react-router-dom';
-import { TransactionItemType } from '@/types/transactionTypes';
+import { IncomeExpenseButtonType, TransactionItemType } from '@/types/transactionTypes';
+import { useNavigate } from 'react-router-dom';
+import { useTransactionTypeStore } from '@/stores/transaction/useTransactionTypeStore';
 
 interface Props extends TransactionItemType {}
 
 const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: Props) => {
+  const navigate = useNavigate();
+  const { setTransactionType } = useTransactionTypeStore();
+
+  const handleClick = (id: number, type: string) => {
+    const transactionType = type === 'EXPENSE' ? '지출' : '수입';
+    setTransactionType(transactionType as IncomeExpenseButtonType);
+    navigate(`/transaction?type=edit&transactionType=${transactionType}&id=${id}`);
+  };
+
   return (
-    <Link
-      to={{
-        pathname: '/transaction',
-        search: `?type=edit&transactionType=${type === 'EXPENSE' ? '지출' : '수입'}&id=${id}`,
-      }}
+    <button
+      onClick={() => handleClick(id, type)}
       className="w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray bg-white rounded-lg">
       <div className="flex items-center gap-2.5">
         <span style={{ color }} className="font-semibold min-w-fit">
@@ -28,7 +35,7 @@ const TransactionDetailItem = ({ id, color, category, title, isIteration, type, 
         )}>
         {cost.toLocaleString()}원
       </span>
-    </Link>
+    </button>
   );
 };
 

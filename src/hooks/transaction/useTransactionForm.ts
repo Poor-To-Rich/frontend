@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form';
 import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 
 interface Props {
-  transactionType: IncomeExpenseButtonType;
+  transactionType?: IncomeExpenseButtonType;
   initialIterationTypeRef: React.MutableRefObject<string>;
 }
 
@@ -16,7 +16,10 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   const { reset } = useFormContext<TransactionFormDataType>();
   const { transactionDate, transactionId, isEditPage } = useTransactionParams();
   const { customIteration } = useResetCustomIteration();
-  const { data } = isEditPage && transactionId ? useGetTransaction(transactionType, transactionId!) : { data: null };
+  const { data } =
+    isEditPage && transactionId && transactionType
+      ? useGetTransaction(transactionType, transactionId!)
+      : { data: null };
 
   useEffect(() => {
     if (transactionDate) setCalenderDate(new Date(transactionDate));

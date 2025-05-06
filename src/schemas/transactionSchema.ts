@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { customIterationSchema } from '@/schemas/customIterationSchema';
 
+export const IterationActionEnum = z.enum(['THIS_ONLY', 'THIS_AND_FUTURE', 'ALL']);
+
 export const transactionSchema = z.object({
   date: z.string().min(1, { message: '날짜를 입력해주세요' }),
   categoryName: z.string(),
@@ -11,6 +13,7 @@ export const transactionSchema = z.object({
     .max(100000000, { message: '1억 이하의 값을 입력해주세요' }),
   paymentMethod: z.string().optional(),
   memo: z.string().optional(),
+  iterationAction: IterationActionEnum.optional(),
   iterationType: z.string(),
   customIteration: customIterationSchema.optional(),
 });

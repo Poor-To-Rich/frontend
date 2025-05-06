@@ -12,6 +12,9 @@ import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes
 import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modals/IterationCycleModal';
 import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
 import useModal from '@/hooks/useModal';
+import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
+import { useTransactionTypeStore } from '@/stores/transaction/useTransactionTypeStore';
+import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterFormData';
 
 interface Props {
   openEdit: () => void;
@@ -19,14 +22,15 @@ interface Props {
 }
 
 const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
-  const { isEditPage, transactionMode } = useTransactionParams();
+  const { isEditPage, transactionId } = useTransactionParams();
+  const { transactionType, setTransactionType } = useTransactionTypeStore();
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
-  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>(
-    (transactionMode as IncomeExpenseButtonType | null) || '지출',
-  );
+
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
+
   const { mutate: addTransaction, isPending } = useAddTransaction(transactionType);
+  const { mutate: updateTransaction } = useUpdateTransaction(transactionType);
   useTransactionForm({ transactionType, initialIterationTypeRef });
 
   const {
@@ -36,24 +40,20 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
 
-  const getPayload = (data: TransactionFormDataType) => {
-    const isCustom = data.iterationType === 'custom';
-    const { customIteration, ...rest } = data;
-    return isCustom ? data : rest;
-  };
-
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
-    const formData = getPayload(data);
 
-    if (isEditPage && initialIterationTypeRef.current !== 'none') openEdit();
-    else {
-      if (isIncome) {
-        const { paymentMethod, ...incomeData } = formData;
-        addTransaction(incomeData);
-      } else {
-        addTransaction(formData);
+    const body = getFinalData(data, isIncome);
+
+    if (isEditPage) {
+      if (initialIterationTypeRef.current !== 'none') {
+        openEdit();
+        return;
       }
+
+      updateTransaction({ id: transactionId!, body });
+    } else {
+      addTransaction(body);
     }
   };
 

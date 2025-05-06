@@ -1,10 +1,10 @@
-import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import PeriodSummary from '@/pages/ChartPage/components/period/PeriodSummary';
-import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
-import { useReportTypeStore } from '@/stores/useReportTypeStore';
+import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
+import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
 
 const PeriodComparisonChart = () => {
-  const { currentTransactionType } = useTransactionTypeStore();
+  const { currentTransactionType } = useTransactionReportTypeStore();
   const { currentReportType } = useReportTypeStore();
   const data = {
     extraAmount: 300,
