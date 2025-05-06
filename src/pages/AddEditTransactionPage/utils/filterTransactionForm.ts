@@ -1,8 +1,10 @@
 import { TransactionFormDataType } from '@/types/transactionTypes';
+import { filteredData } from '@/utils/filteredFormData';
 
 const getPayload = (data: TransactionFormDataType) => {
-  const isCustom = data.iterationType === 'custom';
-  const { customIteration, ...rest } = data;
+  const formData = filteredData(data);
+  const isCustom = formData.iterationType === 'custom';
+  const { customIteration, ...rest } = formData;
   return isCustom ? data : rest;
 };
 

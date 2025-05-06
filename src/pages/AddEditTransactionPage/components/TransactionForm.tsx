@@ -13,8 +13,7 @@ import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modal
 import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
 import useModal from '@/hooks/useModal';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
-import { useTransactionTypeStore } from '@/stores/transaction/useTransactionTypeStore';
-import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterFormData';
+import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
 
 interface Props {
   openEdit: () => void;
@@ -22,8 +21,10 @@ interface Props {
 }
 
 const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
-  const { isEditPage, transactionId } = useTransactionParams();
-  const { transactionType, setTransactionType } = useTransactionTypeStore();
+  const { isEditPage, transactionId, transactionMode } = useTransactionParams();
+  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>(
+    (transactionMode as IncomeExpenseButtonType) || '지출',
+  );
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
 
   const { isOpen, openModal, closeModal } = useModal();

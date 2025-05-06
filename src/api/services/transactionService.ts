@@ -3,7 +3,6 @@ import { endpoints } from '@/api/endpoints';
 import {
   DailyTransactionType,
   DeleteTransactionReq,
-  IterationActionEnumType,
   MonthlyTotalTransactionType,
   TransactionFormDataType,
 } from '@/types/transactionTypes';

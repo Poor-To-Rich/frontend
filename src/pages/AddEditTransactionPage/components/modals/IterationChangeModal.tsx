@@ -1,11 +1,10 @@
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import ModalButton from '@/components/button/ModalButton';
-import { useTransactionTypeStore } from '@/stores/transaction/useTransactionTypeStore';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
-import { IterationActionEnumType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseButtonType, IterationActionEnumType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
-import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterFormData';
+import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
 
 interface Props {
@@ -15,10 +14,13 @@ interface Props {
 
 const IterationChangeModal = ({ type, onClose }: Props) => {
   const { handleSubmit } = useFormContext<TransactionFormDataType>();
-  const { transactionId } = useTransactionParams();
-  const { transactionType } = useTransactionTypeStore();
-  const { mutate: updateTransaction } = useUpdateTransaction(transactionType);
-  const { mutate: deleteTransaction } = useDeleteTransaction(transactionType);
+  const { transactionId, transactionMode } = useTransactionParams();
+  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction(
+    transactionMode as IncomeExpenseButtonType,
+  );
+  const { mutate: deleteTransaction, isPending: isDeletePending } = useDeleteTransaction(
+    transactionMode as IncomeExpenseButtonType,
+  );
   const isEditType = type === 'edit';
 
   const options = {
@@ -40,9 +42,11 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   };
 
   const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
-    const isIncome = transactionType === '수입';
+    const isIncome = transactionMode === '수입';
     const body = isEditType ? getFinalData(data, isIncome) : {};
     const requestData = { id: transactionId!, body: { ...body, iterationAction } };
+
+    if (isUpdatePending || isDeletePending) return;
 
     if (isEditType) {
       updateTransaction(requestData as { id: string; body: TransactionFormDataType });

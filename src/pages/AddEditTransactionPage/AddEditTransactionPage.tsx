@@ -2,7 +2,7 @@ import DefaultHeader from '@/components/header/DefaultHeader';
 import { FormProvider, useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
-import { TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { transactionSchema } from '@/schemas/transactionSchema';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
@@ -11,15 +11,13 @@ import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
-import { useTransactionTypeStore } from '@/stores/transaction/useTransactionTypeStore';
 
 const AddEditTransactionPage = () => {
-  const { transactionId, transactionDate, isEditPage } = useTransactionParams();
+  const { transactionId, transactionDate, transactionMode, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
   const { customIteration } = useResetCustomIteration();
-  const { transactionType } = useTransactionTypeStore();
-  const { mutate: deleteTransaction } = useDeleteTransaction(transactionType);
+  const { mutate: deleteTransaction, isPending } = useDeleteTransaction(transactionMode! as IncomeExpenseButtonType);
 
   const methods = useForm<TransactionFormDataType>({
     defaultValues: {
@@ -53,6 +51,7 @@ const AddEditTransactionPage = () => {
           (initialIterationTypeRef.current === 'none' ? (
             <DefaultModal
               content="해당 내역을 삭제하시겠습니까?"
+              isPending={isPending}
               onClose={closeDeleteModal}
               onClick={methods.handleSubmit(handleDelete)}
             />

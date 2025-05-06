@@ -129,6 +129,16 @@ export const transactionHandlers = [
     await delay(3000);
     const { id } = params;
 
+    if (id === '3') {
+      return HttpResponse.json(
+        {
+          status: 400,
+          message: `${id}번 가계부 수정에 실패하였습니다.`,
+        },
+        { status: 400 },
+      );
+    }
+
     return HttpResponse.json(
       {
         status: 201,
@@ -140,6 +150,16 @@ export const transactionHandlers = [
   http.put('/income/:id', async ({ params }) => {
     await delay(3000);
     const { id } = params;
+
+    if (id === '3') {
+      return HttpResponse.json(
+        {
+          status: 400,
+          message: `${id}번 가계부 수정에 실패하였습니다.`,
+        },
+        { status: 400 },
+      );
+    }
 
     return HttpResponse.json(
       {
@@ -153,6 +173,16 @@ export const transactionHandlers = [
     await delay(3000);
     const { id } = params;
 
+    if (id === '3') {
+      return HttpResponse.json(
+        {
+          status: 400,
+          message: `${id}번 가계부 삭제에 실패하였습니다.`,
+        },
+        { status: 400 },
+      );
+    }
+
     return HttpResponse.json(
       {
         status: 200,
@@ -164,6 +194,16 @@ export const transactionHandlers = [
   http.delete('/income/:id', async ({ params }) => {
     await delay(3000);
     const { id } = params;
+
+    if (id === '3') {
+      return HttpResponse.json(
+        {
+          status: 400,
+          message: `${id}번 가계부 삭제에 실패하였습니다.`,
+        },
+        { status: 400 },
+      );
+    }
 
     return HttpResponse.json(
       {
