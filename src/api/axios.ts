@@ -89,7 +89,9 @@ export const fetchData = async <RequestType = undefined, ResponseDataType = unde
         response = await apiClient.put(endpoint, data, config);
         break;
       case 'DELETE':
-        response = await apiClient.delete(endpoint);
+        response = await apiClient.delete(endpoint, {
+          data: data,
+        });
         break;
       default:
         throw new Error('Invalid HTTP method');

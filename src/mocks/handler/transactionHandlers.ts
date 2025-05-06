@@ -125,26 +125,52 @@ export const transactionHandlers = [
       { status: 200 },
     );
   }),
-  http.put('/expense/:id', async () => {
+  http.put('/expense/:id', async ({ params }) => {
     await delay(3000);
+    const { id } = params;
 
     return HttpResponse.json(
       {
         status: 201,
-        message: `지출 가계부를 성공적으로 수정정하였습니다.`,
+        message: `${id}번 가계부를 성공적으로 수정하였습니다.`,
       },
       { status: 201 },
     );
   }),
-  http.put('/income/:id', async () => {
+  http.put('/income/:id', async ({ params }) => {
     await delay(3000);
+    const { id } = params;
 
     return HttpResponse.json(
       {
         status: 201,
-        message: `수입 가계부를 성공적으로 수정하였습니다.`,
+        message: `${id}번 가계부를 성공적으로 수정하였습니다.`,
       },
       { status: 201 },
+    );
+  }),
+  http.delete('/expense/:id', async ({ params }) => {
+    await delay(3000);
+    const { id } = params;
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${id}번 가계부를 성공적으로 삭제하였습니다.`,
+      },
+      { status: 200 },
+    );
+  }),
+  http.delete('/income/:id', async ({ params }) => {
+    await delay(3000);
+    const { id } = params;
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${id}번 가계부를 성공적으로 삭제하였습니다.`,
+      },
+      { status: 200 },
     );
   }),
 ];

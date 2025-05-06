@@ -10,12 +10,16 @@ import IterationChangeModal from '@/pages/AddEditTransactionPage/components/moda
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
+import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
+import { useTransactionTypeStore } from '@/stores/transaction/useTransactionTypeStore';
 
 const AddEditTransactionPage = () => {
-  const { transactionDate, isEditPage } = useTransactionParams();
+  const { transactionId, transactionDate, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
   const { customIteration } = useResetCustomIteration();
+  const { transactionType } = useTransactionTypeStore();
+  const { mutate: deleteTransaction } = useDeleteTransaction(transactionType);
 
   const methods = useForm<TransactionFormDataType>({
     defaultValues: {
@@ -31,6 +35,10 @@ const AddEditTransactionPage = () => {
 
   const initialIterationTypeRef = useRef(methods.getValues('iterationType'));
 
+  const handleDelete = () => {
+    deleteTransaction({ id: transactionId! });
+  };
+
   return (
     <div className="flex flex-col w-full h-screen max-h-fit relative">
       <DefaultHeader
@@ -43,7 +51,11 @@ const AddEditTransactionPage = () => {
         <TransactionForm openEdit={openEdit} initialIterationTypeRef={initialIterationTypeRef} />
         {isDeleteModalOpen &&
           (initialIterationTypeRef.current === 'none' ? (
-            <DefaultModal content="해당 내역을 삭제하시겠습니까?" onClose={closeDeleteModal} />
+            <DefaultModal
+              content="해당 내역을 삭제하시겠습니까?"
+              onClose={closeDeleteModal}
+              onClick={methods.handleSubmit(handleDelete)}
+            />
           ) : (
             <IterationChangeModal type="delete" onClose={closeDeleteModal} />
           ))}

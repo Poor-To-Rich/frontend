@@ -24,8 +24,10 @@ export const endpoints = {
     addExpense: '/expense',
     getExpense: (id: string) => `/expense/${id}`,
     updateExpense: (id: string) => `/expense/${id}`,
+    deleteExpense: (id: string) => `/expense/${id}`,
     addIncome: '/income',
     getIncome: (id: string) => `/income/${id}`,
     updateIncome: (id: string) => `/income/${id}`,
+    deleteIncome: (id: string) => `/income/${id}`,
   },
 };

@@ -29,8 +29,8 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
 
-  const { mutate: addTransaction, isPending } = useAddTransaction(transactionType);
-  const { mutate: updateTransaction } = useUpdateTransaction(transactionType);
+  const { mutate: addTransaction, isPending: isAddPending } = useAddTransaction(transactionType);
+  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction(transactionType);
   useTransactionForm({ transactionType, initialIterationTypeRef });
 
   const {
@@ -77,7 +77,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
       <TransactionInputs type={transactionType} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
-        <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isPending} />
+        <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isAddPending || isUpdatePending} />
       </div>
       {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
       {isCustomOpen && backupCustomIteration && (

@@ -6,6 +6,7 @@ import { IterationActionEnumType, TransactionFormDataType } from '@/types/transa
 import { useFormContext } from 'react-hook-form';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterFormData';
+import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
 
 interface Props {
   type: 'delete' | 'edit';
@@ -17,6 +18,7 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const { transactionId } = useTransactionParams();
   const { transactionType } = useTransactionTypeStore();
   const { mutate: updateTransaction } = useUpdateTransaction(transactionType);
+  const { mutate: deleteTransaction } = useDeleteTransaction(transactionType);
   const isEditType = type === 'edit';
 
   const options = {
@@ -39,13 +41,13 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
 
   const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
     const isIncome = transactionType === '수입';
-
-    const body = getFinalData(data, isIncome);
-
+    const body = isEditType ? getFinalData(data, isIncome) : {};
     const requestData = { id: transactionId!, body: { ...body, iterationAction } };
+
     if (isEditType) {
-      updateTransaction(requestData);
+      updateTransaction(requestData as { id: string; body: TransactionFormDataType });
     } else {
+      deleteTransaction(requestData);
     }
   };
 

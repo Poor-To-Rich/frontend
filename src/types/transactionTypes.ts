@@ -37,6 +37,8 @@ export type WeeklyDetailType = {
   transactions: TransactionItemType[];
 };
 
+export type DeleteTransactionReq = { iterationAction?: IterationActionEnumType };
+
 export type IncomeExpenseButtonType = '지출' | '수입';
 
 export type TransactionType = 'INCOME' | 'EXPENSE';
