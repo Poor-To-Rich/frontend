@@ -1,4 +1,4 @@
-import { TransactionType } from '@/types/transactionTypes';
+import { DateTransactionType } from '@/types/transactionTypes';
 import { clsx } from 'clsx';
 import { addDays, differenceInCalendarDays, endOfMonth, endOfWeek, startOfMonth, startOfWeek } from 'date-fns';
 import DayWithData from '@/pages/MainPage/components/calender/DayWithData';
@@ -8,7 +8,7 @@ interface Props {
   activeDate: Date;
   handleDateClick: (date: Date) => void;
   currentDay: Date;
-  transactions: TransactionType[];
+  transactions: DateTransactionType[];
 }
 
 const DaysContainer = ({ activeDate, handleDateClick, currentDay, transactions }: Props) => {

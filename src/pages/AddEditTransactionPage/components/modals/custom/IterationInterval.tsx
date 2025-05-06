@@ -1,5 +1,5 @@
 import { CustomIterationCycleValue } from '@/types/iterationTypes';
-import { TransactionFormData } from '@/types/transactionTypes';
+import { TransactionFormDataType } from '@/types/transactionTypes';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 }
 
 const IterationInterval = ({ type }: Props) => {
-  const { control, register, setValue } = useFormContext<TransactionFormData>();
+  const { control, setValue } = useFormContext<TransactionFormDataType>();
   const durationUnit = (() => {
     switch (type) {
       case 'daily':
@@ -25,7 +25,6 @@ const IterationInterval = ({ type }: Props) => {
     <Controller
       control={control}
       name={'customIteration.interval'}
-      defaultValue={1}
       render={({ field }) => (
         <div className="flex gap-3.5">
           <span>반복 주기</span>

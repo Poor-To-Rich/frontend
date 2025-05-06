@@ -25,7 +25,8 @@ export const validateDate = (value: string): boolean => {
 };
 
 export const getKoreanDay = (date: Date): DaysOfWeekType => {
-  return DAYS[date.getDay()];
+  const editableDays = [...DAYS];
+  return editableDays[date.getDay()];
 };
 
 export const getKoreanWeekOfMonth = (date: Date) => {

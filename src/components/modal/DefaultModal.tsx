@@ -3,11 +3,12 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 
 interface Props {
   content: string;
+  isPending?: boolean;
   onClose?: () => void;
   onClick?: () => void;
 }
 
-const DefaultModal = ({ content, onClose, onClick }: Props) => {
+const DefaultModal = ({ content, isPending, onClose, onClick }: Props) => {
   return (
     <ModalDimmed onClose={onClose}>
       <div
@@ -15,7 +16,7 @@ const DefaultModal = ({ content, onClose, onClick }: Props) => {
         onClick={e => e.stopPropagation()}>
         <span className="text-center text-md">{content}</span>
         <div className="flex justify-center gap-4">
-          <ModalButton label={'예'} onClick={onClick} />
+          <ModalButton label={'예'} onClick={onClick} isPending={isPending} />
           <ModalButton label={'아니요'} onClick={onClose} />
         </div>
       </div>

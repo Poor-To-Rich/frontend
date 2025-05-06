@@ -1,11 +1,11 @@
 import { DAYS } from '@/constants/days';
 import { DaysOfWeekType } from '@/types/iterationTypes';
-import { TransactionFormData } from '@/types/transactionTypes';
+import { TransactionFormDataType } from '@/types/transactionTypes';
 import { clsx } from 'clsx';
 import { Controller, useFormContext } from 'react-hook-form';
 
 const DayOfWeekSelector = () => {
-  const { control } = useFormContext<TransactionFormData>();
+  const { control } = useFormContext<TransactionFormDataType>();
 
   return (
     <Controller

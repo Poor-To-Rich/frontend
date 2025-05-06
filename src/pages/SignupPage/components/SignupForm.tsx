@@ -12,6 +12,7 @@ import useSignup from '@/hooks/apis/auth/useSignup';
 import { useFormContext } from 'react-hook-form';
 import { SignupFormType } from '@/types/authTypes';
 import useSignFormValidation from '@/hooks/field/useSignFormValidation';
+import { filteredData } from '@/utils/filteredFormData';
 
 const SignupForm = () => {
   const { setError, handleSubmit } = useFormContext<SignupFormType>();
@@ -21,10 +22,13 @@ const SignupForm = () => {
 
   const onSubmit = (data: SignupFormType) => {
     const { confirmPassword, verificationCode, ...postData } = data;
+    const requestData = filteredData(postData);
+
     const formData = new FormData();
-    Object.entries(postData).forEach(([key, value]) => {
+    Object.entries(requestData).forEach(([key, value]) => {
       formData.append(key, value);
     });
+
     signup(formData);
   };
 

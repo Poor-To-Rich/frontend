@@ -1,13 +1,13 @@
 import RightArrowButton from '@/components/button/icon/RightArrowButton';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { useReportTypeStore } from '@/stores/useReportTypeStore';
-import { useTransactionTypeStore } from '@/stores/useTransactionTypeStore';
+import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
+import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
 import { formatNumber } from '@/utils/number';
 import { useNavigate } from 'react-router-dom';
 
 const CategoryDashBoard = () => {
-  const { headerDate } = useHeaderDateStore();
-  const { currentTransactionType } = useTransactionTypeStore();
+  const { chartHeaderDate } = useHeaderDateStore();
+  const { currentTransactionType } = useTransactionReportTypeStore();
   const { currentReportType } = useReportTypeStore();
   const navigate = useNavigate();
   const categoryCharts = [
@@ -72,7 +72,7 @@ const CategoryDashBoard = () => {
           className="flex justify-between gap-3.5 cursor-pointer py-3"
           key={categoryItem.id}
           onClick={() =>
-            handleClick(categoryItem.id, categoryItem.name, currentTransactionType, currentReportType, headerDate)
+            handleClick(categoryItem.id, categoryItem.name, currentTransactionType, currentReportType, chartHeaderDate)
           }>
           <div className="flex w-fit gap-4.5">
             <span style={{ color: categoryItem.color }}>{categoryItem.name}</span>

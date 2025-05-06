@@ -2,17 +2,25 @@ import { useState, useEffect } from 'react';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { getDate } from 'date-fns';
+import { EndType } from '@/types/transactionTypes';
 
-export const useIterationRuleDefaults = () => {
+export const useResetCustomIteration = () => {
   const { calenderDate } = useCalenderDateStore();
   const [iterationRuleDefaults, setIterationRuleDefaults] = useState(() => calculateIterationDefaults(calenderDate));
+  const end: EndType = { type: 'never' };
 
   useEffect(() => {
     const newIterationDefaults = calculateIterationDefaults(calenderDate);
     setIterationRuleDefaults(newIterationDefaults);
   }, [calenderDate]);
 
-  return { iterationRuleDefaults };
+  return {
+    customIteration: {
+      iterationRule: iterationRuleDefaults,
+      interval: 1,
+      end: end,
+    },
+  };
 };
 
 const calculateIterationDefaults = (calenderDate: Date) => {

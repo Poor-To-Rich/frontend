@@ -7,7 +7,7 @@ interface TransactionState {
   clearTransactionType: () => void;
 }
 
-export const useTransactionTypeStore = create<TransactionState>(set => ({
+export const useTransactionReportTypeStore = create<TransactionState>(set => ({
   currentTransactionType: '지출',
   setCurrentTransactionType: transactionType => set({ currentTransactionType: transactionType }),
   clearTransactionType: () => set({ currentTransactionType: '지출' }),

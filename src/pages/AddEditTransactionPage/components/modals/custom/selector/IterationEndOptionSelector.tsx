@@ -3,11 +3,11 @@ import RadioOption from './RadioOption';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format, addMonths } from 'date-fns';
-import { TransactionFormData } from '@/types/transactionTypes';
+import { TransactionFormDataType } from '@/types/transactionTypes';
 
 const IterationEndOptionSelector = () => {
   const { calenderDate } = useCalenderDateStore();
-  const { control, register, setValue } = useFormContext<TransactionFormData>();
+  const { control, register, setValue } = useFormContext<TransactionFormDataType>();
   const end = useWatch({ control, name: 'customIteration.end' });
 
   const options = [
@@ -22,15 +22,14 @@ const IterationEndOptionSelector = () => {
       input: (
         <Controller
           name="customIteration.end.count"
-          control={control}
           defaultValue={10}
+          control={control}
           render={({ field }) => (
             <>
               <input
                 type="tel"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                defaultValue={10}
                 placeholder="10"
                 className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
                 value={field.value}
