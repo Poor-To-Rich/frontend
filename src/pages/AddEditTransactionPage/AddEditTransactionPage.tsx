@@ -25,7 +25,6 @@ const AddEditTransactionPage = () => {
       memo: '',
       date: transactionDate!,
       iterationType: 'none',
-      customIteration: customIteration,
     },
     resolver: zodResolver(transactionSchema),
     mode: 'onChange',
