@@ -91,7 +91,10 @@ const TransactionInputs = ({ type }: Props) => {
         )}
       />
       {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
-      <Controller name="memo" render={({ field }) => <MemoInput maxLength={100} {...field} />} />
+      <Controller
+        name="memo"
+        render={({ field }) => <MemoInput maxLength={100} errorMessage={errors.memo?.message} {...field} />}
+      />
     </div>
   );
 };

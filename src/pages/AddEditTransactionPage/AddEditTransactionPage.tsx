@@ -9,14 +9,12 @@ import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import IterationChangeModal from '@/pages/AddEditTransactionPage/components/modals/IterationChangeModal';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
-import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
 
 const AddEditTransactionPage = () => {
   const { transactionId, transactionDate, transactionMode, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
-  const { customIteration } = useResetCustomIteration();
   const { mutate: deleteTransaction, isPending } = useDeleteTransaction(transactionMode! as IncomeExpenseButtonType);
 
   const methods = useForm<TransactionFormDataType>({

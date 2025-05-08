@@ -156,6 +156,9 @@ export const transactionHandlers = [
         {
           status: 400,
           message: `${id}번 가계부 수정에 실패하였습니다.`,
+          data: {
+            field: 'memo',
+          },
         },
         { status: 400 },
       );
