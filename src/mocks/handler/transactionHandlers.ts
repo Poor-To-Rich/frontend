@@ -88,7 +88,7 @@ export const transactionHandlers = [
           type: 'weekly',
           daysOfWeek: ['월', '금'],
         },
-        interval: 2,
+        cycle: 2,
         end: {
           type: 'until',
           date: '2025-05-01',

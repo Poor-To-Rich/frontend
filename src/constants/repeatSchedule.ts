@@ -4,6 +4,7 @@ export const ITERATION_CYCLE = [
   { label: '주중 매일 (월-금)', value: 'weekday' },
   { label: '매주', value: 'weekly' },
   { label: '매월', value: 'monthly' },
+  { label: '매달 말일', value: 'endOfMonth' },
   { label: '매년', value: 'yearly' },
   { label: '사용자화', value: 'custom' },
 ] as const;

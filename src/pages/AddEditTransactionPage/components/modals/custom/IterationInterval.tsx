@@ -24,7 +24,7 @@ const IterationInterval = ({ type }: Props) => {
   return (
     <Controller
       control={control}
-      name={'customIteration.interval'}
+      name={'customIteration.cycle'}
       render={({ field }) => (
         <div className="flex gap-3.5">
           <span>반복 주기</span>
@@ -33,7 +33,7 @@ const IterationInterval = ({ type }: Props) => {
             inputMode="numeric"
             pattern="[0-9]*"
             min={1}
-            max={999}
+            max={365}
             maxLength={3}
             placeholder="1"
             className="w-[40px] text-center focus:outline-none placeholder:text-defaultGrey"
@@ -42,11 +42,17 @@ const IterationInterval = ({ type }: Props) => {
               const value = e.target.value;
 
               if (/^\d*$/.test(value)) {
-                field.onChange(value === '' ? '' : Number(value));
+                const cycle = Number(value);
+
+                if (cycle > 365) {
+                  field.onChange(365);
+                } else {
+                  field.onChange(value === '' ? '' : cycle);
+                }
               }
             }}
             onBlur={e => {
-              if (!e.target.value) setValue('customIteration.interval', 1, { shouldValidate: true });
+              if (!e.target.value) setValue('customIteration.cycle', 1, { shouldValidate: true });
             }}
           />
           <span>{durationUnit}</span>

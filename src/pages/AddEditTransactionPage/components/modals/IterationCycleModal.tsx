@@ -5,6 +5,8 @@ import CheckIcon from '@/components/icon/CheckIcon';
 import { IterationCycleValue } from '@/types/iterationTypes';
 import { useFormContext } from 'react-hook-form';
 import { TransactionFormDataType } from '@/types/transactionTypes';
+import { isMonthOfLastDay } from '@/utils/date';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 
 interface Props {
   onClose: () => void;
@@ -12,20 +14,26 @@ interface Props {
 }
 
 const IterationCycleModal = ({ onClose, onClick }: Props) => {
+  const { calenderDate } = useCalenderDateStore();
   const { getValues } = useFormContext<TransactionFormDataType>();
   const { iterationType } = getValues();
+  const isEndOfMonth = isMonthOfLastDay(calenderDate);
+
+  const FILTERED_ITERATION_CYCLE = isEndOfMonth
+    ? ITERATION_CYCLE
+    : ITERATION_CYCLE.filter(item => item.value !== 'endOfMonth');
 
   return (
     <ModalDimmed onClose={onClose}>
       <div className="w-[48%] min-w-fit">
         <div className="flex flex-col bg-white" onClick={e => e.stopPropagation()}>
-          {ITERATION_CYCLE.map(({ label, value }, index) => (
+          {FILTERED_ITERATION_CYCLE.map(({ label, value }, index) => (
             <button
               key={value}
               type="button"
               className={clsx(
                 'w-full flex items-center justify-between p-3.5 cursor-pointer',
-                (index !== 0 || index !== ITERATION_CYCLE.length - 1) && 'border-b border-strokeGray',
+                (index !== 0 || index !== FILTERED_ITERATION_CYCLE.length - 1) && 'border-b border-strokeGray',
               )}
               onClick={() => {
                 onClick(value);

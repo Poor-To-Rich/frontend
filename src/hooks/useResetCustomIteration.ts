@@ -17,7 +17,7 @@ export const useResetCustomIteration = () => {
   return {
     customIteration: {
       iterationRule: iterationRuleDefaults,
-      interval: 1,
+      cycle: 1,
       end: end,
     },
   };
