@@ -88,7 +88,7 @@ export const transactionHandlers = [
           type: 'weekly',
           daysOfWeek: ['월', '금'],
         },
-        interval: 2,
+        cycle: 2,
         end: {
           type: 'until',
           date: '2025-05-01',
@@ -156,6 +156,9 @@ export const transactionHandlers = [
         {
           status: 400,
           message: `${id}번 가계부 수정에 실패하였습니다.`,
+          data: {
+            field: 'memo',
+          },
         },
         { status: 400 },
       );

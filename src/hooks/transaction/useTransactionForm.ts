@@ -5,6 +5,7 @@ import useGetTransaction from '@/hooks/apis/transaction/useGetTransaction';
 import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';
 import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
+import { merge } from 'lodash';
 
 interface Props {
   transactionType?: IncomeExpenseButtonType;
@@ -32,7 +33,11 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
           ...data,
           customIteration,
         });
-      } else reset(data);
+      } else {
+        const merged = merge({}, customIteration, data.customIteration);
+
+        reset({ ...data, customIteration: merged });
+      }
       initialIterationTypeRef.current = data.iterationType;
     }
   }, [data]);

@@ -21,6 +21,13 @@ interface Props {
 }
 
 const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
+  const {
+    handleSubmit,
+    setValue,
+    getValues,
+    setError,
+    formState: { isValid },
+  } = useFormContext<TransactionFormDataType>();
   const { isEditPage, transactionId, transactionMode } = useTransactionParams();
   const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>(
     (transactionMode as IncomeExpenseButtonType) || '지출',
@@ -30,16 +37,12 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
 
-  const { mutate: addTransaction, isPending: isAddPending } = useAddTransaction(transactionType);
-  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction(transactionType);
+  const { mutate: addTransaction, isPending: isAddPending } = useAddTransaction({ type: transactionType, setError });
+  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
+    type: transactionType,
+    setError,
+  });
   useTransactionForm({ transactionType, initialIterationTypeRef });
-
-  const {
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { isValid },
-  } = useFormContext<TransactionFormDataType>();
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';

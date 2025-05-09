@@ -1,4 +1,4 @@
-import { format, isValid, parse } from 'date-fns';
+import { format, isSameDay, isValid, lastDayOfMonth, parse } from 'date-fns';
 import { dayRegex } from './regex';
 import { DAYS } from '@/constants/days';
 import { DaysOfWeekType } from '@/types/iterationTypes';
@@ -30,13 +30,16 @@ export const getKoreanDay = (date: Date): DaysOfWeekType => {
 };
 
 export const getKoreanWeekOfMonth = (date: Date) => {
+  const monthOfLastDay = lastDayOfMonth(date);
+  const isLastWeek = monthOfLastDay.getDate() - date.getDate() < 7;
   const day = date.getDate();
 
-  if (day <= 7) return 0;
-  if (day <= 14) return 1;
-  if (day <= 21) return 2;
-  if (day <= 28) return 3;
-  return 4;
+  if (isLastWeek) return 0;
+  if (day <= 7) return 1;
+  if (day <= 14) return 2;
+  if (day <= 21) return 3;
+  if (day <= 28) return 4;
+  return 0;
 };
 
 export const getKoreanWeek = (date: Date, week: number) => {
@@ -44,5 +47,10 @@ export const getKoreanWeek = (date: Date, week: number) => {
   const lastWeek = getKoreanWeekOfMonth(lastDateOfMonth);
 
   const koreanWeek = ['첫째주', '둘째주', '셋째주', '넷째주'];
-  return lastWeek === week ? '마지막주' : koreanWeek[week];
+  return lastWeek === week ? '마지막주' : koreanWeek[week - 1];
+};
+
+export const isMonthOfLastDay = (date: Date) => {
+  const isEndOfMonth = isSameDay(date, lastDayOfMonth(date));
+  return isEndOfMonth;
 };

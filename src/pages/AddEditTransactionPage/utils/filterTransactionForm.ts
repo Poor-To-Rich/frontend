@@ -5,7 +5,7 @@ const getPayload = (data: TransactionFormDataType) => {
   const formData = filteredData(data);
   const isCustom = formData.iterationType === 'custom';
   const { customIteration, ...rest } = formData;
-  return isCustom ? data : rest;
+  return isCustom ? formData : rest;
 };
 
 export const getFinalData = (data: TransactionFormDataType, isIncome: boolean) => {

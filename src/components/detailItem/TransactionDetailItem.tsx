@@ -2,15 +2,20 @@ import { clsx } from 'clsx';
 import IterationIcon from '@/components/icon/IterationIcon';
 import { TransactionItemType } from '@/types/transactionTypes';
 import { useNavigate } from 'react-router-dom';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { format } from 'date-fns';
 
 interface Props extends TransactionItemType {}
 
 const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: Props) => {
+  const { calenderDate } = useCalenderDateStore();
   const navigate = useNavigate();
 
   const handleClick = (id: number, type: string) => {
     const transactionType = type === 'EXPENSE' ? '지출' : '수입';
-    navigate(`/transaction?type=edit&transactionType=${transactionType}&id=${id}`);
+    navigate(
+      `/transaction?type=edit&transactionType=${transactionType}&date=${format(calenderDate, 'yyyy-MM-dd')}&id=${id}`,
+    );
   };
 
   return (

@@ -1,10 +1,17 @@
 import { updateIncomeTransaction, updateExpenseTransaction } from '@/api/services/transactionService';
 import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import CustomError from '@/utils/CustomError';
 import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
+import { UseFormSetError } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-const useUpdateTransaction = (type: IncomeExpenseButtonType) => {
+const useUpdateTransaction = ({
+  type,
+  setError,
+}: {
+  type: IncomeExpenseButtonType;
+  setError: UseFormSetError<TransactionFormDataType>;
+}) => {
   const navigate = useNavigate();
   const mutationFn = type === '지출' ? updateExpenseTransaction : updateIncomeTransaction;
 
@@ -13,8 +20,12 @@ const useUpdateTransaction = (type: IncomeExpenseButtonType) => {
     onSuccess: () => {
       navigate('/');
     },
-    onError: error => {
-      toast.error(error.message);
+    onError: (error: CustomError<{ field: keyof TransactionFormDataType }>) => {
+      if (error.data)
+        setError(error.data.field, {
+          type: 'server',
+          message: error.message,
+        });
     },
   });
 };

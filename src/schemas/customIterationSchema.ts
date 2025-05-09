@@ -7,7 +7,8 @@ const monthlyOptionSchema = z.discriminatedUnion('mode', [
     mode: z.literal('dayOfMonth'),
     day: z.number(),
   }),
-  z.object({ mode: z.literal('weekdayOfMonth'), week: z.number().min(1).max(5), dayOfWeek: daysOfWeekEnum }),
+  z.object({ mode: z.literal('weekdayOfMonth'), week: z.number().min(0).max(4), dayOfWeek: daysOfWeekEnum }),
+  z.object({ mode: z.literal('endOfMonth') }),
 ]);
 
 const iterationRuleSchema = z.discriminatedUnion('type', [
@@ -31,6 +32,6 @@ export const endSchema = z.discriminatedUnion('type', [
 
 export const customIterationSchema = z.object({
   iterationRule: iterationRuleSchema,
-  interval: z.number().min(1).max(999),
+  cycle: z.number().min(1).max(365),
   end: endSchema,
 });

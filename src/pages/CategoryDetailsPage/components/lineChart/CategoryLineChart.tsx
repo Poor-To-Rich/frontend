@@ -17,7 +17,7 @@ const CategoryLineChart = ({ weeklyBalances }: Props) => {
           type="category"
           axisLine={false}
           tickLine={false}
-          interval={0}
+          cycle={0}
           tick={CustomizedXAxisTick}
         />
         <YAxis dataKey="amount" type="number" hide domain={[0, 'auto']} />
