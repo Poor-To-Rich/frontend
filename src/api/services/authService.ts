@@ -5,9 +5,9 @@ import {
   NicknameDuplicationReq,
   UsernameDuplicationReq,
   VerifyEmailCodeReq,
-  EmailCountRes,
   LoginFormType,
   TokenRes,
+  EmailRes,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -26,26 +26,16 @@ export const checkNicknameDuplication = async ({ nickname }: NicknameDuplication
 };
 
 export const sendEmailCode = async ({ email, purpose }: SendEmailReq) => {
-  const res = await fetchData<SendEmailReq>('POST', endpoints.email.sendEmail, { email, purpose });
-  return res;
-};
-
-export const getSendEmailCount = async (email: string) => {
-  const res = await fetchData<undefined, EmailCountRes>('GET', endpoints.email.getSendEmailCount(email));
+  const res = await fetchData<SendEmailReq, EmailRes>('POST', endpoints.email.sendEmail, { email, purpose });
   return res;
 };
 
 export const verifyEmailCode = async ({ email, purpose, verificationCode }: VerifyEmailCodeReq) => {
-  const res = await fetchData<VerifyEmailCodeReq>('POST', endpoints.email.verifyCode, {
+  const res = await fetchData<VerifyEmailCodeReq, EmailRes>('POST', endpoints.email.verifyCode, {
     email,
     purpose,
     verificationCode,
   });
-  return res;
-};
-
-export const getVerifyEmailCodeCount = async (email: string) => {
-  const res = await fetchData<undefined, EmailCountRes>('GET', endpoints.email.getVerifyEmailCodeCount(email));
   return res;
 };
 

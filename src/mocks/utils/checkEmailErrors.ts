@@ -42,7 +42,10 @@ export const checkCommonEmailErrors = ({
     return HttpResponse.json(
       {
         status: 429,
-        message: '인증 요청 횟수를 초과하였습니다. 잠시후에 다시 시도해주세요.',
+        message: '이메일 인증 요청이 너무 많아 일시적으로 차단되었습니다.',
+        data: {
+          notificationMessage: '약 29분 뒤에 다시 시도해주세요.',
+        },
       },
       { status: 429 },
     );
