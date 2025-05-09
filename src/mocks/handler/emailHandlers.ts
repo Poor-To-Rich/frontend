@@ -22,7 +22,7 @@ export const emailHandlers = [
     );
   }),
   http.post(endpoints.email.verifyCode, async ({ request }) => {
-    let { email, purpose, verificationCode } = await parseRequestBody(request);
+    const { email, purpose, verificationCode } = await parseRequestBody(request);
 
     const errorResponse = checkCommonEmailErrors({ email, purpose });
     if (errorResponse) return errorResponse;

@@ -13,6 +13,7 @@ import { useFormContext } from 'react-hook-form';
 import { SignupFormType } from '@/types/authTypes';
 import useSignFormValidation from '@/hooks/field/useSignFormValidation';
 import { filteredData } from '@/utils/filteredFormData';
+import { omit } from 'lodash';
 
 const SignupForm = () => {
   const { setError, handleSubmit } = useFormContext<SignupFormType>();
@@ -21,7 +22,7 @@ const SignupForm = () => {
   const { buttonDisabled } = useSignFormValidation();
 
   const onSubmit = (data: SignupFormType) => {
-    const { confirmPassword, verificationCode, ...postData } = data;
+    const postData = omit(data, ['confirmPassword', 'verificationCode']);
     const requestData = filteredData(postData);
 
     const formData = new FormData();

@@ -36,9 +36,10 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config;
 
     const isRefreshRequest = originalRequest.url?.includes(endpoints.auth.refreshToken);
+    const hasToken = !!tokenManager.getToken();
 
     // 토큰 만료 + 재시도 안 했던 요청만
-    if (error.response?.status === 401 && !originalRequest._retry && !isRefreshRequest) {
+    if (error.response?.status === 401 && !originalRequest._retry && !isRefreshRequest && hasToken) {
       originalRequest._retry = true;
 
       // 이미 갱신 중이면 그걸 기다렸다가 사용
