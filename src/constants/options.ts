@@ -1,8 +1,8 @@
 import { SettingOptionType } from '@/types/types';
 
 export const GENDER_OPTIONS = [
-  { label: '여자', value: '여자' },
-  { label: '남자', value: '남자' },
+  { label: '여자', value: 'FEMALE' },
+  { label: '남자', value: 'MALE' },
 ];
 
 export const JOB_OPTIONS = [

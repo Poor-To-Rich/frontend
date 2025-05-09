@@ -17,7 +17,7 @@ export type EmailPurposeType = (typeof emailPurposeList)[number];
 
 export type SendEmailReq = { email: string; purpose: EmailPurposeType };
 
-export type EmailCountRes = { remainingAttempts: string };
+export type EmailRes = { notificationMessage: string };
 
 export type VerifyEmailCodeReq = SendEmailReq & { verificationCode: number };
 

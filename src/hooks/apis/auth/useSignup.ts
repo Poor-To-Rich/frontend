@@ -3,6 +3,7 @@ import { SignupFormType } from '@/types/authTypes';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
 import CustomError from '@/utils/CustomError';
 import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const useSignup = ({ setError }: Pick<CheckVerifyFieldProps, 'setError'>) => {
@@ -19,6 +20,7 @@ const useSignup = ({ setError }: Pick<CheckVerifyFieldProps, 'setError'>) => {
           type: 'server',
           message: error.message,
         });
+      else toast.error(error.message);
     },
   });
 };

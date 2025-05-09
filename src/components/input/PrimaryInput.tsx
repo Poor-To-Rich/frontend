@@ -62,7 +62,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
               className={clsx(
                 errorMessage && 'text-sunsetRose',
                 successMessage && 'text-oliveGreen',
-                'w-fit h-fit text-sm mt-1.5',
+                'w-fit h-fit text-sm mt-1.5 whitespace-pre-line',
               )}>
               {message}
             </p>
