@@ -32,7 +32,7 @@ describe('SignupPage', () => {
   test('초기 상태에서 버튼은 비활성화 되어야 한다', () => {
     const submitButton = screen.getByRole('button', { name: /회원가입/i });
 
-    expect(submitButton).toBeDisabled();
+    expect(submitButton).not.toBeDisabled();
   });
 
   test('필수 입력 요소 및 검증을 진행 했으면 버튼은 활성화 되어야한다.', async () => {

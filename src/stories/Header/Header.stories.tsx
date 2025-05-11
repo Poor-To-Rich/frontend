@@ -11,8 +11,7 @@ function Header() {
       <DefaultHeader label="카테고리 추가" hasPlusButton />
       <DefaultHeader label="가계부 편집" hasBackButton hasTrashButton />
       <h2>DateControlHeader</h2>
-      <DateControlHeader date="2024년 1월" />
-      <DateControlHeader date="2024년" />
+      <DateControlHeader headerDate={new Date()} setHeaderDate={() => {}} />
     </div>
   );
 }

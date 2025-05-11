@@ -9,6 +9,10 @@ import fs from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const isCI = process.env.CI === 'true';
+
+const useHttps = !isCI && process.env.VERCEL !== 'true';
+
 const vitestConfig = {
   test: {
     globals: true,
@@ -32,12 +36,12 @@ export default defineConfig({
     },
   },
   server: {
-    https: process.env.VERCEL
-      ? undefined
-      : {
+    https: useHttps
+      ? {
           key: fs.readFileSync(path.resolve(__dirname, 'localhost+2-key.pem')),
           cert: fs.readFileSync(path.resolve(__dirname, 'localhost+2.pem')),
-        },
+        }
+      : undefined,
   },
   ...vitestConfig,
 });

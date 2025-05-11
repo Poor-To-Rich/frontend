@@ -13,11 +13,12 @@ interface Props {
 }
 
 const IterationChangeModal = ({ type, onClose }: Props) => {
-  const { handleSubmit } = useFormContext<TransactionFormDataType>();
+  const { handleSubmit, setError } = useFormContext<TransactionFormDataType>();
   const { transactionId, transactionMode } = useTransactionParams();
-  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction(
-    transactionMode as IncomeExpenseButtonType,
-  );
+  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
+    type: transactionMode as IncomeExpenseButtonType,
+    setError: setError,
+  });
   const { mutate: deleteTransaction, isPending: isDeletePending } = useDeleteTransaction(
     transactionMode as IncomeExpenseButtonType,
   );

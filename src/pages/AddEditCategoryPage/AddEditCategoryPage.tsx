@@ -51,7 +51,7 @@ const AddEditCategoryPage = () => {
               <PrimaryInput
                 {...field}
                 label="카테고리명"
-                message={errors.name?.message}
+                errorMessage={errors.name?.message}
                 onChange={e => {
                   if (e.target.value.length <= 10) {
                     field.onChange(e);
