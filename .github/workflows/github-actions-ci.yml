@@ -1,8 +1,6 @@
 name: github-ci
 
-on:
-  push:
-    branches: [dev]
+on: push
 
 jobs:
   # 의존성 설치 및 캐싱
