@@ -53,21 +53,27 @@ const ProfilePage = () => {
               name="name"
               control={control}
               render={({ field }) => (
-                <PrimaryInput {...field} label="이름" isRequired type="text" message={errors.name?.message} />
+                <PrimaryInput {...field} label="이름" isRequired type="text" errorMessage={errors.name?.message} />
               )}
             />
             <Controller
               name="nickname"
               control={control}
               render={({ field }) => (
-                <PrimaryInput {...field} label="닉네임" isRequired type="text" message={errors.nickname?.message} />
+                <PrimaryInput
+                  {...field}
+                  label="닉네임"
+                  isRequired
+                  type="text"
+                  errorMessage={errors.nickname?.message}
+                />
               )}
             />
             <Controller
               name="birth"
               control={control}
               render={({ field }) => (
-                <PrimaryInput {...field} label="생년월일" isRequired type="text" message={errors.birth?.message} />
+                <PrimaryInput {...field} label="생년월일" isRequired type="text" errorMessage={errors.birth?.message} />
               )}
             />
             <Controller

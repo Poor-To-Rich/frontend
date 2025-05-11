@@ -35,7 +35,7 @@ const UpdatePasswordPage = () => {
                 {...field}
                 label="현재 비밀번호"
                 type="password"
-                message={errors.currentPassword?.message}
+                errorMessage={errors.currentPassword?.message}
               />
             )}
           />
@@ -43,7 +43,7 @@ const UpdatePasswordPage = () => {
             name="newPassword"
             control={control}
             render={({ field }) => (
-              <PrimaryInput {...field} label="새 비밀번호" type="password" message={errors.newPassword?.message} />
+              <PrimaryInput {...field} label="새 비밀번호" type="password" errorMessage={errors.newPassword?.message} />
             )}
           />
           <Controller
@@ -54,7 +54,7 @@ const UpdatePasswordPage = () => {
                 {...field}
                 label="비밀번호 재입력"
                 type="password"
-                message={errors.confirmPassword?.message}
+                errorMessage={errors.confirmPassword?.message}
               />
             )}
           />

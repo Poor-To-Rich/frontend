@@ -10,9 +10,9 @@ const useSignFormValidation = () => {
   } = useFormContext();
 
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
-  const { nicknameStatus, resetNicknameStatus } = useNicknameVerification();
-  const { usernameStatus, resetUsernameStatus } = useUsernameVerification();
-  const { sendEmailStatus, emailCodeStatus, resetSendEmailStatus, resetEmailCodeStatus } = useEmailVerification();
+  const { nicknameStatus } = useNicknameVerification();
+  const { usernameStatus } = useUsernameVerification();
+  const { sendEmailStatus, emailCodeStatus } = useEmailVerification();
 
   useEffect(() => {
     (() => {

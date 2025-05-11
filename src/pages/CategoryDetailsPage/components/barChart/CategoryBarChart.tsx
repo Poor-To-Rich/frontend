@@ -37,7 +37,7 @@ const CategoryBarChart = () => {
       <div className="min-w-[700px]">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={monthlyBalances} margin={{ top: 30, right: 10, bottom: 0, left: 10 }} barSize={25}>
-            <XAxis type="category" dataKey="month" axisLine={false} tickLine={false} cycle={0} />
+            <XAxis type="category" dataKey="month" axisLine={false} tickLine={false} interval={0} />
             <YAxis type="number" dataKey="amount" hide domain={[1, maxAmount]} />
             <Tooltip content={<CustomizedTooltip />} />
             <Bar

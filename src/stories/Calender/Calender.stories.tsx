@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 function CalenderStory() {
   return (
     <div>
-      <Calender />
+      <Calender transactions={[]} />
     </div>
   );
 }

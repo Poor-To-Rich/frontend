@@ -59,7 +59,7 @@ apiClient.interceptors.response.use(
         return await apiClient(originalRequest);
       } catch (err) {
         if (err instanceof CustomError) {
-          window.location.replace(`/login?failMessage=${err.message}`);
+          if (typeof window !== 'undefined') window.location.replace(`/login?failMessage=${err.message}`);
         }
         return Promise.reject(err);
       } finally {
