@@ -2,15 +2,14 @@ import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem
 import DefaultHeader from '@/components/header/DefaultHeader';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import { WeeklyDetailType } from '@/types/transactionTypes';
-
 import { format } from 'date-fns';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 const WeeklyDetailsPage = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const date = searchParams.get('date');
-  const week = searchParams.get('week');
+  // const location = useLocation();
+  // const searchParams = new URLSearchParams(location.search);
+  // const date = searchParams.get('date');
+  // const week = searchParams.get('week');
 
   const dailyDetails: WeeklyDetailType[] = [
     {

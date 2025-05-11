@@ -32,7 +32,13 @@ const UpdateEmailPage = () => {
             name="email"
             control={control}
             render={({ field }) => (
-              <PrimaryInput {...field} label="이메일" type="email" buttonLabel="인증" message={errors.email?.message} />
+              <PrimaryInput
+                {...field}
+                label="이메일"
+                type="email"
+                buttonLabel="인증"
+                errorMessage={errors.email?.message}
+              />
             )}
           />
           <PrimaryInput label="인증 코드" type="text" buttonLabel="확인" />

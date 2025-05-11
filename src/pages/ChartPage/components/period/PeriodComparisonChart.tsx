@@ -53,7 +53,7 @@ const PeriodComparisonChart = () => {
               type="category"
               axisLine={false}
               tickLine={false}
-              cycle={0}
+              interval={0}
               tickFormatter={tickItem =>
                 `${currentReportType === '월별' ? `${tickItem.slice(-2)}월` : `${tickItem.slice(0, 4)}`}`
               }

@@ -5,8 +5,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 function Summary() {
   return (
     <div className="flex flex-col gap-2.5">
-      <PeriodSummary period="25.01~25.02" balance={45678465468} />
-      <TransactionSummary income={865133} expense={15648124124444444465133} total={4685165} />
+      <PeriodSummary period="25.01~25.02" balance={45678465468} transactionType="지출" />
+      <TransactionSummary income={865133} expense={15648124124} total={4685165} />
       <TransactionSummary
         income={865133}
         expense={1564865133}

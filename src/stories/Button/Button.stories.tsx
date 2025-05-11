@@ -1,16 +1,16 @@
 import CategoryEditButton from '@/components/button/icon/CategoryEditButton';
-import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import MinusCircleButton from '@/components/button/icon/MinusCircleButton';
 import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
-import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
-import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/TransactionTypeButton';
 import SignButton from '@/pages/LoginPage/components/SignButton';
-import ToggleSwitch from '@/components/button/ToggleSwitch';
 import VerifyButton from '@/components/button/VerifyButton';
 import type { Meta, StoryObj } from '@storybook/react';
+import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
+import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
+import ToggleSwitch from '@/components/button/ToggleSwitch';
+import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 
 function Button() {
   return (
@@ -29,7 +29,7 @@ function Button() {
       </div>
       <br />
       <h2>지출, 수입 버튼</h2>
-      {/* <IncomeExpenseButton /> */}
+      <IncomeExpenseButton type="지출" onClick={() => {}} />
       <ReportTypeButton />
       <h2>검증 버튼</h2>
       <VerifyButton label="인증" />
@@ -37,10 +37,10 @@ function Button() {
       <VerifyButton label="중복확인" />
       <h2>기타 버튼</h2>
       <PlusCircleButton />
-      {/* <RepeatCircleButton />
-      <ToggleSwitch />
-      <CategoryLinkButton /> */}
-      <MinusCircleButton />
+      <RepeatCircleButton openModal={() => {}} />
+      <ToggleSwitch visibility />
+      <CategoryLinkButton type="지출" />
+      <MinusCircleButton onClick={() => {}} />
       <CategoryEditButton />
     </div>
   );
