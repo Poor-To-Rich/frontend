@@ -10,8 +10,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const isCI = process.env.CI === 'true';
+const isVercel = process.env.VERCEL_ENV === 'production';
 
-const useHttps = !isCI && process.env.VERCEL !== 'true';
+// 로컬 개발환경에서는 https 설정, Vercel 환경에서는 https 설정 안 함
+const useHttps = !isCI && !isVercel;
 
 const vitestConfig = {
   test: {
