@@ -1,8 +1,8 @@
 name: github-ci
 
 on:
-  pull_request:
-    types: [opened, synchronize]
+  push:
+    branches: [dev]
 
 jobs:
   # 의존성 설치 및 캐싱
