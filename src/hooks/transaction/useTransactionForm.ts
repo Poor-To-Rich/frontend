@@ -17,14 +17,12 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   const { reset } = useFormContext<TransactionFormDataType>();
   const { transactionDate, transactionId, isEditPage } = useTransactionParams();
   const { customIteration } = useResetCustomIteration();
-  const { data } =
-    isEditPage && transactionId && transactionType
-      ? useGetTransaction(transactionType, transactionId!)
-      : { data: null };
+  const enable = Boolean(isEditPage && transactionId && transactionType);
+  const { data } = useGetTransaction(transactionType!, transactionId!, enable);
 
   useEffect(() => {
     if (transactionDate) setCalenderDate(new Date(transactionDate));
-  }, []);
+  }, [transactionDate, setCalenderDate]);
 
   useEffect(() => {
     if (data) {
