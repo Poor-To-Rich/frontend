@@ -58,7 +58,10 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
 
   return (
     <ModalDimmed onClose={onClose}>
-      <div className="w-[63%]  flex flex-col justify-evenly rounded-lg bg-white" onClick={e => e.stopPropagation()}>
+      <div
+        data-testid="iteration-change-modal"
+        className="w-[63%]  flex flex-col justify-evenly rounded-lg bg-white"
+        onClick={e => e.stopPropagation()}>
         <span className="text-center py-8 text-md">{options.content}</span>
         <div className="flex flex-col items-center justify-center gap-6 pb-8">
           {options.buttons.map(({ label, value }) => (

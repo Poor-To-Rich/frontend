@@ -1,6 +1,6 @@
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
-import TransactionInputs from './TransactionInputs';
+import TransactionFields from '@/pages/AddEditTransactionPage/components/TransactionFields';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import useTransactionForm from '@/hooks/transaction/useTransactionForm';
@@ -78,10 +78,16 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
         type={transactionType}
         onClick={(value: IncomeExpenseButtonType) => setTransactionType(value)}
       />
-      <TransactionInputs type={transactionType} />
+      <TransactionFields type={transactionType} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
-        <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isAddPending || isUpdatePending} />
+        <PrimaryButton
+          data-testid="submit-button"
+          label="저장"
+          type="submit"
+          disabled={!isValid}
+          isPending={isAddPending || isUpdatePending}
+        />
       </div>
       {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
       {isCustomOpen && backupCustomIteration && (

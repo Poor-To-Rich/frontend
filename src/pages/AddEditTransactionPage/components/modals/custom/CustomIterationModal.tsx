@@ -32,7 +32,10 @@ const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIterati
 
   return (
     <ModalDimmed>
-      <div className="w-[85%] min-h-[350px] bg-white py-10 px-5" onClick={e => e.stopPropagation()}>
+      <div
+        data-testid="custom-iteration-modal"
+        className="w-[85%] min-h-[350px] bg-white py-10 px-5"
+        onClick={e => e.stopPropagation()}>
         <IterationTypeSelector />
         <div className="flex flex-col gap-10">
           <IterationInterval type={type} />

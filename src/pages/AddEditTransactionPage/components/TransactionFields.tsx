@@ -15,7 +15,7 @@ interface Props {
   type: IncomeExpenseButtonType;
 }
 
-const TransactionInputs = ({ type }: Props) => {
+const TransactionFields = ({ type }: Props) => {
   const isExpense = type === '지출';
   const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
@@ -39,6 +39,7 @@ const TransactionInputs = ({ type }: Props) => {
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
       <PrimaryInput
         label="날짜"
+        data-testid="date-input"
         isRequired
         type="date"
         errorMessage={errors.date?.message}
@@ -60,6 +61,7 @@ const TransactionInputs = ({ type }: Props) => {
       />
       <SelectBox
         label="카테고리"
+        data-testid={`${isExpense ? 'expense' : 'income'}-categories-select`}
         isRequired
         options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
         type={type}
@@ -68,6 +70,7 @@ const TransactionInputs = ({ type }: Props) => {
       />
       <PrimaryInput
         label={`${type}명`}
+        data-testid={`${isExpense ? 'expense' : 'income'}-title-input`}
         type="text"
         errorMessage={errors.title?.message}
         maxLength={15}
@@ -78,6 +81,7 @@ const TransactionInputs = ({ type }: Props) => {
         control={control}
         render={({ field }) => (
           <PrimaryInput
+            data-testid="cost-input"
             label="금액"
             isRequired
             type="tel"
@@ -90,13 +94,23 @@ const TransactionInputs = ({ type }: Props) => {
           />
         )}
       />
-      {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
+      {isExpense && (
+        <SelectBox
+          data-testid="expense-method-select"
+          label="지출 수단"
+          isRequired
+          options={EXPENSE_METHODS}
+          {...register('paymentMethod')}
+        />
+      )}
       <Controller
         name="memo"
-        render={({ field }) => <MemoInput maxLength={100} errorMessage={errors.memo?.message} {...field} />}
+        render={({ field }) => (
+          <MemoInput data-testid="memo-input" maxLength={100} errorMessage={errors.memo?.message} {...field} />
+        )}
       />
     </div>
   );
 };
 
-export default TransactionInputs;
+export default TransactionFields;

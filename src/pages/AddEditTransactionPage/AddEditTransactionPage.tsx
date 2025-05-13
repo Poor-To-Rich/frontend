@@ -47,6 +47,7 @@ const AddEditTransactionPage = () => {
         {isDeleteModalOpen &&
           (initialIterationTypeRef.current === 'none' ? (
             <DefaultModal
+              data-testid="delete-confirm-modal"
               content="해당 내역을 삭제하시겠습니까?"
               isPending={isPending}
               onClose={closeDeleteModal}
