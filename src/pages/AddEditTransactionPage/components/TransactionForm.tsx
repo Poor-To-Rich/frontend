@@ -61,9 +61,9 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
-  const handleRepeatCircleClick = (value: IterationCycleValue) => {
+  const handleIterationTypeClick = (value: IterationCycleValue) => {
     if (value !== 'custom') {
-      setValue('iterationType', value);
+      setValue('iterationType', value, { shouldDirty: true });
       closeModal();
     } else {
       const current = JSON.parse(JSON.stringify(getValues('customIteration')));
@@ -89,7 +89,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
           isPending={isAddPending || isUpdatePending}
         />
       </div>
-      {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
+      {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleIterationTypeClick} />}
       {isCustomOpen && backupCustomIteration && (
         <CustomIterationModal
           backUpCustomIteration={backupCustomIteration}

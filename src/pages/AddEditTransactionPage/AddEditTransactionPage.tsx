@@ -34,6 +34,8 @@ const AddEditTransactionPage = () => {
     deleteTransaction({ id: transactionId! });
   };
 
+  console.log(methods.formState.dirtyFields);
+
   return (
     <div className="flex flex-col w-full h-screen max-h-fit relative">
       <DefaultHeader
