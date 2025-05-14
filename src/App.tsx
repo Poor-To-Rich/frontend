@@ -15,12 +15,16 @@ import UpdateEmailPage from '@/pages/UpdateEmailPage/UpdateEmailPage';
 import IterationDataPage from '@/pages/IterationDataPage/IterationDataPage';
 import ChartPage from '@/pages/ChartPage/ChartPage';
 import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage';
-
-import ProtectedRoute from './components/route/ProtectedRoute';
+import ProtectedRoute from '@/components/route/ProtectedRoute';
+import RedirectIfLoggedInRoute from '@/components/route/RedirectIfLoggedInRoute';
 
 function App() {
   return (
     <Routes>
+      <Route element={<RedirectIfLoggedInRoute />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+      </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/transaction" element={<AddEditTransactionPage />} />
@@ -36,8 +40,6 @@ function App() {
         <Route path="/chart" element={<ChartPage />} />
         <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
       </Route>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
     </Routes>
   );
 }

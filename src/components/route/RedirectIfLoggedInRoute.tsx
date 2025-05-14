@@ -1,12 +1,12 @@
 import { useAuthStatus } from '@/hooks/useAuthStatus';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const ProtectedRoute = () => {
+const RedirectIfLoggedInRoute = () => {
   const isLogin = useAuthStatus();
 
   if (isLogin === null) return null;
 
-  return isLogin ? <Outlet /> : <Navigate to="/login" replace />;
+  return isLogin ? <Navigate to="/" replace /> : <Outlet />;
 };
 
-export default ProtectedRoute;
+export default RedirectIfLoggedInRoute;
