@@ -15,6 +15,7 @@ const IterationTypeSelector = () => {
           {CUSTOM_ITERATION_CYCLE.map(({ label, value }) => (
             <button
               type="button"
+              data-testid={`${value}-type-button`}
               key={value}
               className={clsx(
                 field.value === value && 'bg-pastelLime',

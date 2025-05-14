@@ -18,6 +18,7 @@ const IncomeExpenseButton = ({ type, onClick }: Props) => {
     <div className="w-full flex justify-center gap-6">
       {options.map(({ label, color }) => (
         <button
+          data-testid={`${label === '지출' ? 'expense' : 'income'}-toggle-button`}
           key={label}
           value={label}
           type="button"
