@@ -23,10 +23,10 @@ const useLoginForm = () => {
     mode: 'onChange',
   });
 
-  const { mutate, isPending } = useLogin({ setErrorMessage });
+  const { mutate: login, isPending } = useLogin({ setErrorMessage });
 
   const onSubmit = (data: LoginFormType) => {
-    if (!Boolean(errorMessage)) mutate(data);
+    if (!errorMessage) login(data);
   };
 
   const registerWithResetError = (name: keyof LoginFormType, options = {}) =>
