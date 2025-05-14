@@ -29,8 +29,6 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const isEditType = type === 'edit';
   const hasChangedIterationFields = dirtyFields.iterationType || dirtyFields.customIteration;
 
-  console.log(dirtyFields);
-
   const content = isEditType ? '해당 가계부를 편집하시겠습니까?' : '해당 가계부를 삭제하시겠습니까?';
 
   const baseOptions = [
@@ -38,9 +36,10 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
     { label: '모든 반복 내역에 적용', value: 'ALL' },
   ];
 
-  const options = hasChangedIterationFields
-    ? baseOptions
-    : [{ label: '이 반복 내역에만 적용', value: 'THIS_ONLY' }, ...baseOptions];
+  const options =
+    hasChangedIterationFields && isEditType
+      ? baseOptions
+      : [{ label: '이 반복 내역에만 적용', value: 'THIS_ONLY' }, ...baseOptions];
 
   const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
     const isIncome = transactionMode === '수입';
