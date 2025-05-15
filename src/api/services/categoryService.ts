@@ -3,6 +3,7 @@ import { endpoints } from '@/api/endpoints';
 import {
   ActiveCategoriesRes,
   BaseCategoriesType,
+  CategoryVisibility,
   CustomCategoriesRes,
   DefaultCategoriesRes,
 } from '@/types/categoryTypes';
@@ -54,5 +55,10 @@ export const updateCategory = async (id: string, body: BaseCategoriesType) => {
 
 export const deleteCategory = async (id: string) => {
   const res = await fetchData<undefined, undefined>('DELETE', endpoints.category.deleteCategory(id));
+  return res;
+};
+
+export const updateCategoryVisibility = async (id: string, body: CategoryVisibility) => {
+  const res = await fetchData<CategoryVisibility, undefined>('PUT', endpoints.category.updateActive(id), body);
   return res;
 };

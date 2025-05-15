@@ -44,7 +44,7 @@ export const categoryHandlers = [
   }),
   http.get(endpoints.category.getDefaultExpense, () => {
     const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }, index) => ({
-      value: index + 10,
+      id: index + 10,
       name: value,
       color,
       visibility: true,
@@ -240,7 +240,7 @@ export const categoryHandlers = [
     );
   }),
 
-  http.delete('/category/:id', () => {
+  http.delete('/category/:id', async () => {
     return HttpResponse.json(
       {
         status: 200,
@@ -248,5 +248,29 @@ export const categoryHandlers = [
       },
       { status: 200 },
     );
+  }),
+
+  http.put('/category/active/:id', async ({ request }) => {
+    const { visibility } = await parseRequestBody<{ visibility: boolean }>(request);
+
+    if (visibility) {
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: '카테고리를 성공적으로 활성화하였습니다.',
+        },
+        { status: 200 },
+      );
+    }
+
+    if (!visibility) {
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: '카테고리를 성공적으로 비활성화하였습니다.',
+        },
+        { status: 200 },
+      );
+    }
   }),
 ];

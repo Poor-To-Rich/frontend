@@ -22,7 +22,7 @@ const CategoryList = ({ label, type, defaultCategories, customCategories, handle
           defaultCategories.map(({ id, color, name, visibility }) => (
             <div key={name} className="category-common">
               <span style={{ color }}>{name}</span>
-              <ToggleSwitch id={id} visibility={visibility} />
+              <ToggleSwitch id={id.toString()} visibility={visibility} />
             </div>
           ))}
         {label === '사용자 지정' &&

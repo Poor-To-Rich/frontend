@@ -3,10 +3,14 @@ export type BaseCategoriesType = {
   name: string;
 };
 
-export type DefaultCategoriesType = BaseCategoriesType & {
-  id: number;
+export type CategoryVisibility = {
   visibility: boolean;
 };
+
+export type DefaultCategoriesType = BaseCategoriesType &
+  CategoryVisibility & {
+    id: number;
+  };
 
 export type CustomCategoriesType = BaseCategoriesType & {
   id: number;
