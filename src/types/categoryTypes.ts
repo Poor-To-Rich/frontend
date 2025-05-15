@@ -4,6 +4,7 @@ export type BaseCategoriesType = {
 };
 
 export type DefaultCategoriesType = BaseCategoriesType & {
+  id: number;
   visibility: boolean;
 };
 

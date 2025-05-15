@@ -43,7 +43,8 @@ export const categoryHandlers = [
     );
   }),
   http.get(endpoints.category.getDefaultExpense, () => {
-    const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }) => ({
+    const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }, index) => ({
+      value: index + 10,
       name: value,
       color,
       visibility: true,
@@ -59,7 +60,8 @@ export const categoryHandlers = [
     );
   }),
   http.get(endpoints.category.getDefaultIncome, () => {
-    const categoryNamesWithColors = INCOME_CATEGORIES.map(({ value, color }) => ({
+    const categoryNamesWithColors = INCOME_CATEGORIES.map(({ value, color }, index) => ({
+      id: index + 10,
       name: value,
       color,
       visibility: true,
@@ -214,6 +216,37 @@ export const categoryHandlers = [
         message: '존재하지 않는 카테고리입니다.',
       },
       { status: 404 },
+    );
+  }),
+
+  http.put('/category/:id', async ({ request }) => {
+    const { name } = await parseRequestBody<{ name: string }>(request);
+
+    if (name === '냠냠' || name === '쩝쩝' || name === '주식 배당금') {
+      return HttpResponse.json(
+        {
+          status: 409,
+          message: '이미 사용중인 카테고리 이름입니다.',
+        },
+        { status: 409 },
+      );
+    }
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: '카테고리를 성공적으로 편집하였습니다.',
+      },
+      { status: 201 },
+    );
+  }),
+
+  http.delete('/category/:id', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '카테고리를 성공적으로 삭제하였습니다.',
+      },
+      { status: 200 },
     );
   }),
 ];

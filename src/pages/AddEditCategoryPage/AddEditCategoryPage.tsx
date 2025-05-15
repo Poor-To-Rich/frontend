@@ -1,6 +1,6 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import PrimaryInput from '@/components/input/PrimaryInput';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ColorInput from '@/pages/AddEditCategoryPage/components/ColorInput';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import { Controller, useForm } from 'react-hook-form';
@@ -13,16 +13,21 @@ import { IncomeExpenseType } from '@/types/transactionTypes';
 import { BaseCategoriesType } from '@/types/categoryTypes';
 import useGetCategory from '@/hooks/apis/category/useGetCategory';
 import { useEffect } from 'react';
+import useUpdateCategory from '@/hooks/apis/category/useUpdateCategory';
+import useDeleteCategory from '@/hooks/apis/category/useDeleteCategory';
 
 const AddEditCategoryPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
-  const categoryType = queryParams.get('categoryType');
+  const categoryType = queryParams.get('categoryType') as IncomeExpenseType;
   const type = queryParams.get('type');
   const categoryId = queryParams.get('id');
   const isEdit = type === 'edit';
-  const { mutate: addCategory, isPending: isAddPending } = useAddCategory(categoryType as IncomeExpenseType);
+  const { mutate: addCategory, isPending: isAddPending } = useAddCategory(categoryType);
+  const { mutate: updateCategory, isPending: isUpdatePending } = useUpdateCategory();
+  const { mutate: deleteCategory, isSuccess } = useDeleteCategory(categoryType);
   const { data } = useGetCategory(categoryId!, isEdit);
 
   const {
@@ -41,15 +46,28 @@ const AddEditCategoryPage = () => {
 
   const onSubmit = (data: BaseCategoriesType) => {
     if (isEdit) {
-      console.log('편집');
+      updateCategory({ id: categoryId!, body: data });
     } else {
       addCategory(data);
+    }
+  };
+
+  const handleDelete = () => {
+    if (categoryId) {
+      console.log(categoryId);
+      deleteCategory(categoryId);
     }
   };
 
   useEffect(() => {
     if (data) reset(data);
   }, [data]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(-1);
+    }
+  }, [isSuccess]);
 
   return (
     <div className="w-full h-screen flex flex-col relative">
@@ -80,10 +98,12 @@ const AddEditCategoryPage = () => {
           <Controller name="color" control={control} render={({ field }) => <ColorInput {...field} />} />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="저장" disabled={!isValid} type="submit" isPending={isAddPending} />
+          <PrimaryButton label="저장" disabled={!isValid} type="submit" isPending={isAddPending || isUpdatePending} />
         </div>
       </form>
-      {isDeleteModalOpen && <DefaultModal content="해당 카테고리를를 삭제하시겠습니까?" onClose={closeDeleteModal} />}
+      {isDeleteModalOpen && (
+        <DefaultModal content="해당 카테고리를 삭제하시겠습니까?" onClick={handleDelete} onClose={closeDeleteModal} />
+      )}
     </div>
   );
 };

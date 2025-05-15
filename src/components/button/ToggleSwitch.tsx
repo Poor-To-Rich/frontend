@@ -2,10 +2,11 @@ import { clsx } from 'clsx';
 import { useState } from 'react';
 
 interface Props {
+  id: number;
   visibility: boolean;
 }
 
-const ToggleSwitch = ({ visibility }: Props) => {
+const ToggleSwitch = ({ id, visibility }: Props) => {
   const [isActive, setIsActive] = useState<boolean>(visibility);
 
   return (

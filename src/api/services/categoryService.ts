@@ -44,5 +44,15 @@ export const addIncomeCategory = async (body: BaseCategoriesType) => {
 
 export const getCategory = async (id: string) => {
   const res = await fetchData<undefined, BaseCategoriesType>('GET', endpoints.category.getCategory(id));
-  return res.data || {};
+  return res.data;
+};
+
+export const updateCategory = async (id: string, body: BaseCategoriesType) => {
+  const res = await fetchData<BaseCategoriesType, undefined>('PUT', endpoints.category.updateCategory(id), body);
+  return res;
+};
+
+export const deleteCategory = async (id: string) => {
+  const res = await fetchData<undefined, undefined>('DELETE', endpoints.category.deleteCategory(id));
+  return res;
 };

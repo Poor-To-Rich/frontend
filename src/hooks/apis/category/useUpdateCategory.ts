@@ -1,16 +1,14 @@
-import { addExpenseCategory, addIncomeCategory } from '@/api/services/categoryService';
+import { updateCategory } from '@/api/services/categoryService';
 import { BaseCategoriesType } from '@/types/categoryTypes';
-import { IncomeExpenseType } from '@/types/transactionTypes';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const useAddCategory = (type: IncomeExpenseType) => {
-  const mutationFn = type === '지출' ? addExpenseCategory : addIncomeCategory;
+const useUpdateCategory = () => {
   const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: (body: BaseCategoriesType) => mutationFn(body),
+    mutationFn: ({ id, body }: { id: string; body: BaseCategoriesType }) => updateCategory(id, body),
     onSuccess: data => {
       toast.success(data.message);
       navigate(-1);
@@ -21,4 +19,4 @@ const useAddCategory = (type: IncomeExpenseType) => {
   });
 };
 
-export default useAddCategory;
+export default useUpdateCategory;

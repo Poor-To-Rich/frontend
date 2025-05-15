@@ -1,8 +1,16 @@
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { Link } from 'react-router-dom';
 
-const CategoryEditButton = ({ id }: { id: number }) => {
+interface Props {
+  id: number;
+  type?: IncomeExpenseType;
+}
+
+const CategoryEditButton = ({ id, type }: Props) => {
   return (
-    <Link to={{ pathname: '/category', search: `?type=edit&id=${id}` }} className="w-fit h-fit cursor-pointer">
+    <Link
+      to={{ pathname: '/category', search: `?type=edit&id=${id}&categoryType=${type}` }}
+      className="w-fit h-fit cursor-pointer">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fillRule="evenodd"
