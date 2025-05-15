@@ -22,7 +22,7 @@ const SignupForm = () => {
   const { buttonDisabled } = useSignFormValidation();
 
   const onSubmit = (data: SignupFormType) => {
-    const postData = omit(data, ['confirmPassword', 'verificationCode']);
+    const postData = omit(data, ['verificationCode']);
     const requestData = filteredData(postData);
 
     const formData = new FormData();

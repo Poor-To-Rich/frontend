@@ -1,6 +1,6 @@
 export const endpoints = {
   auth: {
-    signup: '/register',
+    signup: 'user/register',
     login: '/user/login',
     logout: '/user/logout',
     deleteUser: '/user/leave',
@@ -28,7 +28,7 @@ export const endpoints = {
     deleteIncome: (id: string) => `/income/${id}`,
   },
   category: {
-    getActive: (type: string) => `/category/active?type${type}`,
+    getActive: (type: string) => `/category/active?type=${type}`,
     getDefaultExpense: '/category/expense/default',
     getCustomExpense: '/category/expense/custom',
     getDefaultIncome: '/category/income/default',

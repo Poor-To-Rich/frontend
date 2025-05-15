@@ -4,7 +4,7 @@ import TrashButton from '@/components/button/icon/TrashButton';
 
 interface Props {
   value: string | undefined;
-  onChange: (value: string | undefined) => void;
+  onChange: (value: File | undefined) => void;
 }
 
 const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onChange }, ref) => {
@@ -14,15 +14,8 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onC
     const file = e.target.files?.[0];
 
     if (file) {
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-
-      reader.onloadend = () => {
-        const imageUrl = reader.result as string;
-        setImage(imageUrl);
-        onChange(imageUrl);
-      };
+      setImage(URL.createObjectURL(file));
+      onChange(file);
     }
 
     e.target.value = '';
@@ -31,7 +24,7 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onC
   const handleImageDelete = (event: React.MouseEvent) => {
     event.stopPropagation();
     setImage('');
-    onChange('');
+    onChange(undefined);
   };
 
   return (

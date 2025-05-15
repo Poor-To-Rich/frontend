@@ -47,14 +47,14 @@ const UpdatePasswordPage = () => {
             )}
           />
           <Controller
-            name="confirmPassword"
+            name="passwordConfirm"
             control={control}
             render={({ field }) => (
               <PrimaryInput
                 {...field}
                 label="비밀번호 재입력"
                 type="password"
-                errorMessage={errors.confirmPassword?.message}
+                errorMessage={errors.passwordConfirm?.message}
               />
             )}
           />

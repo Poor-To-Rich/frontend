@@ -18,12 +18,12 @@ const PasswordField = () => {
         errorMessage={errors.password?.message}
       />
       <PrimaryInput
-        {...register('confirmPassword')}
+        {...register('passwordConfirm')}
         data-testid="confirm-password-input"
         label="비밀번호 재입력"
         isRequired
         type="password"
-        errorMessage={errors.confirmPassword?.message}
+        errorMessage={errors.passwordConfirm?.message}
       />
     </>
   );
