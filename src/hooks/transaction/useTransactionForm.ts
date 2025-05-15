@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import useGetTransaction from '@/hooks/apis/transaction/useGetTransaction';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';
 import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 import { merge } from 'lodash';
 
 interface Props {
-  transactionType?: IncomeExpenseButtonType;
+  transactionType?: IncomeExpenseType;
   initialIterationTypeRef: React.MutableRefObject<string>;
 }
 

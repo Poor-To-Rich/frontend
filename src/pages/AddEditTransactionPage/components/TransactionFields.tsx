@@ -4,7 +4,7 @@ import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/consta
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
-  type: IncomeExpenseButtonType;
+  type: IncomeExpenseType;
 }
 
 const TransactionFields = ({ type }: Props) => {

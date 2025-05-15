@@ -1,10 +1,10 @@
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { ReportType } from '@/types/reportTypes';
-import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { format } from 'date-fns';
 
 interface Props {
-  currentTransactionType: IncomeExpenseButtonType;
+  currentTransactionType: IncomeExpenseType;
   currentReportType: ReportType;
   extraAmount: number;
   averageAmount: number;
