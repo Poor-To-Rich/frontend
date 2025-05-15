@@ -6,15 +6,21 @@ import PrimaryButton from '@/components/button/PrimaryButton';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { categorySchema } from '@/schemas/categorySchema';
-import { z } from 'zod';
 import useModal from '@/hooks/useModal';
 import DefaultModal from '@/components/modal/DefaultModal';
+import useAddCategory from '@/hooks/apis/category/useAddCategory';
+import { IncomeExpenseType } from '@/types/transactionTypes';
+import { BaseCategoriesType } from '@/types/categoryTypes';
 
 const AddEditCategoryPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
+  const categoryType = queryParams.get('categoryType');
   const type = queryParams.get('type');
+  const isEdit = type === 'edit';
+  const { mutate: addCategory, isPending } = useAddCategory(categoryType as IncomeExpenseType);
+
   const {
     control,
     handleSubmit,
@@ -24,14 +30,16 @@ const AddEditCategoryPage = () => {
     resolver: zodResolver(categorySchema),
     defaultValues: {
       name: '',
-      color: '#FFFFFF',
+      color: '#000000',
     },
   });
 
-  type categoryFormType = z.infer<typeof categorySchema>;
-
-  const onSubmit = (data: categoryFormType) => {
-    console.log(data);
+  const onSubmit = (data: BaseCategoriesType) => {
+    if (isEdit) {
+      console.log('편집');
+    } else {
+      addCategory(data);
+    }
   };
 
   return (
@@ -62,8 +70,8 @@ const AddEditCategoryPage = () => {
           />
           <Controller name="color" control={control} render={({ field }) => <ColorInput {...field} />} />
         </div>
-        <div className="w-full text-end">
-          <PrimaryButton label="저장" disabled={!isValid} type="submit" />
+        <div className="w-full flex justify-end">
+          <PrimaryButton label="저장" disabled={!isValid} type="submit" isPending={isPending} />
         </div>
       </form>
       {isDeleteModalOpen && <DefaultModal content="해당 카테고리를를 삭제하시겠습니까?" onClose={closeDeleteModal} />}

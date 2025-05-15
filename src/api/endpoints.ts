@@ -34,7 +34,7 @@ export const endpoints = {
     getDefaultIncome: '/category/income/default',
     getCustomIncome: '/category/income/custom',
     addExpense: '/category/expense',
-    addIncome: '/category/expense',
+    addIncome: '/category/income',
     getCategory: (id: string) => `/category/${id}`,
     updateCategory: (id: string) => `/category/${id}`,
     deleteCategory: (id: string) => `/category/${id}`,

@@ -1,6 +1,11 @@
 import { fetchData } from '@/api/axios';
 import { endpoints } from '@/api/endpoints';
-import { ActiveCategoriesRes, CustomCategoriesRes, DefaultCategoriesRes } from '@/types/categoryTypes';
+import {
+  ActiveCategoriesRes,
+  BaseCategoriesType,
+  CustomCategoriesRes,
+  DefaultCategoriesRes,
+} from '@/types/categoryTypes';
 
 export const getActiveCategory = async (type: string) => {
   const res = await fetchData<undefined, ActiveCategoriesRes>('GET', endpoints.category.getActive(type));
@@ -25,4 +30,14 @@ export const getCustomExpense = async () => {
 export const getCustomIncome = async () => {
   const res = await fetchData<undefined, CustomCategoriesRes>('GET', endpoints.category.getCustomIncome);
   return res.data?.customCategories;
+};
+
+export const addExpenseCategory = async (body: BaseCategoriesType) => {
+  const res = await fetchData<BaseCategoriesType, undefined>('POST', endpoints.category.addExpense, body);
+  return res;
+};
+
+export const addIncomeCategory = async (body: BaseCategoriesType) => {
+  const res = await fetchData<BaseCategoriesType, undefined>('POST', endpoints.category.addIncome, body);
+  return res;
 };

@@ -30,7 +30,7 @@ const CategoriesPage = () => {
         label={`${type} 카테고리`}
         hasBackButton
         hasPlusButton
-        onClick={() => navigate('/category?type=add')}
+        onClick={() => navigate(`/category?type=add&categoryType=${type}`)}
       />
       <div className="flex flex-col gap-4 py-8">
         <CategoryList label="기본" defaultCategories={defaultCategories} />

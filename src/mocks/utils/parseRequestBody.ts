@@ -3,7 +3,7 @@ export const parseRequestBody = async <T = any>(request: Request): Promise<T> =>
 
   try {
     return JSON.parse(text);
-  } catch (error) {
+  } catch {
     throw new Error('Invalid JSON body');
   }
 };

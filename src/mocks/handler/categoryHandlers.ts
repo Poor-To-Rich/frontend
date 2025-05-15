@@ -1,6 +1,7 @@
 import { endpoints } from '@/api/endpoints';
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse, delay } from 'msw';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
+import { parseRequestBody } from '../utils/parseRequestBody';
 
 export const categoryHandlers = [
   http.get('category/active', ({ request }) => {
@@ -10,27 +11,36 @@ export const categoryHandlers = [
     if (type === 'expense') {
       const categories = ['주거비', '식비', '교통비', '쇼핑', '건강/의료', '술/유흥', '기타'];
 
-      return HttpResponse.json({
-        status: 200,
-        message: '활성화된 지출 카테고리가 조회되었습니다.',
-        data: { categories },
-      });
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: '활성화된 지출 카테고리가 조회되었습니다.',
+          data: { categories },
+        },
+        { status: 200 },
+      );
     }
 
     if (type === 'income') {
       const categories = ['용돈', '월급', '보너스', '부수입', '기타'];
 
-      return HttpResponse.json({
-        status: 200,
-        message: '활성화된 수입 카테고리가 조회되었습니다.',
-        data: { categories },
-      });
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: '활성화된 수입 카테고리가 조회되었습니다.',
+          data: { categories },
+        },
+        { status: 200 },
+      );
     }
 
-    return HttpResponse.json({
-      status: 400,
-      message: '카테고리의 타입이 적절하지 않습니다.',
-    });
+    return HttpResponse.json(
+      {
+        status: 400,
+        message: '카테고리의 타입이 적절하지 않습니다.',
+      },
+      { status: 400 },
+    );
   }),
   http.get(endpoints.category.getDefaultExpense, () => {
     const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }) => ({
@@ -39,11 +49,14 @@ export const categoryHandlers = [
       visibility: true,
     }));
 
-    return HttpResponse.json({
-      status: 200,
-      message: '기본 지출 카테고리가 조회되었습니다.',
-      data: { defaultCategories: categoryNamesWithColors },
-    });
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '기본 지출 카테고리가 조회되었습니다.',
+        data: { defaultCategories: categoryNamesWithColors },
+      },
+      { status: 200 },
+    );
   }),
   http.get(endpoints.category.getDefaultIncome, () => {
     const categoryNamesWithColors = INCOME_CATEGORIES.map(({ value, color }) => ({
@@ -52,11 +65,14 @@ export const categoryHandlers = [
       visibility: true,
     }));
 
-    return HttpResponse.json({
-      status: 200,
-      message: '기본 수입 카테고리가 조회되었습니다.',
-      data: { defaultCategories: categoryNamesWithColors },
-    });
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '기본 수입 카테고리가 조회되었습니다.',
+        data: { defaultCategories: categoryNamesWithColors },
+      },
+      { status: 200 },
+    );
   }),
   http.get(endpoints.category.getCustomExpense, () => {
     const customCategories = [
@@ -72,11 +88,14 @@ export const categoryHandlers = [
       },
     ];
 
-    return HttpResponse.json({
-      status: 200,
-      message: '사용자 지정 지출 카테고리가 조회되었습니다.',
-      data: { customCategories },
-    });
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '사용자 지정 지출 카테고리가 조회되었습니다.',
+        data: { customCategories },
+      },
+      { status: 200 },
+    );
   }),
 
   http.get(endpoints.category.getCustomIncome, () => {
@@ -88,10 +107,59 @@ export const categoryHandlers = [
       },
     ];
 
-    return HttpResponse.json({
-      status: 200,
-      message: '사용자 지정 수입 카테고리가 조회되었습니다.',
-      data: { customCategories },
-    });
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '사용자 지정 수입 카테고리가 조회되었습니다.',
+        data: { customCategories },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.post(endpoints.category.addExpense, async ({ request }) => {
+    const { name } = await parseRequestBody<{ name: string }>(request);
+    await delay(2000);
+
+    if (name === '냠냠' || name === '쩝쩝') {
+      return HttpResponse.json(
+        {
+          status: 409,
+          message: '이미 사용중인 카테고리 이름입니다.',
+        },
+        { status: 409 },
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '카테고리를 성공적으로 등록하였습니다.',
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.post(endpoints.category.addIncome, async ({ request }) => {
+    const { name } = await parseRequestBody<{ name: string }>(request);
+    await delay(2000);
+
+    if (name === '주식 배당금') {
+      return HttpResponse.json(
+        {
+          status: 409,
+          message: '이미 사용중인 카테고리 이름입니다.',
+        },
+        { status: 409 },
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '카테고리를 성공적으로 등록하였습니다.',
+      },
+      { status: 200 },
+    );
   }),
 ];
