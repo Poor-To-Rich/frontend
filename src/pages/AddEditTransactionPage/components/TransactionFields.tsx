@@ -10,6 +10,7 @@ import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import CategorySelectBox from './CategorySelectBox';
 
 interface Props {
   type: IncomeExpenseType;
@@ -59,15 +60,7 @@ const TransactionFields = ({ type }: Props) => {
           setValue('customIteration.iterationRule.monthlyOption.dayOfWeek', koreanDay);
         }}
       />
-      <SelectBox
-        label="카테고리"
-        data-testid={`${isExpense ? 'expense' : 'income'}-categories-select`}
-        isRequired
-        options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
-        type={type}
-        hasEditButton
-        {...register('categoryName')}
-      />
+      <CategorySelectBox isExpense={isExpense} type={type} />
       <PrimaryInput
         label={`${type}명`}
         data-testid={`${isExpense ? 'expense' : 'income'}-title-input`}
