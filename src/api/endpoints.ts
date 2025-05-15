@@ -28,6 +28,7 @@ export const endpoints = {
     deleteIncome: (id: string) => `/income/${id}`,
   },
   category: {
+    getActive: (type: string) => `/category/active?type${type}`,
     getDefaultExpense: '/category/expense/default',
     getCustomExpense: '/category/expense/custom',
     getDefaultIncome: '/category/income/default',

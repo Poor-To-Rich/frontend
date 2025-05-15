@@ -7,10 +7,18 @@ export type DefaultCategoriesType = BaseCategoriesType & {
   visibility: boolean;
 };
 
+export type CustomCategoriesType = BaseCategoriesType & {
+  id: number;
+};
+
 export type DefaultCategoriesRes = {
   defaultCategories: DefaultCategoriesType[];
 };
 
-export type UserCategoriesType = BaseCategoriesType & {
-  id: number;
+export type CustomCategoriesRes = {
+  customCategories: CustomCategoriesType[];
+};
+
+export type ActiveCategoriesRes = {
+  categories: string[];
 };

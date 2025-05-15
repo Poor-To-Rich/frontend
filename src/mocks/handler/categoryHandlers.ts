@@ -7,6 +7,7 @@ export const categoryHandlers = [
     const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }) => ({
       name: value,
       color,
+      visibility: true,
     }));
 
     return HttpResponse.json({
@@ -19,12 +20,49 @@ export const categoryHandlers = [
     const categoryNamesWithColors = INCOME_CATEGORIES.map(({ value, color }) => ({
       name: value,
       color,
+      visibility: true,
     }));
 
     return HttpResponse.json({
       status: 200,
       message: '기본 수입 카테고리가 조회되었습니다.',
       data: { defaultCategories: categoryNamesWithColors },
+    });
+  }),
+  http.get(endpoints.category.getCustomExpense, () => {
+    const customCategories = [
+      {
+        id: 10,
+        color: '#E7AEA5',
+        name: '냠냠',
+      },
+      {
+        id: 23,
+        color: '#D58888',
+        name: '쩝쩝',
+      },
+    ];
+
+    return HttpResponse.json({
+      status: 200,
+      message: '사용자 지정 지출 카테고리가 조회되었습니다.',
+      data: { customCategories },
+    });
+  }),
+
+  http.get(endpoints.category.getCustomIncome, () => {
+    const customCategories = [
+      {
+        id: 21,
+        color: '#543562',
+        name: '주식 배당금',
+      },
+    ];
+
+    return HttpResponse.json({
+      status: 200,
+      message: '사용자 지정 수입 카테고리가 조회되었습니다.',
+      data: { customCategories },
     });
   }),
 ];

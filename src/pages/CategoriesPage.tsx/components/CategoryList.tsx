@@ -1,16 +1,16 @@
 import CategoryEditButton from '@/components/button/icon/CategoryEditButton';
 import MinusCircleButton from '@/components/button/icon/MinusCircleButton';
 import ToggleSwitch from '@/components/button/ToggleSwitch';
-import { DefaultCategoriesType, UserCategoriesType } from '@/types/types';
+import { DefaultCategoriesType, CustomCategoriesType } from '@/types/categoryTypes';
 
 interface Props {
   label: '기본' | '사용자 지정';
   defaultCategories?: DefaultCategoriesType[];
-  userCategories?: UserCategoriesType[];
+  customCategories?: CustomCategoriesType[];
   handleDeleteClick?: (value: string) => void;
 }
 
-const CategoryList = ({ label, defaultCategories, userCategories, handleDeleteClick }: Props) => {
+const CategoryList = ({ label, defaultCategories, customCategories, handleDeleteClick }: Props) => {
   return (
     <div className="w-full h-fit flex flex-col gap-2 px-8 font-semibold">
       <span className="text-lg">{label}</span>
@@ -24,8 +24,8 @@ const CategoryList = ({ label, defaultCategories, userCategories, handleDeleteCl
             </div>
           ))}
         {label === '사용자 지정' &&
-          userCategories &&
-          userCategories.map(({ color, name, id }) => (
+          customCategories &&
+          customCategories.map(({ color, name, id }) => (
             <div key={id} className="category-common">
               <div className="flex items-center gap-2.5">
                 <MinusCircleButton onClick={() => handleDeleteClick!(name)} />

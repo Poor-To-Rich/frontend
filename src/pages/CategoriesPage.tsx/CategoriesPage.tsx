@@ -1,12 +1,12 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CategoryList from '@/pages/CategoriesPage.tsx/components/CategoryList';
-import { DefaultCategoriesType, UserCategoriesType } from '@/types/types';
 import DefaultModal from '@/components/modal/DefaultModal';
 import useModal from '@/hooks/useModal';
 import { useRef } from 'react';
 import useGetDefaultCategory from '@/hooks/apis/category/useGetDefaultCategory';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import useGetCustomCategory from '@/hooks/apis/category/useGetCustomCategory';
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const CategoriesPage = () => {
   const type = queryParams.get('type');
 
   const { data: defaultCategories } = useGetDefaultCategory(type as IncomeExpenseType);
+  const { data: customCategories } = useGetCustomCategory(type as IncomeExpenseType);
 
   const handleDeleteClick = (value: string) => {
     categoryRef.current = value;
@@ -33,7 +34,7 @@ const CategoriesPage = () => {
       />
       <div className="flex flex-col gap-4 py-8">
         <CategoryList label="기본" defaultCategories={defaultCategories} />
-        {/* <CategoryList label="사용자 지정" userCategories={userCategories} handleDeleteClick={handleDeleteClick} /> */}
+        <CategoryList label="사용자 지정" customCategories={customCategories} handleDeleteClick={handleDeleteClick} />
       </div>
       {isOpen && <DefaultModal content={`"${categoryRef.current}"(을)를 삭제하시겠습니까?`} onClose={closeModal} />}
     </div>
