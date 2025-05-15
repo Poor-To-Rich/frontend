@@ -31,7 +31,7 @@ const CategoryList = ({ label, defaultCategories, customCategories, handleDelete
                 <MinusCircleButton onClick={() => handleDeleteClick!(name)} />
                 <span style={{ color }}>{name}</span>
               </div>
-              <CategoryEditButton />
+              <CategoryEditButton id={id} />
             </div>
           ))}
       </div>

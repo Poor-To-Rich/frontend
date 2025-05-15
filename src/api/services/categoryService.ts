@@ -41,3 +41,8 @@ export const addIncomeCategory = async (body: BaseCategoriesType) => {
   const res = await fetchData<BaseCategoriesType, undefined>('POST', endpoints.category.addIncome, body);
   return res;
 };
+
+export const getCategory = async (id: string) => {
+  const res = await fetchData<undefined, BaseCategoriesType>('GET', endpoints.category.getCategory(id));
+  return res.data || {};
+};

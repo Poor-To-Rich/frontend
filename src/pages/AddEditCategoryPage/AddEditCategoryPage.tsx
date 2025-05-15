@@ -11,6 +11,8 @@ import DefaultModal from '@/components/modal/DefaultModal';
 import useAddCategory from '@/hooks/apis/category/useAddCategory';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import { BaseCategoriesType } from '@/types/categoryTypes';
+import useGetCategory from '@/hooks/apis/category/useGetCategory';
+import { useEffect } from 'react';
 
 const AddEditCategoryPage = () => {
   const location = useLocation();
@@ -18,12 +20,15 @@ const AddEditCategoryPage = () => {
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const categoryType = queryParams.get('categoryType');
   const type = queryParams.get('type');
+  const categoryId = queryParams.get('id');
   const isEdit = type === 'edit';
-  const { mutate: addCategory, isPending } = useAddCategory(categoryType as IncomeExpenseType);
+  const { mutate: addCategory, isPending: isAddPending } = useAddCategory(categoryType as IncomeExpenseType);
+  const { data } = useGetCategory(categoryId!, isEdit);
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isValid, errors },
   } = useForm({
     mode: 'onChange',
@@ -41,6 +46,10 @@ const AddEditCategoryPage = () => {
       addCategory(data);
     }
   };
+
+  useEffect(() => {
+    if (data) reset(data);
+  }, [data]);
 
   return (
     <div className="w-full h-screen flex flex-col relative">
@@ -71,7 +80,7 @@ const AddEditCategoryPage = () => {
           <Controller name="color" control={control} render={({ field }) => <ColorInput {...field} />} />
         </div>
         <div className="w-full flex justify-end">
-          <PrimaryButton label="저장" disabled={!isValid} type="submit" isPending={isPending} />
+          <PrimaryButton label="저장" disabled={!isValid} type="submit" isPending={isAddPending} />
         </div>
       </form>
       {isDeleteModalOpen && <DefaultModal content="해당 카테고리를를 삭제하시겠습니까?" onClose={closeDeleteModal} />}

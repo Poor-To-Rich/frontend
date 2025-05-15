@@ -77,12 +77,12 @@ export const categoryHandlers = [
   http.get(endpoints.category.getCustomExpense, () => {
     const customCategories = [
       {
-        id: 10,
+        id: 1,
         color: '#E7AEA5',
         name: '냠냠',
       },
       {
-        id: 23,
+        id: 2,
         color: '#D58888',
         name: '쩝쩝',
       },
@@ -101,7 +101,7 @@ export const categoryHandlers = [
   http.get(endpoints.category.getCustomIncome, () => {
     const customCategories = [
       {
-        id: 21,
+        id: 3,
         color: '#543562',
         name: '주식 배당금',
       },
@@ -160,6 +160,60 @@ export const categoryHandlers = [
         message: '카테고리를 성공적으로 등록하였습니다.',
       },
       { status: 200 },
+    );
+  }),
+
+  http.get('/category/:id', ({ params }) => {
+    const { id } = params;
+
+    if (id === '1') {
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: `${id}번 카테고리가 조회되었습니다.`,
+          data: {
+            color: '#E7AEA5',
+            name: '냠냠',
+          },
+        },
+        { status: 200 },
+      );
+    }
+
+    if (id === '2') {
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: `${id}번 카테고리가 조회되었습니다.`,
+          data: {
+            color: '#D58888',
+            name: '쩝쩝',
+          },
+        },
+        { status: 200 },
+      );
+    }
+
+    if (id === '3') {
+      return HttpResponse.json(
+        {
+          status: 200,
+          message: `${id}번 카테고리가 조회되었습니다.`,
+          data: {
+            color: '#543562',
+            name: '주식 배당금',
+          },
+        },
+        { status: 200 },
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        status: 404,
+        message: '존재하지 않는 카테고리입니다.',
+      },
+      { status: 404 },
     );
   }),
 ];
