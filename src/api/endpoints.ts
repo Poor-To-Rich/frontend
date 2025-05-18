@@ -1,8 +1,8 @@
 export const endpoints = {
   auth: {
     signup: 'user/register',
-    login: '/user/login',
-    logout: '/user/logout',
+    login: '/auth/login',
+    logout: '/auth/logout',
     deleteUser: '/user/leave',
     checkNicknameDuplicate: '/user/exists/nickname',
     checkUsernameDuplicate: '/user/exists/username',
