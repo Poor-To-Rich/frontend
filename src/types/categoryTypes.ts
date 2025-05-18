@@ -27,3 +27,8 @@ export type CustomCategoriesRes = {
 export type ActiveCategoriesRes = {
   categories: string[];
 };
+
+export type CategoryRef = {
+  name: string;
+  id: number;
+};

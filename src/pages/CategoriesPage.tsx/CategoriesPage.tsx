@@ -1,40 +1,21 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CategoryList from '@/pages/CategoriesPage.tsx/components/CategoryList';
 import DefaultModal from '@/components/modal/DefaultModal';
-import useModal from '@/hooks/useModal';
-import { useEffect, useRef } from 'react';
-import useGetDefaultCategory from '@/hooks/apis/category/useGetDefaultCategory';
-import { IncomeExpenseType } from '@/types/transactionTypes';
-import useGetCustomCategory from '@/hooks/apis/category/useGetCustomCategory';
-import useDeleteCategory from '@/hooks/apis/category/useDeleteCategory';
+import { useCategoryManagement } from '@/hooks/category/useCategoryManagement';
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
-  const { isOpen, openModal, closeModal } = useModal();
-  const categoryRef = useRef<{ name: string; id: number }>({ name: '', id: -1 });
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const type = queryParams.get('type') as IncomeExpenseType;
-
-  const { data: defaultCategories } = useGetDefaultCategory(type);
-  const { data: customCategories } = useGetCustomCategory(type);
-  const { mutate: deleteCategory, isSuccess } = useDeleteCategory(type);
-
-  const handleDeleteIconClick = (id: number, name: string) => {
-    categoryRef.current = { name, id };
-    openModal();
-  };
-
-  const handleDeleteCategory = (id: number) => {
-    deleteCategory(id.toString());
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      closeModal();
-    }
-  }, [isSuccess]);
+  const {
+    type,
+    isOpen,
+    closeModal,
+    defaultCategories,
+    customCategories,
+    categoryRef,
+    handleDeleteIconClick,
+    handleDeleteCategory,
+  } = useCategoryManagement();
 
   return (
     <div className="w-full h-full relative">
