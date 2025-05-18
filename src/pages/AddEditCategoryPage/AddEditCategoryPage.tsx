@@ -1,80 +1,23 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import PrimaryInput from '@/components/input/PrimaryInput';
-import { useLocation, useNavigate } from 'react-router-dom';
 import ColorInput from '@/pages/AddEditCategoryPage/components/ColorInput';
 import PrimaryButton from '@/components/button/PrimaryButton';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { categorySchema } from '@/schemas/categorySchema';
-import useModal from '@/hooks/useModal';
+import { Controller } from 'react-hook-form';
 import DefaultModal from '@/components/modal/DefaultModal';
-import useAddCategory from '@/hooks/apis/category/useAddCategory';
-import { IncomeExpenseType } from '@/types/transactionTypes';
-import { BaseCategoriesType } from '@/types/categoryTypes';
-import useGetCategory from '@/hooks/apis/category/useGetCategory';
-import { useEffect } from 'react';
-import useUpdateCategory from '@/hooks/apis/category/useUpdateCategory';
-import useDeleteCategory from '@/hooks/apis/category/useDeleteCategory';
+import useModal from '@/hooks/useModal';
+import useCategoryForm from '@/hooks/category/useCategoryForm';
 
 const AddEditCategoryPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
-  const categoryType = queryParams.get('categoryType') as IncomeExpenseType;
-  const type = queryParams.get('type');
-  const categoryId = queryParams.get('id');
-  const isEdit = type === 'edit';
-  const { mutate: addCategory, isPending: isAddPending } = useAddCategory(categoryType);
-  const { mutate: updateCategory, isPending: isUpdatePending } = useUpdateCategory();
-  const { mutate: deleteCategory, isSuccess } = useDeleteCategory(categoryType);
-  const { data } = useGetCategory(categoryId!, isEdit);
-
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { isValid, errors },
-  } = useForm({
-    mode: 'onChange',
-    resolver: zodResolver(categorySchema),
-    defaultValues: {
-      name: '',
-      color: '#000000',
-    },
-  });
-
-  const onSubmit = (data: BaseCategoriesType) => {
-    if (isEdit) {
-      updateCategory({ id: categoryId!, body: data });
-    } else {
-      addCategory(data);
-    }
-  };
-
-  const handleDelete = () => {
-    if (categoryId) {
-      console.log(categoryId);
-      deleteCategory(categoryId);
-    }
-  };
-
-  useEffect(() => {
-    if (data) reset(data);
-  }, [data]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(-1);
-    }
-  }, [isSuccess]);
+  const { isEdit, control, handleSubmit, onSubmit, isValid, errors, isAddPending, isUpdatePending, handleDelete } =
+    useCategoryForm();
 
   return (
     <div className="w-full h-screen flex flex-col relative">
       <DefaultHeader
-        label={`카테고리 ${type === 'add' ? '추가' : '편집'}`}
+        label={`카테고리 ${isEdit ? '편집' : '추가'}`}
         hasBackButton
-        hasTrashButton={type === 'edit'}
+        hasTrashButton={isEdit}
         onClick={openDeleteModal}
       />
       <form className="flex flex-col justify-between flex-grow p-8" onSubmit={handleSubmit(onSubmit)}>
