@@ -2,13 +2,13 @@ import { getExpenseTransaction, getIncomeTransaction } from '@/api/services/tran
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import { useQuery } from '@tanstack/react-query';
 
-const useGetTransaction = (type: IncomeExpenseType, id: string, enable: boolean) => {
+const useGetTransaction = (type: IncomeExpenseType, id: string, enabled: boolean) => {
   const queryFn = type === '지출' ? getExpenseTransaction : getIncomeTransaction;
 
   return useQuery({
     queryKey: ['transaction', type, id],
     queryFn: () => queryFn(id),
-    enabled: enable,
+    enabled: enabled,
   });
 };
 

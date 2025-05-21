@@ -42,7 +42,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     type: transactionType,
     setError,
   });
-  useTransactionForm({ transactionType, initialIterationTypeRef });
+  const { categoryOptions: options, isLoading } = useTransactionForm({ transactionType, initialIterationTypeRef });
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
@@ -72,10 +72,14 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
+  if (isLoading) {
+    return <div>로딩중</div>;
+  }
+
   return (
     <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
       <IncomeExpenseButton type={transactionType} onClick={(value: IncomeExpenseType) => setTransactionType(value)} />
-      <TransactionFields type={transactionType} />
+      <TransactionFields type={transactionType} options={options} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
         <PrimaryButton

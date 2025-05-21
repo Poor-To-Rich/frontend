@@ -36,8 +36,8 @@ const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(
                 {...rest}
                 ref={ref}
                 onChange={onChange}>
-                {options.map(({ label, value }) => (
-                  <option key={value} value={value}>
+                {options.map(({ label, value, visibility = true }) => (
+                  <option key={value} value={value} hidden={!visibility}>
                     {label}
                   </option>
                 ))}

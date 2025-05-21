@@ -9,7 +9,7 @@ export const categoryHandlers = [
     const type = url.searchParams.get('type');
 
     if (type === 'expense') {
-      const categories = ['주거비', '식비', '교통비', '쇼핑', '건강/의료', '술/유흥', '기타'];
+      const categories = ['식비', '선물/경조사', '교통비', '쇼핑', '건강/의료', '술/유흥', '기타'];
 
       return HttpResponse.json(
         {
