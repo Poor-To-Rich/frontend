@@ -1,7 +1,7 @@
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import ModalButton from '@/components/button/ModalButton';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
-import { IncomeExpenseButtonType, IterationActionEnumType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseType, IterationActionEnumType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
@@ -20,11 +20,11 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   } = useFormContext<TransactionFormDataType>();
   const { transactionId, transactionMode } = useTransactionParams();
   const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
-    type: transactionMode as IncomeExpenseButtonType,
+    type: transactionMode as IncomeExpenseType,
     setError: setError,
   });
   const { mutate: deleteTransaction, isPending: isDeletePending } = useDeleteTransaction(
-    transactionMode as IncomeExpenseButtonType,
+    transactionMode as IncomeExpenseType,
   );
   const isEditType = type === 'edit';
   const hasChangedIterationFields = dirtyFields.iterationType || dirtyFields.customIteration;

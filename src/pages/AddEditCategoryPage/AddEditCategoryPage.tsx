@@ -1,45 +1,23 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import PrimaryInput from '@/components/input/PrimaryInput';
-import { useLocation } from 'react-router-dom';
 import ColorInput from '@/pages/AddEditCategoryPage/components/ColorInput';
 import PrimaryButton from '@/components/button/PrimaryButton';
-import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { categorySchema } from '@/schemas/categorySchema';
-import { z } from 'zod';
-import useModal from '@/hooks/useModal';
+import { Controller } from 'react-hook-form';
 import DefaultModal from '@/components/modal/DefaultModal';
+import useModal from '@/hooks/useModal';
+import useCategoryForm from '@/hooks/category/useCategoryForm';
 
 const AddEditCategoryPage = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
-  const type = queryParams.get('type');
-  const {
-    control,
-    handleSubmit,
-    formState: { isValid, errors },
-  } = useForm({
-    mode: 'onChange',
-    resolver: zodResolver(categorySchema),
-    defaultValues: {
-      name: '',
-      color: '#FFFFFF',
-    },
-  });
-
-  type categoryFormType = z.infer<typeof categorySchema>;
-
-  const onSubmit = (data: categoryFormType) => {
-    console.log(data);
-  };
+  const { isEdit, control, handleSubmit, onSubmit, isValid, errors, isAddPending, isUpdatePending, handleDelete } =
+    useCategoryForm();
 
   return (
     <div className="w-full h-screen flex flex-col relative">
       <DefaultHeader
-        label={`카테고리 ${type === 'add' ? '추가' : '편집'}`}
+        label={`카테고리 ${isEdit ? '편집' : '추가'}`}
         hasBackButton
-        hasTrashButton={type === 'edit'}
+        hasTrashButton={isEdit}
         onClick={openDeleteModal}
       />
       <form className="flex flex-col justify-between flex-grow p-8" onSubmit={handleSubmit(onSubmit)}>
@@ -62,11 +40,13 @@ const AddEditCategoryPage = () => {
           />
           <Controller name="color" control={control} render={({ field }) => <ColorInput {...field} />} />
         </div>
-        <div className="w-full text-end">
-          <PrimaryButton label="저장" disabled={!isValid} type="submit" />
+        <div className="w-full flex justify-end">
+          <PrimaryButton label="저장" disabled={!isValid} type="submit" isPending={isAddPending || isUpdatePending} />
         </div>
       </form>
-      {isDeleteModalOpen && <DefaultModal content="해당 카테고리를를 삭제하시겠습니까?" onClose={closeDeleteModal} />}
+      {isDeleteModalOpen && (
+        <DefaultModal content="해당 카테고리를 삭제하시겠습니까?" onClick={handleDelete} onClose={closeDeleteModal} />
+      )}
     </div>
   );
 };

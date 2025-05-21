@@ -1,8 +1,8 @@
-import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  type: IncomeExpenseButtonType;
+  type: IncomeExpenseType;
 }
 
 const CategoryLinkButton = ({ type }: Props) => {

@@ -1,21 +1,22 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
-import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
+import { EXPENSE_METHODS } from '@/constants/options';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { SelectOptionsType } from '@/types/fieldType';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
-import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
-  type: IncomeExpenseButtonType;
+  type: IncomeExpenseType;
+  options: SelectOptionsType[];
 }
 
-const TransactionFields = ({ type }: Props) => {
+const TransactionFields = ({ type, options }: Props) => {
   const isExpense = type === '지출';
   const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
@@ -31,9 +32,9 @@ const TransactionFields = ({ type }: Props) => {
     onChange(Number(formattedValue));
   };
 
-  useEffect(() => {
-    setValue('categoryName', isExpense ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
-  }, [type]);
+  if (!options) {
+    return;
+  }
 
   return (
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
@@ -63,7 +64,7 @@ const TransactionFields = ({ type }: Props) => {
         label="카테고리"
         data-testid={`${isExpense ? 'expense' : 'income'}-categories-select`}
         isRequired
-        options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
+        options={options}
         type={type}
         hasEditButton
         {...register('categoryName')}

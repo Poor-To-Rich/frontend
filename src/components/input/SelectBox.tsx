@@ -3,14 +3,14 @@ import { ChangeEvent, forwardRef } from 'react';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import { clsx } from 'clsx';
 import { ReportType } from '@/types/reportTypes';
-import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { SelectOptionsType } from '@/types/fieldType';
 
 interface SelectBoxProps {
   label?: string;
   isRequired?: boolean;
   options: SelectOptionsType[];
-  type?: IncomeExpenseButtonType;
+  type?: IncomeExpenseType;
   hasEditButton?: boolean;
   value?: ReportType | string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -36,8 +36,8 @@ const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(
                 {...rest}
                 ref={ref}
                 onChange={onChange}>
-                {options.map(({ label, value }) => (
-                  <option key={value} value={value}>
+                {options.map(({ label, value, visibility = true }) => (
+                  <option key={value} value={value} hidden={!visibility}>
                     {label}
                   </option>
                 ))}

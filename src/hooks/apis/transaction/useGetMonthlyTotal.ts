@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetMonthlyTotal = (date: string) => {
   return useQuery({
-    queryKey: [`${date} monthlyTotal`],
+    queryKey: ['monthlyTotal', date],
     queryFn: () => getMonthlyTotal(date),
   });
 };

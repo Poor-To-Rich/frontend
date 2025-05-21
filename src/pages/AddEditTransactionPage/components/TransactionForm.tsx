@@ -1,5 +1,5 @@
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import TransactionFields from '@/pages/AddEditTransactionPage/components/TransactionFields';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
@@ -29,8 +29,8 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
   const { isEditPage, transactionId, transactionMode } = useTransactionParams();
-  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>(
-    (transactionMode as IncomeExpenseButtonType) || '지출',
+  const [transactionType, setTransactionType] = useState<IncomeExpenseType>(
+    (transactionMode as IncomeExpenseType) || '지출',
   );
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
 
@@ -42,7 +42,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     type: transactionType,
     setError,
   });
-  useTransactionForm({ transactionType, initialIterationTypeRef });
+  const { categoryOptions: options, isFetching } = useTransactionForm({ transactionType, initialIterationTypeRef });
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
@@ -72,13 +72,14 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
+  if (isFetching) {
+    return <div>로딩중</div>;
+  }
+
   return (
     <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
-      <IncomeExpenseButton
-        type={transactionType}
-        onClick={(value: IncomeExpenseButtonType) => setTransactionType(value)}
-      />
-      <TransactionFields type={transactionType} />
+      <IncomeExpenseButton type={transactionType} onClick={(value: IncomeExpenseType) => setTransactionType(value)} />
+      <TransactionFields type={transactionType} options={options} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
         <PrimaryButton

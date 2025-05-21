@@ -1,8 +1,8 @@
 export const endpoints = {
   auth: {
-    signup: '/register',
-    login: '/user/login',
-    logout: '/user/logout',
+    signup: 'user/register',
+    login: '/auth/login',
+    logout: '/auth/logout',
     deleteUser: '/user/leave',
     checkNicknameDuplicate: '/user/exists/nickname',
     checkUsernameDuplicate: '/user/exists/username',
@@ -26,5 +26,18 @@ export const endpoints = {
     getIncome: (id: string) => `/income/${id}`,
     updateIncome: (id: string) => `/income/${id}`,
     deleteIncome: (id: string) => `/income/${id}`,
+  },
+  category: {
+    updateActive: (id: string) => `/category/active/${id}`,
+    getActive: (type: string) => `/category/active?type=${type}`,
+    getDefaultExpense: '/category/expense/default',
+    getCustomExpense: '/category/expense/custom',
+    getDefaultIncome: '/category/income/default',
+    getCustomIncome: '/category/income/custom',
+    addExpense: '/category/expense',
+    addIncome: '/category/income',
+    getCategory: (id: string) => `/category/${id}`,
+    updateCategory: (id: string) => `/category/${id}`,
+    deleteCategory: (id: string) => `/category/${id}`,
   },
 };

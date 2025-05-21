@@ -1,5 +1,4 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
-import ProfileImageInput from '@/components/input/ProfileImageInput';
 import { profileSchema } from '@/schemas/authSchema';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -10,6 +9,7 @@ import SelectBox from '@/components/input/SelectBox';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import useModal from '@/hooks/useModal';
 import DefaultModal from '@/components/modal/DefaultModal';
+import ProfileImageField from '@/components/input/auth/ProfileImageField';
 
 const ProfilePage = () => {
   const { isOpen, openModal, closeModal } = useModal();
@@ -21,7 +21,7 @@ const ProfilePage = () => {
     formState: { errors, isValid },
   } = useForm<ProfileFormData>({
     defaultValues: {
-      profileImage: '',
+      profileImage: undefined,
       name: '',
       nickname: '',
       birth: '',
@@ -41,13 +41,7 @@ const ProfilePage = () => {
       <DefaultHeader label="프로필 편집" hasBackButton />
       <form className="flex flex-col justify-between grow px-5 pt-15 pb-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex flex-col">
-          <div className="w-full flex justify-center">
-            <Controller
-              name="profileImage"
-              control={control}
-              render={({ field }) => <ProfileImageInput {...field} />}
-            />
-          </div>
+          <ProfileImageField />
           <div className="flex flex-col gap-3 my-15">
             <Controller
               name="name"

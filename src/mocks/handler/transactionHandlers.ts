@@ -77,7 +77,7 @@ export const transactionHandlers = [
     const { id } = params;
     const response = {
       date: '2025-02-09',
-      name: '주거비',
+      categoryName: '주거비',
       title: '월세',
       cost: 30000,
       paymentMethod: '계좌이체',
@@ -109,7 +109,7 @@ export const transactionHandlers = [
     const { id } = params;
     const response = {
       date: '2025-02-09',
-      name: '용돈',
+      categoryName: '용돈',
       title: '용돈',
       cost: 300000,
       memo: '엄마가 줌',

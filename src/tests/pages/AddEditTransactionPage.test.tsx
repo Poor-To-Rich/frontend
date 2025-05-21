@@ -22,10 +22,10 @@ describe('AddEditTransactionPage', () => {
       const category = '선물/경조사';
       const expenseMethod = '현금';
 
-      const submitButton = screen.getByTestId('submit-button');
+      // When
+      const submitButton = await screen.findByTestId('submit-button');
       expect(submitButton).toBeDisabled();
 
-      // When
       await userEvent.type(screen.getByTestId('cost-input'), String(cost));
       await userEvent.selectOptions(screen.getByTestId('expense-categories-select'), category);
       await userEvent.selectOptions(screen.getByTestId('expense-method-select'), expenseMethod);
@@ -49,7 +49,7 @@ describe('AddEditTransactionPage', () => {
       const expenseMethod = '현금';
 
       // When
-      await userEvent.type(screen.getByTestId('cost-input'), String(cost));
+      await userEvent.type(await screen.findByTestId('cost-input'), String(cost));
       await userEvent.selectOptions(screen.getByTestId('expense-categories-select'), category);
       await userEvent.selectOptions(screen.getByTestId('expense-method-select'), expenseMethod);
 
@@ -89,7 +89,7 @@ describe('AddEditTransactionPage', () => {
       const memo = '야호';
 
       // When
-      await userEvent.type(screen.getByTestId('income-toggle-button'), transactionType);
+      await userEvent.type(await screen.findByTestId('income-toggle-button'), transactionType);
       await userEvent.type(screen.getByTestId('cost-input'), cost);
       await userEvent.selectOptions(screen.getByTestId('income-categories-select'), category);
       await userEvent.type(screen.getByTestId('income-title-input'), title);

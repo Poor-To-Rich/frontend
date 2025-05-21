@@ -2,7 +2,7 @@ import DefaultHeader from '@/components/header/DefaultHeader';
 import { FormProvider, useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
 import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { transactionSchema } from '@/schemas/transactionSchema';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
@@ -15,7 +15,7 @@ const AddEditTransactionPage = () => {
   const { transactionId, transactionDate, transactionMode, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
-  const { mutate: deleteTransaction, isPending } = useDeleteTransaction(transactionMode! as IncomeExpenseButtonType);
+  const { mutate: deleteTransaction, isPending } = useDeleteTransaction(transactionMode! as IncomeExpenseType);
 
   const methods = useForm<TransactionFormDataType>({
     defaultValues: {
