@@ -9,7 +9,7 @@ vi.mock('@/components/route/ProtectedRoute', () => ({
 }));
 
 const renderCustomModal = async () => {
-  const repeatButton = screen.getByTestId('repeat-button');
+  const repeatButton = await screen.findByTestId('repeat-button');
   await userEvent.click(repeatButton);
 
   const IterationCycleModal = await screen.findByTestId('iteration-cycle-modal');

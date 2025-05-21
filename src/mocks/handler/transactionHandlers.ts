@@ -74,7 +74,6 @@ export const transactionHandlers = [
     );
   }),
   http.get('/expense/:id', async ({ params }) => {
-    await delay(3000);
     const { id } = params;
     const response = {
       date: '2025-02-09',
@@ -107,7 +106,6 @@ export const transactionHandlers = [
     );
   }),
   http.get('/income/:id', async ({ params }) => {
-    await delay(3000);
     const { id } = params;
     const response = {
       date: '2025-02-09',

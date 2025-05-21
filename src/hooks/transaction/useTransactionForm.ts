@@ -22,15 +22,16 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   const { customIteration } = useResetCustomIteration();
   const isExpense = transactionType === '지출';
   const enabled = Boolean(isEditPage && transactionId && transactionType);
-  const { data: transactionFormData, isPending: isGetTransactionPending } = useGetTransaction(
+  const { data: transactionFormData, isFetching: isGetTransactionFetching } = useGetTransaction(
     transactionType!,
     transactionId!,
     enabled,
   );
-  const { data: activeCategory, isPending: isCategoryPending } = useGetActiveCategory(isExpense ? 'expense' : 'income');
+  const { data: activeCategory, isFetching: isCategoryFetching } = useGetActiveCategory(
+    isExpense ? 'expense' : 'income',
+  );
   const categories = isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
   const { categoryOptions } = useFilteredCategories(categories, transactionFormData, activeCategory, isEditPage);
-
   useEffect(() => {
     if (transactionDate) setCalenderDate(new Date(transactionDate));
   }, [transactionDate, setCalenderDate]);
@@ -53,7 +54,7 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
 
   return {
     categoryOptions,
-    isLoading: isGetTransactionPending || isCategoryPending,
+    isFetching: isGetTransactionFetching || isCategoryFetching,
   };
 };
 

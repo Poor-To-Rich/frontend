@@ -21,7 +21,7 @@ const ProfilePage = () => {
     formState: { errors, isValid },
   } = useForm<ProfileFormData>({
     defaultValues: {
-      profileImage: '',
+      profileImage: undefined,
       name: '',
       nickname: '',
       birth: '',

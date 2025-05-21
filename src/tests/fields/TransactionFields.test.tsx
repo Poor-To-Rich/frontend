@@ -18,12 +18,12 @@ describe('TransactionFields', () => {
 
   it('페이지 진입 시 날짜 필드의 값은 사용자가 선택한 날짜로 세팅되어야한다.', async () => {
     //When
-    const dateInput = screen.getByTestId('date-input');
 
-    expect(dateInput).toBeInTheDocument();
-
-    //Then
     await waitFor(() => {
+      const dateInput = screen.getByTestId('date-input');
+
+      expect(dateInput).toBeInTheDocument();
+
       expect((dateInput as HTMLInputElement).value).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     });
   });
@@ -33,9 +33,11 @@ describe('TransactionFields', () => {
     const value = 'asds';
 
     // When
-    const costInput = screen.getByTestId('cost-input');
-    act(() => {
-      fireEvent.change(costInput, { target: { value: value } });
+    await waitFor(() => {
+      const costInput = screen.getByTestId('cost-input');
+      act(() => {
+        fireEvent.change(costInput, { target: { value: value } });
+      });
     });
 
     // Then
@@ -49,7 +51,7 @@ describe('TransactionFields', () => {
     // Given
     const value = 10000;
 
-    const costInput = screen.getByTestId('cost-input');
+    const costInput = await screen.findByTestId('cost-input');
 
     act(() => {
       fireEvent.change(costInput, { target: { value: value } });
@@ -64,8 +66,10 @@ describe('TransactionFields', () => {
     // Given
 
     // When
-    const expenseButton = screen.getByTestId('expense-toggle-button');
-    act(() => fireEvent.click(expenseButton));
+    await waitFor(() => {
+      const expenseButton = screen.getByTestId('expense-toggle-button');
+      act(() => fireEvent.click(expenseButton));
+    });
 
     // Then
     await waitFor(() => {
@@ -78,8 +82,10 @@ describe('TransactionFields', () => {
     // Given
 
     // When
-    const expenseButton = screen.getByTestId('expense-toggle-button');
-    act(() => fireEvent.click(expenseButton));
+    await waitFor(() => {
+      const expenseButton = screen.getByTestId('expense-toggle-button');
+      act(() => fireEvent.click(expenseButton));
+    });
 
     // Then
     await waitFor(() => {
@@ -92,8 +98,10 @@ describe('TransactionFields', () => {
     // Given
 
     // When
-    const incomeButton = screen.getByTestId('income-toggle-button');
-    act(() => fireEvent.click(incomeButton));
+    await waitFor(() => {
+      const incomeButton = screen.getByTestId('income-toggle-button');
+      act(() => fireEvent.click(incomeButton));
+    });
 
     // Then
     await waitFor(() => {
@@ -106,8 +114,10 @@ describe('TransactionFields', () => {
     // Given
 
     // When
-    const incomeButton = screen.getByTestId('income-toggle-button');
-    act(() => fireEvent.click(incomeButton));
+    await waitFor(() => {
+      const incomeButton = screen.getByTestId('income-toggle-button');
+      act(() => fireEvent.click(incomeButton));
+    });
 
     // Then
     await waitFor(() => {
