@@ -38,10 +38,10 @@ function Button() {
       <h2>기타 버튼</h2>
       <PlusCircleButton />
       <RepeatCircleButton openModal={() => {}} />
-      <ToggleSwitch visibility />
+      <ToggleSwitch id={'1'} visibility />
       <CategoryLinkButton type="지출" />
       <MinusCircleButton onClick={() => {}} />
-      <CategoryEditButton />
+      <CategoryEditButton id={1} />
     </div>
   );
 }
