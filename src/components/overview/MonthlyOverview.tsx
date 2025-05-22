@@ -1,7 +1,7 @@
-import { OverviewLogType } from '@/types/types';
 import LogItem from '@/components/overview/LogItem';
 import WeeklyOverview from './WeeklyOverview';
 import { useState } from 'react';
+import { OverviewLogType } from '@/types/reportTypes';
 
 interface Props {
   monthlyLogs: OverviewLogType[];
