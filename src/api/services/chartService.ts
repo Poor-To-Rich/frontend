@@ -1,5 +1,5 @@
 import { fetchData } from '@/api/axios';
-import { ChartTotalAndSavingsType } from '@/types/chartTypes';
+import { ChartTotalAndSavingsType, StackedBarChartResponse } from '@/types/chartTypes';
 import { endpoints } from '@/api/endpoints';
 
 export const getExpenseTotalAndSavings = async (date: string) => {
@@ -15,5 +15,18 @@ export const getIncomeTotalAndSavings = async (date: string) => {
     'GET',
     endpoints.chart.getIncomeTotalAndSavings(date),
   );
+  return res.data;
+};
+
+export const getExpenseStackedBarChart = async (date: string) => {
+  const res = await fetchData<undefined, StackedBarChartResponse>(
+    'GET',
+    endpoints.chart.getExpenseStackedBarChar(date),
+  );
+  return res.data;
+};
+
+export const getIncomeStackedBarChart = async (date: string) => {
+  const res = await fetchData<undefined, StackedBarChartResponse>('GET', endpoints.chart.getIncomeStackedBarChar(date));
   return res.data;
 };

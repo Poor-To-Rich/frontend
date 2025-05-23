@@ -36,4 +36,120 @@ export const chartHandlers = [
       { status: 200 },
     );
   }),
+
+  http.get('/chart/category/expense', ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date');
+
+    const response = {
+      aggregatedData: [
+        {
+          주거비: 35.0,
+          식비: 25.0,
+          쇼핑: 15.0,
+          '건강/의료': 8.0,
+          '문화/취미': 7.0,
+          커피: 6.0,
+          기타: 4.0,
+        },
+      ],
+      categoryColors: {
+        주거비: '#4A90E2',
+        식비: '#7ED321',
+        쇼핑: '#FF6F61',
+        '건강/의료': '#4A90E2',
+        '문화/취미': '#E563FF',
+        커피: '#B88A69',
+        기타: '#ADADAD',
+      },
+      categoryCharts: [
+        {
+          id: 1,
+          color: '#4A90E2',
+          name: '주거비',
+          rate: 35.0,
+          amount: 270000,
+        },
+        {
+          id: 2,
+          color: '#7ED321',
+          name: '식비',
+          rate: 25.0,
+          amount: 220000,
+        },
+        {
+          id: 3,
+          color: '#FF6F61',
+          name: '쇼핑',
+          rate: 15.0,
+          amount: 100000,
+        },
+      ],
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 지출 카테고리별 비율 및 총 금액 조회 성공`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/chart/category/income', async ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date');
+
+    const response = {
+      aggregatedData: [
+        {
+          월급: 35.0,
+          보너스: 25.0,
+          용돈: 23.0,
+          비상금: 13.0,
+          기타: 4.0,
+        },
+      ],
+      categoryColors: {
+        월급: '#228B22',
+        보너스: '#7ED321',
+        용돈: '#E5D038',
+        비상금: '#33dfab',
+        기타: '#ADADAD',
+      },
+      categoryCharts: [
+        {
+          id: 1,
+          color: '#228B22',
+          name: '월급',
+          rate: 35.0,
+          amount: 270000,
+        },
+        {
+          id: 2,
+          color: '#7ED321',
+          name: '보너스',
+          rate: 25.0,
+          amount: 220000,
+        },
+        {
+          id: 3,
+          color: '#E5D038',
+          name: '용돈',
+          rate: 15.0,
+          amount: 100000,
+        },
+      ],
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 수입 카테고리별 비율 및 총 금액 조회 성공`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
 ];

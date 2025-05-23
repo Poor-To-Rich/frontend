@@ -1,18 +1,13 @@
 import useGetTotalAndSavings from '@/hooks/apis/chart/useGetTotalAndSavings';
+import useFormattedReportDate from '@/hooks/chart/useFormattedReportDate';
 import SummaryItem from '@/pages/ChartPage/components/summary/SummaryItem';
-import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
 import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
-import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { format } from 'date-fns';
 
 const ReportSummary = () => {
-  const { chartHeaderDate } = useHeaderDateStore();
-  const { currentReportType } = useReportTypeStore();
   const { currentTransactionType } = useTransactionReportTypeStore();
+  const formattedDate = useFormattedReportDate();
 
-  const date = currentReportType === '연별' ? format(chartHeaderDate, 'yyyy') : format(chartHeaderDate, 'yyyy-MM');
-
-  const { data: totalAndSavings, isFetching } = useGetTotalAndSavings(currentTransactionType, date);
+  const { data: totalAndSavings, isFetching } = useGetTotalAndSavings(currentTransactionType, formattedDate);
 
   return (
     <div className="w-full flex justify-between px-8 py-4 gap-3.5">
