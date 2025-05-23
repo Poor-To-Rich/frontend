@@ -1,5 +1,5 @@
 import DateControlHeader from '@/components/header/DateControlHeader';
-import MonthlyOverview from '@/components/overview/MonthlyOverview';
+import MonthlyOverview from '@/pages/MonthWeekPage/components/MonthlyOverview';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import TapBar from '@/components/tapbar/TapBar';
 import useGetYearlySummary from '@/hooks/apis/report/useGetYearlySummary';

@@ -1,7 +1,7 @@
-import LogItem from '@/components/overview/LogItem';
-import WeeklyOverview from './WeeklyOverview';
+import WeeklyOverview from '@/pages/MonthWeekPage/components/WeeklyOverview';
 import { useState } from 'react';
 import { OverviewLogType } from '@/types/reportTypes';
+import LogItem from '@/pages/MonthWeekPage/components/LogItem';
 
 interface Props {
   targetYear: string;

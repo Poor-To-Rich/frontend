@@ -17,7 +17,7 @@ const IterationDataPage = () => {
       title: '상하이버거세트',
       isIteration: true,
       type: 'EXPENSE',
-      cost: 45626546888798978,
+      cost: 45626546888,
     },
     {
       id: 2,

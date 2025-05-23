@@ -1,4 +1,4 @@
-import LogItem from '@/components/overview/LogItem';
+import LogItem from '@/pages/MonthWeekPage/components/LogItem';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import useGetWeeklySummary from '@/hooks/apis/report/useGetWeeklySummary';

@@ -32,11 +32,6 @@ export type DailyTransactionType = {
   dailyDetails: TransactionItemType[];
 };
 
-export type WeeklyDetailType = {
-  date: Date;
-  transactions: TransactionItemType[];
-};
-
 export type DeleteTransactionReq = { iterationAction?: IterationActionEnumType };
 
 export type IncomeExpenseType = '지출' | '수입';

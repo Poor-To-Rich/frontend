@@ -1,4 +1,5 @@
 export type ReportType = '월별' | '연별';
+import { TransactionItemType } from '@/types/transactionTypes';
 
 export type OverviewLogType = {
   startDate: string;
@@ -17,4 +18,13 @@ export type AnnualFinanceReportType = {
 
 export type WeeklySummaryType = {
   weeklyLogs: OverviewLogType[];
+};
+
+export type WeeklyDetailsType = {
+  date: string;
+  transactions: TransactionItemType[];
+};
+
+export type WeeklyDetailsSummaryType = OverviewLogType & {
+  dailyDetails: WeeklyDetailsType[];
 };
