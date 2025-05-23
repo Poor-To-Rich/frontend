@@ -1,4 +1,4 @@
-import { format, isSameDay, isValid, lastDayOfMonth, parse } from 'date-fns';
+import { isSameDay, isValid, lastDayOfMonth, parse } from 'date-fns';
 import { dayRegex } from './regex';
 import { DAYS } from '@/constants/days';
 import { DaysOfWeekType } from '@/types/iterationTypes';
@@ -9,10 +9,6 @@ export const isSameDate = (today: Date, targetDate: Date) => {
     today.getMonth() === targetDate.getMonth() &&
     today.getDate() === targetDate.getDate()
   );
-};
-
-export const monthDayFormatter = (date: string | Date) => {
-  return format(date, 'MM.dd');
 };
 
 export const validateDate = (value: string): boolean => {

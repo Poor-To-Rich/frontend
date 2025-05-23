@@ -71,14 +71,13 @@ export const totalHandlers = [
     const income = createRandomAmount();
 
     const response = {
-      startDate: '2024-12-27',
-      endDate: '2025-01-04',
+      period: '24.12.29 ~ 25.01.04',
       totalAmount: income - expense,
       totalIncome: income,
       totalExpense: expense,
       dailyDetails: [
         {
-          date: '2025-01-01',
+          date: '12.30',
           transactions: [
             {
               id: 5,
@@ -101,7 +100,7 @@ export const totalHandlers = [
           ],
         },
         {
-          date: '2025-01-04',
+          date: '01.01',
           transactions: [
             {
               id: 9,

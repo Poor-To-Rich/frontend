@@ -19,8 +19,7 @@ const WeeklyDetailsPage = () => {
     <div>
       <DefaultHeader label="주별 상세내역" hasBackButton />
       <TransactionSummary
-        startDate={format(weeklyDetailsSummary.startDate, 'yy.MM.dd')}
-        endDate={format(weeklyDetailsSummary.endDate, 'yy.MM.dd')}
+        period={weeklyDetailsSummary.period}
         income={weeklyDetailsSummary.totalIncome}
         expense={weeklyDetailsSummary.totalExpense}
         total={weeklyDetailsSummary.totalAmount}

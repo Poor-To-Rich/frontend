@@ -1,5 +1,4 @@
 import { OverviewLogType } from '@/types/reportTypes';
-import { monthDayFormatter } from '@/utils/date';
 import { clsx } from 'clsx';
 
 interface Props {
@@ -26,9 +25,7 @@ const LogItem = ({ type, order, log, hasUnderLine, onClick }: Props) => {
           {type === 'month' && '월'}
           {type === 'week' && '주차'}
         </span>
-        <span className="text-sm">
-          {monthDayFormatter(log.startDate)}~{monthDayFormatter(log.endDate)}
-        </span>
+        <span className="text-sm">{log.period}</span>
       </div>
       <div className="flex flex-col items-end w-[60%] text-md">
         <div className="flex justify-end gap-2.5 w-full">

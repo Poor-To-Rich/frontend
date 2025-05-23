@@ -50,8 +50,7 @@ export const createMockYearlySummary = (date: string) => {
     const totalExpense = createRandomAmount();
 
     result.push({
-      startDate,
-      endDate,
+      period: `${format(startDate, 'MM.dd')}~${format(endDate, 'MM.dd')}`,
       totalIncome,
       totalExpense,
       totalAmount: totalIncome - totalExpense,
@@ -74,8 +73,7 @@ export const createMockWeeklySummary = (date: Date) => {
     const totalExpense = createRandomAmount();
 
     result.push({
-      startDate,
-      endDate,
+      period: `${format(startDate, 'MM.dd')}~${format(endDate, 'MM.dd')}`,
       totalIncome: totalIncome,
       totalExpense: totalExpense,
       totalAmount: totalIncome - totalExpense,
