@@ -10,7 +10,7 @@ interface Props {
 const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
   const periodSummaryData = {
     period: '25.01.01~25.01.31',
-    totalBalance: 200000000,
+    totalAmount: 200000000,
     weeklyBalances: [
       {
         period: '01.01~01.06',
@@ -39,7 +39,7 @@ const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
     <div className="w-full">
       <PeriodSummary
         period="25.01.01~25.01.31"
-        balance={periodSummaryData.totalBalance}
+        balance={periodSummaryData.totalAmount}
         transactionType={transactionType || ' '}
       />
       <div className="w-full h-[300px] p-5">

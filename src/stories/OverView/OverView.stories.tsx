@@ -9,21 +9,21 @@ function Overview() {
       endDate: '2025-01-31',
       totalIncome: 100000,
       totalExpense: 900000,
-      totalBalance: -800000,
+      totalAmount: -800000,
     },
     {
       startDate: '2025-02-01',
       endDate: '2025-02-28',
       totalIncome: 100004558748489000,
       totalExpense: 1001651489465000,
-      totalBalance: 900000,
+      totalAmount: 900000,
     },
     {
       startDate: '2025-03-01',
       endDate: '2025-03-31',
       totalIncome: 10000000,
       totalExpense: 100000,
-      totalBalance: 900000,
+      totalAmount: 900000,
     },
   ];
 

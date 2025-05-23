@@ -23,7 +23,7 @@ const WeeklyDetailsPage = () => {
         endDate={format(weeklyDetailsSummary.endDate, 'yy.MM.dd')}
         income={weeklyDetailsSummary.totalIncome}
         expense={weeklyDetailsSummary.totalExpense}
-        total={weeklyDetailsSummary.totalBalance}
+        total={weeklyDetailsSummary.totalAmount}
         isWeekSummary
       />
       {weeklyDetailsSummary.dailyDetails.map(({ date, transactions }, indx) => (

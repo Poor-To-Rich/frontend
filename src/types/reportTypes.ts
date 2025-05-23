@@ -6,7 +6,7 @@ export type OverviewLogType = {
   endDate: string;
   totalIncome: number;
   totalExpense: number;
-  totalBalance: number;
+  totalAmount: number;
 };
 
 export type AnnualFinanceReportType = {

@@ -8,3 +8,9 @@ export type WeeklyBalanceType = {
   period: string;
   amount: number;
 };
+
+export type ChartTotalAndSavingsType = {
+  savingCategoryId: number;
+  totalAmount: number;
+  totalSavingsAmount: number;
+};

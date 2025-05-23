@@ -11,6 +11,7 @@ import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 
 const ChartPage = () => {
   const { chartHeaderDate, setChartHeaderDate } = useHeaderDateStore();
+
   return (
     <div className="flex flex-col w-full min-h-screen">
       <DateControlHeader headerDate={chartHeaderDate} setHeaderDate={setChartHeaderDate} />

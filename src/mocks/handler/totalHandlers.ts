@@ -73,7 +73,7 @@ export const totalHandlers = [
     const response = {
       startDate: '2024-12-27',
       endDate: '2025-01-04',
-      totalBalance: income - expense,
+      totalAmount: income - expense,
       totalIncome: income,
       totalExpense: expense,
       dailyDetails: [

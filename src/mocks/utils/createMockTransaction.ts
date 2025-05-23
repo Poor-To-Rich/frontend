@@ -54,7 +54,7 @@ export const createMockYearlySummary = (date: string) => {
       endDate,
       totalIncome,
       totalExpense,
-      totalBalance: totalIncome - totalExpense,
+      totalAmount: totalIncome - totalExpense,
     });
   }
 
@@ -78,7 +78,7 @@ export const createMockWeeklySummary = (date: Date) => {
       endDate,
       totalIncome: totalIncome,
       totalExpense: totalExpense,
-      totalBalance: totalIncome - totalExpense,
+      totalAmount: totalIncome - totalExpense,
     });
     startDate = addDays(endDate, 1);
     endDate = addDays(startDate, 6);
