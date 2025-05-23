@@ -16,7 +16,7 @@ const ReportSummary = () => {
       ) : (
         <>
           <SummaryItem title="총액" total={totalAndSavings.totalAmount} />
-          <SummaryItem title="저축" total={totalAndSavings.totalSavingsAmount} />
+          <SummaryItem title="저축/투자" total={totalAndSavings.totalSavingsAmount} />
         </>
       )}
     </div>

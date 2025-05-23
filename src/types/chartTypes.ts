@@ -36,3 +36,14 @@ export type StackedBarChartResponse = {
   categoryColors: CategoryColors;
   categoryCharts: StackedBarCategoryChartItem[];
 };
+
+export type BarChartTotalAmountsType = {
+  date: string;
+  totalAmount: number;
+};
+
+export type BarChartResponse = {
+  extraAmount: string;
+  averageAmount: string;
+  totalAmounts: BarChartTotalAmountsType[];
+};

@@ -1,4 +1,5 @@
 import { http, HttpResponse } from 'msw';
+import { createMockChart } from '@/mocks/utils/createMockChart';
 
 export const chartHandlers = [
   http.get('/chart/expense/total', ({ request }) => {
@@ -147,6 +148,48 @@ export const chartHandlers = [
       {
         status: 200,
         message: `${date} 수입 카테고리별 비율 및 총 금액 조회 성공`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/chart/expense/bar', ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date') ?? '';
+    const isYearMonthlyFormat = /^\d{4}-\d{2}$/.test(date);
+
+    const response = {
+      extraAmount: '10만원 덜',
+      averageAmount: '316만원',
+      totalAmounts: createMockChart(date, isYearMonthlyFormat),
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 지출 막대그래프 조회 성공`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/chart/income/bar', ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date') ?? '';
+    const isYearMonthlyFormat = /^\d{4}-\d{2}$/.test(date);
+
+    const response = {
+      extraAmount: '200만원 더',
+      averageAmount: '420만원',
+      totalAmounts: createMockChart(date, isYearMonthlyFormat),
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 수입 막대그래프 조회 성공`,
         data: response,
       },
       { status: 200 },
