@@ -1,4 +1,4 @@
-import { OverviewLogType } from '@/types/types';
+import { OverviewLogType } from '@/types/reportTypes';
 import { monthDayFormatter } from '@/utils/date';
 import { clsx } from 'clsx';
 

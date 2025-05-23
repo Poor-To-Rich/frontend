@@ -5,9 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
 
-interface Props extends TransactionItemType {}
-
-const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: Props) => {
+const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: TransactionItemType) => {
   const { calenderDate } = useCalenderDateStore();
   const navigate = useNavigate();
 

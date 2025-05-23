@@ -40,4 +40,9 @@ export const endpoints = {
     updateCategory: (id: string) => `/category/${id}`,
     deleteCategory: (id: string) => `/category/${id}`,
   },
+  report: {
+    getYearlySummary: (date: string) => `/report/monthly/total?date=${date}`,
+    getWeeklySummary: (date: string) => `/report/weekly/total?date=${date}`,
+    getWeeklyDetails: (date: string, week: string) => `/report/weekly/details?date=${date}&week=${week}`,
+  },
 };

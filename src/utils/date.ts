@@ -11,7 +11,7 @@ export const isSameDate = (today: Date, targetDate: Date) => {
   );
 };
 
-export const monthDayFormatter = (date: Date) => {
+export const monthDayFormatter = (date: string | Date) => {
   return format(date, 'MM.dd');
 };
 
