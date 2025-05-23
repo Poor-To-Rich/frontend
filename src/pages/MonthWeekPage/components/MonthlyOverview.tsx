@@ -20,8 +20,8 @@ const MonthlyOverview = ({ targetYear, monthlyLogs }: Props) => {
   return (
     <div className="w-full">
       {monthlyLogs.map((log, index) => (
-        <div className="flex flex-col items-end">
-          <LogItem key={index} order={index + 1} log={log} type="month" onClick={() => handleClick(index)} />
+        <div key={index} className="flex flex-col items-end">
+          <LogItem order={index + 1} log={log} type="month" onClick={() => handleClick(index)} />
           {openIndexes.includes(index) && (
             <WeeklyOverview targetDate={`${targetYear}-${(index + 1).toString().padStart(2, '0')}`} />
           )}
