@@ -1,26 +1,26 @@
-import MonthlyOverview from '@/components/overview/MonthlyOverview';
-import WeeklyOverview from '@/components/overview/WeeklyOverview';
+import MonthlyOverview from '@/pages/MonthWeekPage/components/MonthlyOverview';
+import WeeklyOverview from '@/pages/MonthWeekPage/components/WeeklyOverview';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function Overview() {
   const monthlyReport = [
     {
-      startDate: new Date('2025-01-01'),
-      endDate: new Date('2025-01-31'),
+      startDate: '2025-01-01',
+      endDate: '2025-01-31',
       totalIncome: 100000,
       totalExpense: 900000,
       totalBalance: -800000,
     },
     {
-      startDate: new Date('2025-02-01'),
-      endDate: new Date('2025-02-28'),
+      startDate: '2025-02-01',
+      endDate: '2025-02-28',
       totalIncome: 100004558748489000,
       totalExpense: 1001651489465000,
       totalBalance: 900000,
     },
     {
-      startDate: new Date('2025-03-01'),
-      endDate: new Date('2025-03-31'),
+      startDate: '2025-03-01',
+      endDate: '2025-03-31',
       totalIncome: 10000000,
       totalExpense: 100000,
       totalBalance: 900000,
@@ -29,8 +29,8 @@ function Overview() {
 
   return (
     <div className="flex flex-col items-end">
-      <MonthlyOverview monthlyLogs={monthlyReport} />
-      <WeeklyOverview weeklyLogs={monthlyReport} />
+      <MonthlyOverview targetYear="2025" monthlyLogs={monthlyReport} />
+      <WeeklyOverview targetDate="2025-01" />
     </div>
   );
 }
