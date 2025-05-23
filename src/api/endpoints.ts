@@ -42,7 +42,7 @@ export const endpoints = {
   },
   report: {
     getYearlySummary: (date: string) => `/report/monthly/total?date=${date}`,
-    getWeeklyTotal: (date: string) => `/report/weekly/total?date=${date}`,
+    getWeeklySummary: (date: string) => `/report/weekly/total?date=${date}`,
     getWeeklyDetails: (date: string, week: string) => `/report/weekly/details?date=${date}&week=${week}`,
   },
 };

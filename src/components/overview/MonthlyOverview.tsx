@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { OverviewLogType } from '@/types/reportTypes';
 
 interface Props {
+  targetYear: string;
   monthlyLogs: OverviewLogType[];
 }
 
-const MonthlyOverview = ({ monthlyLogs }: Props) => {
+const MonthlyOverview = ({ targetYear, monthlyLogs }: Props) => {
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   const handleClick = (index: number) => {
@@ -21,7 +22,9 @@ const MonthlyOverview = ({ monthlyLogs }: Props) => {
       {monthlyLogs.map((log, index) => (
         <div className="flex flex-col items-end">
           <LogItem key={index} order={index + 1} log={log} type="month" onClick={() => handleClick(index)} />
-          {openIndexes.includes(index) && <WeeklyOverview weeklyLogs={monthlyLogs} />}
+          {openIndexes.includes(index) && (
+            <WeeklyOverview targetDate={`${targetYear}-${(index + 1).toString().padStart(2, '0')}`} />
+          )}
         </div>
       ))}
     </div>

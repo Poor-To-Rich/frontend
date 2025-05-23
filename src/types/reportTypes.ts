@@ -14,3 +14,7 @@ export type AnnualFinanceReportType = {
   yearTotalBalance: number;
   monthlyReport: OverviewLogType[];
 };
+
+export type WeeklySummaryType = {
+  weeklyLogs: OverviewLogType[];
+};

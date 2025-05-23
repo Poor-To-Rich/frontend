@@ -8,7 +8,8 @@ import { format } from 'date-fns';
 
 const MonthWeekPage = () => {
   const { monthWeekHeaderDate, setMonthWeekHeaderDate } = useHeaderDateStore();
-  const { data: yearlySummaryData, isFetching } = useGetYearlySummary(format(monthWeekHeaderDate, 'yyyy'));
+  const targetYear = format(monthWeekHeaderDate, 'yyyy');
+  const { data: yearlySummaryData, isFetching } = useGetYearlySummary(targetYear);
 
   return (
     <div className="w-full h-fit min-h-screen max-h-fit flex flex-col relative">
@@ -22,7 +23,7 @@ const MonthWeekPage = () => {
             expense={yearlySummaryData.yearTotalExpense}
             total={yearlySummaryData.yearTotalBalance}
           />
-          <MonthlyOverview monthlyLogs={yearlySummaryData.monthlyReport} />
+          <MonthlyOverview targetYear={targetYear} monthlyLogs={yearlySummaryData.monthlyReport} />
         </div>
       )}
       <TapBar page="month-week" />

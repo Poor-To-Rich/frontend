@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import {
   createMockMonthlyTransactions,
+  createMockWeeklySummary,
   createMockYearlySummary,
   createRandomAmount,
 } from '@/mocks/utils/createMockTransaction';
@@ -36,6 +37,25 @@ export const totalHandlers = [
       {
         status: 200,
         message: `${date} 가계부 내역이 조회 되었습니다.`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/report/weekly/total', async ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date');
+    const targetDate = new Date(date || '');
+
+    const response = {
+      weeklyLogs: createMockWeeklySummary(targetDate),
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 주차별 가계부 내역이 조회 되었습니다.`,
         data: response,
       },
       { status: 200 },

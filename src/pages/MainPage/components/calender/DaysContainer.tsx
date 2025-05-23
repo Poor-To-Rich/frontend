@@ -18,6 +18,8 @@ const DaysContainer = ({ activeDate, handleDateClick, currentDay, transactions }
   const weekEndDate = endOfWeek(monthEndDate); // 현재 달의 마지막 날짜가 포함된 주의 마지막 날짜
   const today = new Date();
 
+  console.log(weekStartDate, weekEndDate);
+
   const datesOfCurrentMonth = (() => {
     const monthDays = [];
     let day = weekStartDate;

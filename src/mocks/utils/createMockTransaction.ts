@@ -1,4 +1,14 @@
-import { format, lastDayOfMonth } from 'date-fns';
+import {
+  addDays,
+  endOfMonth,
+  endOfWeek,
+  format,
+  isBefore,
+  isSameDay,
+  lastDayOfMonth,
+  startOfMonth,
+  startOfWeek,
+} from 'date-fns';
 
 export const createRandomAmount = () => {
   return Math.floor(Math.random() * 1000000000000);
@@ -46,6 +56,32 @@ export const createMockYearlySummary = (date: string) => {
       totalExpense,
       totalBalance: totalIncome - totalExpense,
     });
+  }
+
+  return result;
+};
+
+export const createMockWeeklySummary = (date: Date) => {
+  const result = [];
+
+  const monthStartDate = startOfWeek(startOfMonth(date));
+  const monthEndDate = endOfWeek(endOfMonth(date));
+  let startDate = monthStartDate;
+  let endDate = addDays(startDate, 6);
+
+  while (isBefore(startDate, monthEndDate) || isSameDay(startDate, monthEndDate)) {
+    const totalIncome = createRandomAmount();
+    const totalExpense = createRandomAmount();
+
+    result.push({
+      startDate,
+      endDate,
+      totalIncome: totalIncome,
+      totalExpense: totalExpense,
+      totalBalance: totalIncome - totalExpense,
+    });
+    startDate = addDays(endDate, 1);
+    endDate = addDays(startDate, 6);
   }
 
   return result;
