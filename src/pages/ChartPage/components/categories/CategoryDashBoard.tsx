@@ -5,6 +5,7 @@ import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionRepo
 import { formatNumber } from '@/utils/number';
 import { useNavigate } from 'react-router-dom';
 import { StackedBarCategoryChartItem } from '@/types/chartTypes';
+import { handleClickCategoryChart } from '@/pages/ChartPage/utils/handleClickCategoryChart';
 
 interface Props {
   categoryCharts: StackedBarCategoryChartItem[];
@@ -16,23 +17,6 @@ const CategoryDashBoard = ({ categoryCharts }: Props) => {
   const { currentReportType } = useReportTypeStore();
   const navigate = useNavigate();
 
-  const handleClick = (
-    categoryId: number,
-    categoryName: string,
-    transactionType: string,
-    reportType: string,
-    date: Date,
-  ) => {
-    navigate(`/chart/category-details/${categoryId}`, {
-      state: {
-        categoryName,
-        transactionType,
-        reportType,
-        date,
-      },
-    });
-  };
-
   return (
     <div className="flex flex-col pl-8 pr-5 pb-4">
       {categoryCharts.map(categoryItem => (
@@ -40,7 +24,14 @@ const CategoryDashBoard = ({ categoryCharts }: Props) => {
           className="flex justify-between gap-3.5 cursor-pointer py-3"
           key={categoryItem.id}
           onClick={() =>
-            handleClick(categoryItem.id, categoryItem.name, currentTransactionType, currentReportType, chartHeaderDate)
+            handleClickCategoryChart(
+              navigate,
+              categoryItem.id,
+              categoryItem.name,
+              currentTransactionType,
+              currentReportType,
+              chartHeaderDate,
+            )
           }>
           <div className="flex w-fit gap-4.5">
             <span style={{ color: categoryItem.color }}>{categoryItem.name}</span>

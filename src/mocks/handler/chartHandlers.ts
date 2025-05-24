@@ -12,7 +12,7 @@ export const chartHandlers = [
         message: `${date} 지출 및 저축 금액 조회 성공`,
         data: {
           savingCategoryId: 1,
-          totalAmount: 10000000,
+          totalAmount: 546546546,
           totalSavingsAmount: 4536456,
         },
       },
@@ -30,7 +30,7 @@ export const chartHandlers = [
         message: `${date} 수입 및 저축 금액 조회 성공`,
         data: {
           savingCategoryId: 2,
-          totalAmount: 5465465,
+          totalAmount: 2132447,
           totalSavingsAmount: 2313225,
         },
       },
