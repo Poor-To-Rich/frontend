@@ -12,8 +12,7 @@ function Summary() {
         expense={1564865133}
         total={4685165}
         isWeekSummary
-        startDate={'25.01.01'}
-        endDate={'25.01.13'}
+        period={'25.01.01 ~ 25.01.13'}
       />
     </div>
   );

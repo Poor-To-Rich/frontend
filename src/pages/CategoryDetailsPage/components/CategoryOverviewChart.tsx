@@ -5,12 +5,13 @@ import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/Ca
 interface Props {
   reportType: string;
   transactionType: string;
+  isSavings?: boolean;
 }
 
-const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
+const CategoryOverviewChart = ({ reportType, transactionType, isSavings }: Props) => {
   const periodSummaryData = {
     period: '25.01.01~25.01.31',
-    totalBalance: 200000000,
+    totalAmount: 200000000,
     weeklyBalances: [
       {
         period: '01.01~01.06',
@@ -39,8 +40,8 @@ const CategoryOverviewChart = ({ reportType, transactionType }: Props) => {
     <div className="w-full">
       <PeriodSummary
         period="25.01.01~25.01.31"
-        balance={periodSummaryData.totalBalance}
-        transactionType={transactionType || ' '}
+        balance={periodSummaryData.totalAmount}
+        transactionType={isSavings ? '저축/투자' : transactionType}
       />
       <div className="w-full h-[300px] p-5">
         {reportType === '월별' ? (

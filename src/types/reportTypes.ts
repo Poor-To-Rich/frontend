@@ -2,11 +2,10 @@ export type ReportType = '월별' | '연별';
 import { TransactionItemType } from '@/types/transactionTypes';
 
 export type OverviewLogType = {
-  startDate: string;
-  endDate: string;
+  period: string;
   totalIncome: number;
   totalExpense: number;
-  totalBalance: number;
+  totalAmount: number;
 };
 
 export type AnnualFinanceReportType = {

@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
   transactionType: string;
+  isSavings: boolean;
 }
 
-const CategoryLogList = ({ transactionType }: Props) => {
+const CategoryLogList = ({ transactionType, isSavings }: Props) => {
   const navigate = useNavigate();
   const [isDescending, setIsDescending] = useState<boolean>(true);
   const { countOf, categoryLogs } = {
@@ -62,8 +63,8 @@ const CategoryLogList = ({ transactionType }: Props) => {
                     key={id}
                     className={clsx(
                       index === 0 ? 'justify-between' : 'justify-end',
-                      transactionType === '지출' && 'text-sunsetRose',
-                      transactionType === '수입' && 'text-oceanBlue',
+                      (transactionType === '지출' || isSavings) && 'text-sunsetRose',
+                      transactionType === '수입' && !isSavings && 'text-oceanBlue',
                       `flex items-center px-8 gap-8  h-[4.8rem] cursor-pointer hover:bg-strokeGray active:bg-strokeGray`,
                     )}
                     onClick={() => navigate(`/transaction?type=edit&id=${id}`)}>

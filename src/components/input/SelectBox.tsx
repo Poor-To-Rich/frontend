@@ -45,7 +45,7 @@ const SelectBox = forwardRef<HTMLSelectElement, SelectBoxProps>(
               <span
                 className={clsx(
                   hasEditButton ? 'right-[4rem]' : 'right-[0.75rem]',
-                  'absolute top-1/2 -translate-y-1/2',
+                  'absolute top-1/2 -translate-y-1/2 pointer-events-none',
                 )}>
                 <DropdownIcon />
               </span>

@@ -8,20 +8,20 @@ import CategoryLogList from '@/pages/CategoryDetailsPage/components/CategoryLogL
 
 const CategoryDetailsPage = () => {
   const location = useLocation();
-  const { categoryName, transactionType, reportType } = location.state || {};
+  const { categoryName, transactionType, reportType, isSavings } = location.state || {};
   const { setCurrentReportType } = useReportTypeStore();
   const { setCurrentTransactionType } = useTransactionReportTypeStore();
 
   useEffect(() => {
     setCurrentReportType(reportType);
     setCurrentTransactionType(transactionType);
-  }, []);
+  }, [reportType, transactionType, setCurrentReportType, setCurrentTransactionType]);
 
   return (
     <div className="w-full min-h-screen flex flex-col">
       <DefaultHeader label={categoryName} hasBackButton />
-      <CategoryOverviewChart reportType={reportType} transactionType={transactionType} />
-      <CategoryLogList transactionType={transactionType} />
+      <CategoryOverviewChart reportType={reportType} transactionType={transactionType} isSavings={isSavings} />
+      <CategoryLogList transactionType={transactionType} isSavings={isSavings} />
     </div>
   );
 };
