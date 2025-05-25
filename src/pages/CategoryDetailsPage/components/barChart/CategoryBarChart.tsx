@@ -3,25 +3,17 @@ import CustomizedLabel from '@/pages/CategoryDetailsPage/components/barChart/Cus
 import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/CustomizedTooltip';
 import '@/styles/recharts-tooltip.css';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
+import { monthlyAmountType } from '@/types/chartTypes';
 
-const CategoryBarChart = () => {
+interface Props {
+  monthlyAmounts: monthlyAmountType[];
+}
+
+const CategoryBarChart = ({ monthlyAmounts }: Props) => {
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
-  const monthlyBalances = [
-    { month: '1월', amount: 11000 },
-    { month: '2월', amount: 9000 },
-    { month: '3월', amount: 15000 },
-    { month: '4월', amount: 8000 },
-    { month: '5월', amount: 11000 },
-    { month: '6월', amount: 9500 },
-    { month: '7월', amount: 1400 },
-    { month: '8월', amount: 10000 },
-    { month: '9월', amount: 1300 },
-    { month: '10월', amount: 0 },
-    { month: '11월', amount: 12500 },
-    { month: '12월', amount: 8500 },
-  ];
-  const maxAmount = Math.max(...monthlyBalances.map(item => item.amount));
+
+  const maxAmount = Math.max(...monthlyAmounts.map(item => item.amount));
 
   return (
     <div
@@ -36,7 +28,7 @@ const CategoryBarChart = () => {
       onTouchEnd={handleEnd}>
       <div className="min-w-[700px]">
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={monthlyBalances} margin={{ top: 30, right: 10, bottom: 0, left: 10 }} barSize={25}>
+          <BarChart data={monthlyAmounts} margin={{ top: 30, right: 10, bottom: 0, left: 10 }} barSize={25}>
             <XAxis type="category" dataKey="month" axisLine={false} tickLine={false} interval={0} />
             <YAxis type="number" dataKey="amount" hide domain={[1, maxAmount]} />
             <Tooltip content={<CustomizedTooltip />} />

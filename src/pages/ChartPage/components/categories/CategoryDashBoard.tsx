@@ -1,18 +1,18 @@
 import RightArrowButton from '@/components/button/icon/RightArrowButton';
-import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
 import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
 import { formatNumber } from '@/utils/number';
 import { useNavigate } from 'react-router-dom';
 import { StackedBarCategoryChartItem } from '@/types/chartTypes';
 import { handleClickCategoryChart } from '@/pages/ChartPage/utils/handleClickCategoryChart';
+import useFormattedReportDate from '@/hooks/chart/useFormattedReportDate';
 
 interface Props {
   categoryCharts: StackedBarCategoryChartItem[];
 }
 
 const CategoryDashBoard = ({ categoryCharts }: Props) => {
-  const { chartHeaderDate } = useHeaderDateStore();
+  const date = useFormattedReportDate();
   const { currentTransactionType } = useTransactionReportTypeStore();
   const { currentReportType } = useReportTypeStore();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const CategoryDashBoard = ({ categoryCharts }: Props) => {
               categoryItem.name,
               currentTransactionType,
               currentReportType,
-              chartHeaderDate,
+              date,
             )
           }>
           <div className="flex w-fit gap-4.5">

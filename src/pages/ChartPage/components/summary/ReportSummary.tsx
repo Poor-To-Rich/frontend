@@ -5,13 +5,11 @@ import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionRepo
 import { handleClickCategoryChart } from '@/pages/ChartPage/utils/handleClickCategoryChart';
 import { useNavigate } from 'react-router-dom';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
-import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 
 const ReportSummary = () => {
   const navigate = useNavigate();
   const { currentReportType } = useReportTypeStore();
   const { currentTransactionType } = useTransactionReportTypeStore();
-  const { chartHeaderDate } = useHeaderDateStore();
   const formattedDate = useFormattedReportDate();
   const { data: totalAndSavings, isFetching } = useGetTotalAndSavings(currentTransactionType, formattedDate);
 
@@ -33,7 +31,7 @@ const ReportSummary = () => {
                 categoryName,
                 currentTransactionType,
                 currentReportType,
-                chartHeaderDate,
+                formattedDate,
                 true,
               )
             }

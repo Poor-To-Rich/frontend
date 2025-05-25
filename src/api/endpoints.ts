@@ -52,5 +52,7 @@ export const endpoints = {
     getIncomeTotalAndSavings: (date: string) => `/chart/income/total?date=${date}`,
     getIncomeStackedBarChart: (date: string) => `/chart/category/income?date=${date}`,
     getIncomeBarChart: (date: string) => `/chart/income/bar?date=${date}`,
+    getLineChart: (categoryId: string, date: string) => `/chart/${categoryId}/line?date=${date}`,
+    getVerticalBarChart: (categoryId: string, date: string) => `/chart/${categoryId}/vertical?date=${date}`,
   },
 };

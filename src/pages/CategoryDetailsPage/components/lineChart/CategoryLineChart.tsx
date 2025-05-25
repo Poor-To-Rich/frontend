@@ -1,17 +1,17 @@
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import CustomizedXAxisTick from '@/pages/CategoryDetailsPage/components/lineChart/CustomizedXAxisTick';
-import { WeeklyBalanceType } from '@/types/chartTypes';
+import { WeeklyAmountType } from '@/types/chartTypes';
 import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/CustomizedTooltip';
 import '@/styles/recharts-line.css';
 
 interface Props {
-  weeklyBalances: WeeklyBalanceType[];
+  weeklyAmounts: WeeklyAmountType[];
 }
 
-const CategoryLineChart = ({ weeklyBalances }: Props) => {
+const CategoryLineChart = ({ weeklyAmounts }: Props) => {
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={weeklyBalances} margin={{ top: 0, right: 30, bottom: 0, left: 30 }}>
+      <LineChart data={weeklyAmounts} margin={{ top: 0, right: 30, bottom: 0, left: 30 }}>
         <XAxis
           dataKey="period"
           type="category"

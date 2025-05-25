@@ -1,5 +1,11 @@
 import { fetchData } from '@/api/axios';
-import { BarChartResponse, ChartTotalAndSavingsType, StackedBarChartResponse } from '@/types/chartTypes';
+import {
+  BarChartResponse,
+  CategoryDetailsBarChartRes,
+  CategoryDetailsLineChartRes,
+  ChartTotalAndSavingsType,
+  StackedBarChartResponse,
+} from '@/types/chartTypes';
 import { endpoints } from '@/api/endpoints';
 
 export const getExpenseTotalAndSavings = async (date: string) => {
@@ -41,5 +47,21 @@ export const getExpenseBarChart = async (date: string) => {
 
 export const getIncomeBarChart = async (date: string) => {
   const res = await fetchData<undefined, BarChartResponse>('GET', endpoints.chart.getIncomeBarChart(date));
+  return res.data;
+};
+
+export const getCategoryDetailsLineChart = async (categoryId: string, date: string) => {
+  const res = await fetchData<undefined, CategoryDetailsLineChartRes>(
+    'GET',
+    endpoints.chart.getLineChart(categoryId, date),
+  );
+  return res.data;
+};
+
+export const getCategoryDetailsBarChart = async (categoryId: string, date: string) => {
+  const res = await fetchData<undefined, CategoryDetailsBarChartRes>(
+    'GET',
+    endpoints.chart.getVerticalBarChart(categoryId, date),
+  );
   return res.data;
 };
