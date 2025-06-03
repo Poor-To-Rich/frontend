@@ -27,7 +27,7 @@ const CategoryDetailsPage = () => {
         date={date}
         isSavings={isSavings}
       />
-      <CategoryLogList transactionType={transactionType} isSavings={isSavings} />
+      <CategoryLogList transactionType={transactionType} categoryId={categoryId} date={date} isSavings={isSavings} />
     </div>
   );
 };

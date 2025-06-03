@@ -65,3 +65,22 @@ export type monthlyAmountType = {
 export type CategoryDetailsBarChartRes = BaseCategoryDetailsType & {
   monthlyAmounts: monthlyAmountType[];
 };
+
+export type CategoryDetailsTransactionType = {
+  id: number;
+  title?: string;
+  amount: number;
+};
+
+export type CategoryLogsType = {
+  date: string;
+  countOfTransactions: number;
+  transactions: CategoryDetailsTransactionType[];
+};
+
+export type CategoryDetailsRes = {
+  countOfLogs: number;
+  hasNext: boolean;
+  nextCursor: string;
+  categoryLogs: CategoryLogsType[];
+};

@@ -3,6 +3,7 @@ import {
   BarChartResponse,
   CategoryDetailsBarChartRes,
   CategoryDetailsLineChartRes,
+  CategoryDetailsRes,
   ChartTotalAndSavingsType,
   StackedBarChartResponse,
 } from '@/types/chartTypes';
@@ -63,5 +64,15 @@ export const getCategoryDetailsBarChart = async (categoryId: string, date: strin
     'GET',
     endpoints.chart.getVerticalBarChart(categoryId, date),
   );
+  return res.data;
+};
+
+export const getCategoryLogs = async (categoryId: string, date: string, cursor: string | null) => {
+  const res = await fetchData<undefined, CategoryDetailsRes>(
+    'GET',
+    endpoints.chart.getCategoryLogs(categoryId, date, cursor),
+  );
+
+  if (!res.data) throw new Error('No data from server');
   return res.data;
 };

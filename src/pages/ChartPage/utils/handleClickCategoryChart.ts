@@ -12,6 +12,7 @@ export const handleClickCategoryChart = (
   navigate(`/chart/category-details/${categoryId}`, {
     state: {
       categoryName,
+      categoryId,
       transactionType,
       reportType,
       date,

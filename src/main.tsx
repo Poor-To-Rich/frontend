@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast';
 import ScrollToUp from '@/utils/ScrollToUp';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 if (typeof window !== 'undefined') {
   if (import.meta.env.DEV) {
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <ScrollToUp />
       <App />
+      <ReactQueryDevtools initialIsOpen={false} />
     </BrowserRouter>
     <Toaster />
   </QueryClientProvider>,
