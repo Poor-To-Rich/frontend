@@ -195,4 +195,78 @@ export const chartHandlers = [
       { status: 200 },
     );
   }),
+
+  http.get('/chart/:categoryId/line', ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date') ?? '';
+
+    const response = {
+      period: '25.01.01~25.01.31',
+      totalAmount: 5467685412,
+      weeklyAmounts: [
+        {
+          period: '01.01~01.06',
+          amount: 123569,
+        },
+        {
+          period: '01.07~01.13',
+          amount: 213545,
+        },
+        {
+          period: '01.14~01.20',
+          amount: 222,
+        },
+        {
+          period: '01.21~01.27',
+          amount: 21245,
+        },
+        {
+          period: '01.28~01.31',
+          amount: 120000,
+        },
+      ],
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 꺾은선 그래프 조회 성공`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/chart/:categoryId/vertical', ({ request }) => {
+    const url = new URL(request.url);
+    const date = url.searchParams.get('date') ?? '';
+
+    const response = {
+      period: '25.01.01~25.12.31',
+      totalAmount: 132435,
+      monthlyAmounts: [
+        { month: '1월', amount: 11000 },
+        { month: '2월', amount: 9000 },
+        { month: '3월', amount: 15000 },
+        { month: '4월', amount: 8000 },
+        { month: '5월', amount: 11000 },
+        { month: '6월', amount: 9500 },
+        { month: '7월', amount: 1400 },
+        { month: '8월', amount: 10000 },
+        { month: '9월', amount: 1300 },
+        { month: '10월', amount: 0 },
+        { month: '11월', amount: 12500 },
+        { month: '12월', amount: 8500 },
+      ],
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `${date} 수직 막대그래프 조회 성공`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
 ];

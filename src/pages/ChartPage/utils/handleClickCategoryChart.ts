@@ -6,12 +6,13 @@ export const handleClickCategoryChart = (
   categoryName: string,
   transactionType: string,
   reportType: string,
-  date: Date,
+  date: string,
   isSavings?: boolean,
 ) => {
   navigate(`/chart/category-details/${categoryId}`, {
     state: {
       categoryName,
+      categoryId,
       transactionType,
       reportType,
       date,

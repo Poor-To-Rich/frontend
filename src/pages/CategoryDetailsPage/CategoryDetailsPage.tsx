@@ -8,7 +8,7 @@ import CategoryLogList from '@/pages/CategoryDetailsPage/components/CategoryLogL
 
 const CategoryDetailsPage = () => {
   const location = useLocation();
-  const { categoryName, transactionType, reportType, isSavings } = location.state || {};
+  const { categoryName, transactionType, reportType, categoryId, date, isSavings } = location.state || {};
   const { setCurrentReportType } = useReportTypeStore();
   const { setCurrentTransactionType } = useTransactionReportTypeStore();
 
@@ -20,8 +20,14 @@ const CategoryDetailsPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <DefaultHeader label={categoryName} hasBackButton />
-      <CategoryOverviewChart reportType={reportType} transactionType={transactionType} isSavings={isSavings} />
-      <CategoryLogList transactionType={transactionType} isSavings={isSavings} />
+      <CategoryOverviewChart
+        reportType={reportType}
+        transactionType={transactionType}
+        categoryId={categoryId}
+        date={date}
+        isSavings={isSavings}
+      />
+      <CategoryLogList transactionType={transactionType} categoryId={categoryId} date={date} isSavings={isSavings} />
     </div>
   );
 };

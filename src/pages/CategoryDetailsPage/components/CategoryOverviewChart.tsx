@@ -1,54 +1,45 @@
 import PeriodSummary from '@/components/summary/PeriodSummary';
 import CategoryLineChart from '@/pages/CategoryDetailsPage/components/lineChart/CategoryLineChart';
 import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarChart';
+import useGetCategoryDetailsBarChart from '@/hooks/apis/chart/useGetCategoryDetailsBarChart';
+import useGetCategoryDetailsLineChart from '@/hooks/apis/chart/useGetCategoryDetailsLineChart';
+import { ReportType } from '@/types/reportTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 
 interface Props {
-  reportType: string;
-  transactionType: string;
+  reportType: ReportType;
+  transactionType: IncomeExpenseType;
+  categoryId: string;
+  date: string;
   isSavings?: boolean;
 }
 
-const CategoryOverviewChart = ({ reportType, transactionType, isSavings }: Props) => {
-  const periodSummaryData = {
-    period: '25.01.01~25.01.31',
-    totalAmount: 200000000,
-    weeklyBalances: [
-      {
-        period: '01.01~01.06',
-        amount: 900000,
-      },
-      {
-        period: '01.07~01.13',
-        amount: 340000,
-      },
-      {
-        period: '01.14~01.20',
-        amount: 0,
-      },
-      {
-        period: '01.21~01.27',
-        amount: 762000,
-      },
-      {
-        period: '01.28~01.31',
-        amount: 120000,
-      },
-    ],
-  };
+const CategoryOverviewChart = ({ reportType, transactionType, categoryId, date, isSavings }: Props) => {
+  const isWeekly = reportType === '월별';
+  const { data: monthlyChartData, isFetching: isBarChartFetching } = useGetCategoryDetailsBarChart(
+    categoryId,
+    date,
+    !isWeekly,
+  );
+  const { data: weeklyChartData, isFetching: isLineChartFetching } = useGetCategoryDetailsLineChart(
+    categoryId,
+    date,
+    isWeekly,
+  );
+
+  if ((!monthlyChartData && !isWeekly) || (!weeklyChartData && isWeekly) || isBarChartFetching || isLineChartFetching) {
+    return <div>로딩중..</div>;
+  }
+
+  const period = isWeekly ? weeklyChartData?.period : monthlyChartData?.period;
+  const balance = isWeekly ? weeklyChartData?.totalAmount : monthlyChartData?.totalAmount;
 
   return (
     <div className="w-full">
-      <PeriodSummary
-        period="25.01.01~25.01.31"
-        balance={periodSummaryData.totalAmount}
-        transactionType={isSavings ? '저축/투자' : transactionType}
-      />
+      <PeriodSummary period={period} balance={balance} transactionType={isSavings ? '저축/투자' : transactionType} />
       <div className="w-full h-[300px] p-5">
-        {reportType === '월별' ? (
-          <CategoryLineChart weeklyBalances={periodSummaryData.weeklyBalances} />
-        ) : (
-          <CategoryBarChart />
-        )}
+        {isWeekly && weeklyChartData && <CategoryLineChart weeklyAmounts={weeklyChartData.weeklyAmounts} />}
+        {!isWeekly && monthlyChartData && <CategoryBarChart monthlyAmounts={monthlyChartData.monthlyAmounts} />}
       </div>
     </div>
   );

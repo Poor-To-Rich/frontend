@@ -4,11 +4,6 @@ export type TickPayload = {
   coordinate: number;
 };
 
-export type WeeklyBalanceType = {
-  period: string;
-  amount: number;
-};
-
 export type ChartTotalAndSavingsType = {
   savingCategoryId: number;
   totalAmount: number;
@@ -46,4 +41,46 @@ export type BarChartResponse = {
   extraAmount: string;
   averageAmount: string;
   totalAmounts: BarChartTotalAmountsType[];
+};
+
+export type BaseCategoryDetailsType = {
+  period: string;
+  totalAmount: number;
+};
+
+export type WeeklyAmountType = {
+  period: string;
+  amount: number;
+};
+
+export type CategoryDetailsLineChartRes = BaseCategoryDetailsType & {
+  weeklyAmounts: WeeklyAmountType[];
+};
+
+export type monthlyAmountType = {
+  month: string;
+  amount: number;
+};
+
+export type CategoryDetailsBarChartRes = BaseCategoryDetailsType & {
+  monthlyAmounts: monthlyAmountType[];
+};
+
+export type CategoryDetailsTransactionType = {
+  id: number;
+  title?: string;
+  amount: number;
+};
+
+export type CategoryLogsType = {
+  date: string;
+  countOfTransactions: number;
+  transactions: CategoryDetailsTransactionType[];
+};
+
+export type CategoryDetailsRes = {
+  countOfLogs: number;
+  hasNext: boolean;
+  nextCursor: string;
+  categoryLogs: CategoryLogsType[];
 };
