@@ -53,4 +53,9 @@ export const authHandlers = [
     Cookies.remove('refreshToken');
     return HttpResponse.json({ status: 200, message: '로그아웃 성공' }, { status: 200 });
   }),
+
+  http.delete(endpoints.auth.deleteUser, () => {
+    Cookies.remove('refreshToken');
+    return HttpResponse.json({ status: 200, message: '회원탈퇴 성공' }, { status: 200 });
+  }),
 ];

@@ -54,6 +54,11 @@ export const logout = async () => {
   return res;
 };
 
+export const deleteUser = async () => {
+  const res = await fetchData<undefined, undefined>('DELETE', endpoints.auth.deleteUser);
+  return res;
+};
+
 export const refreshToken = async () => {
   const res = await fetchData<undefined, TokenRes>('POST', endpoints.auth.refreshToken);
 

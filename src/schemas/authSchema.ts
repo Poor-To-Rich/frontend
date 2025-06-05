@@ -52,6 +52,7 @@ export const profileSchema = baseSignupSchema.omit({
   username: true,
   password: true,
   passwordConfirm: true,
+  verificationCode: true,
   email: true,
 });
 
