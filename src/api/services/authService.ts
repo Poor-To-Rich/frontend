@@ -79,3 +79,8 @@ export const updateUserDetails = async (body: FormData) => {
   const res = await fetchData<FormData, undefined>('PUT', endpoints.auth.updateUserDetails, body);
   return res;
 };
+
+export const resetData = async () => {
+  const res = await fetchData<undefined, undefined>('DELETE', endpoints.auth.dataReset);
+  return res;
+};

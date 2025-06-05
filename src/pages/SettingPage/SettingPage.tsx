@@ -3,6 +3,7 @@ import DefaultModal from '@/components/modal/DefaultModal';
 import TapBar from '@/components/tapbar/TapBar';
 import { ACCOUNT_OPTIONS, DATA_OPTIONS, INFORMATION_OPTIONS } from '@/constants/options';
 import useLogout from '@/hooks/apis/auth/useLogout';
+import useResetData from '@/hooks/apis/auth/useResetData';
 import LabelContainer from '@/pages/SettingPage/components/LabelContainer';
 import { ModalType, SettingOptionType } from '@/types/types';
 import { useState } from 'react';
@@ -12,6 +13,7 @@ const SettingPage = () => {
   const navigate = useNavigate();
   const [selectedModal, setSelectedModal] = useState<ModalType>(null);
   const { mutate: logout } = useLogout();
+  const { mutate: resetData } = useResetData({ closeModal: () => setSelectedModal(null) });
 
   const handleOptionClick = ({ to, modalType, externalUrl }: Omit<SettingOptionType, 'title'>) => {
     if (to) {
@@ -23,10 +25,6 @@ const SettingPage = () => {
     if (externalUrl) {
       window.location.href = externalUrl;
     }
-  };
-
-  const handleLogout = () => {
-    logout();
   };
 
   const handleModalClose = () => {
@@ -43,10 +41,14 @@ const SettingPage = () => {
       </div>
       <TapBar page="setting" />
       {selectedModal === 'logout' && (
-        <DefaultModal content="로그아웃 하시겠습니까?" onClick={handleLogout} onClose={handleModalClose} />
+        <DefaultModal content="로그아웃 하시겠습니까?" onClick={logout} onClose={handleModalClose} />
       )}
       {selectedModal === 'dataReset' && (
-        <DefaultModal content="전체 데이터를 초기화 하시겠습니까?" onClose={handleModalClose} />
+        <DefaultModal
+          content={`초기화하게 되면\n입력된 모든 가계부 데이터가 삭제됩니다.\n전체 데이터를 초기화 하시겠습니까?`}
+          onClick={resetData}
+          onClose={handleModalClose}
+        />
       )}
     </div>
   );

@@ -76,4 +76,14 @@ export const authHandlers = [
   http.put(endpoints.auth.updateUserDetails, () => {
     return HttpResponse.json({ status: 201, message: '프로필을 성공적으로 편집하였습니다.' }, { status: 201 });
   }),
+
+  http.delete(endpoints.auth.dataReset, () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '모든 데이터를 삭제했습니다.',
+      },
+      { status: 200 },
+    );
+  }),
 ];

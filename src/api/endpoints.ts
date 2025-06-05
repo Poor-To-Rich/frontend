@@ -8,7 +8,8 @@ export const endpoints = {
     checkUsernameDuplicate: '/user/exists/username',
     refreshToken: '/auth/refresh',
     getUserDetails: '/user/detail',
-    updateUserDetails: 'user/update',
+    updateUserDetails: '/user/update',
+    dataReset: '/user/reset',
   },
   email: {
     getEmail: '/user/email',

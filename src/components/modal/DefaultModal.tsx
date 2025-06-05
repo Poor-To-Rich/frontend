@@ -12,10 +12,10 @@ const DefaultModal = ({ content, isPending, onClose, onClick, ...rest }: Props) 
   return (
     <ModalDimmed onClose={onClose}>
       <div
-        className="w-[63%] aspect-[2/1] flex flex-col justify-evenly rounded-lg bg-white"
+        className="min-w-[63%] w-fit p-10 aspect-[2/1] flex flex-col justify-evenly gap-6 rounded-lg bg-white"
         onClick={e => e.stopPropagation()}
         {...rest}>
-        <span className="text-center text-md">{content}</span>
+        <p className="text-center text-md whitespace-pre-line">{content}</p>
         <div className="flex justify-center gap-4">
           <ModalButton label={'예'} onClick={onClick} isPending={isPending} />
           <ModalButton label={'아니요'} onClick={onClose} />
