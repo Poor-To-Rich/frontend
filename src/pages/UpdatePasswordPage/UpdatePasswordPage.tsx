@@ -3,7 +3,7 @@ import { changePasswordSchema } from '@/schemas/authSchema';
 import { ChangePasswordData } from '@/types/authTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
-import UpdatePasswordForm from './components/updatePasswordForm';
+import UpdatePasswordForm from '@/pages/UpdatePasswordPage/components/UpdatePasswordForm';
 
 const UpdatePasswordPage = () => {
   const control = useForm<ChangePasswordData>({

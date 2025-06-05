@@ -1,5 +1,11 @@
 import { z } from 'zod';
-import { changePasswordSchema, loginSchema, profileSchema, signupSchema } from '@/schemas/authSchema';
+import {
+  changePasswordSchema,
+  emailChangeSchema,
+  loginSchema,
+  profileSchema,
+  signupSchema,
+} from '@/schemas/authSchema';
 
 export type SignupFormType = z.infer<typeof signupSchema>;
 
@@ -10,6 +16,12 @@ export type UsernameDuplicationReq = {
 export type NicknameDuplicationReq = {
   nickname: string;
 };
+
+export type GetUserEmailRes = {
+  email: string;
+};
+
+export type ChangeEmailReq = Pick<EmailChangeData, 'newEmail'>;
 
 export const emailPurposeList = ['register', 'changeEmail'] as const;
 
@@ -26,6 +38,8 @@ export type LoginFormType = z.infer<typeof loginSchema>;
 export type ProfileFormData = z.infer<typeof profileSchema>;
 
 export type ChangePasswordData = z.infer<typeof changePasswordSchema>;
+
+export type EmailChangeData = z.infer<typeof emailChangeSchema>;
 
 export type TokenRes = {
   accessToken: string;

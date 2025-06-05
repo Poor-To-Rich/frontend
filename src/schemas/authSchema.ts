@@ -64,6 +64,7 @@ export const changePasswordSchema = passwordMatchRefinement(
   }),
 );
 
-export const emailChangeSchema = baseSignupSchema.pick({
-  email: true,
+export const emailChangeSchema = z.object({
+  newEmail: baseSignupSchema.shape.email,
+  verificationCode: baseSignupSchema.shape.verificationCode,
 });

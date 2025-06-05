@@ -41,7 +41,7 @@ const SignupForm = () => {
         <UsernameField />
         <PasswordField />
         <BirthField />
-        <EmailField />
+        <EmailField emailFieldName="email" purpose="register" />
         <GenderField />
         <JobField />
       </div>

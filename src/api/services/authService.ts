@@ -10,6 +10,8 @@ import {
   EmailRes,
   ProfileFormData,
   ChangePasswordData,
+  GetUserEmailRes,
+  ChangeEmailReq,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -38,6 +40,16 @@ export const verifyEmailCode = async ({ email, purpose, verificationCode }: Veri
     purpose,
     verificationCode,
   });
+  return res;
+};
+
+export const getUserEmail = async () => {
+  const res = await fetchData<undefined, GetUserEmailRes>('GET', endpoints.email.getUserEmail);
+  return res.data?.email;
+};
+
+export const changeEmail = async (body: ChangeEmailReq) => {
+  const res = await fetchData<ChangeEmailReq, undefined>('PUT', endpoints.email.changeEmail, body);
   return res;
 };
 

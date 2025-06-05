@@ -13,7 +13,8 @@ export const endpoints = {
     dataReset: '/user/reset',
   },
   email: {
-    getEmail: '/user/email',
+    getUserEmail: '/user/email',
+    changeEmail: '/user/email',
     sendEmail: '/email/send',
     verifyCode: '/email/verify',
   },
