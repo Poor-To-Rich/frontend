@@ -9,6 +9,7 @@ import {
   TokenRes,
   EmailRes,
   ProfileFormData,
+  ChangePasswordData,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -76,7 +77,16 @@ export const getUserDetails = async () => {
 };
 
 export const updateUserDetails = async (body: FormData) => {
-  const res = await fetchData<FormData, undefined>('PUT', endpoints.auth.updateUserDetails, body);
+  const res = await fetchData<FormData, undefined, { field: string }>('PUT', endpoints.auth.updateUserDetails, body);
+  return res;
+};
+
+export const updatePassword = async (body: ChangePasswordData) => {
+  const res = await fetchData<ChangePasswordData, undefined, { field: string }>(
+    'PUT',
+    endpoints.auth.updatePassword,
+    body,
+  );
   return res;
 };
 

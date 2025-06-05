@@ -43,7 +43,7 @@ const UpdateEmailPage = () => {
           />
           <PrimaryInput label="인증 코드" type="text" buttonLabel="확인" />
         </div>
-        <div className="w-full text-end">
+        <div className="flex justify-end w-full">
           <PrimaryButton label="이메일 변경" disabled={!isValid} type="submit" />
         </div>
       </form>

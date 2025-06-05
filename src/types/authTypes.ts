@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { loginSchema, profileSchema, signupSchema } from '@/schemas/authSchema';
+import { changePasswordSchema, loginSchema, profileSchema, signupSchema } from '@/schemas/authSchema';
 
 export type SignupFormType = z.infer<typeof signupSchema>;
 
@@ -24,6 +24,8 @@ export type VerifyEmailCodeReq = SendEmailReq & { verificationCode: number };
 export type LoginFormType = z.infer<typeof loginSchema>;
 
 export type ProfileFormData = z.infer<typeof profileSchema>;
+
+export type ChangePasswordData = z.infer<typeof changePasswordSchema>;
 
 export type TokenRes = {
   accessToken: string;

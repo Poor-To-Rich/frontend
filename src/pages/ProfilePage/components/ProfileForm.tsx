@@ -20,11 +20,12 @@ const ProfileForm = () => {
   const {
     reset,
     handleSubmit,
+    setError,
     formState: { isValid, dirtyFields },
   } = useFormContext<ProfileFormData>();
   const { isOpen, openModal, closeModal } = useModal();
   const { mutate: deleteUser } = useDeleteUser();
-  const { mutate: updateUserDetails } = useUpdateUserDetails();
+  const { mutate: updateUserDetails } = useUpdateUserDetails({ setError });
   const { data: userDetails, isPending } = useGetUserDetails();
 
   const onSubmit = (data: ProfileFormData) => {

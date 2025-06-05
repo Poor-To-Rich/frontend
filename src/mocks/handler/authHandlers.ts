@@ -12,6 +12,7 @@ import {
   SIGNUP_SUCCESS_MSG,
 } from '@/mocks/constants/auth';
 import Cookies from 'js-cookie';
+import { ChangePasswordData } from '@/types/authTypes';
 
 export const authHandlers = [
   http.post(endpoints.auth.checkUsernameDuplicate, async ({ request }) => {
@@ -82,6 +83,31 @@ export const authHandlers = [
       {
         status: 200,
         message: '모든 데이터를 삭제했습니다.',
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.put(endpoints.auth.updatePassword, async ({ request }) => {
+    const { currentPassword } = await parseRequestBody<ChangePasswordData>(request);
+
+    if (currentPassword !== 'Qwer1234!!') {
+      return HttpResponse.json(
+        {
+          status: 400,
+          message: '현재 비밀번호가 일치하지 않습니다',
+          data: {
+            field: 'currentPassword',
+          },
+        },
+        { status: 400 },
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '비밀번호 변경 성공',
       },
       { status: 200 },
     );

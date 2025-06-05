@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-export const passwordMatchRefinement = <T extends { passwordConfirm: string }>(
-  schema: z.ZodType<T & { password?: string; newPassword?: string }>,
+export const passwordMatchRefinement = <T extends { passwordConfirm: string; newPassword?: string; password?: string }>(
+  schema: z.ZodType<T>,
 ) =>
   schema.refine(
     data => {

@@ -9,6 +9,7 @@ export const endpoints = {
     refreshToken: '/auth/refresh',
     getUserDetails: '/user/detail',
     updateUserDetails: '/user/update',
+    updatePassword: '/user/password',
     dataReset: '/user/reset',
   },
   email: {
