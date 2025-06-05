@@ -17,7 +17,7 @@ export const loginSchema = z.object({
 });
 
 export const baseSignupSchema = z.object({
-  profileImage: z.instanceof(File).optional(),
+  profileImage: z.union([z.instanceof(File), z.string()]).optional(),
   username: z
     .string()
     .min(4, { message: '아이디는 최소 4자 이상입니다' })

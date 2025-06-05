@@ -1,20 +1,25 @@
 import CameraIcon from '@/components/icon/CameraIcon';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import TrashButton from '@/components/button/icon/TrashButton';
 
 interface Props {
-  value: string | undefined;
+  value: string | File | undefined;
   onChange: (value: File | undefined) => void;
 }
 
-const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onChange }, ref) => {
-  const [image, setImage] = useState<string>(value);
+const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange }, ref) => {
+  let imageSrc: string | undefined;
+
+  if (typeof value === 'string') {
+    imageSrc = value;
+  } else if (value instanceof File) {
+    imageSrc = URL.createObjectURL(value);
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
-      setImage(URL.createObjectURL(file));
       onChange(file);
     }
 
@@ -23,14 +28,17 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onC
 
   const handleImageDelete = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setImage('');
     onChange(undefined);
   };
 
   return (
     <div className="relative w-[15rem] flex justify-center items-center aspect-square rounded-2xl bg-lightGray cursor-pointer">
-      {image ? <img src={image} className="w-full h-full rounded-2xl object-cover" /> : <span>비어있음</span>}
-      {!image && (
+      {imageSrc ? (
+        <img src={imageSrc} alt="프로필 이미지" className="w-full h-full rounded-2xl object-cover" />
+      ) : (
+        <span>비어있음</span>
+      )}
+      {!imageSrc && (
         <div className="profileImage-icon-common">
           <CameraIcon />
         </div>
@@ -42,7 +50,7 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value = '', onC
         onChange={handleImageChange}
         ref={ref}
       />
-      {image && (
+      {imageSrc && (
         <div className="profileImage-icon-common">
           <TrashButton onClick={handleImageDelete} />
         </div>

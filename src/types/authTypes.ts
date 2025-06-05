@@ -28,3 +28,7 @@ export type ProfileFormData = z.infer<typeof profileSchema>;
 export type TokenRes = {
   accessToken: string;
 };
+
+export type ProfileUpdateFormData = ProfileFormData & {
+  isDefaultProfile?: boolean;
+};

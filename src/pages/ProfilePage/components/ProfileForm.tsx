@@ -8,24 +8,47 @@ import PrimaryButton from '@/components/button/PrimaryButton';
 import useModal from '@/hooks/useModal';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useFormContext } from 'react-hook-form';
-import { ProfileFormData } from '@/types/authTypes';
+import { ProfileFormData, ProfileUpdateFormData } from '@/types/authTypes';
 import DeleteUserButton from '@/pages/ProfilePage/components/DeleteUserButton';
 import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
 import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
 import { useEffect } from 'react';
+import useUpdateUserDetails from '@/hooks/apis/auth/useUpdateUserDetails';
+import { filteredData } from '@/utils/filteredFormData';
 
 const ProfileForm = () => {
   const {
     reset,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, dirtyFields },
   } = useFormContext<ProfileFormData>();
   const { isOpen, openModal, closeModal } = useModal();
   const { mutate: deleteUser } = useDeleteUser();
+  const { mutate: updateUserDetails } = useUpdateUserDetails();
   const { data: userDetails, isPending } = useGetUserDetails();
 
   const onSubmit = (data: ProfileFormData) => {
-    console.log(data);
+    let postData: ProfileUpdateFormData = { ...data };
+
+    if (dirtyFields.profileImage) {
+      if (!data.profileImage) {
+        postData = { ...postData, isDefaultProfile: true };
+      }
+    } else {
+      delete postData.profileImage;
+    }
+
+    const requestData = filteredData(postData);
+
+    const formData = new FormData();
+    Object.entries(requestData).forEach(([key, value]) => {
+      if (typeof value === 'boolean') {
+        value = String(value);
+      }
+      formData.append(key, value);
+    });
+
+    updateUserDetails(formData);
   };
 
   useEffect(() => {
