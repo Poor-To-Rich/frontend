@@ -11,18 +11,30 @@ import { useFormContext } from 'react-hook-form';
 import { ProfileFormData } from '@/types/authTypes';
 import DeleteUserButton from '@/pages/ProfilePage/components/DeleteUserButton';
 import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
+import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
+import { useEffect } from 'react';
 
 const ProfileForm = () => {
-  const { isOpen, openModal, closeModal } = useModal();
-  const { mutate: deleteUser } = useDeleteUser();
   const {
+    reset,
     handleSubmit,
     formState: { isValid },
   } = useFormContext<ProfileFormData>();
+  const { isOpen, openModal, closeModal } = useModal();
+  const { mutate: deleteUser } = useDeleteUser();
+  const { data: userDetails, isPending } = useGetUserDetails();
 
   const onSubmit = (data: ProfileFormData) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    if (userDetails) {
+      reset(userDetails);
+    }
+  }, [reset, userDetails]);
+
+  if (isPending) return <div>로딩중</div>;
 
   return (
     <>

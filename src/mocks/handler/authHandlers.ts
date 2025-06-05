@@ -58,4 +58,18 @@ export const authHandlers = [
     Cookies.remove('refreshToken');
     return HttpResponse.json({ status: 200, message: '회원탈퇴 성공' }, { status: 200 });
   }),
+
+  http.get(endpoints.auth.getUserDetails, async () => {
+    await delay(3000);
+
+    const response = {
+      name: '최은진',
+      nickname: '데굴',
+      birth: '2001-01-02',
+      gender: 'FEMALE',
+      job: '선택안함',
+    };
+
+    return HttpResponse.json({ status: 200, message: '회원 상세 조회 성공', data: response }, { status: 200 });
+  }),
 ];

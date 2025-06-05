@@ -8,6 +8,7 @@ import {
   LoginFormType,
   TokenRes,
   EmailRes,
+  ProfileFormData,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -67,4 +68,9 @@ export const refreshToken = async () => {
     tokenManager.setToken(newToken);
     return newToken;
   }
+};
+
+export const getUserDetails = async () => {
+  const res = await fetchData<undefined, ProfileFormData>('GET', endpoints.auth.getUserDetails);
+  return res.data;
 };
