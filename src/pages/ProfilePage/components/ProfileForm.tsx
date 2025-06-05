@@ -10,9 +10,11 @@ import DefaultModal from '@/components/modal/DefaultModal';
 import { useFormContext } from 'react-hook-form';
 import { ProfileFormData } from '@/types/authTypes';
 import DeleteUserButton from '@/pages/ProfilePage/components/DeleteUserButton';
+import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
 
 const ProfileForm = () => {
   const { isOpen, openModal, closeModal } = useModal();
+  const { mutate: deleteUser } = useDeleteUser();
   const {
     handleSubmit,
     formState: { isValid },
@@ -40,7 +42,7 @@ const ProfileForm = () => {
           <PrimaryButton label="저장" type="submit" disabled={!isValid} />
         </div>
       </form>
-      {isOpen && <DefaultModal content="회원탈퇴를 하시겠습니까?" onClose={closeModal} />}
+      {isOpen && <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />}
     </>
   );
 };
