@@ -49,6 +49,11 @@ export const login = async (body: LoginFormType) => {
   return res;
 };
 
+export const logout = async () => {
+  const res = await fetchData<undefined, undefined>('POST', endpoints.auth.logout);
+  return res;
+};
+
 export const refreshToken = async () => {
   const res = await fetchData<undefined, TokenRes>('POST', endpoints.auth.refreshToken);
 

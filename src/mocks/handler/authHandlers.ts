@@ -11,6 +11,7 @@ import {
   NICKNAME_SUCCESS_MSG,
   SIGNUP_SUCCESS_MSG,
 } from '@/mocks/constants/auth';
+import Cookies from 'js-cookie';
 
 export const authHandlers = [
   http.post(endpoints.auth.checkUsernameDuplicate, async ({ request }) => {
@@ -46,5 +47,10 @@ export const authHandlers = [
     }
 
     return HttpResponse.json({ status: 200, message: SIGNUP_SUCCESS_MSG }, { status: 200 });
+  }),
+
+  http.post(endpoints.auth.logout, () => {
+    Cookies.remove('refreshToken');
+    return HttpResponse.json({ status: 200, message: '로그아웃 성공' }, { status: 200 });
   }),
 ];
