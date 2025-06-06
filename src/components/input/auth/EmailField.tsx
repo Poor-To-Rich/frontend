@@ -1,34 +1,35 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
 import useEmailVerification from '@/hooks/field/useEmailVerification';
+import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
+import { EmailPurposeType } from '@/types/authTypes';
 import { Controller, useFormContext } from 'react-hook-form';
 
-const EmailField = () => {
+interface Props {
+  emailFieldName: string;
+  purpose: EmailPurposeType;
+}
+
+const EmailField = ({ emailFieldName, purpose }: Props) => {
   const {
     register,
     control,
     formState: { errors },
   } = useFormContext();
 
-  const {
-    sendEmailStatus,
-    emailCodeStatus,
-    resetSendEmailStatus,
-    resetEmailCodeStatus,
-    handleEmailSend,
-    handleEmailCode,
-  } = useEmailVerification();
+  const { sendEmailStatus, emailCodeStatus, resetEmailCodeStatus, resetSendEmailStatus } = useEmailFieldStore();
+  const { handleEmailSend, handleEmailCode } = useEmailVerification({ emailFieldName, purpose });
 
   return (
     <>
       <PrimaryInput
-        {...register('email')}
+        {...register(emailFieldName)}
         data-testid="email-input"
         label="이메일"
         isRequired
         readOnly={emailCodeStatus.isVerify}
         type="email"
         onChange={e => {
-          register('email').onChange(e);
+          register(emailFieldName).onChange(e);
           resetSendEmailStatus();
         }}
         errorMessage={errors.email?.message}

@@ -20,9 +20,9 @@ const CategoryLineChart = ({ weeklyAmounts }: Props) => {
           interval={0}
           tick={CustomizedXAxisTick}
         />
-        <YAxis dataKey="amount" type="number" hide domain={[0, 'auto']} />
+        <YAxis dataKey="totalAmount" type="number" hide domain={[0, 'auto']} />
         <Tooltip content={<CustomizedTooltip />} />
-        <Line type="linear" dataKey="amount" stroke="#eb6060" strokeWidth={2} />
+        <Line type="linear" dataKey="totalAmount" stroke="#eb6060" strokeWidth={2} />
       </LineChart>
     </ResponsiveContainer>
   );

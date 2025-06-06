@@ -39,7 +39,7 @@ describe('EmailField 테스트', () => {
   beforeEach(() => {
     render(
       <Wrapper>
-        <EmailField />
+        <EmailField emailFieldName="email" purpose="register" />
       </Wrapper>,
     );
   });

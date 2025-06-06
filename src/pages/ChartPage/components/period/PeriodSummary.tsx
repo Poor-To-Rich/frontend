@@ -6,18 +6,18 @@ import { format } from 'date-fns';
 interface Props {
   currentTransactionType: IncomeExpenseType;
   currentReportType: ReportType;
-  extraAmount: string;
+  differenceAmount: string;
   averageAmount: string;
 }
 
-const PeriodSummary = ({ currentTransactionType, currentReportType, extraAmount, averageAmount }: Props) => {
+const PeriodSummary = ({ currentTransactionType, currentReportType, differenceAmount, averageAmount }: Props) => {
   const { chartHeaderDate } = useHeaderDateStore();
   return (
     <div className="p-5 mb-10">
       <div className="text-xl">
         {format(chartHeaderDate, currentReportType === '월별' ? 'M' : 'yyyy')}
         {currentReportType === '월별' ? '월' : '년'}에는 {currentReportType === '월별' ? '전월' : '작년'}보다{' '}
-        {extraAmount}
+        {differenceAmount}
         {currentTransactionType === '지출' ? '썼어요' : '벌었어요'}
       </div>
       <div>

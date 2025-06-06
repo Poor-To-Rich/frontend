@@ -17,7 +17,7 @@ export const loginSchema = z.object({
 });
 
 export const baseSignupSchema = z.object({
-  profileImage: z.instanceof(File).optional(),
+  profileImage: z.union([z.instanceof(File), z.string()]).optional(),
   username: z
     .string()
     .min(4, { message: '아이디는 최소 4자 이상입니다' })
@@ -52,6 +52,7 @@ export const profileSchema = baseSignupSchema.omit({
   username: true,
   password: true,
   passwordConfirm: true,
+  verificationCode: true,
   email: true,
 });
 
@@ -63,6 +64,7 @@ export const changePasswordSchema = passwordMatchRefinement(
   }),
 );
 
-export const emailChangeSchema = baseSignupSchema.pick({
-  email: true,
+export const emailChangeSchema = z.object({
+  newEmail: baseSignupSchema.shape.email,
+  verificationCode: baseSignupSchema.shape.verificationCode,
 });

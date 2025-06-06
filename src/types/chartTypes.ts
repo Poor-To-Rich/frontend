@@ -33,12 +33,12 @@ export type StackedBarChartResponse = {
 };
 
 export type BarChartTotalAmountsType = {
-  date: string;
+  period: string;
   totalAmount: number;
 };
 
 export type BarChartResponse = {
-  extraAmount: string;
+  differenceAmount: string;
   averageAmount: string;
   totalAmounts: BarChartTotalAmountsType[];
 };
@@ -50,7 +50,7 @@ export type BaseCategoryDetailsType = {
 
 export type WeeklyAmountType = {
   period: string;
-  amount: number;
+  totalAmount: number;
 };
 
 export type CategoryDetailsLineChartRes = BaseCategoryDetailsType & {
@@ -59,7 +59,7 @@ export type CategoryDetailsLineChartRes = BaseCategoryDetailsType & {
 
 export type monthlyAmountType = {
   month: string;
-  amount: number;
+  totalAmount: number;
 };
 
 export type CategoryDetailsBarChartRes = BaseCategoryDetailsType & {

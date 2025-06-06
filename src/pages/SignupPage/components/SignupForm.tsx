@@ -17,7 +17,6 @@ import { omit } from 'lodash';
 
 const SignupForm = () => {
   const { setError, handleSubmit } = useFormContext<SignupFormType>();
-
   const { mutate: signup, isPending } = useSignup({ setError });
   const { buttonDisabled } = useSignFormValidation();
 
@@ -42,7 +41,7 @@ const SignupForm = () => {
         <UsernameField />
         <PasswordField />
         <BirthField />
-        <EmailField />
+        <EmailField emailFieldName="email" purpose="register" />
         <GenderField />
         <JobField />
       </div>

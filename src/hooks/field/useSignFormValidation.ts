@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import useEmailVerification from './useEmailVerification';
 import useNicknameVerification from './useNicknameVerification ';
 import useUsernameVerification from './useUsernameVerification';
 import { useFormContext } from 'react-hook-form';
+import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 
 const useSignFormValidation = () => {
   const {
@@ -12,7 +12,7 @@ const useSignFormValidation = () => {
   const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
   const { nicknameStatus } = useNicknameVerification();
   const { usernameStatus } = useUsernameVerification();
-  const { sendEmailStatus, emailCodeStatus } = useEmailVerification();
+  const { sendEmailStatus, emailCodeStatus } = useEmailFieldStore();
 
   useEffect(() => {
     (() => {
