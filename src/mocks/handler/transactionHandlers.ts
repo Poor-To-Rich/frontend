@@ -220,7 +220,7 @@ export const transactionHandlers = [
   http.get(endpoints.transaction.getIterationExpense, () => {
     const response = {
       totalAmount: 213587652,
-      transactions: [
+      iterationAccountBooks: [
         {
           id: 1,
           color: '#ff55ad',
@@ -255,7 +255,7 @@ export const transactionHandlers = [
   http.get(endpoints.transaction.getIterationIncome, () => {
     const response = {
       totalAmount: 4657687621,
-      transactions: [
+      iterationAccountBooks: [
         {
           id: 1,
           color: '#228B22',

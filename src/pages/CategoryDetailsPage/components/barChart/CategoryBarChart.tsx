@@ -13,7 +13,7 @@ const CategoryBarChart = ({ monthlyAmounts }: Props) => {
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
 
-  const maxAmount = Math.max(...monthlyAmounts.map(item => item.amount));
+  const maxAmount = Math.max(...monthlyAmounts.map(item => item.totalAmount));
 
   return (
     <div
@@ -30,14 +30,14 @@ const CategoryBarChart = ({ monthlyAmounts }: Props) => {
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={monthlyAmounts} margin={{ top: 30, right: 10, bottom: 0, left: 10 }} barSize={25}>
             <XAxis type="category" dataKey="month" axisLine={false} tickLine={false} interval={0} />
-            <YAxis type="number" dataKey="amount" hide domain={[1, maxAmount]} />
+            <YAxis type="number" dataKey="totalAmount" hide domain={[1, maxAmount]} />
             <Tooltip content={<CustomizedTooltip />} />
             <Bar
-              dataKey="amount"
+              dataKey="totalAmount"
               fill="#ffcbc4"
               background={{ fill: '#f0f0f0', stroke: 'none', radius: 15 }}
               radius={15}>
-              <LabelList dataKey="amount" position="top" fontSize={11} content={CustomizedLabel} />
+              <LabelList dataKey="totalAmount" position="top" fontSize={11} content={CustomizedLabel} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

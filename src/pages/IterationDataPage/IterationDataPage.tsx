@@ -30,7 +30,7 @@ const IterationDataPage = () => {
         </p>
       </div>
       <div className="w-full flex flex-col items-center gap-2.5">
-        {iterationData.transactions.map(({ id, color, categoryName, title, isIteration, type, cost }) => (
+        {iterationData.iterationAccountBooks.map(({ id, color, categoryName, title, isIteration, type, cost }) => (
           <TransactionDetailItem
             key={id}
             id={id}

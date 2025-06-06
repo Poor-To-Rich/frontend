@@ -27,14 +27,14 @@ const PeriodComparisonChart = () => {
       <PeriodSummary
         currentTransactionType={currentTransactionType}
         currentReportType={currentReportType}
-        extraAmount={barChartData.extraAmount}
+        differenceAmount={barChartData.differenceAmount}
         averageAmount={barChartData.averageAmount}
       />
       <div className="w-full h-[250px] flex justify-center items-center ">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={barChartData.totalAmounts} margin={{ top: 20, right: 10, bottom: 0, left: 10 }}>
             <XAxis
-              dataKey="date"
+              dataKey="period"
               type="category"
               axisLine={false}
               tickLine={false}
@@ -47,10 +47,13 @@ const PeriodComparisonChart = () => {
             <Bar
               dataKey={'totalAmount'}
               label={{ position: 'top', fill: '#000000', fontSize: 14 }}
-              onClick={target => handleBarCharClick(target.date)}
+              onClick={target => handleBarCharClick(target.period)}
               className="cursor-pointer">
               {barChartData.totalAmounts.map((entry, index) => (
-                <Cell key={entry.date} fill={index === barChartData.totalAmounts.length - 1 ? '#e7f6d1' : '#E6E6E6'} />
+                <Cell
+                  key={entry.period}
+                  fill={index === barChartData.totalAmounts.length - 1 ? '#e7f6d1' : '#E6E6E6'}
+                />
               ))}
             </Bar>
           </BarChart>

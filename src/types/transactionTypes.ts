@@ -34,7 +34,7 @@ export type DailyTransactionType = {
 
 export type IterationDataType = {
   totalAmount: number;
-  transactions: TransactionItemType[];
+  iterationAccountBooks: TransactionItemType[];
 };
 
 export type DeleteTransactionReq = { iterationAction?: IterationActionEnumType };

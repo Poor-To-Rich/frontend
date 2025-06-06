@@ -9,7 +9,7 @@ export const createMockChart = (date: string, isYearMonthlyFormat: boolean) => {
 
   for (let i = 0; i < 5; i++) {
     result.push({
-      date: targetDate,
+      period: targetDate,
       totalAmount: Math.floor(Math.random() * boundary + 1),
     });
 

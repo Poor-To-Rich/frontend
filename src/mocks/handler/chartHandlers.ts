@@ -160,7 +160,7 @@ export const chartHandlers = [
     const isYearMonthlyFormat = /^\d{4}-\d{2}$/.test(date);
 
     const response = {
-      extraAmount: '10만원 덜',
+      differenceAmount: '10만원 덜',
       averageAmount: '316만원',
       totalAmounts: createMockChart(date, isYearMonthlyFormat),
     };
@@ -181,7 +181,7 @@ export const chartHandlers = [
     const isYearMonthlyFormat = /^\d{4}-\d{2}$/.test(date);
 
     const response = {
-      extraAmount: '200만원 더',
+      differenceAmount: '200만원 더',
       averageAmount: '420만원',
       totalAmounts: createMockChart(date, isYearMonthlyFormat),
     };
@@ -206,23 +206,23 @@ export const chartHandlers = [
       weeklyAmounts: [
         {
           period: '01.01~01.06',
-          amount: 123569,
+          totalAmount: 123569,
         },
         {
           period: '01.07~01.13',
-          amount: 213545,
+          totalAmount: 213545,
         },
         {
           period: '01.14~01.20',
-          amount: 222,
+          totalAmount: 222,
         },
         {
           period: '01.21~01.27',
-          amount: 21245,
+          totalAmount: 21245,
         },
         {
           period: '01.28~01.31',
-          amount: 120000,
+          totalAmount: 120000,
         },
       ],
     };
@@ -245,18 +245,18 @@ export const chartHandlers = [
       period: '25.01.01~25.12.31',
       totalAmount: 132435,
       monthlyAmounts: [
-        { month: '1월', amount: 11000 },
-        { month: '2월', amount: 9000 },
-        { month: '3월', amount: 15000 },
-        { month: '4월', amount: 8000 },
-        { month: '5월', amount: 11000 },
-        { month: '6월', amount: 9500 },
-        { month: '7월', amount: 1400 },
-        { month: '8월', amount: 10000 },
-        { month: '9월', amount: 1300 },
-        { month: '10월', amount: 0 },
-        { month: '11월', amount: 12500 },
-        { month: '12월', amount: 8500 },
+        { month: '1월', totalAmount: 11000 },
+        { month: '2월', totalAmount: 9000 },
+        { month: '3월', totalAmount: 15000 },
+        { month: '4월', totalAmount: 8000 },
+        { month: '5월', totalAmount: 11000 },
+        { month: '6월', totalAmount: 9500 },
+        { month: '7월', totalAmount: 1400 },
+        { month: '8월', totalAmount: 10000 },
+        { month: '9월', totalAmount: 1300 },
+        { month: '10월', totalAmount: 0 },
+        { month: '11월', totalAmount: 12500 },
+        { month: '12월', totalAmount: 8500 },
       ],
     };
 
