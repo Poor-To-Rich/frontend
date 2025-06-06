@@ -23,6 +23,8 @@ export const endpoints = {
   },
   transaction: {
     getDailyDetails: (date: string) => `/report/daily/details?date=${date}`,
+    getIterationExpense: '/expense/iteration/details',
+    getIterationIncome: '/income/iteration/details',
     addExpense: '/expense',
     getExpense: (id: string) => `/expense/${id}`,
     updateExpense: (id: string) => `/expense/${id}`,

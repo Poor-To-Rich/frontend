@@ -82,7 +82,7 @@ export const totalHandlers = [
             {
               id: 5,
               color: '#FDB248',
-              category: '식비',
+              categoryName: '식비',
               title: '상하이 치킨 버거',
               isIteration: false,
               type: 'EXPENSE',
@@ -91,7 +91,7 @@ export const totalHandlers = [
             {
               id: 7,
               color: '#FDB248',
-              category: '식비',
+              categoryName: '식비',
               title: '상하이 치킨 버거',
               isIteration: false,
               type: 'EXPENSE',
@@ -105,7 +105,7 @@ export const totalHandlers = [
             {
               id: 9,
               color: '#FDB248',
-              category: '식비',
+              categoryName: '식비',
               title: '상하이 치킨 버거',
               isIteration: false,
               type: 'EXPENSE',
@@ -114,7 +114,7 @@ export const totalHandlers = [
             {
               id: 10,
               color: '#FDB248',
-              category: '식비',
+              categoryName: '식비',
               title: '상하이 치킨 버거',
               isIteration: false,
               type: 'EXPENSE',

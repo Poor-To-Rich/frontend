@@ -7,16 +7,16 @@ function DetailItem() {
       <TransactionDetailItem
         id={1}
         color={'#ff55ad'}
-        category="식비"
+        categoryName="식비"
         title={'상하이버거세트'}
         isIteration
         type="EXPENSE"
-        cost={45626546888798978}
+        cost={45626546888}
       />
       <TransactionDetailItem
         id={1}
         color={'#9ADEF1'}
-        category="용돈"
+        categoryName="용돈"
         title={'용돈이지롱'}
         type="INCOME"
         cost={12678689}

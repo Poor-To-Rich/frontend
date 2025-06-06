@@ -3,6 +3,7 @@ import { endpoints } from '@/api/endpoints';
 import {
   DailyTransactionType,
   DeleteTransactionReq,
+  IterationDataType,
   MonthlyTotalTransactionType,
   TransactionFormDataType,
 } from '@/types/transactionTypes';
@@ -55,4 +56,14 @@ export const deleteExpenseTransaction = async ({ id, body }: { id: string; body?
 export const deleteIncomeTransaction = async ({ id, body }: { id: string; body?: DeleteTransactionReq }) => {
   const res = await fetchData<DeleteTransactionReq>('DELETE', endpoints.transaction.deleteIncome(id), body);
   return res;
+};
+
+export const getIterationExpense = async () => {
+  const res = await fetchData<undefined, IterationDataType>('GET', endpoints.transaction.getIterationExpense);
+  return res.data;
+};
+
+export const getIterationIncome = async () => {
+  const res = await fetchData<undefined, IterationDataType>('GET', endpoints.transaction.getIterationIncome);
+  return res.data;
 };

@@ -18,7 +18,7 @@ export type MonthlyTotalTransactionType = {
 export type TransactionItemType = {
   id: number;
   color: string;
-  category: string;
+  categoryName: string;
   title?: string | null;
   isIteration?: boolean;
   type: TransactionType;
@@ -30,6 +30,11 @@ export type DailyTransactionType = {
   totalIncome: number;
   totalExpense: number;
   dailyDetails: TransactionItemType[];
+};
+
+export type IterationDataType = {
+  totalAmount: number;
+  transactions: TransactionItemType[];
 };
 
 export type DeleteTransactionReq = { iterationAction?: IterationActionEnumType };
