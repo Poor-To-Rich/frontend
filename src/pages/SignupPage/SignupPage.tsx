@@ -14,7 +14,7 @@ const SignupPage = () => {
       nickname: '',
       username: '',
       password: '',
-      confirmPassword: '',
+      passwordConfirm: '',
       birth: '',
       email: '',
       verificationCode: 0,

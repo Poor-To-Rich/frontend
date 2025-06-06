@@ -1,5 +1,14 @@
 import { setupServer } from 'msw/node';
 import { authHandlers } from '@/mocks/handler/authHandlers';
 import { emailHandlers } from '@/mocks/handler/emailHandlers';
+import { tokenHandlers } from '@/mocks/handler/tokenHandlers';
+import { transactionHandlers } from '@/mocks/handler/transactionHandlers';
+import { categoryHandlers } from '@/mocks/handler/categoryHandlers';
 
-export const server = setupServer(...authHandlers, ...emailHandlers);
+export const server = setupServer(
+  ...tokenHandlers,
+  ...authHandlers,
+  ...emailHandlers,
+  ...transactionHandlers,
+  ...categoryHandlers,
+);

@@ -17,7 +17,7 @@ export const loginSchema = z.object({
 });
 
 export const baseSignupSchema = z.object({
-  profileImage: z.string().optional(),
+  profileImage: z.union([z.instanceof(File), z.string()]).optional(),
   username: z
     .string()
     .min(4, { message: '아이디는 최소 4자 이상입니다' })
@@ -35,7 +35,7 @@ export const baseSignupSchema = z.object({
     .min(1, { message: '값을 입력해주세요' })
     .max(10, { message: '최대 10자입니다' })
     .regex(nicknameRegex, '특수문자 X, 한글 또는 영문자로 시작돼야합니다'),
-  confirmPassword: z.string().min(1, { message: '값을 입력해주세요' }),
+  passwordConfirm: z.string().min(1, { message: '값을 입력해주세요' }),
   birth: z
     .string()
     .min(1, { message: '값을 입력해주세요' })
@@ -51,7 +51,8 @@ export const signupSchema = passwordMatchRefinement(baseSignupSchema);
 export const profileSchema = baseSignupSchema.omit({
   username: true,
   password: true,
-  confirmPassword: true,
+  passwordConfirm: true,
+  verificationCode: true,
   email: true,
 });
 
@@ -59,10 +60,11 @@ export const changePasswordSchema = passwordMatchRefinement(
   z.object({
     currentPassword: passwordSchema,
     newPassword: passwordSchema,
-    confirmPassword: z.string().min(1, { message: '값을 입력해주세요' }),
+    passwordConfirm: z.string().min(1, { message: '값을 입력해주세요' }),
   }),
 );
 
-export const emailChangeSchema = baseSignupSchema.pick({
-  email: true,
+export const emailChangeSchema = z.object({
+  newEmail: baseSignupSchema.shape.email,
+  verificationCode: baseSignupSchema.shape.verificationCode,
 });

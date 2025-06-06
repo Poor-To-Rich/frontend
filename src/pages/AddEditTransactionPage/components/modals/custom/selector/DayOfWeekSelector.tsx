@@ -23,7 +23,7 @@ const DayOfWeekSelector = () => {
         };
 
         return (
-          <div className="flex justify-around">
+          <div className="flex justify-around" data-testid="day-of-week-selector">
             {DAYS.map(day => (
               <button
                 type="button"

@@ -1,6 +1,6 @@
 interface Props {
-  period: string;
-  balance: number;
+  period?: string;
+  balance?: number;
   transactionType: string;
 }
 
@@ -11,7 +11,7 @@ const PeriodSummary = ({ period, balance, transactionType }: Props) => {
         <span className="text-22">구간 {transactionType} 금액</span>
         <span className="text-md">({period})</span>
       </div>
-      <span className="text-xl font-semibold truncate">{balance.toLocaleString()}원</span>
+      <span className="text-xl font-semibold truncate">{balance?.toLocaleString()}원</span>
     </div>
   );
 };

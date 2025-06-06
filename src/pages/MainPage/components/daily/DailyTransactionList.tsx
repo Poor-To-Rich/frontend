@@ -32,12 +32,12 @@ const DailyTransactionList = () => {
       ) : (
         <>
           <div className="w-full flex flex-col items-center gap-2.5">
-            {dailyDetails.dailyDetails.map(({ id, color, category, title, isIteration, type, cost }) => (
+            {dailyDetails.dailyDetails.map(({ id, color, categoryName, title, isIteration, type, cost }) => (
               <TransactionDetailItem
                 key={id}
                 id={id}
                 color={color}
-                category={category}
+                categoryName={categoryName}
                 title={title}
                 isIteration={isIteration}
                 type={type}

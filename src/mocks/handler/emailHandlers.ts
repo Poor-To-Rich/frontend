@@ -57,4 +57,24 @@ export const emailHandlers = [
       { status: 200 },
     );
   }),
+
+  http.get(endpoints.email.getUserEmail, () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '이메일 조회에 성공했습니다.',
+        data: { email: 'woic02@gmail.com' },
+      },
+      { status: 200 },
+    );
+  }),
+  http.put(endpoints.email.getUserEmail, () => {
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: '이메일 변경에 성공했습니다.',
+      },
+      { status: 201 },
+    );
+  }),
 ];

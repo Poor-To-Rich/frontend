@@ -13,6 +13,7 @@ interface PrimaryInputProps {
   handleClick?: () => void;
   successMessage?: string;
   errorMessage?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
+  'data-testid'?: string;
 }
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
@@ -59,6 +60,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
           </div>
           {typeof message === 'string' && message && (
             <p
+              data-testid={rest['data-testid'] ? `${rest['data-testid']}-helper-text` : 'helper-text'}
               className={clsx(
                 errorMessage && 'text-sunsetRose',
                 successMessage && 'text-oliveGreen',

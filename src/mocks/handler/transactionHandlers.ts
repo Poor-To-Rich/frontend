@@ -11,7 +11,7 @@ export const transactionHandlers = [
       {
         id: 1,
         color: '#ff55ad',
-        category: '식비',
+        categoryName: '식비',
         title: '상하이버거세트',
         isIteration: true,
         type: 'EXPENSE',
@@ -20,7 +20,7 @@ export const transactionHandlers = [
       {
         id: 2,
         color: '#9ADEF1',
-        category: '용돈',
+        categoryName: '용돈',
         title: '용돈이지롱',
         type: 'INCOME',
         cost: 12678689,
@@ -28,7 +28,7 @@ export const transactionHandlers = [
       {
         id: 3,
         color: '#FDB248',
-        category: '교통비',
+        categoryName: '교통비',
         title: '',
         type: 'INCOME',
         cost: 546548,
@@ -77,7 +77,7 @@ export const transactionHandlers = [
     const { id } = params;
     const response = {
       date: '2025-02-09',
-      name: '주거비',
+      categoryName: '주거비',
       title: '월세',
       cost: 30000,
       paymentMethod: '계좌이체',
@@ -109,7 +109,7 @@ export const transactionHandlers = [
     const { id } = params;
     const response = {
       date: '2025-02-09',
-      name: '용돈',
+      categoryName: '용돈',
       title: '용돈',
       cost: 300000,
       memo: '엄마가 줌',
@@ -212,6 +212,76 @@ export const transactionHandlers = [
       {
         status: 200,
         message: `${id}번 가계부를 성공적으로 삭제하였습니다.`,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get(endpoints.transaction.getIterationExpense, () => {
+    const response = {
+      totalAmount: 213587652,
+      iterationAccountBooks: [
+        {
+          id: 1,
+          color: '#ff55ad',
+          categoryName: '식비',
+          title: '상하이버거세트',
+          isIteration: true,
+          type: 'EXPENSE',
+          cost: 89000,
+        },
+        {
+          id: 2,
+          color: '#9ADEF1',
+          categoryName: '주거비',
+          title: null,
+          isIteration: true,
+          type: 'EXPENSE',
+          cost: 12678689,
+        },
+      ],
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `지출 반복데이터 조회를 완료했습니다.`,
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get(endpoints.transaction.getIterationIncome, () => {
+    const response = {
+      totalAmount: 4657687621,
+      iterationAccountBooks: [
+        {
+          id: 1,
+          color: '#228B22',
+          categoryName: '용돈',
+          title: null,
+          isIteration: true,
+          type: 'INCOME',
+          cost: 5987212,
+        },
+        {
+          id: 2,
+          color: '#E5D038',
+          categoryName: '월급',
+          title: null,
+          isIteration: true,
+          type: 'INCOME',
+          cost: 246598962,
+        },
+      ],
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: `수입 반복데이터 조회를 완료했습니다.`,
+        data: response,
       },
       { status: 200 },
     );

@@ -1,5 +1,5 @@
 import { updateIncomeTransaction, updateExpenseTransaction } from '@/api/services/transactionService';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import CustomError from '@/utils/CustomError';
 import { useMutation } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
@@ -9,7 +9,7 @@ const useUpdateTransaction = ({
   type,
   setError,
 }: {
-  type: IncomeExpenseButtonType;
+  type: IncomeExpenseType;
   setError: UseFormSetError<TransactionFormDataType>;
 }) => {
   const navigate = useNavigate();

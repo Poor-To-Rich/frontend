@@ -1,6 +1,6 @@
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
-import TransactionInputs from './TransactionInputs';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
+import TransactionFields from '@/pages/AddEditTransactionPage/components/TransactionFields';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import useTransactionForm from '@/hooks/transaction/useTransactionForm';
@@ -29,8 +29,8 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
   const { isEditPage, transactionId, transactionMode } = useTransactionParams();
-  const [transactionType, setTransactionType] = useState<IncomeExpenseButtonType>(
-    (transactionMode as IncomeExpenseButtonType) || '지출',
+  const [transactionType, setTransactionType] = useState<IncomeExpenseType>(
+    (transactionMode as IncomeExpenseType) || '지출',
   );
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
 
@@ -42,7 +42,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     type: transactionType,
     setError,
   });
-  useTransactionForm({ transactionType, initialIterationTypeRef });
+  const { categoryOptions: options, isFetching } = useTransactionForm({ transactionType, initialIterationTypeRef });
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
@@ -61,9 +61,9 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
-  const handleRepeatCircleClick = (value: IterationCycleValue) => {
+  const handleIterationTypeClick = (value: IterationCycleValue) => {
     if (value !== 'custom') {
-      setValue('iterationType', value);
+      setValue('iterationType', value, { shouldDirty: true });
       closeModal();
     } else {
       const current = JSON.parse(JSON.stringify(getValues('customIteration')));
@@ -72,18 +72,25 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
+  if (isFetching) {
+    return <div>로딩중</div>;
+  }
+
   return (
     <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
-      <IncomeExpenseButton
-        type={transactionType}
-        onClick={(value: IncomeExpenseButtonType) => setTransactionType(value)}
-      />
-      <TransactionInputs type={transactionType} />
+      <IncomeExpenseButton type={transactionType} onClick={(value: IncomeExpenseType) => setTransactionType(value)} />
+      <TransactionFields type={transactionType} options={options} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
-        <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isAddPending || isUpdatePending} />
+        <PrimaryButton
+          data-testid="submit-button"
+          label="저장"
+          type="submit"
+          disabled={!isValid}
+          isPending={isAddPending || isUpdatePending}
+        />
       </div>
-      {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleRepeatCircleClick} />}
+      {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleIterationTypeClick} />}
       {isCustomOpen && backupCustomIteration && (
         <CustomIterationModal
           backUpCustomIteration={backupCustomIteration}

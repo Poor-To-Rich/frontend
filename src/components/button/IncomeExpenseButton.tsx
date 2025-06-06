@@ -1,15 +1,15 @@
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
-import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { clsx } from 'clsx';
 
 interface Props {
-  type: IncomeExpenseButtonType;
-  onClick: (value: IncomeExpenseButtonType) => void;
+  type: IncomeExpenseType;
+  onClick: (value: IncomeExpenseType) => void;
 }
 
 const IncomeExpenseButton = ({ type, onClick }: Props) => {
   const { isEditPage } = useTransactionParams();
-  const options: { label: IncomeExpenseButtonType; color: string }[] = [
+  const options: { label: IncomeExpenseType; color: string }[] = [
     { label: '지출', color: 'bg-pinkRed font-bold' },
     { label: '수입', color: 'bg-lightBlue font-bold' },
   ];
@@ -18,6 +18,7 @@ const IncomeExpenseButton = ({ type, onClick }: Props) => {
     <div className="w-full flex justify-center gap-6">
       {options.map(({ label, color }) => (
         <button
+          data-testid={`${label === '지출' ? 'expense' : 'income'}-toggle-button`}
           key={label}
           value={label}
           type="button"

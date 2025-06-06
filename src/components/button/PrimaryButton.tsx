@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   isPending?: boolean;
   disabled?: boolean;
@@ -9,16 +9,17 @@ interface Props {
   onClick?: () => void;
 }
 
-const PrimaryButton = ({ label, isPending, disabled, onClick, type = 'button' }: Props) => {
+const PrimaryButton = ({ label, isPending, disabled, onClick, type = 'button', ...rest }: Props) => {
   return (
     <button
       className={clsx(
         'w-fit min-w-[12rem] h-[3.6rem] flex justify-center items-center rounded-lg text-md cursor-pointer relative',
         disabled ? 'text-defaultGrey bg-strokeGray' : 'bg-pastelLime text-oliveGreen',
       )}
-      disabled={isPending}
+      disabled={isPending || disabled}
       type={type}
-      onClick={onClick}>
+      onClick={onClick}
+      {...rest}>
       {isPending ? <LoadingSpinner size={20} /> : label}
     </button>
   );

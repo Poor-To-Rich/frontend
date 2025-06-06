@@ -1,9 +1,9 @@
-import { IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { create } from 'zustand';
 
 interface TransactionState {
-  currentTransactionType: IncomeExpenseButtonType;
-  setCurrentTransactionType: (transactionType: IncomeExpenseButtonType) => void;
+  currentTransactionType: IncomeExpenseType;
+  setCurrentTransactionType: (transactionType: IncomeExpenseType) => void;
   clearTransactionType: () => void;
 }
 

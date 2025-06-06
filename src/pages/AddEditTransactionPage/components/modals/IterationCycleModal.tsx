@@ -35,11 +35,12 @@ const IterationCycleModal = ({ onClose, onClick }: Props) => {
 
   return (
     <ModalDimmed onClose={onClose}>
-      <div className="w-[48%] min-w-fit">
+      <div className="w-[48%] min-w-fit" data-testid="iteration-cycle-modal">
         <div className="flex flex-col bg-white" onClick={e => e.stopPropagation()}>
           {FILTERED_ITERATION_CYCLE.map(({ label, value }, index) => (
             <button
               key={value}
+              data-testid={`${value}-button`}
               type="button"
               className={clsx(
                 'w-full flex items-center justify-between p-3.5 cursor-pointer',

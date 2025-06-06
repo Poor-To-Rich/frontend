@@ -18,7 +18,7 @@ export type MonthlyTotalTransactionType = {
 export type TransactionItemType = {
   id: number;
   color: string;
-  category: string;
+  categoryName: string;
   title?: string | null;
   isIteration?: boolean;
   type: TransactionType;
@@ -32,14 +32,14 @@ export type DailyTransactionType = {
   dailyDetails: TransactionItemType[];
 };
 
-export type WeeklyDetailType = {
-  date: Date;
-  transactions: TransactionItemType[];
+export type IterationDataType = {
+  totalAmount: number;
+  iterationAccountBooks: TransactionItemType[];
 };
 
 export type DeleteTransactionReq = { iterationAction?: IterationActionEnumType };
 
-export type IncomeExpenseButtonType = '지출' | '수입';
+export type IncomeExpenseType = '지출' | '수입';
 
 export type TransactionType = 'INCOME' | 'EXPENSE';
 

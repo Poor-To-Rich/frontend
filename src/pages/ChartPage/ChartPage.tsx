@@ -1,16 +1,16 @@
 import TransactionTypeButton from '@/components/button/TransactionTypeButton';
 import DateControlHeader from '@/components/header/DateControlHeader';
-import StackedBarChart from '@/pages/ChartPage/components/categories/StackedBarChart';
-import CategoryDashBoard from '@/pages/ChartPage/components/categories/CategoryDashBoard';
 import PeriodComparisonChart from '@/pages/ChartPage/components/period/PeriodComparisonChart';
 import Divider from '@/components/Divider';
 import TapBar from '@/components/tapbar/TapBar';
 import ReportTypeSelection from '@/pages/ChartPage/components/ReportTypeSelection';
 import ReportSummary from '@/pages/ChartPage/components/summary/ReportSummary';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
+import CategoryChartBoard from '@/pages/ChartPage/components/categories/CategoryChartBoard';
 
 const ChartPage = () => {
   const { chartHeaderDate, setChartHeaderDate } = useHeaderDateStore();
+
   return (
     <div className="flex flex-col w-full min-h-screen">
       <DateControlHeader headerDate={chartHeaderDate} setHeaderDate={setChartHeaderDate} />
@@ -20,8 +20,7 @@ const ChartPage = () => {
           <TransactionTypeButton />
         </div>
         <ReportSummary />
-        <StackedBarChart />
-        <CategoryDashBoard />
+        <CategoryChartBoard />
         <Divider />
         <PeriodComparisonChart />
       </div>

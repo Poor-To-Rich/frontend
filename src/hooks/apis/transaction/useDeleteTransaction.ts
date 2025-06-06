@@ -1,10 +1,10 @@
 import { deleteExpenseTransaction, deleteIncomeTransaction } from '@/api/services/transactionService';
-import { DeleteTransactionReq, IncomeExpenseButtonType } from '@/types/transactionTypes';
+import { DeleteTransactionReq, IncomeExpenseType } from '@/types/transactionTypes';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const useDeleteTransaction = (type: IncomeExpenseButtonType) => {
+const useDeleteTransaction = (type: IncomeExpenseType) => {
   const navigate = useNavigate();
   const mutationFn = type === '지출' ? deleteExpenseTransaction : deleteIncomeTransaction;
 

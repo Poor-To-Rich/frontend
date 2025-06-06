@@ -5,9 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
 
-interface Props extends TransactionItemType {}
-
-const TransactionDetailItem = ({ id, color, category, title, isIteration, type, cost }: Props) => {
+const TransactionDetailItem = ({ id, color, categoryName, title, isIteration, type, cost }: TransactionItemType) => {
   const { calenderDate } = useCalenderDateStore();
   const navigate = useNavigate();
 
@@ -24,7 +22,7 @@ const TransactionDetailItem = ({ id, color, category, title, isIteration, type, 
       className="w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray bg-white rounded-lg cursor-pointer">
       <div className="flex items-center gap-2.5">
         <span style={{ color }} className="font-semibold min-w-fit">
-          {category}
+          {categoryName}
         </span>
         {title && <span className="text-sm text-defaultGrey min-w-fit">{title}</span>}
         {isIteration && <IterationIcon />}

@@ -1,21 +1,22 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
-import { EXPENSE_CATEGORIES, EXPENSE_METHODS, INCOME_CATEGORIES } from '@/constants/options';
+import { EXPENSE_METHODS } from '@/constants/options';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
-import { IncomeExpenseButtonType, TransactionFormDataType } from '@/types/transactionTypes';
+import { SelectOptionsType } from '@/types/fieldType';
+import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
-import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
-  type: IncomeExpenseButtonType;
+  type: IncomeExpenseType;
+  options: SelectOptionsType[];
 }
 
-const TransactionInputs = ({ type }: Props) => {
+const TransactionFields = ({ type, options }: Props) => {
   const isExpense = type === '지출';
   const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
@@ -31,14 +32,15 @@ const TransactionInputs = ({ type }: Props) => {
     onChange(Number(formattedValue));
   };
 
-  useEffect(() => {
-    setValue('categoryName', isExpense ? EXPENSE_CATEGORIES[0].value : INCOME_CATEGORIES[0].value);
-  }, [type]);
+  if (!options) {
+    return;
+  }
 
   return (
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
       <PrimaryInput
         label="날짜"
+        data-testid="date-input"
         isRequired
         type="date"
         errorMessage={errors.date?.message}
@@ -60,14 +62,16 @@ const TransactionInputs = ({ type }: Props) => {
       />
       <SelectBox
         label="카테고리"
+        data-testid={`${isExpense ? 'expense' : 'income'}-categories-select`}
         isRequired
-        options={isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES}
+        options={options}
         type={type}
         hasEditButton
         {...register('categoryName')}
       />
       <PrimaryInput
         label={`${type}명`}
+        data-testid={`${isExpense ? 'expense' : 'income'}-title-input`}
         type="text"
         errorMessage={errors.title?.message}
         maxLength={15}
@@ -78,6 +82,7 @@ const TransactionInputs = ({ type }: Props) => {
         control={control}
         render={({ field }) => (
           <PrimaryInput
+            data-testid="cost-input"
             label="금액"
             isRequired
             type="tel"
@@ -90,13 +95,23 @@ const TransactionInputs = ({ type }: Props) => {
           />
         )}
       />
-      {isExpense && <SelectBox label="지출 수단" isRequired options={EXPENSE_METHODS} {...register('paymentMethod')} />}
+      {isExpense && (
+        <SelectBox
+          data-testid="expense-method-select"
+          label="지출 수단"
+          isRequired
+          options={EXPENSE_METHODS}
+          {...register('paymentMethod')}
+        />
+      )}
       <Controller
         name="memo"
-        render={({ field }) => <MemoInput maxLength={100} errorMessage={errors.memo?.message} {...field} />}
+        render={({ field }) => (
+          <MemoInput data-testid="memo-input" maxLength={100} errorMessage={errors.memo?.message} {...field} />
+        )}
       />
     </div>
   );
 };
 
-export default TransactionInputs;
+export default TransactionFields;
