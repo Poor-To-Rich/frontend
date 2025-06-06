@@ -26,7 +26,7 @@ const EmailField = ({ emailFieldName, purpose }: Props) => {
         data-testid="email-input"
         label="이메일"
         isRequired
-        readOnly={emailCodeStatus.isVerify}
+        readOnly={emailCodeStatus.isVerify && sendEmailStatus.isVerify}
         type="email"
         onChange={e => {
           register(emailFieldName).onChange(e);

@@ -2,7 +2,7 @@ import { checkUsernameDuplication } from '@/api/services/authService';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
 import { useMutation } from '@tanstack/react-query';
 
-const useCheckUsernameDuplication = ({ setError, setFieldStatus }: CheckVerifyFieldProps) => {
+const useCheckUsernameDuplication = ({ setError, setFieldStatus, resetFieldStatus }: CheckVerifyFieldProps) => {
   return useMutation({
     mutationFn: checkUsernameDuplication,
     onSuccess: data => {
@@ -13,6 +13,7 @@ const useCheckUsernameDuplication = ({ setError, setFieldStatus }: CheckVerifyFi
         type: 'server',
         message: error.message,
       });
+      resetFieldStatus();
     },
   });
 };

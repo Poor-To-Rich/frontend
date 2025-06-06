@@ -1,6 +1,5 @@
 import { endpoints } from '@/api/endpoints';
 import { parseRequestBody } from '@/mocks/utils/parseRequestBody';
-import { koreanOnlyRegex } from '@/utils/regex';
 import { delay, http, HttpResponse } from 'msw';
 import {
   USERNAME_ERROR_MSG,
@@ -36,13 +35,13 @@ export const authHandlers = [
 
     const formData = await request.formData();
 
-    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
 
-    if (!koreanOnlyRegex.test(name)) {
+    if (email === 'woic0102@naver.com') {
       return HttpResponse.json(
-        { status: 400, message: '이름은 한글로만 작성해야 합니다.', data: { field: 'name' } },
+        { status: 409, message: '이미 사용중인 이메일입니다.', data: { field: 'email' } },
         {
-          status: 400,
+          status: 409,
         },
       );
     }
