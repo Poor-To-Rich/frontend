@@ -50,7 +50,8 @@ export const endpoints = {
   report: {
     getYearlySummary: (date: string) => `/report/monthly/total?date=${date}`,
     getWeeklySummary: (date: string) => `/report/weekly/total?date=${date}`,
-    getWeeklyDetails: (date: string, week: string) => `/report/weekly/details?date=${date}&week=${week}`,
+    getWeeklyDetails: (date: string, week: string, cursor: string | null) =>
+      `/report/weekly/details?date=${date}&week=${week}${cursor ? `&cursor=${cursor}` : ''}`,
   },
   chart: {
     getExpenseTotalAndSavings: (date: string) => `/chart/expense/total?date=${date}`,

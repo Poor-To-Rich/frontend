@@ -1,9 +1,11 @@
 import SortingButton from '@/components/button/icon/SortingButton';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { formatNumber } from '@/utils/number';
 import { clsx } from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import useCategoryLogsInfiniteQuery from '@/hooks/apis/chart/useCategoryLogsInfiniteQuery';
+import FetchingMessage from '@/components/loading/FetchingMessage';
+import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 
 interface Props {
   transactionType: string;
@@ -15,36 +17,16 @@ interface Props {
 const CategoryLogList = ({ transactionType, categoryId, date, isSavings }: Props) => {
   const navigate = useNavigate();
   const [isDescending, setIsDescending] = useState<boolean>(true);
+  const observerRef = useRef<HTMLDivElement | null>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useCategoryLogsInfiniteQuery(categoryId, date);
+  useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
   const allCategoryLogs = data?.pages?.flatMap(page => page.categoryLogs) || [];
   const totalCount = data?.pages[0]?.countOfLogs ?? 0;
   const isEmpty = allCategoryLogs?.length === 0;
-  const observerRef = useRef<HTMLDivElement | null>(null);
 
   const handleClick = () => {
     setIsDescending(prev => !prev);
   };
-
-  useEffect(() => {
-    if (!observerRef.current || !hasNextPage) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      },
-      { threshold: 0.5 },
-    );
-
-    const current = observerRef.current;
-    observer.observe(current);
-
-    return () => {
-      observer.unobserve(current);
-      observer.disconnect();
-    };
-  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   if (!data) {
     return <div>로딩중...</div>;
@@ -82,9 +64,9 @@ const CategoryLogList = ({ transactionType, categoryId, date, isSavings }: Props
             </div>
           ))
         )}
-        {isFetchingNextPage && <div className="text-center py-4 text-defaultGrey">불러오는 중...</div>}
+        <FetchingMessage isFetchingNextPage={isFetchingNextPage} />
       </div>
-      <div ref={observerRef} className="h-4" />
+      {!isEmpty && <div ref={observerRef} className="h-4" />}
     </div>
   );
 };

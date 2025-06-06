@@ -12,10 +12,11 @@ export const getWeeklySummary = async (date: string) => {
   return res.data?.weeklyLogs;
 };
 
-export const getWeeklyDetails = async (date: string, week: string) => {
+export const getWeeklyDetails = async (date: string, week: string, cursor: string | null) => {
   const res = await fetchData<undefined, WeeklyDetailsSummaryType>(
     'GET',
-    endpoints.report.getWeeklyDetails(date, week),
+    endpoints.report.getWeeklyDetails(date, week, cursor),
   );
+  if (!res.data) throw new Error('No data from server');
   return res.data;
 };

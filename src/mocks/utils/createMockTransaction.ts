@@ -84,3 +84,9 @@ export const createMockWeeklySummary = (date: Date) => {
 
   return result;
 };
+
+export const generateDate = (index: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() - index);
+  return `${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+};

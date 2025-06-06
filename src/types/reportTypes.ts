@@ -25,5 +25,8 @@ export type WeeklyDetailsType = {
 };
 
 export type WeeklyDetailsSummaryType = OverviewLogType & {
+  countOfLogs: number;
+  hasNext: boolean;
+  nextCursor: string;
   dailyDetails: WeeklyDetailsType[];
 };

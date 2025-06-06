@@ -4,16 +4,19 @@ import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/Customized
 import '@/styles/recharts-tooltip.css';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
 import { monthlyAmountType } from '@/types/chartTypes';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 
 interface Props {
+  transactionType: IncomeExpenseType;
   monthlyAmounts: monthlyAmountType[];
 }
 
-const CategoryBarChart = ({ monthlyAmounts }: Props) => {
+const CategoryBarChart = ({ transactionType, monthlyAmounts }: Props) => {
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
 
   const maxAmount = Math.max(...monthlyAmounts.map(item => item.totalAmount));
+  const chartColor = transactionType === '지출' ? '#ffcbc4' : '#D2E2FF';
 
   return (
     <div
@@ -34,7 +37,7 @@ const CategoryBarChart = ({ monthlyAmounts }: Props) => {
             <Tooltip content={<CustomizedTooltip />} />
             <Bar
               dataKey="totalAmount"
-              fill="#ffcbc4"
+              fill={chartColor}
               background={{ fill: '#f0f0f0', stroke: 'none', radius: 15 }}
               radius={15}>
               <LabelList dataKey="totalAmount" position="top" fontSize={11} content={CustomizedLabel} />

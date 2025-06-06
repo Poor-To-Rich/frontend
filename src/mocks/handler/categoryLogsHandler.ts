@@ -1,14 +1,9 @@
 import { CategoryDetailsRes, CategoryLogsType } from '@/types/chartTypes';
 import { delay, http, HttpResponse } from 'msw';
+import { generateDate } from '@/mocks/utils/createMockTransaction';
 
 const TOTAL_LOGS = 50;
 const PAGE_SIZE = 5;
-
-const generateDate = (index: number) => {
-  const date = new Date();
-  date.setDate(date.getDate() - index);
-  return `${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
-};
 
 const generateLog = (index: number): CategoryLogsType => ({
   date: generateDate(index),
