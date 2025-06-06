@@ -23,7 +23,7 @@ const MonthWeekPage = () => {
             expense={yearlySummaryData.yearTotalExpense}
             total={yearlySummaryData.yearTotalBalance}
           />
-          <MonthlyOverview targetYear={targetYear} monthlyLogs={yearlySummaryData.monthlyReport} />
+          <MonthlyOverview targetYear={targetYear} monthlyLogs={yearlySummaryData.monthlyLogs} />
         </div>
       )}
       <TapBar page="month-week" />
