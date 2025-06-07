@@ -9,26 +9,26 @@ export const categoryHandlers = [
     const type = url.searchParams.get('type');
 
     if (type === 'expense') {
-      const categories = ['식비', '선물/경조사', '교통비', '쇼핑', '건강/의료', '술/유흥', '기타'];
+      const activeCategories = ['식비', '선물/경조사', '교통비', '쇼핑', '건강/의료', '술/유흥', '기타'];
 
       return HttpResponse.json(
         {
           status: 200,
           message: '활성화된 지출 카테고리가 조회되었습니다.',
-          data: { categories },
+          data: { activeCategories },
         },
         { status: 200 },
       );
     }
 
     if (type === 'income') {
-      const categories = ['용돈', '월급', '보너스', '부수입', '기타'];
+      const activeCategories = ['용돈', '월급', '보너스', '부수입', '기타'];
 
       return HttpResponse.json(
         {
           status: 200,
           message: '활성화된 수입 카테고리가 조회되었습니다.',
-          data: { categories },
+          data: { activeCategories },
         },
         { status: 200 },
       );
