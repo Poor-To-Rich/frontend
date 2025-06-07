@@ -9,6 +9,7 @@ interface Props {
 
 const MemoInput = forwardRef<HTMLTextAreaElement, Props & React.TextareaHTMLAttributes<HTMLTextAreaElement>>(
   ({ value, errorMessage, ...rest }, ref) => {
+    const length = (value ?? '').length;
     const MAX_LENGTH = 100;
 
     return (
@@ -27,7 +28,7 @@ const MemoInput = forwardRef<HTMLTextAreaElement, Props & React.TextareaHTMLAttr
             <p className={clsx(errorMessage && 'text-sunsetRose', 'w-fit h-fit text-sm mt-1.5')}>{errorMessage}</p>
           )}
           <span className="flex-grow text-end text-defaultGrey text-md">
-            {value.length}/{MAX_LENGTH}
+            {length}/{MAX_LENGTH}
           </span>
         </div>
       </div>

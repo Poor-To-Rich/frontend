@@ -38,7 +38,7 @@ const DailyTransactionList = () => {
           <div className="w-full flex flex-col items-center gap-2.5">
             {dailyDetails.dailyDetails.map(({ id, color, categoryName, title, isIteration, type, cost }) => (
               <TransactionDetailItem
-                key={id}
+                key={`${categoryName}${id}`}
                 id={id}
                 color={color}
                 categoryName={categoryName}

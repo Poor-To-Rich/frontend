@@ -28,7 +28,7 @@ export const createMockMonthlyTransactions = (date: string) => {
 
     result.push({
       date: `${date}-${day}`,
-      incomesAmount: createRandomAmount(),
+      incomeAmount: createRandomAmount(),
       expenseAmount: createRandomAmount(),
     });
   }

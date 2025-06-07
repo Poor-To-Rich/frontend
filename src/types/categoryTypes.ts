@@ -25,7 +25,7 @@ export type CustomCategoriesRes = {
 };
 
 export type ActiveCategoriesRes = {
-  categories: string[];
+  activeCategories: string[];
 };
 
 export type CategoryRef = {

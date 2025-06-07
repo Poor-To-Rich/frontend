@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetActiveCategory = (type: string) => {
   return useQuery({
-    queryKey: [`activeCategory`, type],
+    queryKey: [`activeCategories`, type],
     queryFn: () => getActiveCategory(type),
   });
 };
