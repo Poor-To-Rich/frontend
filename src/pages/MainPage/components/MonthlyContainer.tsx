@@ -1,3 +1,4 @@
+import Skeleton from '@/components/loading/Skeleton';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import useGetMonthlyTotal from '@/hooks/apis/transaction/useGetMonthlyTotal';
 import Calender from '@/pages/MainPage/components/calender/Calender';
@@ -8,21 +9,24 @@ const MonthlyContainer = () => {
   const { mainHeaderDate } = useHeaderDateStore();
   const { data: monthlyTotal, isPending } = useGetMonthlyTotal(format(mainHeaderDate, 'yyyy-MM'));
 
+  if (!monthlyTotal || isPending) {
+    return (
+      <div className="flex flex-col gap-2.5 p-5">
+        <Skeleton height="h-32" />
+        <Skeleton height="h-[38rem]" />
+      </div>
+    );
+  }
+
   return (
-    <>
-      {isPending || !monthlyTotal ? (
-        <div className="w-full grow flex items-center justify-center">로딩중</div>
-      ) : (
-        <>
-          <TransactionSummary
-            income={monthlyTotal.totalIncome}
-            expense={monthlyTotal.totalExpense}
-            total={monthlyTotal.totalAmount}
-          />
-          <Calender transactions={monthlyTotal.transactions} />
-        </>
-      )}
-    </>
+    <div className={isPending ? 'opacity-20 pointer-events-none' : ''}>
+      <TransactionSummary
+        income={monthlyTotal.totalIncome}
+        expense={monthlyTotal.totalExpense}
+        total={monthlyTotal.totalAmount}
+      />
+      <Calender transactions={monthlyTotal.transactions} />
+    </div>
   );
 };
 

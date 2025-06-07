@@ -4,6 +4,7 @@ import { endpoints } from '@/api/endpoints';
 
 export const transactionHandlers = [
   http.get('/report/daily/details', async ({ request }) => {
+    await delay(3000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 

@@ -1,33 +1,37 @@
 import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem';
 import useGetDailyDetails from '@/hooks/apis/transaction/useGetDailyDetails';
 import { clsx } from 'clsx';
-import { useEffect, useState } from 'react';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
 import DailySummeryItem from '@/pages/MainPage/components/daily/DailySummeryItem';
+import Skeleton from '@/components/loading/Skeleton';
 
 const DailyTransactionList = () => {
-  const [isEmpty, setIsEmpty] = useState<boolean>(true);
   const { calenderDate } = useCalenderDateStore();
   const { data: dailyDetails, isPending } = useGetDailyDetails(format(calenderDate, 'yyyy-MM-dd'));
+  const isEmpty = dailyDetails?.dailyDetails.length === 0;
 
-  useEffect(() => {
-    if (dailyDetails && dailyDetails.dailyDetails.length === 0) {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
-    }
-  }, [dailyDetails]);
+  if (isPending) {
+    return (
+      <div className="w-full flex flex-col gap-2.5 border-t border-strokeGray p-5 pb-7">
+        <Skeleton height="h-[3.5rem]" />
+        <Skeleton height="h-[3.5rem]" />
+        <div className="flex flex-col gap-1.5">
+          <Skeleton width="w-[10rem]" height="h-[2.4rem]" />
+          <Skeleton width="w-[10rem]" height="h-[2.4rem]" />
+          <Skeleton width="w-[10rem]" height="h-[2.4rem]" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
       className={clsx(
-        (isEmpty || isPending) && 'justify-center items-center',
+        isEmpty && 'justify-center items-center',
         'flex flex-col w-full min-h-[20rem] max-h-[25rem] items-center gap-5 border-t py-5 pb-7 border-strokeGray overflow-y-auto custom-scrollbar',
       )}>
-      {isPending ? (
-        <span>로딩중...</span>
-      ) : isEmpty || !dailyDetails ? (
+      {isEmpty || !dailyDetails ? (
         <span className="text-defaultGrey">내역이 없습니다.</span>
       ) : (
         <>
