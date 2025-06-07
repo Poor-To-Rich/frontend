@@ -1,11 +1,18 @@
 import { addExpenseCategory, addIncomeCategory } from '@/api/services/categoryService';
 import { BaseCategoriesType } from '@/types/categoryTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import CustomError from '@/utils/CustomError';
 import { useMutation } from '@tanstack/react-query';
+import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const useAddCategory = (type: IncomeExpenseType) => {
+interface Props {
+  type: IncomeExpenseType;
+  setError: UseFormSetError<BaseCategoriesType>;
+}
+
+const useAddCategory = ({ type, setError }: Props) => {
   const mutationFn = type === '지출' ? addExpenseCategory : addIncomeCategory;
   const navigate = useNavigate();
 
@@ -15,8 +22,11 @@ const useAddCategory = (type: IncomeExpenseType) => {
       toast.success(data.message);
       navigate(-1);
     },
-    onError: error => {
-      toast.error(error.message);
+    onError: (error: CustomError) => {
+      setError('name', {
+        type: 'server',
+        message: `${error.message}`,
+      });
     },
   });
 };

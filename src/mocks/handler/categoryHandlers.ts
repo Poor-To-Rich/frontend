@@ -42,7 +42,8 @@ export const categoryHandlers = [
       { status: 400 },
     );
   }),
-  http.get(endpoints.category.getDefaultExpense, () => {
+  http.get(endpoints.category.getDefaultExpense, async () => {
+    await delay(3000);
     const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }, index) => ({
       id: index + 10,
       name: value,
@@ -76,7 +77,8 @@ export const categoryHandlers = [
       { status: 200 },
     );
   }),
-  http.get(endpoints.category.getCustomExpense, () => {
+  http.get(endpoints.category.getCustomExpense, async () => {
+    await delay(3000);
     const customCategories = [
       {
         id: 1,
