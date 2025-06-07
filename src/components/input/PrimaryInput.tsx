@@ -8,6 +8,7 @@ import { VerifyButtonType } from '@/types/fieldType';
 interface PrimaryInputProps {
   label: string;
   isRequired?: boolean;
+  isPending?: boolean;
   hasCheckIcon?: boolean;
   buttonLabel?: VerifyButtonType;
   handleClick?: () => void;
@@ -18,7 +19,18 @@ interface PrimaryInputProps {
 
 const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.InputHTMLAttributes<HTMLInputElement>>(
   (
-    { label, isRequired, hasCheckIcon, buttonLabel, successMessage, errorMessage, handleClick, readOnly, ...rest },
+    {
+      label,
+      isRequired,
+      isPending,
+      hasCheckIcon,
+      buttonLabel,
+      successMessage,
+      errorMessage,
+      handleClick,
+      readOnly,
+      ...rest
+    },
     ref,
   ) => {
     const message = successMessage || errorMessage;
@@ -55,7 +67,13 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
               )}
             </div>
             {buttonLabel && (
-              <VerifyButton data-testid="verify-button" type="button" label={buttonLabel} onClick={handleClick} />
+              <VerifyButton
+                data-testid="verify-button"
+                type="button"
+                label={buttonLabel}
+                isPending={isPending}
+                onClick={handleClick}
+              />
             )}
           </div>
           {typeof message === 'string' && message && (

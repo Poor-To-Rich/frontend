@@ -27,13 +27,13 @@ const useEmailVerification = ({ emailFieldName, purpose }: Props) => {
     resetAllEmailStatus,
   } = useEmailFieldStore();
 
-  const { mutate: sendEmail } = useSendEmail({
+  const { mutate: sendEmail, isPending: isSendEmailPending } = useSendEmail({
     setError,
     setFieldStatus: setSendEmailStatus,
     resetFieldStatus: resetSendEmailStatus,
   });
 
-  const { mutate: verifyCode } = useVerifyEmail({
+  const { mutate: verifyCode, isPending: isVerifyPending } = useVerifyEmail({
     setError,
     setFieldStatus: setEmailCodeStatus,
     resetFieldStatus: resetEmailCodeStatus,
@@ -63,6 +63,8 @@ const useEmailVerification = ({ emailFieldName, purpose }: Props) => {
   }, [resetAllEmailStatus]);
 
   return {
+    isSendEmailPending,
+    isVerifyPending,
     handleEmailSend,
     handleEmailCode,
   };

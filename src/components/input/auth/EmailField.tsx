@@ -17,7 +17,10 @@ const EmailField = ({ emailFieldName, purpose }: Props) => {
   } = useFormContext();
 
   const { sendEmailStatus, emailCodeStatus, resetEmailCodeStatus, resetSendEmailStatus } = useEmailFieldStore();
-  const { handleEmailSend, handleEmailCode } = useEmailVerification({ emailFieldName, purpose });
+  const { isSendEmailPending, isVerifyPending, handleEmailSend, handleEmailCode } = useEmailVerification({
+    emailFieldName,
+    purpose,
+  });
 
   return (
     <>
@@ -32,6 +35,7 @@ const EmailField = ({ emailFieldName, purpose }: Props) => {
           register(emailFieldName).onChange(e);
           resetSendEmailStatus();
         }}
+        isPending={isSendEmailPending}
         errorMessage={errors.email?.message}
         successMessage={sendEmailStatus.message}
         handleClick={handleEmailSend}
@@ -61,6 +65,7 @@ const EmailField = ({ emailFieldName, purpose }: Props) => {
                 resetEmailCodeStatus();
               }
             }}
+            isPending={isVerifyPending}
             hasCheckIcon={emailCodeStatus.isVerify}
             errorMessage={errors.verificationCode?.message}
             successMessage={emailCodeStatus.message}

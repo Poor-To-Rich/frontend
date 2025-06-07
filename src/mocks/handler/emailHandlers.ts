@@ -1,6 +1,6 @@
 import { endpoints } from '@/api/endpoints';
 import { parseRequestBody } from '@/mocks/utils/parseRequestBody';
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { checkCommonEmailErrors } from '@/mocks/utils/checkEmailErrors';
 import {
   SEND_EMAIL_SUCCESS_MSG,
@@ -11,6 +11,7 @@ import {
 
 export const emailHandlers = [
   http.post(endpoints.email.sendEmail, async ({ request }) => {
+    await delay(3000);
     const { email, purpose } = await parseRequestBody(request);
 
     const errorResponse = checkCommonEmailErrors({ email, purpose });
