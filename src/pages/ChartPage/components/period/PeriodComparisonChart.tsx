@@ -1,4 +1,4 @@
-import { Bar, BarChart, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, Cell, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import PeriodSummary from '@/pages/ChartPage/components/period/PeriodSummary';
 import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
@@ -46,7 +46,6 @@ const PeriodComparisonChart = () => {
             <YAxis type="number" hide scale="pow" exponent={0.5} domain={[1, 'auto']} />
             <Bar
               dataKey={'totalAmount'}
-              label={{ position: 'top', fill: '#000000', fontSize: 14 }}
               onClick={target => handleBarCharClick(target.period)}
               className="cursor-pointer">
               {barChartData.totalAmounts.map((entry, index) => (
@@ -55,6 +54,7 @@ const PeriodComparisonChart = () => {
                   fill={index === barChartData.totalAmounts.length - 1 ? '#e7f6d1' : '#E6E6E6'}
                 />
               ))}
+              <LabelList dataKey="label" position="top" fill="#000000" fontSize={14} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
