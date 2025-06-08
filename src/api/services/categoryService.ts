@@ -10,7 +10,7 @@ import {
 
 export const getActiveCategory = async (type: string) => {
   const res = await fetchData<undefined, ActiveCategoriesRes>('GET', endpoints.category.getActive(type));
-  return res.data?.categories;
+  return res.data?.activeCategories;
 };
 
 export const getDefaultExpense = async () => {

@@ -1,12 +1,17 @@
 import { signup } from '@/api/services/authService';
 import { SignupFormType } from '@/types/authTypes';
-import { CheckVerifyFieldProps } from '@/types/fieldType';
 import CustomError from '@/utils/CustomError';
 import { useMutation } from '@tanstack/react-query';
+import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const useSignup = ({ setError }: Pick<CheckVerifyFieldProps, 'setError'>) => {
+interface Props {
+  setError: UseFormSetError<SignupFormType>;
+  fieldStatusMap?: Partial<Record<keyof SignupFormType, (status: { isVerify: boolean; message?: string }) => void>>;
+}
+
+const useSignup = ({ setError, fieldStatusMap }: Props) => {
   const navigate = useNavigate();
 
   return useMutation({
@@ -15,12 +20,19 @@ const useSignup = ({ setError }: Pick<CheckVerifyFieldProps, 'setError'>) => {
       navigate('/login', { replace: true, state: { successMessage: data.message } });
     },
     onError: (error: CustomError<{ field: keyof SignupFormType }>) => {
-      if (error.data)
-        setError(error.data.field, {
+      const field = error.data?.field;
+
+      if (field) {
+        setError(field, {
           type: 'server',
           message: error.message,
         });
-      else toast.error(error.message);
+
+        const setFieldStatus = fieldStatusMap?.[field];
+        if (setFieldStatus) {
+          setFieldStatus({ isVerify: false, message: undefined });
+        }
+      } else toast.error(error.message);
     },
   });
 };

@@ -1,10 +1,14 @@
 import { getMonthlyTotal } from '@/api/services/transactionService';
-import { useQuery } from '@tanstack/react-query';
+import { MonthlyTotalTransactionType } from '@/types/transactionTypes';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const useGetMonthlyTotal = (date: string) => {
-  return useQuery({
+  return useQuery<MonthlyTotalTransactionType>({
     queryKey: ['monthlyTotal', date],
     queryFn: () => getMonthlyTotal(date),
+    placeholderData: keepPreviousData,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 

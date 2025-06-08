@@ -8,6 +8,7 @@ interface EmailFieldProps {
   setEmailCodeStatus: (newStatus: FieldStatusType) => void;
   resetSendEmailStatus: () => void;
   resetEmailCodeStatus: () => void;
+  resetAllEmailStatus: () => void;
 }
 
 export const useEmailFieldStore = create<EmailFieldProps>(set => ({
@@ -17,4 +18,8 @@ export const useEmailFieldStore = create<EmailFieldProps>(set => ({
   setEmailCodeStatus: (newStatus: FieldStatusType) => set({ emailCodeStatus: newStatus }),
   resetSendEmailStatus: () => set({ sendEmailStatus: { message: undefined, isVerify: false } }),
   resetEmailCodeStatus: () => set({ emailCodeStatus: { message: undefined, isVerify: false } }),
+  resetAllEmailStatus: () => {
+    set({ sendEmailStatus: { message: undefined, isVerify: false } });
+    set({ emailCodeStatus: { message: undefined, isVerify: false } });
+  },
 }));

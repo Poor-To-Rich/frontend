@@ -9,6 +9,7 @@ export type FieldStatusType = {
 export interface CheckVerifyFieldProps {
   setError: UseFormSetError<SignupFormType>;
   setFieldStatus: (status: FieldStatusType) => void;
+  resetFieldStatus: () => void;
 }
 
 export type VerifyButtonType = '인증' | '재발급' | '확인' | '중복확인';

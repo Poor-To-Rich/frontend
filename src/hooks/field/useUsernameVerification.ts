@@ -11,7 +11,11 @@ const useUsernameVerification = () => {
   } = useFormContext();
 
   const { usernameStatus, setUsernameStatus, resetUsernameStatus } = useUsernameFieldStore();
-  const { mutate: checkUsername } = useCheckUsernameDuplication({ setError, setFieldStatus: setUsernameStatus });
+  const { mutate: checkUsername } = useCheckUsernameDuplication({
+    setError,
+    setFieldStatus: setUsernameStatus,
+    resetFieldStatus: resetUsernameStatus,
+  });
 
   const handleUsernameDuplication = () => {
     const usernameError = errors.username;

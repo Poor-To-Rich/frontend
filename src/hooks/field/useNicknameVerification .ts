@@ -11,7 +11,11 @@ const useNicknameVerification = () => {
   } = useFormContext();
 
   const { nicknameStatus, setNicknameStatus, resetNicknameStatus } = useNicknameFieldStore();
-  const { mutate: checkNickname } = useCheckNicknameDuplication({ setError, setFieldStatus: setNicknameStatus });
+  const { mutate: checkNickname } = useCheckNicknameDuplication({
+    setError,
+    setFieldStatus: setNicknameStatus,
+    resetFieldStatus: resetNicknameStatus,
+  });
 
   const handleNicknameDuplication = () => {
     const nicknameError = errors.nickname;

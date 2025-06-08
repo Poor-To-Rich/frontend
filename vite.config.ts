@@ -38,6 +38,12 @@ export default defineConfig({
     },
   },
   server: {
+    // proxy: {
+    //   '/': {
+    //     target: process.env.VITE_API_URL,
+    //     changeOrigin: true,
+    //   },
+    // },
     https: useHttps
       ? {
           key: fs.readFileSync(path.resolve(__dirname, 'localhost+2-key.pem')),

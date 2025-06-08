@@ -38,7 +38,7 @@ function Button() {
       <h2>기타 버튼</h2>
       <PlusCircleButton />
       <RepeatCircleButton openModal={() => {}} />
-      <ToggleSwitch id={'1'} visibility />
+      <ToggleSwitch id={'1'} visibility type={'지출'} />
       <CategoryLinkButton type="지출" />
       <MinusCircleButton onClick={() => {}} />
       <CategoryEditButton id={1} />

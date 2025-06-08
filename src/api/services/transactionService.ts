@@ -10,6 +10,7 @@ import {
 
 export const getMonthlyTotal = async (date: string) => {
   const res = await fetchData<undefined, MonthlyTotalTransactionType>('GET', endpoints.total.getMonthlyTotal(date));
+  if (!res.data) throw new Error('No data');
   return res.data;
 };
 

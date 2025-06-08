@@ -17,16 +17,32 @@ const useEmailVerification = ({ emailFieldName, purpose }: Props) => {
     formState: { errors },
   } = useFormContext();
 
-  const { emailCodeStatus, setEmailCodeStatus, setSendEmailStatus, resetEmailCodeStatus, resetSendEmailStatus } =
-    useEmailFieldStore();
+  const {
+    sendEmailStatus,
+    emailCodeStatus,
+    setEmailCodeStatus,
+    setSendEmailStatus,
+    resetSendEmailStatus,
+    resetEmailCodeStatus,
+    resetAllEmailStatus,
+  } = useEmailFieldStore();
 
-  const { mutate: sendEmail } = useSendEmail({ setError, setFieldStatus: setSendEmailStatus });
-  const { mutate: verifyCode } = useVerifyEmail({ setError, setFieldStatus: setEmailCodeStatus });
+  const { mutate: sendEmail, isPending: isSendEmailPending } = useSendEmail({
+    setError,
+    setFieldStatus: setSendEmailStatus,
+    resetFieldStatus: resetSendEmailStatus,
+  });
+
+  const { mutate: verifyCode, isPending: isVerifyPending } = useVerifyEmail({
+    setError,
+    setFieldStatus: setEmailCodeStatus,
+    resetFieldStatus: resetEmailCodeStatus,
+  });
 
   const handleEmailSend = () => {
     const emailError = errors.email;
     const email = getValues(emailFieldName);
-    if (email && !emailError && !emailCodeStatus.isVerify) {
+    if (email && !emailError && (!emailCodeStatus.isVerify || !sendEmailStatus.isVerify)) {
       sendEmail({ email, purpose });
     }
   };
@@ -42,12 +58,13 @@ const useEmailVerification = ({ emailFieldName, purpose }: Props) => {
 
   useEffect(() => {
     return () => {
-      resetEmailCodeStatus();
-      resetSendEmailStatus();
+      resetAllEmailStatus();
     };
-  }, []);
+  }, [resetAllEmailStatus]);
 
   return {
+    isSendEmailPending,
+    isVerifyPending,
     handleEmailSend,
     handleEmailCode,
   };

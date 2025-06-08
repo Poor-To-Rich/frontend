@@ -2,19 +2,25 @@ import LoadingSpinner from '../loading/LoadingSpinner';
 
 interface Props {
   label: string;
+  disabled?: boolean;
   isPending?: boolean;
   onClick?: () => void;
 }
 
-const ModalButton = ({ label, isPending, onClick, ...rest }: Props) => {
+const ModalButton = ({ label, disabled, isPending, onClick, ...rest }: Props) => {
   return (
     <button
-      className="flex justify-center items-center w-fit min-w-[9rem] h-[3.5rem] px-8 rounded-lg text-md bg-pastelLime text-oliveGreen cursor-pointer"
+      className="flex justify-center items-center w-fit min-w-[9rem] h-[3.5rem] px-8 rounded-lg text-md bg-pastelLime text-oliveGreen cursor-pointer relative"
       type="button"
-      disabled={isPending}
+      disabled={isPending || disabled}
       onClick={onClick}
       {...rest}>
-      {isPending ? <LoadingSpinner size={15} /> : label}
+      <span className={isPending ? 'invisible' : 'visible'}>{label}</span>
+      {isPending && (
+        <span className="absolute inset-0 flex items-center justify-center">
+          <LoadingSpinner size={20} />
+        </span>
+      )}
     </button>
   );
 };

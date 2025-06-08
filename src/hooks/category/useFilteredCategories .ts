@@ -5,19 +5,19 @@ import { useEffect, useState } from 'react';
 const useFilteredCategories = (
   allCategories: SelectOptionsType[],
   transactionFormData: TransactionFormDataType | undefined,
-  activeCategory: string[] | undefined,
+  activeCategories: string[] | undefined,
   isEditPage: boolean,
 ) => {
   const [categoryOptions, setCategoryOptions] = useState<SelectOptionsType[]>([]);
 
   useEffect(() => {
-    if (activeCategory) {
+    if (activeCategories) {
       const filteredCategory = allCategories
         .filter(category => {
           if (isEditPage && transactionFormData) {
-            return activeCategory.includes(category.label) || category.label === transactionFormData.categoryName;
+            return activeCategories.includes(category.label) || category.label === transactionFormData.categoryName;
           }
-          return activeCategory.includes(category.label);
+          return activeCategories.includes(category.label);
         })
         .map(category => ({
           ...category,
@@ -26,7 +26,7 @@ const useFilteredCategories = (
 
       setCategoryOptions(filteredCategory);
     }
-  }, [allCategories, transactionFormData, activeCategory, isEditPage]);
+  }, [allCategories, transactionFormData, activeCategories, isEditPage]);
 
   return {
     categoryOptions,

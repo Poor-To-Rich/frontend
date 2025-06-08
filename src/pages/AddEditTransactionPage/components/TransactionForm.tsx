@@ -42,7 +42,10 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     type: transactionType,
     setError,
   });
-  const { categoryOptions: options, isFetching } = useTransactionForm({ transactionType, initialIterationTypeRef });
+  const { categoryOptions: options, isGetTransactionFetching } = useTransactionForm({
+    transactionType,
+    initialIterationTypeRef,
+  });
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
@@ -72,7 +75,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
-  if (isFetching) {
+  if (isGetTransactionFetching) {
     return <div>로딩중</div>;
   }
 

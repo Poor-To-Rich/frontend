@@ -8,32 +8,15 @@ import GenderField from '@/components/input/auth/GenderField';
 import JobField from '@/components/input/auth/JobField';
 import ProfileImageField from '@/components/input/auth/ProfileImageField';
 import PrimaryButton from '@/components/button/PrimaryButton';
-import useSignup from '@/hooks/apis/auth/useSignup';
-import { useFormContext } from 'react-hook-form';
-import { SignupFormType } from '@/types/authTypes';
 import useSignFormValidation from '@/hooks/field/useSignFormValidation';
-import { filteredData } from '@/utils/filteredFormData';
-import { omit } from 'lodash';
+import { useSignupForm } from '@/hooks/signup/useSignupForm';
 
 const SignupForm = () => {
-  const { setError, handleSubmit } = useFormContext<SignupFormType>();
-  const { mutate: signup, isPending } = useSignup({ setError });
+  const { handleSubmit, isPending } = useSignupForm();
   const { buttonDisabled } = useSignFormValidation();
 
-  const onSubmit = (data: SignupFormType) => {
-    const postData = omit(data, ['verificationCode']);
-    const requestData = filteredData(postData);
-
-    const formData = new FormData();
-    Object.entries(requestData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
-    signup(formData);
-  };
-
   return (
-    <form className="px-5 pt-15 pb-8" onSubmit={handleSubmit(onSubmit)}>
+    <form className="px-5 pt-15 pb-8" onSubmit={handleSubmit}>
       <ProfileImageField />
       <div className="flex flex-col gap-3 my-15">
         <NameField />
