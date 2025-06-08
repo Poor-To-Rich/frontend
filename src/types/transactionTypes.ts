@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export type DateTransactionType = {
   date: string;
-  incomesAmount: number;
+  incomeAmount: number;
   expenseAmount: number;
 };
 

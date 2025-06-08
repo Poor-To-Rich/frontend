@@ -6,7 +6,7 @@ import { IncomeExpenseType } from '@/types/transactionTypes';
 
 interface Props {
   label: '기본' | '사용자 지정';
-  type?: IncomeExpenseType;
+  type: IncomeExpenseType;
   defaultCategories?: DefaultCategoriesType[];
   customCategories?: CustomCategoriesType[];
   handleDeleteIconClick?: (id: number, name: string) => void;
@@ -20,9 +20,9 @@ const CategoryList = ({ label, type, defaultCategories, customCategories, handle
         {label === '기본' &&
           defaultCategories &&
           defaultCategories.map(({ id, color, name, visibility }) => (
-            <div key={name} className="category-common">
+            <div key={id} className="category-common">
               <span style={{ color }}>{name}</span>
-              <ToggleSwitch id={id.toString()} visibility={visibility} />
+              <ToggleSwitch id={id.toString()} visibility={visibility} type={type} />
             </div>
           ))}
         {label === '사용자 지정' &&

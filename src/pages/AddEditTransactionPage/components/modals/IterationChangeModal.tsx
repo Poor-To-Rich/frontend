@@ -6,6 +6,8 @@ import { useFormContext } from 'react-hook-form';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
+import useGetUpdateOptions from '../../hooks/useGetUpdateOptions';
+import { useRef } from 'react';
 
 interface Props {
   type: 'delete' | 'edit';
@@ -18,6 +20,15 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
     setError,
     formState: { dirtyFields },
   } = useFormContext<TransactionFormDataType>();
+  const optionRef = useRef<IterationActionEnumType>();
+  const isEditType = type === 'edit';
+  const { content, options } = useGetUpdateOptions({
+    isEditType,
+    dirtyFields: dirtyFields as {
+      iterationType?: boolean;
+      customIteration?: boolean;
+    },
+  });
   const { transactionId, transactionMode } = useTransactionParams();
   const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
     type: transactionMode as IncomeExpenseType,
@@ -26,27 +37,13 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const { mutate: deleteTransaction, isPending: isDeletePending } = useDeleteTransaction(
     transactionMode as IncomeExpenseType,
   );
-  const isEditType = type === 'edit';
-  const hasChangedIterationFields = dirtyFields.iterationType || dirtyFields.customIteration;
-
-  const content = isEditType ? '해당 가계부를 편집하시겠습니까?' : '해당 가계부를 삭제하시겠습니까?';
-
-  const baseOptions = [
-    { label: '이후 반복 내역에도 적용', value: 'THIS_AND_FUTURE' },
-    { label: '모든 반복 내역에 적용', value: 'ALL' },
-  ];
-
-  const options =
-    hasChangedIterationFields && isEditType
-      ? baseOptions
-      : [{ label: '이 반복 내역에만 적용', value: 'THIS_ONLY' }, ...baseOptions];
 
   const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
     const isIncome = transactionMode === '수입';
     const body = isEditType ? getFinalData(data, isIncome) : {};
     const requestData = { id: transactionId!, body: { ...body, iterationAction } };
 
-    if (isUpdatePending || isDeletePending) return;
+    optionRef.current = iterationAction;
 
     if (isEditType) {
       updateTransaction(requestData as { id: string; body: TransactionFormDataType });
@@ -67,6 +64,8 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
             <ModalButton
               label={label}
               key={label}
+              disabled={isUpdatePending || isDeletePending}
+              isPending={optionRef.current === value && (isUpdatePending || isDeletePending)}
               onClick={handleSubmit(data => onSubmit(data, value as IterationActionEnumType))}
             />
           ))}

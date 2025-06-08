@@ -4,7 +4,7 @@ import LoginPage from '@/pages/LoginPage/LoginPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 import MainPage from '@/pages/MainPage/MainPage';
 import AddEditTransactionPage from '@/pages/AddEditTransactionPage/AddEditTransactionPage';
-import CategoriesPage from '@/pages/CategoriesPage.tsx/CategoriesPage';
+import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage';
 import AddEditCategoryPage from '@/pages/AddEditCategoryPage/AddEditCategoryPage';
 import MonthWeekPage from '@/pages/MonthWeekPage/MonthWeekPage';
 import WeeklyDetailsPage from '@/pages/WeeklyDetailsPage/WeeklyDetailsPage';

@@ -8,7 +8,14 @@ const BirthField = () => {
   } = useFormContext();
 
   return (
-    <PrimaryInput {...register('birth')} label="생년월일" isRequired type="text" errorMessage={errors.birth?.message} />
+    <PrimaryInput
+      {...register('birth')}
+      label="생년월일"
+      placeholder="YYYY-MM-DD"
+      isRequired
+      type="text"
+      errorMessage={errors.birth?.message}
+    />
   );
 };
 

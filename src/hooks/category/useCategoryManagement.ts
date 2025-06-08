@@ -15,9 +15,9 @@ export const useCategoryManagement = () => {
   const queryParams = new URLSearchParams(location.search);
   const type = queryParams.get('type') as IncomeExpenseType;
 
-  const { data: defaultCategories } = useGetDefaultCategory(type);
-  const { data: customCategories } = useGetCustomCategory(type);
-  const { mutate: deleteCategory, isSuccess } = useDeleteCategory(type);
+  const { data: defaultCategories, isPending: isGetDefaultCategories } = useGetDefaultCategory(type);
+  const { data: customCategories, isPending: isGetCustomCategories } = useGetCustomCategory(type);
+  const { mutate: deleteCategory, isSuccess, isPending: isDeletePending } = useDeleteCategory(type);
 
   const handleDeleteIconClick = (id: number, name: string) => {
     categoryRef.current = { name, id };
@@ -41,6 +41,8 @@ export const useCategoryManagement = () => {
     defaultCategories,
     customCategories,
     categoryRef,
+    isGetPending: isGetDefaultCategories || isGetCustomCategories,
+    isDeletePending,
     handleDeleteIconClick,
     handleDeleteCategory,
   };
