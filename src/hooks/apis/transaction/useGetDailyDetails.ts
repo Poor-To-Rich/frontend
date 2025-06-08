@@ -6,6 +6,8 @@ const useGetDailyDetails = (date: string) => {
     queryKey: ['dailyDetails', date],
     queryFn: () => getDailyDetails(date),
     placeholderData: keepPreviousData,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 

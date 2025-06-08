@@ -7,6 +7,8 @@ const useGetMonthlyTotal = (date: string) => {
     queryKey: ['monthlyTotal', date],
     queryFn: () => getMonthlyTotal(date),
     placeholderData: keepPreviousData,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 
