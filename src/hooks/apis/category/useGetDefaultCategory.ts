@@ -7,6 +7,8 @@ const useGetDefaultCategory = (type: IncomeExpenseType) => {
   return useQuery({
     queryKey: [`defaultCategories`, type],
     queryFn: queryFn,
+    staleTime: 30 * 60 * 1000,
+    gcTime: 40 * 60 * 1000,
   });
 };
 

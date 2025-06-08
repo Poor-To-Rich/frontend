@@ -9,10 +9,13 @@ const useDeleteCategory = (type: IncomeExpenseType) => {
   return useMutation({
     mutationFn: (id: string) => deleteCategory(id),
     onSuccess: data => {
-      toast.success(data.message);
       queryClient.invalidateQueries({
         queryKey: ['customCategory', type],
       });
+      queryClient.invalidateQueries({
+        queryKey: [`activeCategories`, type],
+      });
+      toast.success(data.message);
     },
     onError: error => {
       toast.error(error.message);

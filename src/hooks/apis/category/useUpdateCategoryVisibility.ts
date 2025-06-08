@@ -27,6 +27,11 @@ const useUpdateCategoryVisibility = ({ type }: Props) => {
 
       return { previousData };
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [`activeCategories`, type],
+      });
+    },
     onError: (error, _variables, context) => {
       if (context?.previousData) {
         queryClient.setQueryData(['defaultCategories', type], context.previousData);
