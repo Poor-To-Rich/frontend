@@ -28,7 +28,7 @@ const CategoryListContainer = ({
 
   return (
     <div className="flex flex-col gap-4 py-8">
-      <CategoryList label="기본" defaultCategories={defaultCategories} />
+      <CategoryList type={type} label="기본" defaultCategories={defaultCategories} />
       <CategoryList
         label="사용자 지정"
         type={type}

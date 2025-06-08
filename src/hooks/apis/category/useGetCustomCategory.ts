@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 const useGetCustomCategory = (type: IncomeExpenseType) => {
   const queryFn = type === '지출' ? getCustomExpense : getCustomIncome;
   return useQuery({
-    queryKey: ['customCategory', type],
+    queryKey: ['customCategories', type],
     queryFn: queryFn,
   });
 };

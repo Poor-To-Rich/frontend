@@ -1,13 +1,40 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateCategoryVisibility } from '@/api/services/categoryService';
-import { CategoryVisibility } from '@/types/categoryTypes';
+import { CategoryVisibility, DefaultCategoriesType } from '@/types/categoryTypes';
 import toast from 'react-hot-toast';
+import { IncomeExpenseType } from '@/types/transactionTypes';
 
-const useUpdateCategoryVisibility = () => {
+interface Props {
+  type: IncomeExpenseType;
+}
+
+const useUpdateCategoryVisibility = ({ type }: Props) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({ id, body }: { id: string; body: CategoryVisibility }) => updateCategoryVisibility(id, body),
-    onError: error => {
+    onMutate: async ({ id, body }) => {
+      await queryClient.cancelQueries({ queryKey: ['defaultCategories', type] });
+
+      const previousData = queryClient.getQueryData(['defaultCategories', type]);
+
+      queryClient.setQueryData(['defaultCategories', type], (old: DefaultCategoriesType[]) => {
+        if (!old) return old;
+        return old.map((category: DefaultCategoriesType) =>
+          String(category.id) === id ? { ...category, visibility: body.visibility } : category,
+        );
+      });
+
+      return { previousData };
+    },
+    onError: (error, _variables, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(['defaultCategories', type], context.previousData);
+      }
       toast.error(error.message);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['defaultCategories', type] });
     },
   });
 };

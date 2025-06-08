@@ -3,6 +3,20 @@ import { http, HttpResponse, delay } from 'msw';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
 import { parseRequestBody } from '../utils/parseRequestBody';
 
+const ExpenseCategories = EXPENSE_CATEGORIES.map(({ value, color }, index) => ({
+  id: index + 10,
+  name: value,
+  color,
+  visibility: true,
+}));
+
+const IncomeCategories = INCOME_CATEGORIES.map(({ value, color }, index) => ({
+  id: index + 30,
+  name: value,
+  color,
+  visibility: true,
+}));
+
 export const categoryHandlers = [
   http.get('category/active', ({ request }) => {
     const url = new URL(request.url);
@@ -43,42 +57,26 @@ export const categoryHandlers = [
     );
   }),
   http.get(endpoints.category.getDefaultExpense, async () => {
-    await delay(3000);
-    const categoryNamesWithColors = EXPENSE_CATEGORIES.map(({ value, color }, index) => ({
-      id: index + 10,
-      name: value,
-      color,
-      visibility: true,
-    }));
-
     return HttpResponse.json(
       {
         status: 200,
         message: '기본 지출 카테고리가 조회되었습니다.',
-        data: { defaultCategories: categoryNamesWithColors },
+        data: { defaultCategories: ExpenseCategories },
       },
       { status: 200 },
     );
   }),
   http.get(endpoints.category.getDefaultIncome, () => {
-    const categoryNamesWithColors = INCOME_CATEGORIES.map(({ value, color }, index) => ({
-      id: index + 10,
-      name: value,
-      color,
-      visibility: true,
-    }));
-
     return HttpResponse.json(
       {
         status: 200,
         message: '기본 수입 카테고리가 조회되었습니다.',
-        data: { defaultCategories: categoryNamesWithColors },
+        data: { defaultCategories: IncomeCategories },
       },
       { status: 200 },
     );
   }),
   http.get(endpoints.category.getCustomExpense, async () => {
-    await delay(3000);
     const customCategories = [
       {
         id: 1,
@@ -252,27 +250,24 @@ export const categoryHandlers = [
     );
   }),
 
-  http.put('/category/active/:id', async ({ request }) => {
+  http.put('/category/active/:id', async ({ params, request }) => {
+    const id = params.id as string;
     const { visibility } = await parseRequestBody<{ visibility: boolean }>(request);
 
-    if (visibility) {
-      return HttpResponse.json(
-        {
-          status: 200,
-          message: '카테고리를 성공적으로 활성화하였습니다.',
-        },
-        { status: 200 },
-      );
+    const category =
+      ExpenseCategories.find(cat => String(cat.id) === id) || IncomeCategories.find(cat => String(cat.id) === id);
+    if (!category) {
+      return HttpResponse.json({ message: '카테고리를 찾을 수 없습니다.' }, { status: 404 });
     }
 
-    if (!visibility) {
-      return HttpResponse.json(
-        {
-          status: 200,
-          message: '카테고리를 성공적으로 비활성화하였습니다.',
-        },
-        { status: 200 },
-      );
-    }
+    category.visibility = visibility;
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: visibility ? '카테고리를 성공적으로 활성화하였습니다.' : '카테고리를 성공적으로 비활성화하였습니다.',
+      },
+      { status: 200 },
+    );
   }),
 ];

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 const useGetDefaultCategory = (type: IncomeExpenseType) => {
   const queryFn = type === '지출' ? getDefaultExpense : getDefaultIncome;
   return useQuery({
-    queryKey: [`defaultCategory`, type],
+    queryKey: [`defaultCategories`, type],
     queryFn: queryFn,
   });
 };
