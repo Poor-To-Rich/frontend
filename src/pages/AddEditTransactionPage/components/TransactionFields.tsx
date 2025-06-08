@@ -63,6 +63,7 @@ const TransactionFields = ({ type, options }: Props) => {
         options={options}
         type={type}
         hasEditButton
+        errorMessage={errors.categoryName?.message}
         {...register('categoryName')}
       />
       <PrimaryInput
