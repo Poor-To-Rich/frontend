@@ -1,32 +1,37 @@
 import { SelectOptionsType } from '@/types/fieldType';
-import { TransactionFormDataType } from '@/types/transactionTypes';
 import { useEffect, useState } from 'react';
 
-const useFilteredCategories = (
-  allCategories: SelectOptionsType[],
-  transactionFormData: TransactionFormDataType | undefined,
-  activeCategories: string[] | undefined,
-  isEditPage: boolean,
-) => {
+const useFilteredCategories = (activeCategories: string[] | undefined, currentCategoryName?: string) => {
   const [categoryOptions, setCategoryOptions] = useState<SelectOptionsType[]>([]);
 
   useEffect(() => {
-    if (activeCategories) {
-      const filteredCategory = allCategories
-        .filter(category => {
-          if (isEditPage && transactionFormData) {
-            return activeCategories.includes(category.label) || category.label === transactionFormData.categoryName;
-          }
-          return activeCategories.includes(category.label);
-        })
-        .map(category => ({
-          ...category,
-          visibility: isEditPage && transactionFormData ? category.label !== transactionFormData.categoryName : true,
-        }));
+    if (!activeCategories) return;
 
-      setCategoryOptions(filteredCategory);
+    const deduped = new Set<string>();
+    const result: SelectOptionsType[] = [];
+
+    if (currentCategoryName && !activeCategories.includes(currentCategoryName)) {
+      result.push({
+        label: currentCategoryName,
+        value: currentCategoryName,
+        visibility: false,
+      });
+      deduped.add(currentCategoryName);
     }
-  }, [allCategories, transactionFormData, activeCategories, isEditPage]);
+
+    for (const category of activeCategories) {
+      if (!deduped.has(category)) {
+        result.push({
+          label: category,
+          value: category,
+          visibility: true,
+        });
+        deduped.add(category);
+      }
+    }
+
+    setCategoryOptions(result);
+  }, [activeCategories, currentCategoryName]);
 
   return {
     categoryOptions,
