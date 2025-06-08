@@ -14,6 +14,7 @@ import CustomIterationModal from '@/pages/AddEditTransactionPage/components/moda
 import useModal from '@/hooks/useModal';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
 import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
   openEdit: () => void;
@@ -42,7 +43,11 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     type: transactionType,
     setError,
   });
-  const { categoryOptions: options, isGetTransactionFetching } = useTransactionForm({
+  const {
+    categoryOptions: options,
+    isGetTransactionFetching,
+    isCategoryPending,
+  } = useTransactionForm({
     transactionType,
     initialIterationTypeRef,
   });
@@ -75,8 +80,12 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
-  if (isGetTransactionFetching) {
-    return <div>로딩중</div>;
+  if (isGetTransactionFetching || isCategoryPending) {
+    return (
+      <div className="w-full flex grow items-center justify-center">
+        <LoadingSpinner size={30} />
+      </div>
+    );
   }
 
   return (
