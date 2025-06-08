@@ -6,6 +6,8 @@ const useGetYearlySummary = (date: string) => {
     queryKey: ['yearlySummary', date],
     queryFn: () => getYearlySummary(date),
     placeholderData: keepPreviousData,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 

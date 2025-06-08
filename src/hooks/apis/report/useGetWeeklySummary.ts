@@ -6,6 +6,8 @@ const useGetWeeklySummary = (date: string) => {
     queryKey: ['weeklySummary', date],
     queryFn: () => getWeeklySummary(date),
     placeholderData: keepPreviousData,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 
