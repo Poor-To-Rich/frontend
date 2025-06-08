@@ -13,7 +13,7 @@ export const chartHandlers = [
         data: {
           savingCategoryId: 1,
           totalAmount: 546546546,
-          totalSavingsAmount: 4536456,
+          totalSaving: 4536456,
         },
       },
       { status: 200 },
@@ -31,7 +31,7 @@ export const chartHandlers = [
         data: {
           savingCategoryId: 2,
           totalAmount: 2132447,
-          totalSavingsAmount: 2313225,
+          totalSaving: 2313225,
         },
       },
       { status: 200 },

@@ -1,5 +1,7 @@
 import { SettingOptionType } from '@/types/types';
 
+export const LOADING_OPTIONS = [{ label: '불러오는 중..', value: '불러오는 중..' }];
+
 export const GENDER_OPTIONS = [
   { label: '여자', value: 'FEMALE' },
   { label: '남자', value: 'MALE' },

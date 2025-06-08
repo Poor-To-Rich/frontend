@@ -30,7 +30,6 @@ const useInfiniteScroll = ({
     observer.observe(current);
 
     return () => {
-      observer.unobserve(current);
       observer.disconnect();
     };
   }, [observerRef, hasNextPage, fetchNextPage, isFetchingNextPage]);

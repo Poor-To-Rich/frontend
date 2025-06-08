@@ -1,10 +1,11 @@
 import { getYearlySummary } from '@/api/services/reportService';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const useGetYearlySummary = (date: string) => {
   return useQuery({
     queryKey: ['yearlySummary', date],
     queryFn: () => getYearlySummary(date),
+    placeholderData: keepPreviousData,
   });
 };
 

@@ -36,6 +36,7 @@ export const totalHandlers = [
   }),
 
   http.get('/report/yearly/total', async ({ request }) => {
+    await delay(3000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -46,7 +47,7 @@ export const totalHandlers = [
     response = {
       yearTotalIncome: income,
       yearTotalExpense: expense,
-      yearTotalBalance: income - expense,
+      yearTotalAmount: income - expense,
       monthlyLogs: createMockYearlySummary(date || format(new Date(), 'yyyy')),
     };
 
@@ -61,6 +62,7 @@ export const totalHandlers = [
   }),
 
   http.get('/report/weekly/total', async ({ request }) => {
+    await delay(3000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
     const targetDate = new Date(date || '');

@@ -15,6 +15,7 @@ import useModal from '@/hooks/useModal';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
 import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { LOADING_OPTIONS } from '@/constants/options';
 
 interface Props {
   openEdit: () => void;
@@ -80,7 +81,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     }
   };
 
-  if (isGetTransactionFetching || isCategoryPending) {
+  if (isGetTransactionFetching) {
     return (
       <div className="w-full flex grow items-center justify-center">
         <LoadingSpinner size={30} />
@@ -89,9 +90,9 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
   }
 
   return (
-    <form className="flex flex-col w-full h-full justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col w-full grow justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
       <IncomeExpenseButton type={transactionType} onClick={(value: IncomeExpenseType) => setTransactionType(value)} />
-      <TransactionFields type={transactionType} options={options} />
+      <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : options} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
         <PrimaryButton

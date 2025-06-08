@@ -7,7 +7,7 @@ export type TickPayload = {
 export type ChartTotalAndSavingsType = {
   savingCategoryId: number;
   totalAmount: number;
-  totalSavingsAmount: number;
+  totalSaving: number;
 };
 
 export type AggregatedData = {

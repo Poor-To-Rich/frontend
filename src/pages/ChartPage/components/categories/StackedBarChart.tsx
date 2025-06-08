@@ -14,7 +14,7 @@ const StackedBarChart = ({ categoryColors, aggregatedData }: Props) => {
     <div className="w-full h-[75px] flex justify-center items-center">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
-          data={aggregatedData}
+          data={[aggregatedData]}
           layout="vertical"
           margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
           barCategoryGap={0}>

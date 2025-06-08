@@ -23,7 +23,7 @@ const ReportSummary = () => {
           <SummaryItem title="총액" total={totalAndSavings.totalAmount} />
           <SummaryItem
             title="저축/투자"
-            total={totalAndSavings.totalSavingsAmount}
+            total={totalAndSavings.totalSaving}
             onClick={() =>
               handleClickCategoryChart(
                 navigate,
