@@ -6,6 +6,7 @@ import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import useGetBarChart from '@/hooks/apis/chart/useGetBarChart';
 import useFormattedReportDate from '@/hooks/chart/useFormattedReportDate';
 import Skeleton from '@/components/loading/Skeleton';
+import CustomXAxisTick from './CustomXAxisTick';
 
 const PeriodComparisonChart = () => {
   const formattedDate = useFormattedReportDate();
@@ -43,7 +44,7 @@ const PeriodComparisonChart = () => {
         differenceAmount={barChartData.differenceAmount}
         averageAmount={barChartData.averageAmount}
       />
-      <div className="w-full h-[250px] flex justify-center items-center ">
+      <div className="w-full h-[250px] mb-4 flex justify-center items-center relative">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={barChartData.totalAmounts} margin={{ top: 20, right: 10, bottom: 0, left: 10 }}>
             <XAxis
@@ -52,15 +53,16 @@ const PeriodComparisonChart = () => {
               axisLine={false}
               tickLine={false}
               interval={0}
-              tickFormatter={tickItem =>
-                `${currentReportType === '월별' ? `${tickItem.slice(-2)}월` : `${tickItem.slice(0, 4)}`}`
-              }
+              tick={props => (
+                <CustomXAxisTick {...props} onClickTick={handleBarCharClick} currentReportType={currentReportType} />
+              )}
             />
             <YAxis type="number" hide scale="pow" exponent={0.5} domain={[1, 'auto']} />
             <Bar
               dataKey={'totalAmount'}
               onClick={target => handleBarCharClick(target.period)}
-              className="cursor-pointer">
+              className="cursor-pointer"
+              background={{ fill: '#ffffff' }}>
               {barChartData.totalAmounts.map((entry, index) => (
                 <Cell
                   key={entry.period}

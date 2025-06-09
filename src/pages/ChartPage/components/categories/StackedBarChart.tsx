@@ -27,7 +27,15 @@ const StackedBarChart = ({ categoryColors, aggregatedData }: Props) => {
               stackId="a"
               fill={categoryColors[key]}
               barSize={500}
-              radius={index === 0 ? [10, 0, 0, 10] : index === lastIndex ? [0, 10, 10, 0] : [0, 0, 0, 0]}
+              radius={
+                colorKeys.length === 1
+                  ? [10, 10, 10, 10]
+                  : index === 0
+                    ? [10, 0, 0, 10]
+                    : index === lastIndex
+                      ? [0, 10, 10, 0]
+                      : [0, 0, 0, 0]
+              }
             />
           ))}
         </BarChart>
