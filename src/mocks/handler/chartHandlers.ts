@@ -1,8 +1,9 @@
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { createMockChart } from '@/mocks/utils/createMockChart';
 
 export const chartHandlers = [
-  http.get('/chart/expense/total', ({ request }) => {
+  http.get('/chart/expense/total', async ({ request }) => {
+    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -13,7 +14,7 @@ export const chartHandlers = [
         data: {
           savingCategoryId: 1,
           totalAmount: 546546546,
-          totalSaving: 4536456,
+          totalSaving: 0,
         },
       },
       { status: 200 },
@@ -38,22 +39,22 @@ export const chartHandlers = [
     );
   }),
 
-  http.get('/chart/category/expense', ({ request }) => {
+  http.get('/chart/category/expense', async ({ request }) => {
+    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
     const response = {
-      aggregatedData: [
-        {
-          주거비: 35.0,
-          식비: 25.0,
-          쇼핑: 15.0,
-          '건강/의료': 8.0,
-          '문화/취미': 7.0,
-          커피: 6.0,
-          기타: 4.0,
-        },
-      ],
+      aggregatedData: {
+        주거비: 35.0,
+        식비: 25.0,
+        쇼핑: 15.0,
+        '건강/의료': 8.0,
+        '문화/취미': 7.0,
+        커피: 6.0,
+        기타: 4.0,
+      },
+
       categoryColors: {
         주거비: '#4A90E2',
         식비: '#7ED321',
@@ -154,7 +155,8 @@ export const chartHandlers = [
     );
   }),
 
-  http.get('/chart/expense/bar', ({ request }) => {
+  http.get('/chart/expense/bar', async ({ request }) => {
+    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date') ?? '';
     const isYearMonthlyFormat = /^\d{4}-\d{2}$/.test(date);
