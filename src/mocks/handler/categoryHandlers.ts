@@ -1,5 +1,5 @@
 import { endpoints } from '@/api/endpoints';
-import { http, HttpResponse, delay } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
 import { parseRequestBody } from '../utils/parseRequestBody';
 
@@ -19,7 +19,6 @@ const IncomeCategories = INCOME_CATEGORIES.map(({ value, color }, index) => ({
 
 export const categoryHandlers = [
   http.get('category/active', async ({ request }) => {
-    await delay(5000);
     const url = new URL(request.url);
     const type = url.searchParams.get('type');
 
@@ -122,7 +121,6 @@ export const categoryHandlers = [
 
   http.post(endpoints.category.addExpense, async ({ request }) => {
     const { name } = await parseRequestBody<{ name: string }>(request);
-    await delay(2000);
 
     if (name === '냠냠' || name === '쩝쩝') {
       return HttpResponse.json(
@@ -145,7 +143,6 @@ export const categoryHandlers = [
 
   http.post(endpoints.category.addIncome, async ({ request }) => {
     const { name } = await parseRequestBody<{ name: string }>(request);
-    await delay(2000);
 
     if (name === '주식 배당금') {
       return HttpResponse.json(

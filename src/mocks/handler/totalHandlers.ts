@@ -1,4 +1,4 @@
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 import {
   createMockMonthlyTransactions,
   createMockWeeklySummary,
@@ -10,7 +10,6 @@ import { generateDate } from '@/mocks/utils/createMockTransaction';
 
 export const totalHandlers = [
   http.get('/report/monthly/total', async ({ request }) => {
-    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -36,7 +35,6 @@ export const totalHandlers = [
   }),
 
   http.get('/report/yearly/total', async ({ request }) => {
-    await delay(3000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -62,7 +60,6 @@ export const totalHandlers = [
   }),
 
   http.get('/report/weekly/total', async ({ request }) => {
-    await delay(3000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
     const targetDate = new Date(date || '');

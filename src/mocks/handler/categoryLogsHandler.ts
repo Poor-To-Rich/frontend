@@ -1,5 +1,5 @@
 import { CategoryDetailsRes, CategoryLogsType } from '@/types/chartTypes';
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { generateDate } from '@/mocks/utils/createMockTransaction';
 
 const TOTAL_LOGS = 50;
@@ -15,8 +15,6 @@ const generateLog = (index: number): CategoryLogsType => ({
 });
 
 export const categoryLogsHandler = http.get('/chart/:categoryId/section', async ({ request }) => {
-  await delay(3000);
-
   const url = new URL(request.url);
   const cursor = url.searchParams.get('cursor');
   const startIndex = cursor ? parseInt(cursor, 10) : 0;

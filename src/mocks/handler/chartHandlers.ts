@@ -1,9 +1,8 @@
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { createMockChart } from '@/mocks/utils/createMockChart';
 
 export const chartHandlers = [
   http.get('/chart/expense/total', async ({ request }) => {
-    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -40,7 +39,6 @@ export const chartHandlers = [
   }),
 
   http.get('/chart/category/expense', async ({ request }) => {
-    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -156,7 +154,6 @@ export const chartHandlers = [
   }),
 
   http.get('/chart/expense/bar', async ({ request }) => {
-    await delay(5000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date') ?? '';
     const isYearMonthlyFormat = /^\d{4}-\d{2}$/.test(date);

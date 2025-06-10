@@ -11,6 +11,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import SignupPage from '@/pages/SignupPage/SignupPage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 
 describe('SignupPage', () => {
   beforeEach(() => {
@@ -36,8 +37,6 @@ describe('SignupPage', () => {
   });
 
   test('필수 입력 요소 및 검증을 진행 했으면 버튼은 활성화 되어야한다.', async () => {
-    const submitButton = screen.getByRole('button', { name: /회원가입/i });
-
     // 1. 필수 필드 채우기
     const nameInput = screen.getByLabelText(/이름/i);
     fireEvent.change(nameInput, { target: { value: '홍길동' } });
@@ -55,10 +54,10 @@ describe('SignupPage', () => {
     fireEvent.click(usernameButton);
 
     const passwordInput = screen.getByTestId('password-input');
-    fireEvent.change(passwordInput, { target: { value: 'Password123!' } });
+    await userEvent.type(passwordInput, 'Password123!');
 
     const confirmPasswordInput = screen.getByTestId('confirm-password-input');
-    fireEvent.change(confirmPasswordInput, { target: { value: 'Password123!' } });
+    await userEvent.type(confirmPasswordInput, 'Password123!');
 
     const birthInput = screen.getByLabelText(/생년월일/i);
     fireEvent.change(birthInput, { target: { value: '1990-01-01' } });
@@ -72,7 +71,7 @@ describe('SignupPage', () => {
     fireEvent.click(screen.getAllByTestId('verify-button')[3]);
 
     await waitFor(() => {
-      expect(submitButton).toBeEnabled();
+      expect(screen.getByRole('button', { name: /회원가입/i })).toBeEnabled();
     });
   });
 });

@@ -1,10 +1,9 @@
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { createRandomAmount } from '../utils/createMockTransaction';
 import { endpoints } from '@/api/endpoints';
 
 export const transactionHandlers = [
   http.get('/report/daily/details', async ({ request }) => {
-    await delay(3000);
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -53,8 +52,6 @@ export const transactionHandlers = [
     );
   }),
   http.post(endpoints.transaction.addExpense, async () => {
-    await delay(3000);
-
     return HttpResponse.json(
       {
         status: 201,
@@ -64,8 +61,6 @@ export const transactionHandlers = [
     );
   }),
   http.post(endpoints.transaction.addIncome, async () => {
-    await delay(3000);
-
     return HttpResponse.json(
       {
         status: 201,
@@ -127,7 +122,6 @@ export const transactionHandlers = [
     );
   }),
   http.put('/expense/:id', async ({ params }) => {
-    await delay(3000);
     const { id } = params;
 
     if (id === '3') {
@@ -149,7 +143,6 @@ export const transactionHandlers = [
     );
   }),
   http.put('/income/:id', async ({ params }) => {
-    await delay(3000);
     const { id } = params;
 
     if (id === '3') {
@@ -174,7 +167,6 @@ export const transactionHandlers = [
     );
   }),
   http.delete('/expense/:id', async ({ params }) => {
-    await delay(3000);
     const { id } = params;
 
     if (id === '3') {
@@ -196,7 +188,6 @@ export const transactionHandlers = [
     );
   }),
   http.delete('/income/:id', async ({ params }) => {
-    await delay(3000);
     const { id } = params;
 
     if (id === '3') {
