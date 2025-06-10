@@ -4,11 +4,10 @@ import { format } from 'date-fns';
 const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
   const year = format(date, 'yyyy');
   const yearMonth = format(date, 'yyyy-MM');
-  const yearMonthDay = format(date, 'yyyy-MM-dd');
 
   // 월별/일별 데이터 조회관련 쿼리키
   queryClient.invalidateQueries({
-    queryKey: ['dailyDetails', yearMonthDay],
+    queryKey: ['dailyDetails'],
   });
   queryClient.invalidateQueries({
     queryKey: ['monthlyTotal', yearMonth],

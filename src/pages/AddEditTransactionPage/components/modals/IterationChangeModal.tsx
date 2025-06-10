@@ -18,6 +18,7 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const {
     handleSubmit,
     setError,
+    setValue,
     formState: { dirtyFields },
   } = useFormContext<TransactionFormDataType>();
   const optionRef = useRef<IterationActionEnumType>();
@@ -38,12 +39,10 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
     transactionMode as IncomeExpenseType,
   );
 
-  const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
+  const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionMode === '수입';
-    const body = isEditType ? getFinalData(data, isIncome) : {};
-    const requestData = { id: transactionId!, body: { ...body, iterationAction } };
-
-    optionRef.current = iterationAction;
+    const body = isEditType ? getFinalData(data, isIncome) : { iterationAction: data.iterationAction };
+    const requestData = { id: transactionId!, body };
 
     if (isEditType) {
       updateTransaction(requestData as { id: string; body: TransactionFormDataType });
@@ -66,7 +65,12 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
               key={label}
               disabled={isUpdatePending || isDeletePending}
               isPending={optionRef.current === value && (isUpdatePending || isDeletePending)}
-              onClick={handleSubmit(data => onSubmit(data, value as IterationActionEnumType))}
+              onClick={() => {
+                const iterationAction = value as IterationActionEnumType;
+                setValue('iterationAction', iterationAction);
+                optionRef.current = iterationAction;
+                handleSubmit(onSubmit)();
+              }}
             />
           ))}
         </div>
