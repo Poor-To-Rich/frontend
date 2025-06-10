@@ -6,6 +6,7 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
   const yearMonth = format(date, 'yyyy-MM');
   const yearMonthDay = format(date, 'yyyy-MM-dd');
 
+  // 월별/일별 데이터 조회관련 쿼리키
   queryClient.invalidateQueries({
     queryKey: ['dailyDetails', yearMonthDay],
   });
@@ -13,11 +14,35 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
     queryKey: ['monthlyTotal', yearMonth],
   });
 
+  // 월별/주별 데이터 조회관련 쿼리키
   queryClient.invalidateQueries({
     queryKey: ['yearlySummary', year],
   });
   queryClient.invalidateQueries({
     queryKey: ['weeklySummary', yearMonth],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['weeklyDetails', yearMonth],
+  });
+
+  // 차트 데이터 조회관련 쿼리키
+  queryClient.invalidateQueries({
+    queryKey: ['barChart', year],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['barChart', yearMonth],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['stackedBarChart', year],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['stackedBarChart', yearMonth],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['totalAndSavings', year],
+  });
+  queryClient.invalidateQueries({
+    queryKey: ['totalAndSavings', yearMonth],
   });
 };
 

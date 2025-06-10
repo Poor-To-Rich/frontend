@@ -17,11 +17,13 @@ const CustomizedLabel = (props: Props) => {
   const maxLength = 8;
   const truncatedValue = String(value).length > maxLength ? String(value).substring(0, maxLength) + '...' : value;
 
+  const adjustedY = Number(value) === 0 ? 255 : numericY - radius;
+
   return (
     <g>
       <text
         x={numericX + numericWidth / 2}
-        y={numericY - radius}
+        y={adjustedY}
         fill="#00000"
         textAnchor="middle"
         dominantBaseline="middle"
