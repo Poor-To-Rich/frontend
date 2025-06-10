@@ -16,7 +16,7 @@ const useUpdateCategory = (type: IncomeExpenseType) => {
         queryKey: ['customCategories', type],
       });
       queryClient.invalidateQueries({
-        queryKey: [`activeCategories`, type],
+        queryKey: [`activeCategories`, type === '수입' ? 'income' : 'expense'],
       });
       toast.success(data.message);
       navigate(-1);

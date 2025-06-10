@@ -5,6 +5,7 @@ import useGetCategoryDetailsBarChart from '@/hooks/apis/chart/useGetCategoryDeta
 import useGetCategoryDetailsLineChart from '@/hooks/apis/chart/useGetCategoryDetailsLineChart';
 import { ReportType } from '@/types/reportTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
   reportType: ReportType;
@@ -28,7 +29,11 @@ const CategoryOverviewChart = ({ reportType, transactionType, categoryId, date, 
   );
 
   if ((!monthlyChartData && !isWeekly) || (!weeklyChartData && isWeekly) || isBarChartFetching || isLineChartFetching) {
-    return <div>로딩중..</div>;
+    return (
+      <div className="flex justify-center items-center w-full h-[39rem]">
+        <LoadingSpinner size={30} />
+      </div>
+    );
   }
 
   const period = isWeekly ? weeklyChartData?.period : monthlyChartData?.period;

@@ -35,7 +35,7 @@ const AddEditTransactionPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen max-h-fit relative">
+    <div className="flex flex-col w-full min-h-screen max-h-fit relative">
       <DefaultHeader
         label={isEditPage ? '가계부 편집' : '가계부 추가'}
         hasBackButton

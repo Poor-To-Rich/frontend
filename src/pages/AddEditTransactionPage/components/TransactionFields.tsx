@@ -32,10 +32,6 @@ const TransactionFields = ({ type, options }: Props) => {
     onChange(Number(formattedValue));
   };
 
-  if (!options) {
-    return;
-  }
-
   return (
     <div className="flex flex-col flex-grow min-h-0 mt-7 gap-3.5">
       <PrimaryInput
@@ -67,6 +63,7 @@ const TransactionFields = ({ type, options }: Props) => {
         options={options}
         type={type}
         hasEditButton
+        errorMessage={errors.categoryName?.message}
         {...register('categoryName')}
       />
       <PrimaryInput

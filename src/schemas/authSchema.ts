@@ -35,7 +35,7 @@ export const baseSignupSchema = z.object({
     .min(1, { message: '값을 입력해주세요' })
     .max(10, { message: '최대 10자입니다' })
     .regex(nicknameRegex, '특수문자 X, 한글 또는 영문자로 시작돼야합니다'),
-  passwordConfirm: z.string().min(1, { message: '값을 입력해주세요' }),
+  passwordConfirm: z.string(),
   birth: z
     .string()
     .min(1, { message: '값을 입력해주세요' })
@@ -48,19 +48,23 @@ export const baseSignupSchema = z.object({
 
 export const signupSchema = passwordMatchRefinement(baseSignupSchema);
 
-export const profileSchema = baseSignupSchema.omit({
-  username: true,
-  password: true,
-  passwordConfirm: true,
-  verificationCode: true,
-  email: true,
-});
+export const profileSchema = baseSignupSchema
+  .omit({
+    username: true,
+    password: true,
+    passwordConfirm: true,
+    verificationCode: true,
+    email: true,
+  })
+  .extend({
+    isDefaultProfile: z.boolean(),
+  });
 
 export const changePasswordSchema = passwordMatchRefinement(
   z.object({
     currentPassword: passwordSchema,
     newPassword: passwordSchema,
-    passwordConfirm: z.string().min(1, { message: '값을 입력해주세요' }),
+    confirmNewPassword: z.string(),
   }),
 );
 

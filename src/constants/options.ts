@@ -1,5 +1,7 @@
 import { SettingOptionType } from '@/types/types';
 
+export const LOADING_OPTIONS = [{ label: '불러오는 중..', value: '불러오는 중..' }];
+
 export const GENDER_OPTIONS = [
   { label: '여자', value: 'FEMALE' },
   { label: '남자', value: 'MALE' },
@@ -63,4 +65,10 @@ export const DATA_OPTIONS: SettingOptionType[] = [
   { title: '전체 데이터 초기화', modalType: 'dataReset' },
 ];
 
-export const INFORMATION_OPTIONS: SettingOptionType[] = [{ title: '의견 보내기', externalUrl: '/' }];
+export const INFORMATION_OPTIONS: SettingOptionType[] = [
+  {
+    title: '의견 보내기',
+    externalUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSd-IGtKdkMbo1lLe943G7g7lGlPyIHr6iSZPSm9D0b8y1_4Kw/viewform?usp=sharing&ouid=113670142221324954659',
+  },
+];

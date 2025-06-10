@@ -8,7 +8,6 @@ import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 import { merge } from 'lodash';
 import useGetActiveCategory from '@/hooks/apis/category/useGetActiveCategory';
 import useFilteredCategories from '@/hooks/category/useFilteredCategories ';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
 
 interface Props {
   transactionType?: IncomeExpenseType;
@@ -31,8 +30,8 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   const { data: activeCategories, isPending: isCategoryPending } = useGetActiveCategory(
     isExpense ? 'expense' : 'income',
   );
-  const categories = isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
-  const { categoryOptions } = useFilteredCategories(categories, transactionFormData, activeCategories, isEditPage);
+
+  const { categoryOptions } = useFilteredCategories(activeCategories, transactionFormData?.categoryName);
 
   useEffect(() => {
     if (transactionDate) setCalenderDate(new Date(transactionDate));
@@ -56,9 +55,13 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
 
   useEffect(() => {
     if (categoryOptions.length > 0) {
-      setValue('categoryName', categoryOptions[0].value);
+      if (transactionFormData) {
+        setValue('categoryName', transactionFormData.categoryName);
+      } else {
+        setValue('categoryName', categoryOptions[0].value);
+      }
     }
-  }, [categoryOptions, setValue]);
+  }, [transactionFormData, categoryOptions, setValue]);
 
   return {
     categoryOptions,

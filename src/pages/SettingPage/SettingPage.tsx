@@ -12,8 +12,8 @@ import { useNavigate } from 'react-router-dom';
 const SettingPage = () => {
   const navigate = useNavigate();
   const [selectedModal, setSelectedModal] = useState<ModalType>(null);
-  const { mutate: logout } = useLogout();
-  const { mutate: resetData } = useResetData({ closeModal: () => setSelectedModal(null) });
+  const { mutate: logout, isPending: isLogoutPending } = useLogout();
+  const { mutate: resetData, isPending: isResetPending } = useResetData({ closeModal: () => setSelectedModal(null) });
 
   const handleOptionClick = ({ to, modalType, externalUrl }: Omit<SettingOptionType, 'title'>) => {
     if (to) {
@@ -41,13 +41,19 @@ const SettingPage = () => {
       </div>
       <TapBar page="setting" />
       {selectedModal === 'logout' && (
-        <DefaultModal content="로그아웃 하시겠습니까?" onClick={logout} onClose={handleModalClose} />
+        <DefaultModal
+          content="로그아웃 하시겠습니까?"
+          onClick={logout}
+          onClose={handleModalClose}
+          isPending={isLogoutPending}
+        />
       )}
       {selectedModal === 'dataReset' && (
         <DefaultModal
           content={`초기화하게 되면\n입력된 모든 가계부 데이터가 삭제됩니다.\n전체 데이터를 초기화 하시겠습니까?`}
           onClick={resetData}
           onClose={handleModalClose}
+          isPending={isResetPending}
         />
       )}
     </div>

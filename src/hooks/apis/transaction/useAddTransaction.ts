@@ -2,8 +2,8 @@ import { addExpenseTransaction, addIncomeTransaction } from '@/api/services/tran
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import CustomError from '@/utils/CustomError';
+import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
 import { UseFormSetError } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,19 +14,15 @@ interface Props {
 
 const useAddTransaction = ({ type, setError }: Props) => {
   const queryClient = useQueryClient();
-  const date = useCalenderDateStore().calenderDate;
+  const { calenderDate } = useCalenderDateStore();
+
   const mutationFn = type === '지출' ? addExpenseTransaction : addIncomeTransaction;
   const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (body: TransactionFormDataType) => mutationFn(body),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['dailyDetails', format(date, 'yyyy-MM-dd')],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['monthlyTotal', format(date, 'yyyy-MM')],
-      });
+      invalidateTransactionQueries(queryClient, calenderDate);
       navigate('/');
     },
     onError: (error: CustomError<{ field: keyof TransactionFormDataType }>) => {

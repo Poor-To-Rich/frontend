@@ -1,13 +1,16 @@
 import { getExpenseStackedBarChart, getIncomeStackedBarChart } from '@/api/services/chartService';
 import { IncomeExpenseType } from '@/types/transactionTypes';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 const useGetStackedBarChart = (transactionType: IncomeExpenseType, date: string) => {
   const queryFn = transactionType === '지출' ? getExpenseStackedBarChart : getIncomeStackedBarChart;
 
   return useQuery({
-    queryKey: ['stackedBarChart', transactionType, date],
+    queryKey: ['stackedBarChart', date, transactionType],
     queryFn: () => queryFn(date),
+    placeholderData: keepPreviousData,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 15 * 60 * 1000,
   });
 };
 

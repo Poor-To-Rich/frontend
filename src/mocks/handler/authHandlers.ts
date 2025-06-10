@@ -1,6 +1,6 @@
 import { endpoints } from '@/api/endpoints';
 import { parseRequestBody } from '@/mocks/utils/parseRequestBody';
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 import {
   USERNAME_ERROR_MSG,
   USERNAME_SUCCESS_MSG,
@@ -31,8 +31,6 @@ export const authHandlers = [
     return HttpResponse.json({ status: 200, message: NICKNAME_SUCCESS_MSG }, { status: 200 });
   }),
   http.post(endpoints.auth.signup, async ({ request }) => {
-    await delay(5000);
-
     const formData = await request.formData();
 
     const email = formData.get('email') as string;

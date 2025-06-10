@@ -14,7 +14,7 @@ const ChartPage = () => {
   return (
     <div className="flex flex-col w-full min-h-screen">
       <DateControlHeader headerDate={chartHeaderDate} setHeaderDate={setChartHeaderDate} />
-      <div className="grow">
+      <div className="flex flex-col grow">
         <div className="w-full flex justify-between items-center p-5">
           <ReportTypeSelection />
           <TransactionTypeButton />
