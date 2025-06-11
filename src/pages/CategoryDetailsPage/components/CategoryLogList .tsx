@@ -57,7 +57,9 @@ const CategoryLogList = ({
                     transactionType === '수입' && !isSavings && 'text-oceanBlue',
                     `flex items-center px-8 gap-8  h-[4.8rem] cursor-pointer hover:bg-strokeGray active:bg-strokeGray`,
                   )}
-                  onClick={() => navigate(`/transaction?type=edit&id=${id}`)}>
+                  onClick={() =>
+                    navigate(`/transaction?type=edit&transactionType=${transactionType}&date=${date}&id=${id}`)
+                  }>
                   <span className="text-[#555555]">{title}</span>
                   <span className="text-lg truncate">{formatNumber(amount)}원</span>
                 </div>

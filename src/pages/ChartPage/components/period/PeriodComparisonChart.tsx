@@ -6,7 +6,8 @@ import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import useGetBarChart from '@/hooks/apis/chart/useGetBarChart';
 import useFormattedReportDate from '@/hooks/chart/useFormattedReportDate';
 import Skeleton from '@/components/loading/Skeleton';
-import CustomXAxisTick from './CustomXAxisTick';
+import CustomXAxisTick from '@/pages/ChartPage/components/period/CustomXAxisTick';
+import PeriodComparisonCustomLabel from '@/pages/ChartPage/components/period/PeriodComparisonCustomLabel';
 
 const PeriodComparisonChart = () => {
   const formattedDate = useFormattedReportDate();
@@ -69,7 +70,13 @@ const PeriodComparisonChart = () => {
                   fill={index === barChartData.totalAmounts.length - 1 ? '#e7f6d1' : '#E6E6E6'}
                 />
               ))}
-              <LabelList dataKey="label" position="top" fill="#000000" fontSize={14} />
+              <LabelList
+                dataKey="label"
+                position="top"
+                fill="#000000"
+                fontSize={14}
+                content={PeriodComparisonCustomLabel}
+              />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
