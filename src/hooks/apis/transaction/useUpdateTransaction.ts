@@ -23,7 +23,7 @@ const useUpdateTransaction = ({
     mutationFn: ({ id, body }: { id: string; body: TransactionFormDataType }) => mutationFn(id, body),
     onSuccess: () => {
       invalidateTransactionQueries(queryClient, calenderDate);
-      navigate('/');
+      navigate(-1);
     },
     onError: (error: CustomError<{ field: keyof TransactionFormDataType }>) => {
       if (error.data)

@@ -6,41 +6,41 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
   const yearMonth = format(date, 'yyyy-MM');
 
   // 월별/일별 데이터 조회관련 쿼리키
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['dailyDetails'],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['monthlyTotal', yearMonth],
   });
 
   // 월별/주별 데이터 조회관련 쿼리키
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['yearlySummary', year],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['weeklySummary', yearMonth],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['weeklyDetails', yearMonth],
   });
 
   // 차트 데이터 조회관련 쿼리키
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['barChart', year],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['barChart', yearMonth],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['stackedBarChart', year],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['stackedBarChart', yearMonth],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['totalAndSavings', year],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['totalAndSavings', yearMonth],
   });
 };

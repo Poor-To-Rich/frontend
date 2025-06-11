@@ -17,7 +17,7 @@ const useDeleteTransaction = (type: IncomeExpenseType) => {
     mutationFn: ({ id, body }: { id: string; body?: DeleteTransactionReq }) => mutationFn({ id, body }),
     onSuccess: () => {
       invalidateTransactionQueries(queryClient, calenderDate);
-      navigate('/');
+      navigate(-1);
     },
     onError: error => {
       toast.error(error.message);
