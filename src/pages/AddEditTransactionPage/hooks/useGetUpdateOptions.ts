@@ -16,6 +16,8 @@ const useGetUpdateOptions = ({ isEditType, dirtyFields }: Props) => {
     { label: '모든 반복 내역에 적용', value: 'ALL' },
   ];
 
+  console.log(hasChangedIterationFields);
+
   const options =
     hasChangedIterationFields && isEditType
       ? baseOptions

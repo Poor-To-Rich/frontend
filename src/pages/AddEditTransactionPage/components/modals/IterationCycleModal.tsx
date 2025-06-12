@@ -31,7 +31,7 @@ const IterationCycleModal = ({ onClose, onClick }: Props) => {
     const merged = merge({}, customIteration, prevCustomIteration);
 
     setValue('customIteration', merged);
-  }, []);
+  }, [setValue]);
 
   return (
     <ModalDimmed onClose={onClose}>

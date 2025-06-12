@@ -54,17 +54,19 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
         reset({ ...transactionFormData, customIteration: merged });
       }
 
-      if (isEditPage) {
-        if (dirtyFields.iterationType) {
-          setValue('isIterationModified', true);
-        } else {
-          setValue('isIterationModified', false);
-        }
-      }
-
       initialIterationTypeRef.current = transactionFormData.iterationType;
     }
-  }, [isEditPage, dirtyFields.iterationType, setValue, transactionFormData, initialIterationTypeRef, reset]);
+  }, [transactionFormData, initialIterationTypeRef, reset]);
+
+  useEffect(() => {
+    if (isEditPage) {
+      if (dirtyFields.iterationType) {
+        setValue('isIterationModified', true);
+      } else {
+        setValue('isIterationModified', false);
+      }
+    }
+  }, [isEditPage, dirtyFields.iterationType, setValue]);
 
   useEffect(() => {
     if (categoryOptions.length > 0) {

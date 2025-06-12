@@ -6,7 +6,7 @@ import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
 
 interface Props extends TransactionItemType {
-  selectedRef: React.MutableRefObject<HTMLButtonElement | null>;
+  selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
 }
 
 const TransactionDetailItem = ({ id, color, categoryName, title, isIteration, type, cost, selectedRef }: Props) => {
