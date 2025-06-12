@@ -1,10 +1,9 @@
-import { formatNumber } from '@/utils/number';
-import { clsx } from 'clsx';
 import FetchingMessage from '@/components/loading/FetchingMessage';
 import { CategoryLogsType } from '@/types/chartTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
-import { useNavigate } from 'react-router-dom';
 import Skeleton from '@/components/loading/Skeleton';
+import CategoryLogItem from '@/pages/CategoryDetailsPage/components/Log/CategoryLogItem';
+import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
 
 interface Props {
   isEmpty: boolean;
@@ -23,7 +22,7 @@ const CategoryLogList = ({
   isSavings,
   transactionType,
 }: Props) => {
-  const navigate = useNavigate();
+  const { selectedRef } = useScrollToSelectedRef();
 
   if (isPending) {
     return (
@@ -48,19 +47,15 @@ const CategoryLogList = ({
           <div key={`${date}-${idx}`} className="w-full flex justify-between">
             <div className=" w-full flex flex-col flex-grow">
               <span className="px-5 py-3">{date}</span>
-              {transactions.map(({ id, title, amount }) => (
-                <div
-                  key={id}
-                  className={clsx(
-                    title ? 'justify-between' : 'justify-end',
-                    (transactionType === '지출' || isSavings) && 'text-sunsetRose',
-                    transactionType === '수입' && !isSavings && 'text-oceanBlue',
-                    `flex items-center px-8 gap-8  h-[4.8rem] cursor-pointer hover:bg-strokeGray active:bg-strokeGray`,
-                  )}
-                  onClick={() => navigate(`/transaction?type=edit&id=${id}`)}>
-                  <span className="text-[#555555]">{title}</span>
-                  <span className="text-lg truncate">{formatNumber(amount)}원</span>
-                </div>
+              {transactions.map(transaction => (
+                <CategoryLogItem
+                  key={transaction.id}
+                  date={date}
+                  isSavings={isSavings}
+                  transactionType={transactionType}
+                  selectedRef={selectedRef}
+                  {...transaction}
+                />
               ))}
             </div>
           </div>

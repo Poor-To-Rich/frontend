@@ -5,11 +5,14 @@ import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
 import DailySummeryItem from '@/pages/MainPage/components/daily/DailySummeryItem';
 import Skeleton from '@/components/loading/Skeleton';
+import { ko } from 'date-fns/locale';
+import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
 
 const DailyTransactionList = () => {
   const { calenderDate } = useCalenderDateStore();
   const { data: dailyDetails, isPending } = useGetDailyDetails(format(calenderDate, 'yyyy-MM-dd'));
   const isEmpty = dailyDetails?.dailyDetails.length === 0;
+  const { selectedRef } = useScrollToSelectedRef();
 
   if (isPending) {
     return (
@@ -35,19 +38,15 @@ const DailyTransactionList = () => {
         <span className="text-defaultGrey">내역이 없습니다.</span>
       ) : (
         <>
-          <div className="w-full flex flex-col items-center gap-2.5">
-            {dailyDetails.dailyDetails.map(({ id, color, categoryName, title, isIteration, type, cost }) => (
-              <TransactionDetailItem
-                key={`${categoryName}${id}`}
-                id={id}
-                color={color}
-                categoryName={categoryName}
-                title={title}
-                isIteration={isIteration}
-                type={type}
-                cost={cost}
-              />
-            ))}
+          <div className="w-full flex flex-col gap-3.5">
+            <p className="w-full text-right px-3 text-defaultGrey">
+              {format(calenderDate, 'yyyy.MM.dd EEEE', { locale: ko })}
+            </p>
+            <div className="w-full flex flex-col items-center gap-2.5">
+              {dailyDetails.dailyDetails.map(dailyDetail => (
+                <TransactionDetailItem key={dailyDetail.id} selectedRef={selectedRef} {...dailyDetail} />
+              ))}
+            </div>
           </div>
           <div className="w-[95%] flex flex-col gap-1.5">
             <DailySummeryItem label="수입" amount={dailyDetails.totalIncome.toLocaleString()} />

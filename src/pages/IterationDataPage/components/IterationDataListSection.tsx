@@ -3,6 +3,7 @@ import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetIterationData from '@/hooks/apis/transaction/useGetIterationData';
+import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
 
 interface Props {
   type: IncomeExpenseType;
@@ -10,6 +11,7 @@ interface Props {
 
 const IterationDataListSection = ({ type }: Props) => {
   const { data: iterationData, isPending: isGetIterationDataPending } = useGetIterationData(type as IncomeExpenseType);
+  const { selectedRef } = useScrollToSelectedRef();
 
   if (!iterationData || isGetIterationDataPending) {
     return (
@@ -31,17 +33,8 @@ const IterationDataListSection = ({ type }: Props) => {
         </p>
       </div>
       <div className="w-full flex flex-col items-center gap-2.5">
-        {iterationData.iterationAccountBooks.map(({ id, color, categoryName, title, isIteration, type, cost }) => (
-          <TransactionDetailItem
-            key={id}
-            id={id}
-            color={color}
-            categoryName={categoryName}
-            title={title}
-            isIteration={isIteration}
-            type={type}
-            cost={cost}
-          />
+        {iterationData.iterationAccountBooks.map(iterationData => (
+          <TransactionDetailItem selectedRef={selectedRef} {...iterationData} />
         ))}
       </div>
     </>

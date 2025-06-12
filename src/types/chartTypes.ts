@@ -84,3 +84,10 @@ export type CategoryDetailsRes = {
   nextCursor: string;
   categoryLogs: CategoryLogsType[];
 };
+
+export interface LabelProps {
+  x?: number | string;
+  y?: number | string;
+  width?: number | string;
+  value?: number | string;
+}

@@ -16,7 +16,11 @@ interface Props {
 
 const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props) => {
   const { setCalenderDate } = useCalenderDateStore();
-  const { reset, setValue } = useFormContext<TransactionFormDataType>();
+  const {
+    reset,
+    setValue,
+    formState: { dirtyFields },
+  } = useFormContext<TransactionFormDataType>();
   const { transactionDate, transactionId, isEditPage } = useTransactionParams();
   const { customIteration } = useResetCustomIteration();
   const isExpense = transactionType === '지출';
@@ -49,9 +53,20 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
 
         reset({ ...transactionFormData, customIteration: merged });
       }
+
       initialIterationTypeRef.current = transactionFormData.iterationType;
     }
   }, [transactionFormData, initialIterationTypeRef, reset]);
+
+  useEffect(() => {
+    if (isEditPage) {
+      if (dirtyFields.iterationType) {
+        setValue('isIterationModified', true);
+      } else {
+        setValue('isIterationModified', false);
+      }
+    }
+  }, [isEditPage, dirtyFields.iterationType, setValue]);
 
   useEffect(() => {
     if (categoryOptions.length > 0) {

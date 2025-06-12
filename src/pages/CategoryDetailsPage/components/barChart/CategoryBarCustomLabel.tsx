@@ -1,13 +1,7 @@
 import { formatNumber } from '@/utils/number';
+import { LabelProps } from 'recharts';
 
-interface Props {
-  x?: number | string;
-  y?: number | string;
-  width?: number | string;
-  value?: number | string;
-}
-
-const CustomizedLabel = (props: Props) => {
+const CategoryBarCustomLabel = (props: LabelProps) => {
   const { x, y, width, value = 0 } = props;
   const numericX = Number(x);
   const numericY = Number(y);
@@ -34,4 +28,4 @@ const CustomizedLabel = (props: Props) => {
   );
 };
 
-export default CustomizedLabel;
+export default CategoryBarCustomLabel;

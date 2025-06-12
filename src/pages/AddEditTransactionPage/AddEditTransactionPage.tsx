@@ -31,7 +31,7 @@ const AddEditTransactionPage = () => {
   const initialIterationTypeRef = useRef(methods.getValues('iterationType'));
 
   const handleDelete = () => {
-    deleteTransaction({ id: transactionId! });
+    deleteTransaction({ id: transactionId!, body: {} });
   };
 
   return (

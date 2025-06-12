@@ -16,4 +16,5 @@ export const transactionSchema = z.object({
   iterationAction: IterationActionEnum.optional(),
   iterationType: z.string(),
   customIteration: customIterationSchema.optional(),
+  isIterationModified: z.boolean().optional(),
 });
