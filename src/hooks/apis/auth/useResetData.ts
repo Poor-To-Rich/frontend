@@ -1,5 +1,5 @@
 import { resetData } from '@/api/services/authService';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -7,10 +7,13 @@ interface Props {
 }
 
 const useResetData = ({ closeModal }: Props) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: resetData,
     onSuccess: data => {
       toast.success(data.message);
+      queryClient.clear();
       closeModal();
     },
     onError: error => {

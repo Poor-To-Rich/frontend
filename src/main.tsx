@@ -7,12 +7,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-if (typeof window !== 'undefined') {
-  if (import.meta.env.DEV) {
-    const { worker } = await import('@/mocks/browser');
-    await worker.start();
-  }
-}
+// if (typeof window !== 'undefined') {
+//   if (import.meta.env.DEV) {
+//     const { worker } = await import('@/mocks/browser');
+//     await worker.start();
+//   }
+// }
 
 const queryClient = new QueryClient();
 
