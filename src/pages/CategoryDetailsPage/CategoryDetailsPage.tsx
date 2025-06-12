@@ -4,7 +4,7 @@ import CategoryOverviewChart from '@/pages/CategoryDetailsPage/components/Catego
 import { useEffect } from 'react';
 import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
-import CategoryLogListSection from '@/pages/CategoryDetailsPage/components/CategoryLogListSection';
+import CategoryLogListSection from '@/pages/CategoryDetailsPage/components/Log/CategoryLogListSection';
 
 const CategoryDetailsPage = () => {
   const location = useLocation();

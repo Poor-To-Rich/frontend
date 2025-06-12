@@ -17,6 +17,7 @@ const YearlySummarySection = () => {
       </div>
     );
   }
+
   return (
     <div className="grow">
       <TransactionSummary

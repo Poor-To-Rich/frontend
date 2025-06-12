@@ -2,7 +2,7 @@ import SortingButton from '@/components/button/icon/SortingButton';
 import { useRef, useState } from 'react';
 import useCategoryLogsInfiniteQuery from '@/hooks/apis/chart/useCategoryLogsInfiniteQuery';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import CategoryLogList from '@/pages/CategoryDetailsPage/components/CategoryLogList ';
+import CategoryLogList from '@/pages/CategoryDetailsPage/components/Log/CategoryLogList ';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 
 interface Props {

@@ -1,19 +1,25 @@
 import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem';
 import FetchingMessage from '@/components/loading/FetchingMessage';
 import TransactionSummary from '@/components/summary/TransactionSummary';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import useGetWeeklyDetailsInfiniteQuery from '@/hooks/apis/report/useGetWeeklyDetailsInfiniteQuery';
 import { format } from 'date-fns';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
 
 const WeeklyDetailsSection = () => {
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const date = searchParams.get('date') || '';
-  const week = searchParams.get('week') || '';
+  const { date, week } = useMemo(() => {
+    const searchParams = new URLSearchParams(location.search);
+    return {
+      date: searchParams.get('date') || '',
+      week: searchParams.get('week') || '',
+    };
+  }, [location.search]);
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const { selectedRef } = useScrollToSelectedRef();
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useGetWeeklyDetailsInfiniteQuery(
     date,
@@ -25,12 +31,13 @@ const WeeklyDetailsSection = () => {
   const totalCount = data?.pages[0]?.countOfLogs ?? 0;
   const isEmpty = weeklyDetailsSummary?.length === 0;
 
-  if (!data || isPending)
+  if (!data || isPending) {
     return (
       <div className="flex flex-col grow justify-center items-center">
         <LoadingSpinner size={30} />
       </div>
     );
+  }
 
   return (
     <>
@@ -53,7 +60,7 @@ const WeeklyDetailsSection = () => {
                   <span className="pl-3">{format(date, 'MM.dd')}</span>
                   <div className="w-full flex flex-col items-center gap-3">
                     {transactions.map(transaction => (
-                      <TransactionDetailItem key={transaction.id} {...transaction} />
+                      <TransactionDetailItem key={transaction.id} {...transaction} selectedRef={selectedRef} />
                     ))}
                   </div>
                 </div>
