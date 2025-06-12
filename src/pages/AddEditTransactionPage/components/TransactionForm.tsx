@@ -28,7 +28,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     setValue,
     getValues,
     setError,
-    formState: { isValid },
+    formState: { isValid, dirtyFields },
   } = useFormContext<TransactionFormDataType>();
   const { isEditPage, transactionId, transactionMode } = useTransactionParams();
   const [transactionType, setTransactionType] = useState<IncomeExpenseType>(
@@ -56,13 +56,15 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
 
-    const body = getFinalData(data, isIncome);
+    let body = getFinalData(data, isIncome);
 
     if (isEditPage) {
       if (initialIterationTypeRef.current !== 'none') {
         openEdit();
         return;
       }
+
+      body = { ...body, isIterationModified: dirtyFields.iterationType };
 
       updateTransaction({ id: transactionId!, body });
     } else {

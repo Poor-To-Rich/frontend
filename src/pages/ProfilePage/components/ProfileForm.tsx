@@ -22,7 +22,6 @@ const ProfileForm = () => {
     reset,
     handleSubmit,
     setError,
-    setValue,
     formState: { isValid, dirtyFields },
   } = useFormContext<ProfileFormData>();
   const { isOpen, openModal, closeModal } = useModal();
@@ -46,6 +45,7 @@ const ProfileForm = () => {
     const requestData = filteredData(postData);
 
     const formData = new FormData();
+
     Object.entries(requestData).forEach(([key, value]) => {
       if (typeof value === 'boolean') {
         value = String(value);
@@ -59,19 +59,8 @@ const ProfileForm = () => {
   useEffect(() => {
     if (userDetails) {
       reset(userDetails);
-      if (typeof userDetails.profileImage === 'string') {
-        if (
-          userDetails.profileImage.includes(
-            'https://poor-to-rich.s3.ap-northeast-2.amazonaws.com/기본프로필.png',
-          )
-        )
-          setValue('isDefaultProfile', true);
-        else {
-          setValue('isDefaultProfile', false);
-        }
-      }
     }
-  }, [reset, setValue, userDetails]);
+  }, [reset, userDetails]);
 
   if (isGetUserDetailsPending)
     return (
