@@ -22,6 +22,7 @@ const AddEditTransactionPage = () => {
       cost: 0,
       memo: '',
       date: transactionDate!,
+      transactionType: (transactionMode as IncomeExpenseType) || '지출',
       iterationType: 'none',
     },
     resolver: zodResolver(transactionSchema),

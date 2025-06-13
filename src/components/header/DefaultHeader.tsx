@@ -1,7 +1,7 @@
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import PlusButton from '@/components/button/icon/PlusButton';
 import TrashButton from '@/components/button/icon/TrashButton';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
   label: string;
@@ -13,8 +13,10 @@ interface Props {
 
 const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, onClick }: Props) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const handleBackClick = () => {
+    if (pathname === '/transaction') sessionStorage.removeItem('transaction-form-data');
     navigate(-1);
   };
 

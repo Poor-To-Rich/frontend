@@ -3,7 +3,7 @@ import { filteredData } from '@/utils/filteredFormData';
 import { omit } from 'lodash';
 
 const getPayload = (data: TransactionFormDataType) => {
-  const formData = filteredData(data);
+  const formData = omit(filteredData(data), 'transactionType');
   const isCustom = formData.iterationType === 'custom';
   const notCustomExcludeData = omit(formData, ['customIteration']);
   return isCustom ? formData : notCustomExcludeData;

@@ -76,7 +76,7 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
             <ModalButton
               label={label}
               key={label}
-              disabled={isUpdatePending || isDeletePending || !isChanged}
+              disabled={isUpdatePending || isDeletePending || (isEditType && !isChanged)}
               isPending={optionRef.current === value && (isUpdatePending || isDeletePending)}
               onClick={() => {
                 const iterationAction = value as IterationActionEnumType;

@@ -1,5 +1,6 @@
 import { deleteExpenseTransaction, deleteIncomeTransaction } from '@/api/services/transactionService';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { useDraftStore } from '@/stores/useDreftStore';
 import { DeleteTransactionReq, IncomeExpenseType } from '@/types/transactionTypes';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -16,7 +17,9 @@ const useDeleteTransaction = (type: IncomeExpenseType) => {
   return useMutation({
     mutationFn: ({ id, body }: { id: string; body?: DeleteTransactionReq }) => mutationFn({ id, body }),
     onSuccess: () => {
+      useDraftStore.getState().disableSave();
       invalidateTransactionQueries(queryClient, calenderDate);
+      sessionStorage.removeItem('transaction-form-data');
       navigate(-1);
     },
     onError: error => {

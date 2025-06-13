@@ -16,6 +16,7 @@ import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction'
 import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { LOADING_OPTIONS } from '@/constants/options';
+import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
 
 interface Props {
   openEdit: () => void;
@@ -28,12 +29,11 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     setValue,
     getValues,
     setError,
+    watch,
     formState: { isValid, dirtyFields },
   } = useFormContext<TransactionFormDataType>();
-  const { isEditPage, transactionId, transactionMode } = useTransactionParams();
-  const [transactionType, setTransactionType] = useState<IncomeExpenseType>(
-    (transactionMode as IncomeExpenseType) || '지출',
-  );
+  const { isEditPage, transactionId } = useTransactionParams();
+  const transactionType = watch('transactionType') as IncomeExpenseType;
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
 
   const { isOpen, openModal, closeModal } = useModal();
@@ -52,6 +52,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     transactionType,
     initialIterationTypeRef,
   });
+  useTransactionDraft();
   const isChanged = Object.keys(dirtyFields).length > 0;
 
   const onSubmit = (data: TransactionFormDataType) => {
@@ -95,7 +96,10 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
 
   return (
     <form className="flex flex-col w-full grow justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
-      <IncomeExpenseButton type={transactionType} onClick={(value: IncomeExpenseType) => setTransactionType(value)} />
+      <IncomeExpenseButton
+        type={transactionType}
+        onClick={(value: IncomeExpenseType) => setValue('transactionType', value)}
+      />
       <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : options} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />

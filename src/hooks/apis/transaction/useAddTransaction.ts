@@ -1,5 +1,6 @@
 import { addExpenseTransaction, addIncomeTransaction } from '@/api/services/transactionService';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { useDraftStore } from '@/stores/useDreftStore';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import CustomError from '@/utils/CustomError';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
@@ -22,8 +23,10 @@ const useAddTransaction = ({ type, setError }: Props) => {
   return useMutation({
     mutationFn: (body: TransactionFormDataType) => mutationFn(body),
     onSuccess: data => {
+      useDraftStore.getState().disableSave();
       invalidateTransactionQueries(queryClient, calenderDate);
       sessionStorage.setItem('selected-id', String(data.data?.id));
+      sessionStorage.removeItem('transaction-form-data');
       navigate('/');
     },
     onError: (error: CustomError<{ field: keyof TransactionFormDataType }>) => {
