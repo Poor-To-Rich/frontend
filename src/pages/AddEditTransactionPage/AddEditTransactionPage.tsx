@@ -10,8 +10,10 @@ import IterationChangeModal from '@/pages/AddEditTransactionPage/components/moda
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 
 const AddEditTransactionPage = () => {
+  const { setCalenderDate } = useCalenderDateStore();
   const { transactionId, transactionDate, transactionMode, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
@@ -30,9 +32,14 @@ const AddEditTransactionPage = () => {
   });
 
   const initialIterationTypeRef = useRef(methods.getValues('iterationType'));
+  const dateRef = useRef(methods.getValues('date'));
 
   const handleDelete = () => {
     deleteTransaction({ id: transactionId!, body: {} });
+  };
+
+  const resetCalenderDate = () => {
+    setCalenderDate(new Date(dateRef.current));
   };
 
   return (
@@ -42,6 +49,7 @@ const AddEditTransactionPage = () => {
         hasBackButton
         hasTrashButton={isEditPage}
         onClick={openDeleteModal}
+        resetCalenderDate={resetCalenderDate}
       />
       <FormProvider {...methods}>
         <TransactionForm openEdit={openEdit} initialIterationTypeRef={initialIterationTypeRef} />

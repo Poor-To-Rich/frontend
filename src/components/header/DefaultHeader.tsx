@@ -1,6 +1,7 @@
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import PlusButton from '@/components/button/icon/PlusButton';
 import TrashButton from '@/components/button/icon/TrashButton';
+import { useDraftStore } from '@/stores/useDreftStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -8,15 +9,21 @@ interface Props {
   hasBackButton?: boolean;
   hasPlusButton?: boolean;
   hasTrashButton?: boolean;
+  resetCalenderDate?: () => void;
   onClick?: () => void;
 }
 
-const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, onClick }: Props) => {
+const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, resetCalenderDate, onClick }: Props) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { disableSave } = useDraftStore();
 
   const handleBackClick = () => {
-    if (pathname === '/transaction') sessionStorage.removeItem('transaction-form-data');
+    if (pathname === '/transaction' && resetCalenderDate) {
+      disableSave();
+      sessionStorage.removeItem('transaction-form-data');
+      resetCalenderDate();
+    }
     navigate(-1);
   };
 
