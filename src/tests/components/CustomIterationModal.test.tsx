@@ -23,8 +23,10 @@ const renderCustomModal = async () => {
 };
 
 describe('CustomIterationModal', () => {
-  beforeEach(() => {
-    renderAddPage();
+  beforeEach(async () => {
+    await act(async () => {
+      renderAddPage();
+    });
   });
 
   afterEach(() => {

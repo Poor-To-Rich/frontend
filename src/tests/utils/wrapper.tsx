@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { ReactNode } from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { LocationDisplay } from './LocationDisplay';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
 export const Wrapper = ({ children, initialEntry }: { children: ReactNode; initialEntry: string }) => {
   return (
@@ -14,29 +14,31 @@ export const Wrapper = ({ children, initialEntry }: { children: ReactNode; initi
   );
 };
 
-export const renderAddPage = () => {
-  return render(<App />, {
-    wrapper: ({ children }) => {
-      return (
-        <Wrapper initialEntry={`/transaction?type=add&date=${format(new Date(), 'yyyy-MM-dd')}`}>
+export const renderAddPage = async (date?: Date) => {
+  await act(async () => {
+    render(<App />, {
+      wrapper: ({ children }) => (
+        <Wrapper initialEntry={`/transaction?type=add&date=${format(date || new Date(), 'yyyy-MM-dd')}`}>
           {children}
           <LocationDisplay />
         </Wrapper>
-      );
-    },
+      ),
+    });
   });
 };
 
-export const renderEditPage = (id: string, transactionType: string) => {
-  return render(<App />, {
-    wrapper: ({ children }) => {
-      return (
-        <Wrapper
-          initialEntry={`/transaction?type=edit&date=${format(new Date(), 'yyyy-MM-dd')}&id=${id}&transactionType=${transactionType}`}>
-          {children}
-          <LocationDisplay />
-        </Wrapper>
-      );
-    },
+export const renderEditPage = async (id: string, transactionType: string) => {
+  await act(async () => {
+    render(<App />, {
+      wrapper: ({ children }) => {
+        return (
+          <Wrapper
+            initialEntry={`/transaction?type=edit&date=${format(new Date(), 'yyyy-MM-dd')}&id=${id}&transactionType=${transactionType}`}>
+            {children}
+            <LocationDisplay />
+          </Wrapper>
+        );
+      },
+    });
   });
 };
