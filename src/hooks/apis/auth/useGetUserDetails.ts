@@ -5,6 +5,8 @@ const useGetUserDetails = () => {
   return useQuery({
     queryKey: ['userDetails'],
     queryFn: getUserDetails,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
 

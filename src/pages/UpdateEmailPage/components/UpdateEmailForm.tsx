@@ -7,6 +7,7 @@ import EmailField from '@/components/input/auth/EmailField';
 import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 import useChangeEmail from '@/hooks/apis/auth/useChangeEmail';
 import { omit } from 'lodash';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 const UpdateEmailForm = () => {
   const {
@@ -14,8 +15,8 @@ const UpdateEmailForm = () => {
     formState: { isValid, errors },
   } = useFormContext<EmailChangeData>();
   const { sendEmailStatus, emailCodeStatus } = useEmailFieldStore();
-  const { data: userEmail, isPending } = useGetUserEmail();
-  const { mutate: changeEmail } = useChangeEmail();
+  const { data: userEmail, isPending: isGetUserEmailPending } = useGetUserEmail();
+  const { mutate: changeEmail, isPending: isUpdateEmailPending } = useChangeEmail();
 
   const buttonDisabled = !isValid || !errors || !sendEmailStatus.isVerify || !emailCodeStatus.isVerify;
 
@@ -24,8 +25,12 @@ const UpdateEmailForm = () => {
     changeEmail(postData);
   };
 
-  if (!userEmail || isPending) {
-    return <div>로딩중..</div>;
+  if (!userEmail || isGetUserEmailPending) {
+    return (
+      <div className="w-full flex grow justify-center items-center">
+        <LoadingSpinner size={30} />
+      </div>
+    );
   }
 
   return (
@@ -35,7 +40,7 @@ const UpdateEmailForm = () => {
         <EmailField emailFieldName="newEmail" purpose="changeEmail" />
       </div>
       <div className="flex justify-end w-full">
-        <PrimaryButton label="이메일 변경" disabled={buttonDisabled} type="submit" />
+        <PrimaryButton label="이메일 변경" disabled={buttonDisabled} type="submit" isPending={isUpdateEmailPending} />
       </div>
     </form>
   );

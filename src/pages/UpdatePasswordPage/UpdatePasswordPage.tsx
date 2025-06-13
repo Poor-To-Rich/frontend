@@ -10,7 +10,7 @@ const UpdatePasswordPage = () => {
     defaultValues: {
       currentPassword: '',
       newPassword: '',
-      passwordConfirm: '',
+      confirmNewPassword: '',
     },
     resolver: zodResolver(changePasswordSchema),
     mode: 'onChange',

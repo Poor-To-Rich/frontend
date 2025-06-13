@@ -7,10 +7,11 @@ export const createMockChart = (date: string, isYearMonthlyFormat: boolean) => {
 
   const result = [];
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     result.push({
       period: targetDate,
       totalAmount: Math.floor(Math.random() * boundary + 1),
+      label: `${Math.floor(Math.random() * boundary + 1)}만원`,
     });
 
     const formattedDate = isYearMonthlyFormat

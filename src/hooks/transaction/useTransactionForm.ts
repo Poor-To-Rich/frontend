@@ -8,7 +8,6 @@ import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 import { merge } from 'lodash';
 import useGetActiveCategory from '@/hooks/apis/category/useGetActiveCategory';
 import useFilteredCategories from '@/hooks/category/useFilteredCategories ';
-import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/options';
 
 interface Props {
   transactionType?: IncomeExpenseType;
@@ -17,7 +16,11 @@ interface Props {
 
 const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props) => {
   const { setCalenderDate } = useCalenderDateStore();
-  const { reset, setValue } = useFormContext<TransactionFormDataType>();
+  const {
+    reset,
+    setValue,
+    formState: { dirtyFields },
+  } = useFormContext<TransactionFormDataType>();
   const { transactionDate, transactionId, isEditPage } = useTransactionParams();
   const { customIteration } = useResetCustomIteration();
   const isExpense = transactionType === '지출';
@@ -31,8 +34,8 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   const { data: activeCategories, isPending: isCategoryPending } = useGetActiveCategory(
     isExpense ? 'expense' : 'income',
   );
-  const categories = isExpense ? EXPENSE_CATEGORIES : INCOME_CATEGORIES;
-  const { categoryOptions } = useFilteredCategories(categories, transactionFormData, activeCategories, isEditPage);
+
+  const { categoryOptions } = useFilteredCategories(activeCategories, transactionFormData?.categoryName);
 
   useEffect(() => {
     if (transactionDate) setCalenderDate(new Date(transactionDate));
@@ -50,15 +53,30 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
 
         reset({ ...transactionFormData, customIteration: merged });
       }
+
       initialIterationTypeRef.current = transactionFormData.iterationType;
     }
   }, [transactionFormData, initialIterationTypeRef, reset]);
 
   useEffect(() => {
-    if (categoryOptions.length > 0) {
-      setValue('categoryName', categoryOptions[0].value);
+    if (isEditPage) {
+      if (dirtyFields.iterationType) {
+        setValue('isIterationModified', true);
+      } else {
+        setValue('isIterationModified', false);
+      }
     }
-  }, [categoryOptions, setValue]);
+  }, [isEditPage, dirtyFields.iterationType, setValue]);
+
+  useEffect(() => {
+    if (categoryOptions.length > 0) {
+      if (transactionFormData) {
+        setValue('categoryName', transactionFormData.categoryName);
+      } else {
+        setValue('categoryName', categoryOptions[0].value);
+      }
+    }
+  }, [transactionFormData, categoryOptions, setValue]);
 
   return {
     categoryOptions,

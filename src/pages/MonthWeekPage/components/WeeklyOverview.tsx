@@ -1,6 +1,7 @@
 import LogItem from '@/pages/MonthWeekPage/components/LogItem';
 import { useNavigate } from 'react-router-dom';
 import useGetWeeklySummary from '@/hooks/apis/report/useGetWeeklySummary';
+import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
   targetDate: string;
@@ -8,7 +9,7 @@ interface Props {
 
 const WeeklyOverview = ({ targetDate }: Props) => {
   const navigate = useNavigate();
-  const { data: weeklyLogs, isFetching } = useGetWeeklySummary(targetDate);
+  const { data: weeklyLogs, isPending } = useGetWeeklySummary(targetDate);
 
   const handleClick = (week: number) => {
     navigate(`/weeklyDetails?date=${targetDate}&week=${week}`);
@@ -16,8 +17,14 @@ const WeeklyOverview = ({ targetDate }: Props) => {
 
   return (
     <div className="w-[90%] mr-[5%] border border-strokeGray mb-2.5">
-      {!weeklyLogs || isFetching ? (
-        <div>로딩중</div>
+      {!weeklyLogs || isPending ? (
+        <div className="flex flex-col grow gap-1.5 p-3">
+          <Skeleton height="h-[4.5rem]" />
+          <Skeleton height="h-[4.5rem]" />
+          <Skeleton height="h-[4.5rem]" />
+          <Skeleton height="h-[4.5rem]" />
+          <Skeleton height="h-[4.5rem]" />
+        </div>
       ) : (
         weeklyLogs.map((log, index) => (
           <LogItem

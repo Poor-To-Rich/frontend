@@ -11,20 +11,20 @@ const ReportSummary = () => {
   const { currentReportType } = useReportTypeStore();
   const { currentTransactionType } = useTransactionReportTypeStore();
   const formattedDate = useFormattedReportDate();
-  const { data: totalAndSavings, isFetching } = useGetTotalAndSavings(currentTransactionType, formattedDate);
+  const { data: totalAndSavings, isPending } = useGetTotalAndSavings(currentTransactionType, formattedDate);
 
   const categoryName = '저축/투자';
+
   return (
     <div className="w-full flex justify-between px-8 py-4 gap-3.5">
-      {!totalAndSavings || isFetching ? (
-        <div>로딩중 ..</div>
-      ) : (
-        <>
-          <SummaryItem title="총액" total={totalAndSavings.totalAmount} />
-          <SummaryItem
-            title="저축/투자"
-            total={totalAndSavings.totalSavingsAmount}
-            onClick={() =>
+      <>
+        <SummaryItem title="총액" isPending={isPending} total={totalAndSavings?.totalAmount} />
+        <SummaryItem
+          title="저축/투자"
+          isPending={isPending}
+          total={totalAndSavings?.totalSaving}
+          onClick={() => {
+            if (!isPending && totalAndSavings)
               handleClickCategoryChart(
                 navigate,
                 totalAndSavings.savingCategoryId,
@@ -33,11 +33,10 @@ const ReportSummary = () => {
                 currentReportType,
                 formattedDate,
                 true,
-              )
-            }
-          />
-        </>
-      )}
+              );
+          }}
+        />
+      </>
     </div>
   );
 };

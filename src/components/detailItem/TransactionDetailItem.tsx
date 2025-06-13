@@ -5,12 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { format } from 'date-fns';
 
-const TransactionDetailItem = ({ id, color, categoryName, title, isIteration, type, cost }: TransactionItemType) => {
+interface Props extends TransactionItemType {
+  selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
+}
+
+const TransactionDetailItem = ({ id, color, categoryName, title, isIteration, type, cost, selectedRef }: Props) => {
   const { calenderDate } = useCalenderDateStore();
+  const targetId = sessionStorage.getItem('selected-id');
+  const isSelected = String(id) === targetId;
   const navigate = useNavigate();
 
   const handleClick = (id: number, type: string) => {
     const transactionType = type === 'EXPENSE' ? '지출' : '수입';
+    sessionStorage.setItem('selected-id', JSON.stringify(id));
     navigate(
       `/transaction?type=edit&transactionType=${transactionType}&date=${format(calenderDate, 'yyyy-MM-dd')}&id=${id}`,
     );
@@ -19,7 +26,11 @@ const TransactionDetailItem = ({ id, color, categoryName, title, isIteration, ty
   return (
     <button
       onClick={() => handleClick(id, type)}
-      className="w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray bg-white rounded-lg cursor-pointer">
+      ref={isSelected ? selectedRef : undefined}
+      className={clsx(
+        'w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray rounded-lg cursor-pointer hover:bg-lightGray active:bg-lightGray',
+        isSelected ? 'bg-lightGray' : 'bg-white',
+      )}>
       <div className="flex items-center gap-2.5">
         <span style={{ color }} className="font-semibold min-w-fit">
           {categoryName}

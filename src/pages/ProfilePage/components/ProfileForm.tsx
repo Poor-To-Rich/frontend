@@ -15,18 +15,20 @@ import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
 import { useEffect } from 'react';
 import useUpdateUserDetails from '@/hooks/apis/auth/useUpdateUserDetails';
 import { filteredData } from '@/utils/filteredFormData';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 const ProfileForm = () => {
   const {
     reset,
     handleSubmit,
     setError,
+    setValue,
     formState: { isValid, dirtyFields },
   } = useFormContext<ProfileFormData>();
   const { isOpen, openModal, closeModal } = useModal();
   const { mutate: deleteUser } = useDeleteUser();
-  const { mutate: updateUserDetails } = useUpdateUserDetails({ setError });
-  const { data: userDetails, isPending } = useGetUserDetails();
+  const { mutate: updateUserDetails, isPending: isUpdateUserDetailsPending } = useUpdateUserDetails(setError);
+  const { data: userDetails, isPending: isGetUserDetailsPending } = useGetUserDetails();
 
   const onSubmit = (data: ProfileFormData) => {
     let postData: ProfileUpdateFormData = { ...data };
@@ -34,6 +36,8 @@ const ProfileForm = () => {
     if (dirtyFields.profileImage) {
       if (!data.profileImage) {
         postData = { ...postData, isDefaultProfile: true };
+      } else {
+        postData = { ...postData, isDefaultProfile: false };
       }
     } else {
       delete postData.profileImage;
@@ -55,10 +59,26 @@ const ProfileForm = () => {
   useEffect(() => {
     if (userDetails) {
       reset(userDetails);
+      if (typeof userDetails.profileImage === 'string') {
+        if (
+          userDetails.profileImage.includes(
+            'https://poor-to-rich.s3.ap-northeast-2.amazonaws.com/기본프로필.png',
+          )
+        )
+          setValue('isDefaultProfile', true);
+        else {
+          setValue('isDefaultProfile', false);
+        }
+      }
     }
-  }, [reset, userDetails]);
+  }, [reset, setValue, userDetails]);
 
-  if (isPending) return <div>로딩중</div>;
+  if (isGetUserDetailsPending)
+    return (
+      <div className="w-full flex grow justify-center items-center">
+        <LoadingSpinner size={30} />
+      </div>
+    );
 
   return (
     <>
@@ -75,7 +95,7 @@ const ProfileForm = () => {
         </div>
         <div className="w-full flex items-center justify-between">
           <DeleteUserButton openModal={openModal} />
-          <PrimaryButton label="저장" type="submit" disabled={!isValid} />
+          <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isUpdateUserDetailsPending} />
         </div>
       </form>
       {isOpen && <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />}

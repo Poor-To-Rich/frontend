@@ -1,11 +1,24 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const PasswordField = () => {
   const {
+    watch,
+    trigger,
     register,
     formState: { errors },
   } = useFormContext();
+
+  useEffect(() => {
+    const subscription = watch((_, { name }) => {
+      if (name === 'password') {
+        trigger(['passwordConfirm']);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch, trigger]);
 
   return (
     <>

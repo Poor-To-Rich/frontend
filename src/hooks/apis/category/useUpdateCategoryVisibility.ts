@@ -29,7 +29,7 @@ const useUpdateCategoryVisibility = ({ type }: Props) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [`activeCategories`, type],
+        queryKey: [`activeCategories`, type === '수입' ? 'income' : 'expense'],
       });
     },
     onError: (error, _variables, context) => {

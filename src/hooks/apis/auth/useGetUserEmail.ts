@@ -5,6 +5,8 @@ const useGetUserEmail = () => {
   return useQuery({
     queryKey: ['userEmail'],
     queryFn: getUserEmail,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
 

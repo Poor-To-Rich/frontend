@@ -1,17 +1,19 @@
 import { updateUserDetails } from '@/api/services/authService';
 import { ProfileFormData } from '@/types/authTypes';
-import { CheckVerifyFieldProps } from '@/types/fieldType';
 import CustomError from '@/utils/CustomError';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const useUpdateUserDetails = ({ setError }: Pick<CheckVerifyFieldProps, 'setError'>) => {
+const useUpdateUserDetails = (setError: UseFormSetError<ProfileFormData>) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: updateUserDetails,
     onSuccess: data => {
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
       toast.success(data.message);
       navigate(-1);
     },

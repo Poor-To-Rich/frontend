@@ -11,7 +11,7 @@ export type OverviewLogType = {
 export type AnnualFinanceReportType = {
   yearTotalIncome: number;
   yearTotalExpense: number;
-  yearTotalBalance: number;
+  yearTotalAmount: number;
   monthlyLogs: OverviewLogType[];
 };
 

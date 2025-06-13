@@ -4,7 +4,7 @@ import CategoryOverviewChart from '@/pages/CategoryDetailsPage/components/Catego
 import { useEffect } from 'react';
 import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionReportTypeStore';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
-import CategoryLogList from '@/pages/CategoryDetailsPage/components/CategoryLogList ';
+import CategoryLogListSection from '@/pages/CategoryDetailsPage/components/Log/CategoryLogListSection';
 
 const CategoryDetailsPage = () => {
   const location = useLocation();
@@ -27,7 +27,12 @@ const CategoryDetailsPage = () => {
         date={date}
         isSavings={isSavings}
       />
-      <CategoryLogList transactionType={transactionType} categoryId={categoryId} date={date} isSavings={isSavings} />
+      <CategoryLogListSection
+        transactionType={transactionType}
+        categoryId={categoryId}
+        date={date}
+        isSavings={isSavings}
+      />
     </div>
   );
 };

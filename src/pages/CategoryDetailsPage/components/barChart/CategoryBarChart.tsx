@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, LabelList, ResponsiveContainer, Tooltip } from 'recharts';
-import CustomizedLabel from '@/pages/CategoryDetailsPage/components/barChart/CustomizedLabel';
+import CategoryBarCustomLabel from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarCustomLabel';
 import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/CustomizedTooltip';
 import '@/styles/recharts-tooltip.css';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
@@ -32,7 +32,7 @@ const CategoryBarChart = ({ transactionType, monthlyAmounts }: Props) => {
       <div className="min-w-[700px]">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={monthlyAmounts} margin={{ top: 30, right: 10, bottom: 0, left: 10 }} barSize={25}>
-            <XAxis type="category" dataKey="month" axisLine={false} tickLine={false} interval={0} />
+            <XAxis type="category" dataKey="period" axisLine={false} tickLine={false} interval={0} />
             <YAxis type="number" dataKey="totalAmount" hide domain={[1, maxAmount]} />
             <Tooltip content={<CustomizedTooltip />} />
             <Bar
@@ -40,7 +40,7 @@ const CategoryBarChart = ({ transactionType, monthlyAmounts }: Props) => {
               fill={chartColor}
               background={{ fill: '#f0f0f0', stroke: 'none', radius: 15 }}
               radius={15}>
-              <LabelList dataKey="totalAmount" position="top" fontSize={11} content={CustomizedLabel} />
+              <LabelList dataKey="totalAmount" position="top" fontSize={11} content={CategoryBarCustomLabel} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

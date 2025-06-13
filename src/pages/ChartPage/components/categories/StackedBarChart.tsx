@@ -18,7 +18,7 @@ const StackedBarChart = ({ categoryColors, aggregatedData }: Props) => {
           layout="vertical"
           margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
           barCategoryGap={0}>
-          <XAxis type="number" hide />
+          <XAxis type="number" hide domain={[0, 100]} />
           <YAxis type="category" hide />
           {colorKeys.map((key, index) => (
             <Bar
@@ -27,7 +27,15 @@ const StackedBarChart = ({ categoryColors, aggregatedData }: Props) => {
               stackId="a"
               fill={categoryColors[key]}
               barSize={500}
-              radius={index === 0 ? [10, 0, 0, 10] : index === lastIndex ? [0, 10, 10, 0] : [0, 0, 0, 0]}
+              radius={
+                colorKeys.length === 1
+                  ? [10, 10, 10, 10]
+                  : index === 0
+                    ? [10, 0, 0, 10]
+                    : index === lastIndex
+                      ? [0, 10, 10, 0]
+                      : [0, 0, 0, 0]
+              }
             />
           ))}
         </BarChart>

@@ -1,13 +1,7 @@
 import { formatNumber } from '@/utils/number';
+import { LabelProps } from 'recharts';
 
-interface Props {
-  x?: number | string;
-  y?: number | string;
-  width?: number | string;
-  value?: number | string;
-}
-
-const CustomizedLabel = (props: Props) => {
+const CategoryBarCustomLabel = (props: LabelProps) => {
   const { x, y, width, value = 0 } = props;
   const numericX = Number(x);
   const numericY = Number(y);
@@ -17,11 +11,13 @@ const CustomizedLabel = (props: Props) => {
   const maxLength = 8;
   const truncatedValue = String(value).length > maxLength ? String(value).substring(0, maxLength) + '...' : value;
 
+  const adjustedY = Number(value) === 0 ? 255 : numericY - radius;
+
   return (
     <g>
       <text
         x={numericX + numericWidth / 2}
-        y={numericY - radius}
+        y={adjustedY}
         fill="#00000"
         textAnchor="middle"
         dominantBaseline="middle"
@@ -32,4 +28,4 @@ const CustomizedLabel = (props: Props) => {
   );
 };
 
-export default CustomizedLabel;
+export default CategoryBarCustomLabel;
