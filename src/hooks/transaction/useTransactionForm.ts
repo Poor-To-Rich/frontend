@@ -16,11 +16,7 @@ interface Props {
 
 const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props) => {
   const { setCalenderDate } = useCalenderDateStore();
-  const {
-    reset,
-    setValue,
-    formState: { dirtyFields },
-  } = useFormContext<TransactionFormDataType>();
+  const { reset, setValue } = useFormContext<TransactionFormDataType>();
   const { transactionDate, transactionId, isEditPage } = useTransactionParams();
   const { customIteration } = useResetCustomIteration();
   const isExpense = transactionType === '지출';
@@ -43,15 +39,17 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
 
   useEffect(() => {
     if (transactionFormData) {
+      const transactionType = isExpense ? '지출' : '수입';
       if (transactionFormData.iterationType !== 'custom') {
         reset({
           ...transactionFormData,
+          transactionType,
           customIteration,
         });
       } else {
         const merged = merge({}, customIteration, transactionFormData.customIteration);
 
-        reset({ ...transactionFormData, customIteration: merged });
+        reset({ ...transactionFormData, transactionType, customIteration: merged });
       }
 
       initialIterationTypeRef.current = transactionFormData.iterationType;
@@ -59,18 +57,13 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   }, [transactionFormData, initialIterationTypeRef, reset]);
 
   useEffect(() => {
-    if (isEditPage) {
-      if (dirtyFields.iterationType) {
-        setValue('isIterationModified', true);
-      } else {
-        setValue('isIterationModified', false);
-      }
-    }
-  }, [isEditPage, dirtyFields.iterationType, setValue]);
-
-  useEffect(() => {
     if (categoryOptions.length > 0) {
-      if (transactionFormData) {
+      const raw = sessionStorage.getItem('transaction-form-data');
+      const storageFormData = raw ? JSON.parse(raw) : null;
+
+      if (storageFormData && categoryOptions.some(option => option.value === storageFormData.categoryName)) {
+        setValue('categoryName', storageFormData.categoryName);
+      } else if (transactionFormData) {
         setValue('categoryName', transactionFormData.categoryName);
       } else {
         setValue('categoryName', categoryOptions[0].value);

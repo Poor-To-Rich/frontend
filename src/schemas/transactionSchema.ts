@@ -3,7 +3,10 @@ import { customIterationSchema } from '@/schemas/customIterationSchema';
 
 export const IterationActionEnum = z.enum(['THIS_ONLY', 'THIS_AND_FUTURE', 'ALL']);
 
+export const TransactionTypeEnum = z.enum(['지출', '수입']);
+
 export const transactionSchema = z.object({
+  transactionType: TransactionTypeEnum.optional(),
   date: z.string().min(1, { message: '날짜를 입력해주세요' }),
   categoryName: z.string(),
   title: z.string().max(15, { message: '최대 15자입니다' }).optional(),

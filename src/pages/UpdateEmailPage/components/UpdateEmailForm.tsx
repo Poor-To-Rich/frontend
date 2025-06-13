@@ -12,11 +12,12 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 const UpdateEmailForm = () => {
   const {
     handleSubmit,
+    setError,
     formState: { isValid, errors },
   } = useFormContext<EmailChangeData>();
   const { sendEmailStatus, emailCodeStatus } = useEmailFieldStore();
   const { data: userEmail, isPending: isGetUserEmailPending } = useGetUserEmail();
-  const { mutate: changeEmail, isPending: isUpdateEmailPending } = useChangeEmail();
+  const { mutate: changeEmail, isPending: isUpdateEmailPending } = useChangeEmail(setError);
 
   const buttonDisabled = !isValid || !errors || !sendEmailStatus.isVerify || !emailCodeStatus.isVerify;
 
