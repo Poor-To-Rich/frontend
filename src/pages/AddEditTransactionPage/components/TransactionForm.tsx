@@ -55,6 +55,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
+    const isIterationModified = Boolean(dirtyFields.iterationType);
 
     let body = getFinalData(data, isIncome);
 
@@ -64,7 +65,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
         return;
       }
 
-      body = { ...body, isIterationModified: dirtyFields.iterationType };
+      body = { ...body, isIterationModified };
 
       updateTransaction({ id: transactionId!, body });
     } else {

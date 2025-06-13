@@ -21,8 +21,9 @@ const useAddTransaction = ({ type, setError }: Props) => {
 
   return useMutation({
     mutationFn: (body: TransactionFormDataType) => mutationFn(body),
-    onSuccess: () => {
+    onSuccess: data => {
       invalidateTransactionQueries(queryClient, calenderDate);
+      sessionStorage.setItem('selected-id', String(data.data?.id));
       navigate('/');
     },
     onError: (error: CustomError<{ field: keyof TransactionFormDataType }>) => {

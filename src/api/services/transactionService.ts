@@ -1,6 +1,7 @@
 import { fetchData } from '@/api/axios';
 import { endpoints } from '@/api/endpoints';
 import {
+  AddTransactionRes,
   DailyTransactionType,
   DeleteTransactionReq,
   IterationDataType,
@@ -20,12 +21,20 @@ export const getDailyDetails = async (date: string) => {
 };
 
 export const addExpenseTransaction = async (body: TransactionFormDataType) => {
-  const res = await fetchData<TransactionFormDataType>('POST', endpoints.transaction.addExpense, body);
+  const res = await fetchData<TransactionFormDataType, AddTransactionRes>(
+    'POST',
+    endpoints.transaction.addExpense,
+    body,
+  );
   return res;
 };
 
 export const addIncomeTransaction = async (body: TransactionFormDataType) => {
-  const res = await fetchData<TransactionFormDataType>('POST', endpoints.transaction.addIncome, body);
+  const res = await fetchData<TransactionFormDataType, AddTransactionRes>(
+    'POST',
+    endpoints.transaction.addIncome,
+    body,
+  );
   return res;
 };
 

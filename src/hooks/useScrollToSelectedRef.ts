@@ -1,6 +1,7 @@
+import { TransactionItemType } from '@/types/transactionTypes';
 import { useEffect, useRef } from 'react';
 
-const useScrollToSelectedRef = () => {
+const useScrollToSelectedRef = (deps?: TransactionItemType[]) => {
   const selectedRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -10,14 +11,12 @@ const useScrollToSelectedRef = () => {
 
     const timeout = setTimeout(() => {
       sessionStorage.removeItem('selected-id');
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timeout);
-  }, []);
+  }, [deps]);
 
-  return {
-    selectedRef,
-  };
+  return { selectedRef };
 };
 
 export default useScrollToSelectedRef;
