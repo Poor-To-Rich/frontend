@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom'; // jest-dom을 사용하여 DOM 테스트
 import { server } from '@/mocks/server';
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-
 // 모든 테스트 시작 전에 MSW 서버 시작
 beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
