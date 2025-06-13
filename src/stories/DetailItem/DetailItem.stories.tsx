@@ -6,6 +6,7 @@ function DetailItem() {
   const expenseItem = {
     id: 1,
     color: '#ff55ad',
+    date: '2025-01-02',
     categoryName: '식비',
     title: '상하이버거세트',
     isIteration: true,
@@ -16,6 +17,7 @@ function DetailItem() {
   const incomeItem = {
     id: 1,
     color: '#9ADEF1',
+    date: '2025-01-02',
     categoryName: '용돈',
     title: '용돈이지롱',
     isIteration: false,
