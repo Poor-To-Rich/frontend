@@ -22,6 +22,8 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   } = useFormContext<TransactionFormDataType>();
   const optionRef = useRef<IterationActionEnumType>();
   const isEditType = type === 'edit';
+  const isChanged = Object.keys(dirtyFields).length > 0;
+
   const { content, options } = useGetUpdateOptions({
     isEditType,
     dirtyFields: dirtyFields as {
@@ -74,7 +76,7 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
             <ModalButton
               label={label}
               key={label}
-              disabled={isUpdatePending || isDeletePending}
+              disabled={isUpdatePending || isDeletePending || !isChanged}
               isPending={optionRef.current === value && (isUpdatePending || isDeletePending)}
               onClick={() => {
                 const iterationAction = value as IterationActionEnumType;

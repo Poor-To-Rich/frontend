@@ -25,9 +25,11 @@ const ProfileForm = () => {
     formState: { isValid, dirtyFields },
   } = useFormContext<ProfileFormData>();
   const { isOpen, openModal, closeModal } = useModal();
+
   const { mutate: deleteUser } = useDeleteUser();
   const { mutate: updateUserDetails, isPending: isUpdateUserDetailsPending } = useUpdateUserDetails(setError);
   const { data: userDetails, isPending: isGetUserDetailsPending } = useGetUserDetails();
+  const isChanged = Object.keys(dirtyFields).length > 0;
 
   const onSubmit = (data: ProfileFormData) => {
     let postData: ProfileUpdateFormData = { ...data };
@@ -84,7 +86,12 @@ const ProfileForm = () => {
         </div>
         <div className="w-full flex items-center justify-between">
           <DeleteUserButton openModal={openModal} />
-          <PrimaryButton label="저장" type="submit" disabled={!isValid} isPending={isUpdateUserDetailsPending} />
+          <PrimaryButton
+            label="저장"
+            type="submit"
+            disabled={!isValid || !isChanged}
+            isPending={isUpdateUserDetailsPending}
+          />
         </div>
       </form>
       {isOpen && <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />}

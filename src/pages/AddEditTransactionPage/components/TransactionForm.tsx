@@ -52,6 +52,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     transactionType,
     initialIterationTypeRef,
   });
+  const isChanged = Object.keys(dirtyFields).length > 0;
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
@@ -102,7 +103,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
           data-testid="submit-button"
           label="저장"
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || !isChanged}
           isPending={isAddPending || isUpdatePending}
         />
       </div>
