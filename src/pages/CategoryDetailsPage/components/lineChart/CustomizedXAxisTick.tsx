@@ -7,18 +7,14 @@ interface Props {
 }
 
 const CustomizedXAxisTick = ({ x, y, payload }: Props) => {
-  const { value, index } = payload;
+  const { index } = payload;
 
   const firstLine = `${index + 1}주차`;
-  const secondLine = `(${value})`;
 
   return (
     <g transform={`translate(${x},${y})`}>
-      <text x={0} y={0} textAnchor="middle" fontSize={14}>
+      <text x={0} y={15} textAnchor="middle" fontSize={14}>
         {firstLine}
-      </text>
-      <text x={0} y={20} textAnchor="middle" fontSize={10}>
-        {secondLine}
       </text>
     </g>
   );
