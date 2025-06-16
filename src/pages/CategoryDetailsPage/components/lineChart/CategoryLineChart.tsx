@@ -1,17 +1,17 @@
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import CustomizedXAxisTick from '@/pages/CategoryDetailsPage/components/lineChart/CustomizedXAxisTick';
-import { WeeklyAmountType } from '@/types/chartTypes';
+import { CharTransactionType, WeeklyAmountType } from '@/types/chartTypes';
 import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/CustomizedTooltip';
 import '@/styles/recharts-line.css';
-import { IncomeExpenseType } from '@/types/transactionTypes';
+import { LINE_CHART_COLORS } from '@/constants/charts';
 
 interface Props {
-  transactionType: IncomeExpenseType;
+  transactionType: CharTransactionType;
   weeklyAmounts: WeeklyAmountType[];
 }
 
 const CategoryLineChart = ({ transactionType, weeklyAmounts }: Props) => {
-  const chartColor = transactionType === '지출' ? '#eb6060' : '#81AAF6';
+  const chartColor = LINE_CHART_COLORS[transactionType];
 
   return (
     <ResponsiveContainer width="100%" height="100%">

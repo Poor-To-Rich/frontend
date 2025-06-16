@@ -4,6 +4,7 @@ import { IncomeExpenseType } from '@/types/transactionTypes';
 import Skeleton from '@/components/loading/Skeleton';
 import CategoryLogItem from '@/pages/CategoryDetailsPage/components/Log/CategoryLogItem';
 import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import { format } from 'date-fns';
 
 interface Props {
   isEmpty: boolean;
@@ -46,7 +47,7 @@ const CategoryLogList = ({
         allCategoryLogs.map(({ date, transactions }, idx) => (
           <div key={`${date}-${idx}`} className="w-full flex justify-between">
             <div className=" w-full flex flex-col flex-grow">
-              <span className="px-5 py-3">{date}</span>
+              <span className="px-5 py-3">{format(new Date(date), 'MM.dd')}</span>
               {transactions.map(transaction => (
                 <CategoryLogItem
                   key={transaction.id}

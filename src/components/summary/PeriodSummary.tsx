@@ -1,7 +1,9 @@
+import { CharTransactionType } from '@/types/chartTypes';
+
 interface Props {
   period?: string;
   balance?: number;
-  transactionType: string;
+  transactionType: CharTransactionType;
 }
 
 const PeriodSummary = ({ period, balance, transactionType }: Props) => {

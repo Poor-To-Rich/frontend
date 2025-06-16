@@ -44,10 +44,16 @@ const CategoryOverviewChart = ({ reportType, transactionType, categoryId, date, 
       <PeriodSummary period={period} balance={balance} transactionType={isSavings ? '저축/투자' : transactionType} />
       <div className="w-full h-[300px] p-5">
         {isWeekly && weeklyChartData && (
-          <CategoryLineChart transactionType={transactionType} weeklyAmounts={weeklyChartData.weeklyAmounts} />
+          <CategoryLineChart
+            transactionType={isSavings ? '저축/투자' : transactionType}
+            weeklyAmounts={weeklyChartData.weeklyAmounts}
+          />
         )}
         {!isWeekly && monthlyChartData && (
-          <CategoryBarChart transactionType={transactionType} monthlyAmounts={monthlyChartData.monthlyAmounts} />
+          <CategoryBarChart
+            transactionType={isSavings ? '저축/투자' : transactionType}
+            monthlyAmounts={monthlyChartData.monthlyAmounts}
+          />
         )}
       </div>
     </div>
