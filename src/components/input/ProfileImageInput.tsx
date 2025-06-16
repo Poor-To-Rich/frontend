@@ -1,6 +1,7 @@
 import CameraIcon from '@/components/icon/CameraIcon';
 import { forwardRef } from 'react';
 import TrashButton from '@/components/button/icon/TrashButton';
+import DefaultProfileImage from '/image/default-profile-image.png';
 
 interface Props {
   value: string | File | undefined;
@@ -32,11 +33,11 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange
   };
 
   return (
-    <div className="relative w-[15rem] flex justify-center items-center aspect-square rounded-2xl bg-lightGray cursor-pointer">
+    <div className="relative w-[15rem] flex justify-center items-center aspect-square rounded-2xl border border-strokeGray cursor-pointer">
       {imageSrc ? (
         <img src={imageSrc} alt="프로필 이미지" className="w-full h-full rounded-2xl object-cover" />
       ) : (
-        <span>비어있음</span>
+        <img src={DefaultProfileImage} alt="프로필 이미지" className="w-full h-full rounded-2xl object-cover" />
       )}
       {!imageSrc && (
         <div className="profileImage-icon-common">
