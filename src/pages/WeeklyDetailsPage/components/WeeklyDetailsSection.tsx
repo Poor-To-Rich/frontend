@@ -19,7 +19,7 @@ const WeeklyDetailsSection = () => {
     };
   }, [location.search]);
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const { selectedRef } = useScrollToSelectedRef('id');
+  const { selectedRef, targetItem } = useScrollToSelectedRef('id');
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useGetWeeklyDetailsInfiniteQuery(
     date,
@@ -60,7 +60,12 @@ const WeeklyDetailsSection = () => {
                   <span className="pl-3">{format(date, 'MM.dd')}</span>
                   <div className="w-full flex flex-col items-center gap-3">
                     {transactions.map(transaction => (
-                      <TransactionDetailItem key={transaction.id} {...transaction} selectedRef={selectedRef} />
+                      <TransactionDetailItem
+                        key={transaction.id}
+                        {...transaction}
+                        selectedRef={selectedRef}
+                        targetItem={targetItem}
+                      />
                     ))}
                   </div>
                 </div>

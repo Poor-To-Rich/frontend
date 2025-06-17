@@ -11,7 +11,7 @@ interface Props {
 
 const MonthlyOverview = ({ targetYear, monthlyLogs }: Props) => {
   const { openIndexes, addOpenIndex } = useOpenIndexStore();
-  const { selectedRef } = useScrollToSelectedRef('period');
+  const { selectedRef, targetItem } = useScrollToSelectedRef('period');
 
   return (
     <div className="w-full">
@@ -21,6 +21,7 @@ const MonthlyOverview = ({ targetYear, monthlyLogs }: Props) => {
           {openIndexes.includes(index) && (
             <WeeklyOverview
               selectedRef={selectedRef}
+              targetItem={targetItem}
               targetDate={`${targetYear}-${(index + 1).toString().padStart(2, '0')}`}
             />
           )}

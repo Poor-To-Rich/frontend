@@ -8,11 +8,11 @@ interface Props {
   hasUnderLine?: boolean;
   onClick?: () => void;
   selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
+  targetItem?: string | null;
 }
 
-const LogItem = ({ type, order, log, hasUnderLine, onClick, selectedRef }: Props) => {
-  const targetId = sessionStorage.getItem('selected-period');
-  const isSelected = log.period === targetId;
+const LogItem = ({ type, order, log, hasUnderLine, onClick, selectedRef, targetItem }: Props) => {
+  const isSelected = `${log.period}-${order}` === targetItem;
 
   return (
     <button

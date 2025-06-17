@@ -11,7 +11,7 @@ interface Props {
 
 const IterationDataListSection = ({ type }: Props) => {
   const { data: iterationData, isPending: isGetIterationDataPending } = useGetIterationData(type as IncomeExpenseType);
-  const { selectedRef } = useScrollToSelectedRef('id');
+  const { selectedRef, targetItem } = useScrollToSelectedRef('id');
 
   if (!iterationData || isGetIterationDataPending) {
     return (
@@ -34,7 +34,7 @@ const IterationDataListSection = ({ type }: Props) => {
       </div>
       <div className="w-full flex flex-col items-center gap-2.5">
         {iterationData.iterationAccountBooks.map(iterationData => (
-          <TransactionDetailItem selectedRef={selectedRef} {...iterationData} />
+          <TransactionDetailItem selectedRef={selectedRef} targetItem={targetItem} {...iterationData} />
         ))}
       </div>
     </>
