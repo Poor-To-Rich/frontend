@@ -12,7 +12,7 @@ const DailyTransactionList = () => {
   const { calenderDate } = useCalenderDateStore();
   const { data: dailyDetails, isPending } = useGetDailyDetails(format(calenderDate, 'yyyy-MM-dd'));
   const isEmpty = dailyDetails?.dailyDetails.length === 0;
-  const { selectedRef } = useScrollToSelectedRef(dailyDetails?.dailyDetails);
+  const { selectedRef } = useScrollToSelectedRef('id', dailyDetails?.dailyDetails);
 
   if (isPending) {
     return (

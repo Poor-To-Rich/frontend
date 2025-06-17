@@ -1,6 +1,6 @@
 import { updateIncomeTransaction, updateExpenseTransaction } from '@/api/services/transactionService';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { useDraftStore } from '@/stores/useDreftStore';
+import { useDraftStore } from '@/stores/useDraftStore';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import CustomError from '@/utils/CustomError';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';

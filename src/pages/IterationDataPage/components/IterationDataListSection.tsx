@@ -11,7 +11,7 @@ interface Props {
 
 const IterationDataListSection = ({ type }: Props) => {
   const { data: iterationData, isPending: isGetIterationDataPending } = useGetIterationData(type as IncomeExpenseType);
-  const { selectedRef } = useScrollToSelectedRef();
+  const { selectedRef } = useScrollToSelectedRef('id');
 
   if (!iterationData || isGetIterationDataPending) {
     return (

@@ -19,7 +19,7 @@ const WeeklyDetailsSection = () => {
     };
   }, [location.search]);
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const { selectedRef } = useScrollToSelectedRef();
+  const { selectedRef } = useScrollToSelectedRef('id');
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useGetWeeklyDetailsInfiniteQuery(
     date,

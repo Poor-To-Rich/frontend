@@ -23,7 +23,7 @@ const CategoryLogList = ({
   isSavings,
   transactionType,
 }: Props) => {
-  const { selectedRef } = useScrollToSelectedRef();
+  const { selectedRef } = useScrollToSelectedRef('id');
 
   if (isPending) {
     return (
