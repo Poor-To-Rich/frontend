@@ -22,7 +22,7 @@ const DateControlHeader = ({ headerDate, setHeaderDate }: Props) => {
     setHeaderDate,
   });
 
-  const isMonthType = currentReportType === '월별' && pathname !== '/month-week';
+  const isMonthType = (currentReportType === '월별' && pathname !== '/month-week') || pathname === '/';
 
   return (
     <header className="header-common">
