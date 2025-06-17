@@ -5,7 +5,11 @@ import { useFormContext } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
 const useTransactionDraft = () => {
-  const { watch, reset } = useFormContext<TransactionFormDataType>();
+  const {
+    watch,
+    reset,
+    formState: { isDirty },
+  } = useFormContext<TransactionFormDataType>();
   const { shouldSave, enableSave } = useDraftStore();
   const formData = watch();
   const [searchParams] = useSearchParams();
@@ -28,8 +32,8 @@ const useTransactionDraft = () => {
 
   useEffect(() => {
     if (!shouldSave) return;
-    sessionStorage.setItem('transaction-form-data', JSON.stringify(formData));
-  }, [formData, shouldSave]);
+    if (isDirty) sessionStorage.setItem('transaction-form-data', JSON.stringify(formData));
+  }, [formData, shouldSave, isDirty]);
 
   useEffect(() => {
     return () => {
