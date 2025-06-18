@@ -5,13 +5,16 @@ import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
   targetDate: string;
+  selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
+  targetItem?: string | null;
 }
 
-const WeeklyOverview = ({ targetDate }: Props) => {
+const WeeklyOverview = ({ targetDate, selectedRef, targetItem }: Props) => {
   const navigate = useNavigate();
   const { data: weeklyLogs, isPending } = useGetWeeklySummary(targetDate);
 
-  const handleClick = (week: number) => {
+  const handleClick = (period: string, week: number) => {
+    sessionStorage.setItem('selected-period', `${period}-${week}`);
     navigate(`/weeklyDetails?date=${targetDate}&week=${week}`);
   };
 
@@ -33,7 +36,9 @@ const WeeklyOverview = ({ targetDate }: Props) => {
             log={log}
             type="week"
             hasUnderLine={index !== weeklyLogs.length - 1}
-            onClick={() => handleClick(index + 1)}
+            onClick={() => handleClick(log.period, index + 1)}
+            selectedRef={selectedRef}
+            targetItem={targetItem}
           />
         ))
       )}

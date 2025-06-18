@@ -1,7 +1,7 @@
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import PlusButton from '@/components/button/icon/PlusButton';
 import TrashButton from '@/components/button/icon/TrashButton';
-import { useDraftStore } from '@/stores/useDreftStore';
+import { useDraftStore } from '@/stores/useDraftStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {

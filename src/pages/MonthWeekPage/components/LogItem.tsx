@@ -7,18 +7,24 @@ interface Props {
   log: OverviewLogType;
   hasUnderLine?: boolean;
   onClick?: () => void;
+  selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
+  targetItem?: string | null;
 }
 
-const LogItem = ({ type, order, log, hasUnderLine, onClick }: Props) => {
+const LogItem = ({ type, order, log, hasUnderLine, onClick, selectedRef, targetItem }: Props) => {
+  const isSelected = `${log.period}-${order}` === targetItem;
+
   return (
     <button
       className={clsx(
-        'flex w-full justify-between items-center cursor-pointer',
+        'flex w-full justify-between items-center cursor-pointer hover:bg-lightGray active:bg-lightGray',
         hasUnderLine && 'border-b border-strokeGray',
         type === 'month' && 'py-5 px-4',
         type === 'week' && 'py-1.5 px-2.5',
+        isSelected && 'bg-lightGray',
       )}
-      onClick={onClick}>
+      onClick={onClick}
+      ref={isSelected ? selectedRef : undefined}>
       <div className="flex flex-col items-start">
         <span>
           {order}

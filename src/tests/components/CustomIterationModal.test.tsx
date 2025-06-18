@@ -30,6 +30,7 @@ describe('CustomIterationModal', () => {
   });
 
   afterEach(() => {
+    sessionStorage.clear();
     cleanup();
   });
 
@@ -99,7 +100,7 @@ describe('CustomIterationModal', () => {
     expect(weekdayOfMonthOption).toHaveTextContent('매월 둘째주 화요일');
   });
 
-  it('5월 27일을 선택하면 monthlyOption에 "매월 13일"과 "매월 마지막 주 화요일"이 표시된다', async () => {
+  it('5월 27일을 선택하면 monthlyOption에 "매월 27일"과 "매월 마지막 주 화요일"이 표시된다', async () => {
     const { result } = renderHook(() => useCalenderDateStore());
 
     const newDate = new Date('2025-05-27');

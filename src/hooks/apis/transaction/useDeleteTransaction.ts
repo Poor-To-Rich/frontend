@@ -1,6 +1,6 @@
 import { deleteExpenseTransaction, deleteIncomeTransaction } from '@/api/services/transactionService';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { useDraftStore } from '@/stores/useDreftStore';
+import { useDraftStore } from '@/stores/useDraftStore';
 import { DeleteTransactionReq, IncomeExpenseType } from '@/types/transactionTypes';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

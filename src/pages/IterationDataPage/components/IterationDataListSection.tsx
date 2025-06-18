@@ -11,7 +11,8 @@ interface Props {
 
 const IterationDataListSection = ({ type }: Props) => {
   const { data: iterationData, isPending: isGetIterationDataPending } = useGetIterationData(type as IncomeExpenseType);
-  const { selectedRef } = useScrollToSelectedRef();
+  const { selectedRef, targetItem } = useScrollToSelectedRef('id');
+  const isEmpty = iterationData?.iterationAccountBooks.length === 0;
 
   if (!iterationData || isGetIterationDataPending) {
     return (
@@ -20,6 +21,7 @@ const IterationDataListSection = ({ type }: Props) => {
       </div>
     );
   }
+
   return (
     <>
       <div className="w-full px-5 py-3">
@@ -32,10 +34,19 @@ const IterationDataListSection = ({ type }: Props) => {
           총액 : {iterationData.totalAmount.toLocaleString()}원
         </p>
       </div>
-      <div className="w-full flex flex-col items-center gap-2.5">
-        {iterationData.iterationAccountBooks.map(iterationData => (
-          <TransactionDetailItem selectedRef={selectedRef} {...iterationData} />
-        ))}
+      <div className={clsx('w-full flex flex-col grow items-center gap-2.5', isEmpty && 'justify-center')}>
+        {isEmpty ? (
+          <span className="text-defaultGrey">내역이 없습니다.</span>
+        ) : (
+          iterationData.iterationAccountBooks.map(iterationData => (
+            <TransactionDetailItem
+              key={iterationData.id}
+              selectedRef={selectedRef}
+              targetItem={targetItem}
+              {...iterationData}
+            />
+          ))
+        )}
       </div>
     </>
   );

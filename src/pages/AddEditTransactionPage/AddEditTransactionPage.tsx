@@ -28,6 +28,7 @@ const AddEditTransactionPage = () => {
       iterationType: 'none',
     },
     resolver: zodResolver(transactionSchema),
+    shouldUnregister: false,
     mode: 'onChange',
   });
 

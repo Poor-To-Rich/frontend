@@ -9,12 +9,12 @@ interface Props extends CategoryDetailsTransactionType {
   transactionType: IncomeExpenseType;
   isSavings: boolean;
   selectedRef: React.MutableRefObject<HTMLButtonElement | null>;
+  targetItem: string | null;
 }
 
-const CategoryLogItem = ({ id, title, amount, date, transactionType, isSavings, selectedRef }: Props) => {
+const CategoryLogItem = ({ id, title, amount, date, transactionType, isSavings, selectedRef, targetItem }: Props) => {
   const navigate = useNavigate();
-  const targetId = sessionStorage.getItem('selected-id');
-  const isSelected = String(id) === targetId;
+  const isSelected = String(id) === targetItem;
 
   const handleClick = (id: number) => {
     sessionStorage.setItem('selected-id', JSON.stringify(id));
