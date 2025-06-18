@@ -9,6 +9,7 @@ import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionT
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
+import { merge } from 'lodash';
 import { Controller, useFormContext } from 'react-hook-form';
 
 interface Props {
@@ -23,6 +24,7 @@ const TransactionFields = ({ type, options }: Props) => {
   const {
     control,
     register,
+    getValues,
     setValue,
     formState: { errors },
   } = useFormContext<TransactionFormDataType>();
@@ -30,6 +32,33 @@ const TransactionFields = ({ type, options }: Props) => {
   const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
     const formattedValue = value.replace(/[^\d]/g, '');
     onChange(Number(formattedValue));
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentDate = new Date(e.target.value);
+    const koreanDay = getKoreanDay(currentDate);
+
+    setCalenderDate(currentDate);
+    setMainHeaderDate(currentDate);
+
+    const newCustomIteration = {
+      end: {
+        date: format(addMonths(currentDate, 2), 'yyyy-MM-dd'),
+      },
+      iterationRule: {
+        monthlyOption: {
+          day: getDate(currentDate),
+          week: getKoreanWeekOfMonth(currentDate),
+          dayOfWeek: koreanDay,
+        },
+
+        daysOfWeek: [koreanDay],
+      },
+    };
+    const { customIteration: prevCustomIteration } = getValues();
+    const merged = merge({}, prevCustomIteration, newCustomIteration);
+
+    setValue('customIteration', merged);
   };
 
   return (
@@ -41,20 +70,7 @@ const TransactionFields = ({ type, options }: Props) => {
         type="date"
         errorMessage={errors.date?.message}
         {...register('date')}
-        onChange={e => {
-          const currentDate = new Date(e.target.value);
-          const koreanDay = getKoreanDay(currentDate);
-
-          register('date').onChange(e);
-
-          setCalenderDate(currentDate);
-          setMainHeaderDate(currentDate);
-          setValue('customIteration.end.date', format(addMonths(currentDate, 2), 'yyyy-MM-dd'));
-          setValue('customIteration.iterationRule.daysOfWeek', [koreanDay]);
-          setValue('customIteration.iterationRule.monthlyOption.day', getDate(currentDate));
-          setValue('customIteration.iterationRule.monthlyOption.week', getKoreanWeekOfMonth(currentDate));
-          setValue('customIteration.iterationRule.monthlyOption.dayOfWeek', koreanDay);
-        }}
+        onChange={handleDateChange}
       />
       <SelectBox
         label="카테고리"

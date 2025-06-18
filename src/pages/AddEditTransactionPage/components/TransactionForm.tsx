@@ -98,7 +98,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     <form className="flex flex-col w-full grow justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
       <IncomeExpenseButton
         type={transactionType}
-        onClick={(value: IncomeExpenseType) => setValue('transactionType', value)}
+        onClick={(value: IncomeExpenseType) => setValue('transactionType', value, { shouldDirty: true })}
       />
       <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : options} />
       <div className="w-full flex justify-between items-center">

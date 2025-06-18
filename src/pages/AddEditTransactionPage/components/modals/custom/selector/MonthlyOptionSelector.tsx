@@ -25,27 +25,29 @@ const MonthlyOptionSelector = () => {
   const options = isEndOfMonth ? [...baseOptions, { label: '매월 말일', value: 'endOfMonth' }] : baseOptions;
 
   return (
-    <Controller
-      name={'customIteration.iterationRule.monthlyOption.mode'}
-      control={control}
-      render={({ field }) => (
-        <div data-testid="monthly-option-selector">
-          {options.map(({ label, value }, index) => {
-            const radioId = `${baseId}-${index}`;
-            return (
-              <RadioOption
-                data-testid={value}
-                key={value}
-                checked={mode === value}
-                radioId={radioId}
-                label={label}
-                onChange={() => field.onChange(value)}
-              />
-            );
-          })}
-        </div>
-      )}
-    />
+    <>
+      <Controller
+        name={'customIteration.iterationRule.monthlyOption.mode'}
+        control={control}
+        render={({ field }) => (
+          <div data-testid="monthly-option-selector">
+            {options.map(({ label, value }, index) => {
+              const radioId = `${baseId}-${index}`;
+              return (
+                <RadioOption
+                  data-testid={value}
+                  key={value}
+                  checked={mode === value}
+                  radioId={radioId}
+                  label={label}
+                  onChange={() => field.onChange(value)}
+                />
+              );
+            })}
+          </div>
+        )}
+      />
+    </>
   );
 };
 

@@ -19,7 +19,7 @@ const useTransactionDraft = () => {
     const raw = sessionStorage.getItem('transaction-form-data');
     const parsed = raw ? JSON.parse(raw) : null;
 
-    const sessionDate = parsed?.transactionDate;
+    const sessionDate = parsed?.date;
 
     if (parsed) {
       if (!queryDate || sessionDate === queryDate) {
@@ -39,7 +39,7 @@ const useTransactionDraft = () => {
     return () => {
       enableSave();
     };
-  }, []);
+  }, [enableSave]);
 };
 
 export default useTransactionDraft;

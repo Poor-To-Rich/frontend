@@ -17,6 +17,9 @@ const DailyTransactionList = () => {
   if (isPending) {
     return (
       <div className="w-full flex flex-col gap-2.5 border-t border-strokeGray p-5 pb-7">
+        <div className="w-full flex justify-end">
+          <Skeleton width="w-[15rem]" height="h-[2.4rem]" />
+        </div>
         <Skeleton height="h-[3.5rem]" />
         <Skeleton height="h-[3.5rem]" />
         <div className="flex flex-col gap-1.5">
