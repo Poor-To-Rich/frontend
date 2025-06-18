@@ -5,8 +5,8 @@ import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
   targetDate: string;
-  selectedRef: React.MutableRefObject<HTMLButtonElement | null>;
-  targetItem: string | null;
+  selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
+  targetItem?: string | null;
 }
 
 const WeeklyOverview = ({ targetDate, selectedRef, targetItem }: Props) => {

@@ -58,7 +58,8 @@ const TransactionFields = ({ type, options }: Props) => {
     const { customIteration: prevCustomIteration } = getValues();
     const merged = merge({}, prevCustomIteration, newCustomIteration);
 
-    setValue('customIteration', merged);
+    setValue('date', format(currentDate, 'yyyy-MM-dd'), { shouldDirty: true });
+    setValue('customIteration', merged, { shouldDirty: true });
   };
 
   return (

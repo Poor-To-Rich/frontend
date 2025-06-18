@@ -7,6 +7,9 @@ import { useFormContext } from 'react-hook-form';
 import { TransactionFormDataType } from '@/types/transactionTypes';
 import { isMonthOfLastDay } from '@/utils/date';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { useEffect } from 'react';
+import { merge } from 'lodash';
+import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 
 interface Props {
   onClose: () => void;
@@ -15,13 +18,20 @@ interface Props {
 
 const IterationCycleModal = ({ onClose, onClick }: Props) => {
   const { calenderDate } = useCalenderDateStore();
-  const { getValues } = useFormContext<TransactionFormDataType>();
-  const { iterationType } = getValues();
+  const { customIteration } = useResetCustomIteration();
+  const { setValue, getValues } = useFormContext<TransactionFormDataType>();
+  const { iterationType, customIteration: prevCustomIteration } = getValues();
   const isEndOfMonth = isMonthOfLastDay(calenderDate);
 
   const FILTERED_ITERATION_CYCLE = isEndOfMonth
     ? ITERATION_CYCLE
     : ITERATION_CYCLE.filter(item => item.value !== 'endOfMonth');
+
+  useEffect(() => {
+    const merged = merge({}, customIteration, prevCustomIteration);
+
+    setValue('customIteration', merged);
+  }, [setValue]);
 
   return (
     <ModalDimmed onClose={onClose}>

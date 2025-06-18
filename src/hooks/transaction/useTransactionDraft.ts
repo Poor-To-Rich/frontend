@@ -18,7 +18,6 @@ const useTransactionDraft = () => {
   useEffect(() => {
     const raw = sessionStorage.getItem('transaction-form-data');
     const parsed = raw ? JSON.parse(raw) : null;
-
     const sessionDate = parsed?.date;
 
     if (parsed) {

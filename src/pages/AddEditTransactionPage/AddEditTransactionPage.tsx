@@ -11,11 +11,9 @@ import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 
 const AddEditTransactionPage = () => {
   const { setCalenderDate } = useCalenderDateStore();
-  const { customIteration } = useResetCustomIteration();
   const { transactionId, transactionDate, transactionMode, isEditPage } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
@@ -27,7 +25,6 @@ const AddEditTransactionPage = () => {
       memo: '',
       date: transactionDate!,
       transactionType: (transactionMode as IncomeExpenseType) || '지출',
-      customIteration,
       iterationType: 'none',
     },
     resolver: zodResolver(transactionSchema),
