@@ -38,8 +38,8 @@ const CategoryBarChart = ({ transactionType, monthlyAmounts }: Props) => {
             <Bar
               dataKey="totalAmount"
               fill={chartColor}
-              background={{ fill: '#f0f0f0', stroke: 'none', radius: 15 }}
-              radius={15}>
+              background={{ fill: '#f0f0f0', stroke: 'none', radius: 10 }}
+              radius={10}>
               <LabelList dataKey="totalAmount" position="top" fontSize={11} content={CategoryBarCustomLabel} />
             </Bar>
           </BarChart>

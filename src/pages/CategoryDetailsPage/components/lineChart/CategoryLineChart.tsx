@@ -15,7 +15,7 @@ const CategoryLineChart = ({ transactionType, weeklyAmounts }: Props) => {
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={weeklyAmounts} margin={{ top: 0, right: 30, bottom: 0, left: 30 }}>
+      <LineChart data={weeklyAmounts} margin={{ top: 20, right: 30, bottom: 0, left: 30 }}>
         <XAxis
           dataKey="period"
           type="category"
