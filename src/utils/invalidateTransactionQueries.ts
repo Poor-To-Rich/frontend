@@ -30,7 +30,7 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date, cate
   queryClient.invalidateQueries({
     queryKey: ['weeklySummary'],
   });
-  queryClient.invalidateQueries({
+  queryClient.refetchQueries({
     queryKey: ['weeklyDetails'],
   });
 

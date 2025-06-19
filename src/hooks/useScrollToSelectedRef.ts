@@ -12,7 +12,7 @@ const useScrollToSelectedRef = (type: 'period' | 'id' | 'category', deps?: Trans
 
     const timeout = setTimeout(() => {
       sessionStorage.removeItem(`selected-${type}`);
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, [deps, type]);
