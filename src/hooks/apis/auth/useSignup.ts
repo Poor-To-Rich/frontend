@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
   setError: UseFormSetError<SignupFormType>;
-  fieldStatusMap?: Partial<Record<keyof SignupFormType, (status: { isVerify: boolean; message?: string }) => void>>;
+  fieldStatusMap?: Partial<Record<keyof SignupFormType, () => void>>;
 }
 
 const useSignup = ({ setError, fieldStatusMap }: Props) => {
@@ -28,10 +28,9 @@ const useSignup = ({ setError, fieldStatusMap }: Props) => {
           message: error.message,
         });
 
-        const setFieldStatus = fieldStatusMap?.[field];
-        if (setFieldStatus) {
-          setFieldStatus({ isVerify: false, message: undefined });
-        }
+        const resetFieldStatus = fieldStatusMap?.[field];
+
+        resetFieldStatus?.();
       } else toast.error(error.message);
     },
   });

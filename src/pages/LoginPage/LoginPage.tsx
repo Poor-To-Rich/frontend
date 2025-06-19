@@ -10,7 +10,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col h-screen items-center justify-center gap-36 bg-vanillaCream">
-      <img src={Logo} className="w-[20rem]" />
+      <img src={Logo} alt="로고 이미지" className="w-[20rem] aspect-square" />
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-3/5 gap-10">
         <div className="flex flex-col w-full gap-7">
           <FloatingLabelInput
