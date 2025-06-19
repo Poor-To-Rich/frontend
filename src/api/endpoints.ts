@@ -62,7 +62,7 @@ export const endpoints = {
     getIncomeBarChart: (date: string) => `/chart/income/bar?date=${date}`,
     getLineChart: (categoryId: string, date: string) => `/chart/${categoryId}/line?date=${date}`,
     getVerticalBarChart: (categoryId: string, date: string) => `/chart/${categoryId}/vertical?date=${date}`,
-    getCategoryLogs: (categoryId: string, date: string, cursor: string | null) =>
-      `/chart/${categoryId}/section?date=${date}${cursor ? `&cursor=${cursor}` : ''}`,
+    getCategoryLogs: (categoryId: string, date: string, cursor: string | null, isDescending: boolean) =>
+      `/chart/${categoryId}/section?date=${date}${cursor ? `&cursor=${cursor}` : ''}${isDescending ? '' : '&sortDirection=desc'}`,
   },
 };

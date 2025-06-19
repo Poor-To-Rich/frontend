@@ -18,6 +18,7 @@ const CategoryLogListSection = ({ transactionType, categoryId, date, isSavings }
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useCategoryLogsInfiniteQuery(
     categoryId,
     date,
+    isDescending,
   );
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
