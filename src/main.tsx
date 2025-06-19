@@ -3,9 +3,10 @@ import './index.css';
 import App from './App.tsx';
 import { Toaster } from 'react-hot-toast';
 import ScrollToUp from '@/utils/ScrollToUp';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { queryClient } from '@/libs/queryClient.ts';
 
 if (typeof window !== 'undefined') {
   if (import.meta.env.DEV) {
@@ -13,8 +14,6 @@ if (typeof window !== 'undefined') {
     await worker.start();
   }
 }
-
-const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>

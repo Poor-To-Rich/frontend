@@ -1,8 +1,8 @@
 import { sendEmailCode } from '@/api/services/authService';
 import { EmailRes, SignupFormType } from '@/types/authTypes';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
-import CustomError from '@/utils/CustomError';
-import { createFormErrorHandler } from '@/utils/errorHandler';
+import CustomError from '@/utils/error/CustomError';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation } from '@tanstack/react-query';
 
 const useSendEmail = ({ setError, setFieldStatus, resetFieldStatus }: CheckVerifyFieldProps<SignupFormType>) => {

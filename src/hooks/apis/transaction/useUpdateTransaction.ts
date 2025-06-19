@@ -2,7 +2,7 @@ import { updateIncomeTransaction, updateExpenseTransaction } from '@/api/service
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useDraftStore } from '@/stores/useDraftStore';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
-import CustomError from '@/utils/CustomError';
+import CustomError from '@/utils/error/CustomError';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';

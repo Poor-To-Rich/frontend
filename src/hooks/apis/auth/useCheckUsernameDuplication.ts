@@ -1,7 +1,7 @@
 import { checkUsernameDuplication } from '@/api/services/authService';
 import { SignupFormType } from '@/types/authTypes';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
-import { createFormErrorHandler } from '@/utils/errorHandler';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation } from '@tanstack/react-query';
 
 const useCheckUsernameDuplication = ({

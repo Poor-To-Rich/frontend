@@ -1,7 +1,7 @@
 import { changeEmail } from '@/api/services/authService';
 import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 import { EmailChangeData } from '@/types/authTypes';
-import CustomError from '@/utils/CustomError';
+import CustomError from '@/utils/error/CustomError';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
