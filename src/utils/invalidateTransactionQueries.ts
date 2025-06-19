@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
-const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
+const invalidateTransactionQueries = (queryClient: QueryClient, date: Date, categoryId?: number) => {
   const year = format(date, 'yyyy');
   const yearMonth = format(date, 'yyyy-MM');
   const yearMonthDay = format(date, 'yyyy-MM-dd');
@@ -21,6 +21,9 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
   });
 
   // 월별/주별 데이터 조회관련 쿼리키
+  queryClient.invalidateQueries({
+    queryKey: ['yearlySummary'],
+  });
   queryClient.refetchQueries({
     queryKey: ['yearlySummary', year],
   });
@@ -28,42 +31,21 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
     queryKey: ['weeklySummary'],
   });
   queryClient.refetchQueries({
-    queryKey: ['weeklySummary', yearMonth],
-  });
-  queryClient.invalidateQueries({
     queryKey: ['weeklyDetails'],
-  });
-  queryClient.refetchQueries({
-    queryKey: ['weeklyDetails', yearMonth],
   });
 
   // 차트 데이터 조회관련 쿼리키
   queryClient.invalidateQueries({
     queryKey: ['barChart'],
   });
-  queryClient.refetchQueries({
-    queryKey: ['barChart', year],
-  });
-  queryClient.refetchQueries({
-    queryKey: ['barChart', yearMonth],
-  });
   queryClient.invalidateQueries({
     queryKey: ['stackedBarChart'],
-  });
-  queryClient.refetchQueries({
-    queryKey: ['stackedBarChart', year],
-  });
-  queryClient.refetchQueries({
-    queryKey: ['stackedBarChart', yearMonth],
   });
   queryClient.invalidateQueries({
     queryKey: ['totalAndSavings'],
   });
   queryClient.refetchQueries({
-    queryKey: ['totalAndSavings', year],
-  });
-  queryClient.refetchQueries({
-    queryKey: ['totalAndSavings', yearMonth],
+    queryKey: ['categoryLogs', categoryId],
   });
 };
 

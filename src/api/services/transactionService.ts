@@ -4,9 +4,11 @@ import {
   AddTransactionRes,
   DailyTransactionType,
   DeleteTransactionReq,
+  DeleteTransactionRes,
   IterationDataType,
   MonthlyTotalTransactionType,
   TransactionFormDataType,
+  UpdateTransactionRes,
 } from '@/types/transactionTypes';
 
 export const getMonthlyTotal = async (date: string) => {
@@ -49,22 +51,38 @@ export const getIncomeTransaction = async (id: string) => {
 };
 
 export const updateExpenseTransaction = async (id: string, body: TransactionFormDataType) => {
-  const res = await fetchData<TransactionFormDataType>('PUT', endpoints.transaction.updateExpense(id), body);
+  const res = await fetchData<TransactionFormDataType, UpdateTransactionRes>(
+    'PUT',
+    endpoints.transaction.updateExpense(id),
+    body,
+  );
   return res;
 };
 
 export const updateIncomeTransaction = async (id: string, body: TransactionFormDataType) => {
-  const res = await fetchData<TransactionFormDataType>('PUT', endpoints.transaction.updateIncome(id), body);
+  const res = await fetchData<TransactionFormDataType, UpdateTransactionRes>(
+    'PUT',
+    endpoints.transaction.updateIncome(id),
+    body,
+  );
   return res;
 };
 
 export const deleteExpenseTransaction = async ({ id, body }: { id: string; body?: DeleteTransactionReq }) => {
-  const res = await fetchData<DeleteTransactionReq>('DELETE', endpoints.transaction.deleteExpense(id), body);
+  const res = await fetchData<DeleteTransactionReq, DeleteTransactionRes>(
+    'DELETE',
+    endpoints.transaction.deleteExpense(id),
+    body,
+  );
   return res;
 };
 
 export const deleteIncomeTransaction = async ({ id, body }: { id: string; body?: DeleteTransactionReq }) => {
-  const res = await fetchData<DeleteTransactionReq>('DELETE', endpoints.transaction.deleteIncome(id), body);
+  const res = await fetchData<DeleteTransactionReq, DeleteTransactionRes>(
+    'DELETE',
+    endpoints.transaction.deleteIncome(id),
+    body,
+  );
   return res;
 };
 

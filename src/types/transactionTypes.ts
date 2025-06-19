@@ -40,9 +40,18 @@ export type IterationDataType = {
 
 export type AddTransactionRes = {
   id: number;
+  categoryId: number;
 };
 
 export type DeleteTransactionReq = { iterationAction?: IterationActionEnumType };
+
+export type DeleteTransactionRes = {
+  categoryId: number;
+};
+
+export type UpdateTransactionRes = {
+  categoryId: number;
+};
 
 export type IncomeExpenseType = '지출' | '수입';
 

@@ -15,8 +15,8 @@ const useGetWeeklyDetailsInfiniteQuery = (date: string, week: string) => {
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : undefined),
     enabled: !!week && !!date,
-    staleTime: 10 * 60 * 1000,
-    gcTime: 15 * 60 * 1000,
+    staleTime: Infinity,
+    refetchOnMount: false,
   });
 };
 

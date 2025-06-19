@@ -7,7 +7,7 @@ const useScrollToSelectedRef = (type: 'period' | 'id' | 'category', deps?: Trans
 
   useEffect(() => {
     if (selectedRef.current) {
-      selectedRef.current.scrollIntoView({ behavior: 'auto', block: 'center' });
+      selectedRef.current.scrollIntoView({ behavior: 'instant', block: 'center' });
     }
 
     const timeout = setTimeout(() => {

@@ -9,6 +9,8 @@ const useCategoryLogsInfiniteQuery = (categoryId: string, date: string) => {
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : undefined),
     enabled: !!categoryId && !!date,
+    staleTime: Infinity,
+    refetchOnMount: false,
   });
 };
 
