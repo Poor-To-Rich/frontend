@@ -18,7 +18,7 @@ const CategoryOverviewChart = ({ transactionType, categoryId, date, isSavings, i
   const { data: monthlyChartData, isFetching: isBarChartFetching } = useGetCategoryDetailsBarChart(
     categoryId,
     date,
-    isWeekly,
+    !isWeekly,
   );
   const { data: weeklyChartData, isFetching: isLineChartFetching } = useGetCategoryDetailsLineChart(
     categoryId,

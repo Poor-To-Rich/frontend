@@ -2,7 +2,7 @@ import { addExpenseTransaction, addIncomeTransaction } from '@/api/services/tran
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useDraftStore } from '@/stores/useDraftStore';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
-import CustomError from '@/utils/error/CustomError';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
@@ -29,13 +29,7 @@ const useAddTransaction = ({ type, setError }: Props) => {
       sessionStorage.removeItem('transaction-form-data');
       navigate('/');
     },
-    onError: (error: CustomError<{ field: keyof TransactionFormDataType }>) => {
-      if (error.data)
-        setError(error.data.field, {
-          type: 'server',
-          message: error.message,
-        });
-    },
+    onError: createFormErrorHandler(setError),
   });
 };
 

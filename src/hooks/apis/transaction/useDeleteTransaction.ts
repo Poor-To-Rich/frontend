@@ -4,7 +4,6 @@ import { useDraftStore } from '@/stores/useDraftStore';
 import { DeleteTransactionReq, IncomeExpenseType } from '@/types/transactionTypes';
 import invalidateTransactionQueries from '@/utils/invalidateTransactionQueries';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 const useDeleteTransaction = (type: IncomeExpenseType) => {
@@ -21,9 +20,6 @@ const useDeleteTransaction = (type: IncomeExpenseType) => {
       invalidateTransactionQueries(queryClient, calenderDate, data.data?.categoryId);
       sessionStorage.removeItem('transaction-form-data');
       navigate(-1);
-    },
-    onError: error => {
-      toast.error(error.message);
     },
   });
 };
