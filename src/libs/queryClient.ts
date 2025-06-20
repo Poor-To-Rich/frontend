@@ -4,6 +4,10 @@ import { toast } from 'react-hot-toast';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
+    queries: {
+      throwOnError: true,
+      retry: false,
+    },
     mutations: {
       onError: (error: unknown) => {
         if (error instanceof CustomError) {
