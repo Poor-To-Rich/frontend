@@ -1,6 +1,6 @@
 import { updatePassword } from '@/api/services/authService';
 import { ChangePasswordData } from '@/types/authTypes';
-import CustomError from '@/utils/error/CustomError';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -15,14 +15,7 @@ const useUpdatePassword = (setError: UseFormSetError<ChangePasswordData>) => {
       toast.success(data.message);
       navigate(-1);
     },
-    onError: (error: CustomError<{ field: keyof ChangePasswordData }>) => {
-      if (error.data)
-        setError(error.data.field, {
-          type: 'server',
-          message: error.message,
-        });
-      else toast.error(error.message);
-    },
+    onError: createFormErrorHandler(setError),
   });
 };
 
