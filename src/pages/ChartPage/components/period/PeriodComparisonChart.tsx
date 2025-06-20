@@ -58,7 +58,13 @@ const PeriodComparisonChart = () => {
                 <CustomXAxisTick {...props} onClickTick={handleBarCharClick} currentReportType={currentReportType} />
               )}
             />
-            <YAxis type="number" hide scale="pow" exponent={0.5} domain={[1, 'auto']} />
+            <YAxis
+              type="number"
+              hide
+              scale="pow"
+              exponent={0.5}
+              domain={barChartData.totalAmounts.every(entry => entry.totalAmount === 0) ? [0, 1] : [0, 'auto']}
+            />
             <Bar
               dataKey={'totalAmount'}
               onClick={target => handleBarCharClick(target.period)}

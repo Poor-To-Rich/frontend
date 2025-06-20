@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { getDate } from 'date-fns';
 import { EndType } from '@/types/transactionTypes';
+import { useMemo } from 'react';
 
 export const useResetCustomIteration = () => {
   const { calenderDate } = useCalenderDateStore();
-  const [iterationRuleDefaults, setIterationRuleDefaults] = useState(() => calculateIterationDefaults(calenderDate));
   const end: EndType = { type: 'never' };
 
-  useEffect(() => {
-    const newIterationDefaults = calculateIterationDefaults(calenderDate);
-    setIterationRuleDefaults(newIterationDefaults);
-  }, [calenderDate]);
+  const iterationRuleDefaults = useMemo(() => calculateIterationDefaults(calenderDate), [calenderDate]);
 
   return {
     customIteration: {

@@ -1,7 +1,7 @@
 import { addExpenseCategory, addIncomeCategory } from '@/api/services/categoryService';
 import { BaseCategoriesType } from '@/types/categoryTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
-import CustomError from '@/utils/CustomError';
+import CustomError from '@/utils/error/CustomError';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';

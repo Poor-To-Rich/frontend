@@ -3,20 +3,18 @@ import CategoryLineChart from '@/pages/CategoryDetailsPage/components/lineChart/
 import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarChart';
 import useGetCategoryDetailsBarChart from '@/hooks/apis/chart/useGetCategoryDetailsBarChart';
 import useGetCategoryDetailsLineChart from '@/hooks/apis/chart/useGetCategoryDetailsLineChart';
-import { ReportType } from '@/types/reportTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
-  reportType: ReportType;
   transactionType: IncomeExpenseType;
   categoryId: string;
   date: string;
+  isWeekly: boolean;
   isSavings?: boolean;
 }
 
-const CategoryOverviewChart = ({ reportType, transactionType, categoryId, date, isSavings }: Props) => {
-  const isWeekly = reportType === '월별';
+const CategoryOverviewChart = ({ transactionType, categoryId, date, isSavings, isWeekly }: Props) => {
   const { data: monthlyChartData, isFetching: isBarChartFetching } = useGetCategoryDetailsBarChart(
     categoryId,
     date,
@@ -44,10 +42,16 @@ const CategoryOverviewChart = ({ reportType, transactionType, categoryId, date, 
       <PeriodSummary period={period} balance={balance} transactionType={isSavings ? '저축/투자' : transactionType} />
       <div className="w-full h-[300px] p-5">
         {isWeekly && weeklyChartData && (
-          <CategoryLineChart transactionType={transactionType} weeklyAmounts={weeklyChartData.weeklyAmounts} />
+          <CategoryLineChart
+            transactionType={isSavings ? '저축/투자' : transactionType}
+            weeklyAmounts={weeklyChartData.weeklyAmounts}
+          />
         )}
         {!isWeekly && monthlyChartData && (
-          <CategoryBarChart transactionType={transactionType} monthlyAmounts={monthlyChartData.monthlyAmounts} />
+          <CategoryBarChart
+            transactionType={isSavings ? '저축/투자' : transactionType}
+            monthlyAmounts={monthlyChartData.monthlyAmounts}
+          />
         )}
       </div>
     </div>

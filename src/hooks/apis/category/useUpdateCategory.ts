@@ -21,9 +21,6 @@ const useUpdateCategory = (type: IncomeExpenseType) => {
       toast.success(data.message);
       navigate(-1);
     },
-    onError: error => {
-      toast.error(error.message);
-    },
   });
 };
 

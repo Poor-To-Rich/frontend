@@ -16,7 +16,6 @@ const useLogout = () => {
       queryClient.clear();
       navigate('/login');
     },
-    onError: error => toast.error(error.message),
   });
 };
 

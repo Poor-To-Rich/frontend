@@ -16,11 +16,14 @@ interface Props {
 }
 
 const CustomIterationModal = ({ closeIteration, closeCustom, backUpCustomIteration }: Props) => {
-  const { control, setValue } = useFormContext<TransactionFormDataType>();
+  const { control, setValue, resetField } = useFormContext<TransactionFormDataType>();
   const type = useWatch({ control, name: 'customIteration.iterationRule.type' });
 
   const handleCancel = () => {
     setValue('customIteration', backUpCustomIteration);
+    resetField('customIteration.iterationRule.type', {
+      defaultValue: backUpCustomIteration.iterationRule.type,
+    });
     closeCustom();
   };
 

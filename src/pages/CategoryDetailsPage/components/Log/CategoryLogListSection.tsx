@@ -18,8 +18,10 @@ const CategoryLogListSection = ({ transactionType, categoryId, date, isSavings }
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useCategoryLogsInfiniteQuery(
     categoryId,
     date,
+    isDescending,
   );
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
+
   const allCategoryLogs = data?.pages?.flatMap(page => page.categoryLogs) || [];
   const totalCount = data?.pages[0]?.countOfLogs ?? 0;
   const isEmpty = allCategoryLogs?.length === 0;

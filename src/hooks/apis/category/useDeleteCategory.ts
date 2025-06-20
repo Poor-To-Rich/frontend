@@ -17,9 +17,6 @@ const useDeleteCategory = (type: IncomeExpenseType) => {
       });
       toast.success(data.message);
     },
-    onError: error => {
-      toast.error(error.message);
-    },
   });
 };
 

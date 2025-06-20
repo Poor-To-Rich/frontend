@@ -67,10 +67,15 @@ export const getCategoryDetailsBarChart = async (categoryId: string, date: strin
   return res.data;
 };
 
-export const getCategoryLogs = async (categoryId: string, date: string, cursor: string | null) => {
+export const getCategoryLogs = async (
+  categoryId: string,
+  date: string,
+  cursor: string | null,
+  isDescending: boolean,
+) => {
   const res = await fetchData<undefined, CategoryDetailsRes>(
     'GET',
-    endpoints.chart.getCategoryLogs(categoryId, date, cursor),
+    endpoints.chart.getCategoryLogs(categoryId, date, cursor, isDescending),
   );
 
   if (!res.data) throw new Error('No data from server');

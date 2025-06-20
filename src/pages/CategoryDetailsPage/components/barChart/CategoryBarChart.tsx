@@ -3,11 +3,11 @@ import CategoryBarCustomLabel from '@/pages/CategoryDetailsPage/components/barCh
 import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/CustomizedTooltip';
 import '@/styles/recharts-tooltip.css';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
-import { monthlyAmountType } from '@/types/chartTypes';
-import { IncomeExpenseType } from '@/types/transactionTypes';
+import { CharTransactionType, monthlyAmountType } from '@/types/chartTypes';
+import { BAR_CHART_COLORS } from '@/constants/charts';
 
 interface Props {
-  transactionType: IncomeExpenseType;
+  transactionType: CharTransactionType;
   monthlyAmounts: monthlyAmountType[];
 }
 
@@ -16,7 +16,7 @@ const CategoryBarChart = ({ transactionType, monthlyAmounts }: Props) => {
     useDraggableScroll();
 
   const maxAmount = Math.max(...monthlyAmounts.map(item => item.totalAmount));
-  const chartColor = transactionType === '지출' ? '#ffcbc4' : '#D2E2FF';
+  const chartColor = BAR_CHART_COLORS[transactionType];
 
   return (
     <div
@@ -38,8 +38,8 @@ const CategoryBarChart = ({ transactionType, monthlyAmounts }: Props) => {
             <Bar
               dataKey="totalAmount"
               fill={chartColor}
-              background={{ fill: '#f0f0f0', stroke: 'none', radius: 15 }}
-              radius={15}>
+              background={{ fill: '#f0f0f0', stroke: 'none', radius: 10 }}
+              radius={10}>
               <LabelList dataKey="totalAmount" position="top" fontSize={11} content={CategoryBarCustomLabel} />
             </Bar>
           </BarChart>

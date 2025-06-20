@@ -12,11 +12,14 @@ const DailyTransactionList = () => {
   const { calenderDate } = useCalenderDateStore();
   const { data: dailyDetails, isPending } = useGetDailyDetails(format(calenderDate, 'yyyy-MM-dd'));
   const isEmpty = dailyDetails?.dailyDetails.length === 0;
-  const { selectedRef } = useScrollToSelectedRef(dailyDetails?.dailyDetails);
+  const { selectedRef, targetItem } = useScrollToSelectedRef('id', dailyDetails?.dailyDetails);
 
   if (isPending) {
     return (
       <div className="w-full flex flex-col gap-2.5 border-t border-strokeGray p-5 pb-7">
+        <div className="w-full flex justify-end">
+          <Skeleton width="w-[15rem]" height="h-[2.4rem]" />
+        </div>
         <Skeleton height="h-[3.5rem]" />
         <Skeleton height="h-[3.5rem]" />
         <div className="flex flex-col gap-1.5">
@@ -44,7 +47,12 @@ const DailyTransactionList = () => {
             </p>
             <div className="w-full flex flex-col items-center gap-2.5">
               {dailyDetails.dailyDetails.map(dailyDetail => (
-                <TransactionDetailItem key={dailyDetail.id} selectedRef={selectedRef} {...dailyDetail} />
+                <TransactionDetailItem
+                  key={dailyDetail.id}
+                  selectedRef={selectedRef}
+                  targetItem={targetItem}
+                  {...dailyDetail}
+                />
               ))}
             </div>
           </div>

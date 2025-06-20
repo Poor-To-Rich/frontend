@@ -1,4 +1,6 @@
 import { login } from '@/api/services/authService';
+import CustomError from '@/utils/error/CustomError';
+import { handleCustomError } from '@/utils/error/errorHandler';
 import { tokenManager } from '@/utils/tokenManager';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -17,9 +19,7 @@ const useLogin = ({ setErrorMessage }: Props) => {
         tokenManager.setToken(data.data?.accessToken);
       }
     },
-    onError: error => {
-      setErrorMessage(error.message);
-    },
+    onError: (error: CustomError) => handleCustomError(error, () => setErrorMessage(error.message)),
   });
 };
 

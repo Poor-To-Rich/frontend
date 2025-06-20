@@ -3,21 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useCategoryManagement } from '@/hooks/category/useCategoryManagement';
 import CategoryListContainer from '@/pages/CategoriesPage/components/CategoryListContainer';
+import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
-  const {
-    type,
-    isOpen,
-    closeModal,
-    defaultCategories,
-    customCategories,
-    categoryRef,
-    isGetPending,
-    isDeletePending,
-    handleDeleteIconClick,
-    handleDeleteCategory,
-  } = useCategoryManagement();
+  const { type, isOpen, closeModal, categoryRef, isDeletePending, handleDeleteIconClick, handleDeleteCategory } =
+    useCategoryManagement();
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
@@ -27,13 +19,11 @@ const CategoriesPage = () => {
         hasPlusButton
         onClick={() => navigate(`/category?type=add&categoryType=${type}`)}
       />
-      <CategoryListContainer
-        type={type}
-        defaultCategories={defaultCategories}
-        customCategories={customCategories}
-        handleDeleteIconClick={handleDeleteIconClick}
-        isPending={isGetPending}
-      />
+      <PageErrorBoundary>
+        <FetchErrorBoundary key={type}>
+          <CategoryListContainer type={type} handleDeleteIconClick={handleDeleteIconClick} />
+        </FetchErrorBoundary>
+      </PageErrorBoundary>
       {isOpen && (
         <DefaultModal
           content={`"${categoryRef.current.name}"(을)를 삭제하시겠습니까?`}

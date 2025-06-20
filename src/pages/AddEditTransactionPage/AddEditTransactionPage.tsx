@@ -11,6 +11,8 @@ import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const AddEditTransactionPage = () => {
   const { setCalenderDate } = useCalenderDateStore();
@@ -28,6 +30,7 @@ const AddEditTransactionPage = () => {
       iterationType: 'none',
     },
     resolver: zodResolver(transactionSchema),
+    shouldUnregister: false,
     mode: 'onChange',
   });
 
@@ -51,24 +54,28 @@ const AddEditTransactionPage = () => {
         onClick={openDeleteModal}
         resetCalenderDate={resetCalenderDate}
       />
-      <FormProvider {...methods}>
-        <TransactionForm openEdit={openEdit} initialIterationTypeRef={initialIterationTypeRef} />
-        {isDeleteModalOpen &&
-          (initialIterationTypeRef.current === 'none' ? (
-            <DefaultModal
-              data-testid="delete-confirm-modal"
-              content="해당 내역을 삭제하시겠습니까?"
-              isPending={isPending}
-              onClose={closeDeleteModal}
-              onClick={methods.handleSubmit(handleDelete)}
-            />
-          ) : (
-            <IterationChangeModal type="delete" onClose={closeDeleteModal} />
-          ))}
-        {isEditOpen && initialIterationTypeRef.current !== 'none' && (
-          <IterationChangeModal type="edit" onClose={closeEdit} />
-        )}
-      </FormProvider>
+      <PageErrorBoundary>
+        <FetchErrorBoundary>
+          <FormProvider {...methods}>
+            <TransactionForm openEdit={openEdit} initialIterationTypeRef={initialIterationTypeRef} />
+            {isDeleteModalOpen &&
+              (initialIterationTypeRef.current === 'none' ? (
+                <DefaultModal
+                  data-testid="delete-confirm-modal"
+                  content="해당 내역을 삭제하시겠습니까?"
+                  isPending={isPending}
+                  onClose={closeDeleteModal}
+                  onClick={methods.handleSubmit(handleDelete)}
+                />
+              ) : (
+                <IterationChangeModal type="delete" onClose={closeDeleteModal} />
+              ))}
+            {isEditOpen && initialIterationTypeRef.current !== 'none' && (
+              <IterationChangeModal type="edit" onClose={closeEdit} />
+            )}
+          </FormProvider>
+        </FetchErrorBoundary>
+      </PageErrorBoundary>
     </div>
   );
 };

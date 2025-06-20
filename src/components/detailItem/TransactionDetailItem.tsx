@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props extends TransactionItemType {
   selectedRef?: React.MutableRefObject<HTMLButtonElement | null>;
+  targetItem?: string | null;
 }
 
 const TransactionDetailItem = ({
@@ -17,9 +18,9 @@ const TransactionDetailItem = ({
   type,
   cost,
   selectedRef,
+  targetItem,
 }: Props) => {
-  const targetId = sessionStorage.getItem('selected-id');
-  const isSelected = String(id) === targetId;
+  const isSelected = String(id) === targetItem;
   const navigate = useNavigate();
 
   const handleClick = (id: number, type: string) => {

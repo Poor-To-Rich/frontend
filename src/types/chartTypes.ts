@@ -1,3 +1,5 @@
+import { IncomeExpenseType } from './transactionTypes';
+
 export type TickPayload = {
   value: any;
   index: number;
@@ -91,3 +93,5 @@ export interface LabelProps {
   width?: number | string;
   value?: number | string;
 }
+
+export type CharTransactionType = IncomeExpenseType | '저축/투자';

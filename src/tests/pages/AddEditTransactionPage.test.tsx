@@ -12,6 +12,7 @@ vi.mock('@/components/route/ProtectedRoute', () => ({
 describe('AddEditTransactionPage', () => {
   afterEach(() => {
     cleanup(); // 테스트 후 cleanup
+    sessionStorage.clear();
   });
 
   describe('가계부 등록', () => {
@@ -68,12 +69,14 @@ describe('AddEditTransactionPage', () => {
       // Then
       await userEvent.click(screen.getByTestId('submit-button'));
 
-      expect(spy).toHaveBeenCalledWith({
-        categoryName: category,
-        cost: cost,
-        date: format(new Date(), 'yyyy-MM-dd'),
-        iterationType: 'daily',
-        paymentMethod: expenseMethod,
+      await waitFor(() => {
+        expect(spy).toHaveBeenCalledWith({
+          categoryName: '선물/경조사',
+          cost: cost,
+          date: format(new Date(), 'yyyy-MM-dd'),
+          iterationType: 'daily',
+          paymentMethod: '현금',
+        });
       });
 
       spy.mockRestore();
@@ -90,14 +93,14 @@ describe('AddEditTransactionPage', () => {
       });
 
       const transactionType = '지출';
-      const cost = '12346';
+      const cost = 12346;
       const category = '용돈';
       const title = '용돈받음';
       const memo = '야호';
 
       // When
       await userEvent.type(await screen.findByTestId('income-toggle-button'), transactionType);
-      await userEvent.type(screen.getByTestId('cost-input'), cost);
+      await userEvent.type(screen.getByTestId('cost-input'), String(cost));
       await userEvent.selectOptions(screen.getByTestId('income-categories-select'), category);
       await userEvent.type(screen.getByTestId('income-title-input'), title);
       await userEvent.type(screen.getByTestId('memo-input'), memo);
@@ -114,7 +117,7 @@ describe('AddEditTransactionPage', () => {
 
       expect(spy).toHaveBeenCalledWith({
         categoryName: category,
-        cost: Number(cost),
+        cost: cost,
         title: title,
         memo: memo,
         date: format(new Date(), 'yyyy-MM-dd'),
@@ -190,9 +193,10 @@ describe('AddEditTransactionPage', () => {
       // When
       const costInput = await screen.findByTestId('cost-input');
       const memoInput = await screen.findByTestId('memo-input');
-      const titleInput = await screen.findByTestId('expense-title-input');
+
       const categorySelectBox = await screen.findByTestId('expense-categories-select');
       const expenseMethodSelectBox = await screen.findByTestId('expense-method-select');
+      const titleInput = await screen.findByTestId('expense-title-input');
 
       await userEvent.selectOptions(categorySelectBox, '식비');
 
@@ -234,8 +238,6 @@ describe('AddEditTransactionPage', () => {
       const titleInput = await screen.findByTestId('expense-title-input');
       const categorySelectBox = await screen.findByTestId('expense-categories-select');
       const expenseMethodSelectBox = await screen.findByTestId('expense-method-select');
-
-      screen.debug(dateInput);
 
       userEvent.type(dateInput, '2020-05-13');
       userEvent.selectOptions(categorySelectBox, '식비');
