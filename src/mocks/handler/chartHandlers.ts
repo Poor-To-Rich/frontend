@@ -43,15 +43,17 @@ export const chartHandlers = [
     const date = url.searchParams.get('date');
 
     const response = {
-      aggregatedData: {
-        주거비: 35.0,
-        식비: 25.0,
-        쇼핑: 15.0,
-        '건강/의료': 8.0,
-        '문화/취미': 7.0,
-        커피: 6.0,
-        기타: 4.0,
-      },
+      aggregatedData: [
+        {
+          주거비: 35.0,
+          식비: 25.0,
+          쇼핑: 15.0,
+          '건강/의료': 8.0,
+          '문화/취미': 7.0,
+          커피: 6.0,
+          기타: 4.0,
+        },
+      ],
 
       categoryColors: {
         주거비: '#4A90E2',
@@ -228,11 +230,11 @@ export const chartHandlers = [
 
     return HttpResponse.json(
       {
-        status: 200,
+        status: 404,
         message: `${date} 꺾은선 그래프 조회 성공`,
         data: response,
       },
-      { status: 200 },
+      { status: 404 },
     );
   }),
 

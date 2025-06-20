@@ -1,23 +1,19 @@
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import CategoryList from '@/pages/CategoriesPage/components/CategoryList';
-import { CustomCategoriesType, DefaultCategoriesType } from '@/types/categoryTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import useGetCustomCategory from '@/hooks/apis/category/useGetCustomCategory';
+import useGetDefaultCategory from '@/hooks/apis/category/useGetDefaultCategory';
 
 interface Props {
   type: IncomeExpenseType;
-  defaultCategories: DefaultCategoriesType[] | undefined;
-  customCategories: CustomCategoriesType[] | undefined;
   handleDeleteIconClick: (id: number, name: string) => void;
-  isPending: boolean;
 }
 
-const CategoryListContainer = ({
-  type,
-  defaultCategories,
-  customCategories,
-  handleDeleteIconClick,
-  isPending,
-}: Props) => {
+const CategoryListContainer = ({ type, handleDeleteIconClick }: Props) => {
+  const { data: defaultCategories, isPending: isGetDefaultCategories } = useGetDefaultCategory(type);
+  const { data: customCategories, isPending: isGetCustomCategories } = useGetCustomCategory(type);
+  const isPending = isGetDefaultCategories || isGetCustomCategories;
+
   if (isPending) {
     return (
       <div className="flex justify-center items-center grow">

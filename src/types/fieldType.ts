@@ -1,13 +1,12 @@
-import { UseFormSetError } from 'react-hook-form';
-import { SignupFormType } from '@/types/authTypes';
+import { FieldValues, UseFormSetError } from 'react-hook-form';
 
 export type FieldStatusType = {
   message: string | undefined;
   isVerify: boolean;
 };
 
-export interface CheckVerifyFieldProps {
-  setError: UseFormSetError<SignupFormType>;
+export interface CheckVerifyFieldProps<T extends FieldValues> {
+  setError: UseFormSetError<T>;
   setFieldStatus: (status: FieldStatusType) => void;
   resetFieldStatus: () => void;
 }

@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import useUpdateUserDetails from '@/hooks/apis/auth/useUpdateUserDetails';
 import { filteredData } from '@/utils/filteredFormData';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { useNicknameFieldStore } from '@/stores/fields/useNicknameFieldStore';
 
 const ProfileForm = () => {
   const {
@@ -29,6 +30,8 @@ const ProfileForm = () => {
   const { mutate: deleteUser } = useDeleteUser();
   const { mutate: updateUserDetails, isPending: isUpdateUserDetailsPending } = useUpdateUserDetails(setError);
   const { data: userDetails, isPending: isGetUserDetailsPending } = useGetUserDetails();
+  const { nicknameStatus } = useNicknameFieldStore();
+  const isNicknameChanged = Boolean(dirtyFields.nickname);
   const isChanged = Object.keys(dirtyFields).length > 0;
 
   const onSubmit = (data: ProfileFormData) => {
@@ -60,7 +63,11 @@ const ProfileForm = () => {
 
   useEffect(() => {
     if (userDetails) {
-      reset(userDetails);
+      const sanitizedData = {
+        ...userDetails,
+        profileImage: userDetails.profileImage ?? undefined,
+      };
+      reset(sanitizedData);
     }
   }, [reset, userDetails]);
 
@@ -89,7 +96,7 @@ const ProfileForm = () => {
           <PrimaryButton
             label="저장"
             type="submit"
-            disabled={!isValid || !isChanged}
+            disabled={!isValid || !isChanged || (isNicknameChanged && !nicknameStatus.isVerify)}
             isPending={isUpdateUserDetailsPending}
           />
         </div>

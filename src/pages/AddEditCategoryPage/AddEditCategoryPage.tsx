@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import useCategoryParams from '@/hooks/category/useCategoryParams';
 import useDeleteCategory from '@/hooks/apis/category/useDeleteCategory';
 import { useEffect } from 'react';
+import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const AddEditCategoryPage = () => {
   const method = useForm({
@@ -45,9 +47,13 @@ const AddEditCategoryPage = () => {
         hasTrashButton={isEdit}
         onClick={openDeleteModal}
       />
-      <FormProvider {...method}>
-        <CategoryForm />
-      </FormProvider>
+      <PageErrorBoundary>
+        <FetchErrorBoundary>
+          <FormProvider {...method}>
+            <CategoryForm />
+          </FormProvider>
+        </FetchErrorBoundary>
+      </PageErrorBoundary>
       {isDeleteModalOpen && (
         <DefaultModal
           content="해당 카테고리를 삭제하시겠습니까?"

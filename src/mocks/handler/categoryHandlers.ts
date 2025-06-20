@@ -59,11 +59,11 @@ export const categoryHandlers = [
   http.get(endpoints.category.getDefaultExpense, async () => {
     return HttpResponse.json(
       {
-        status: 200,
+        status: 404,
         message: '기본 지출 카테고리가 조회되었습니다.',
         data: { defaultCategories: ExpenseCategories },
       },
-      { status: 200 },
+      { status: 404 },
     );
   }),
   http.get(endpoints.category.getDefaultIncome, () => {

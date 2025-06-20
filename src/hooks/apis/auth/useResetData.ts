@@ -16,9 +16,6 @@ const useResetData = ({ closeModal }: Props) => {
       queryClient.clear();
       closeModal();
     },
-    onError: error => {
-      toast.error(error.message);
-    },
   });
 };
 

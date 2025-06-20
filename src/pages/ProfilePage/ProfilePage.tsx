@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { GENDER_OPTIONS, JOB_OPTIONS } from '@/constants/options';
 import { ProfileFormData } from '@/types/authTypes';
 import ProfileForm from '@/pages/ProfilePage/components/ProfileForm';
+import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const ProfilePage = () => {
   const methods = useForm<ProfileFormData>({
@@ -23,9 +25,13 @@ const ProfilePage = () => {
   return (
     <div className="w-full h-screen min-h-screen flex flex-col relative">
       <DefaultHeader label="프로필 편집" hasBackButton />
-      <FormProvider {...methods}>
-        <ProfileForm />
-      </FormProvider>
+      <PageErrorBoundary>
+        <FetchErrorBoundary>
+          <FormProvider {...methods}>
+            <ProfileForm />
+          </FormProvider>
+        </FetchErrorBoundary>
+      </PageErrorBoundary>
     </div>
   );
 };

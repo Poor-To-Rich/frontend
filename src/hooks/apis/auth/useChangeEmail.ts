@@ -1,7 +1,7 @@
 import { changeEmail } from '@/api/services/authService';
 import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 import { EmailChangeData } from '@/types/authTypes';
-import CustomError from '@/utils/CustomError';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -20,16 +20,7 @@ const useChangeEmail = (setError: UseFormSetError<EmailChangeData>) => {
       toast.success(data.message);
       navigate(-1);
     },
-    onError: (error: CustomError<{ field: keyof EmailChangeData }>) => {
-      const field = error.data?.field;
-      if (field) {
-        setError(field, {
-          type: 'server',
-          message: error.message,
-        });
-        resetAllEmailStatus();
-      } else toast.error(error.message);
-    },
+    onError: createFormErrorHandler(setError, resetAllEmailStatus),
   });
 };
 

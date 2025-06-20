@@ -14,7 +14,6 @@ const useDeleteUser = () => {
       tokenManager.clearToken();
       navigate('/login');
     },
-    onError: error => toast.error(error.message),
   });
 };
 

@@ -36,11 +36,6 @@ const useLoginForm = () => {
     });
 
   useEffect(() => {
-    const successMessage = location.state?.successMessage;
-    if (successMessage) {
-      toast.success(successMessage);
-      window.history.replaceState({}, document.title);
-    }
     if (failMessage) {
       toast.error(failMessage, {
         style: {
@@ -49,7 +44,7 @@ const useLoginForm = () => {
       });
       window.history.replaceState({}, document.title, location.pathname);
     }
-  }, []);
+  }, [failMessage, location.pathname]);
 
   return {
     errors,

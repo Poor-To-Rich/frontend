@@ -1,22 +1,23 @@
 import { verifyEmailCode } from '@/api/services/authService';
-import { EmailRes } from '@/types/authTypes';
+import { EmailRes, SignupFormType } from '@/types/authTypes';
 import { CheckVerifyFieldProps } from '@/types/fieldType';
-import CustomError from '@/utils/CustomError';
+import CustomError from '@/utils/error/CustomError';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation } from '@tanstack/react-query';
 
-const useVerifyEmail = ({ setError, setFieldStatus, resetFieldStatus }: CheckVerifyFieldProps) => {
+const useVerifyEmail = ({ setError, setFieldStatus, resetFieldStatus }: CheckVerifyFieldProps<SignupFormType>) => {
   return useMutation({
     mutationFn: verifyEmailCode,
     onSuccess: async data => {
       setFieldStatus({ message: `${data.message}`, isVerify: true });
     },
-    onError: (error: CustomError<EmailRes>) => {
-      setError('verificationCode', {
-        type: 'server',
-        message: `${error.message}${error.data?.notificationMessage ? `\n(${error.data.notificationMessage})` : ''}`,
-      });
-      resetFieldStatus();
-    },
+    onError: createFormErrorHandler(
+      setError,
+      resetFieldStatus,
+      'verificationCode',
+      (error: CustomError<EmailRes>) =>
+        `${error.message}${error.data?.notificationMessage ? `\n(${error.data.notificationMessage})` : ''}`,
+    ),
   });
 };
 

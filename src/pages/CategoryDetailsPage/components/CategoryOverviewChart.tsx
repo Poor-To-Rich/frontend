@@ -3,20 +3,18 @@ import CategoryLineChart from '@/pages/CategoryDetailsPage/components/lineChart/
 import CategoryBarChart from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarChart';
 import useGetCategoryDetailsBarChart from '@/hooks/apis/chart/useGetCategoryDetailsBarChart';
 import useGetCategoryDetailsLineChart from '@/hooks/apis/chart/useGetCategoryDetailsLineChart';
-import { ReportType } from '@/types/reportTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
-  reportType: ReportType;
   transactionType: IncomeExpenseType;
   categoryId: string;
   date: string;
+  isWeekly: boolean;
   isSavings?: boolean;
 }
 
-const CategoryOverviewChart = ({ reportType, transactionType, categoryId, date, isSavings }: Props) => {
-  const isWeekly = reportType === '월별';
+const CategoryOverviewChart = ({ transactionType, categoryId, date, isSavings, isWeekly }: Props) => {
   const { data: monthlyChartData, isFetching: isBarChartFetching } = useGetCategoryDetailsBarChart(
     categoryId,
     date,

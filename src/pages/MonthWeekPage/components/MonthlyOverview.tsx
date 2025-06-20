@@ -3,6 +3,7 @@ import { OverviewLogType } from '@/types/reportTypes';
 import LogItem from '@/pages/MonthWeekPage/components/LogItem';
 import useOpenIndexStore from '@/stores/useOpenIndexStore';
 import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 interface Props {
   targetYear: string;
@@ -19,11 +20,13 @@ const MonthlyOverview = ({ targetYear, monthlyLogs }: Props) => {
         <div key={index} className="flex flex-col items-end">
           <LogItem order={index + 1} log={log} type="month" onClick={() => addOpenIndex(index)} />
           {openIndexes.includes(index) && (
-            <WeeklyOverview
-              selectedRef={selectedRef}
-              targetItem={targetItem}
-              targetDate={`${targetYear}-${(index + 1).toString().padStart(2, '0')}`}
-            />
+            <FetchErrorBoundary>
+              <WeeklyOverview
+                selectedRef={selectedRef}
+                targetItem={targetItem}
+                targetDate={`${targetYear}-${(index + 1).toString().padStart(2, '0')}`}
+              />
+            </FetchErrorBoundary>
           )}
         </div>
       ))}
