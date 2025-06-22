@@ -17,6 +17,7 @@ import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransac
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { LOADING_OPTIONS } from '@/constants/options';
 import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
+import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
 
 interface Props {
   openEdit: () => void;
@@ -35,6 +36,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
   const { isEditPage, transactionId } = useTransactionParams();
   const transactionType = watch('transactionType') as IncomeExpenseType;
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
+  const { hasDraftData } = useDraftMetaStore();
 
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
@@ -53,12 +55,10 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     initialIterationTypeRef,
   });
   useTransactionDraft();
-  const daftData = sessionStorage.getItem('transaction-form-data') || '';
-  const hasDraftData = Boolean(daftData);
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
-    const isIterationModified = Boolean(dirtyFields.iterationType);
+    const isIterationModified = Boolean(dirtyFields.iterationType) || Boolean(dirtyFields.customIteration);
 
     let body = getFinalData(data, isIncome);
 

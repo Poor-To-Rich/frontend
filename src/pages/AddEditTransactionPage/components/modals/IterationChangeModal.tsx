@@ -43,7 +43,7 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
     optionRef.current = iterationAction;
     const isIncome = transactionMode === '수입';
-    const isIterationModified = Boolean(dirtyFields.iterationType);
+    const isIterationModified = Boolean(dirtyFields.iterationType) || Boolean(dirtyFields.customIteration);
 
     if (isEditType) {
       const editBody = getFinalData({ ...data, isIterationModified, iterationAction }, isIncome);

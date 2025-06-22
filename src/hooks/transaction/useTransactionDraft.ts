@@ -1,18 +1,18 @@
+import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
 import { useDraftStore } from '@/stores/useDraftStore';
 import { TransactionFormDataType } from '@/types/transactionTypes';
 import { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 
 const useTransactionDraft = () => {
   const {
-    watch,
     reset,
-    formState: { dirtyFields },
+    formState: { isDirty },
   } = useFormContext<TransactionFormDataType>();
-  const isChanged = Object.keys(dirtyFields).length > 0;
+  const { setHasDraftData } = useDraftMetaStore();
   const { shouldSave, enableSave } = useDraftStore();
-  const formData = watch();
+  const formData = useWatch();
   const [searchParams] = useSearchParams();
   const queryDate = searchParams.get('date');
 
@@ -26,21 +26,24 @@ const useTransactionDraft = () => {
         reset(parsed);
       } else {
         sessionStorage.removeItem('transaction-form-data');
+        setHasDraftData(false);
       }
     }
-  }, [reset, queryDate]);
+  }, [reset, queryDate, setHasDraftData]);
 
   useEffect(() => {
-    if (!shouldSave) return;
-    if (isChanged) {
-      sessionStorage.setItem('transaction-form-data', JSON.stringify(formData));
+    if (!shouldSave) {
+      setHasDraftData(false);
+      return;
     }
-  }, [formData, shouldSave, isChanged]);
+    if (isDirty) {
+      sessionStorage.setItem('transaction-form-data', JSON.stringify(formData));
+      setHasDraftData(true);
+    }
+  }, [formData, shouldSave, isDirty, setHasDraftData]);
 
   useEffect(() => {
-    return () => {
-      enableSave();
-    };
+    enableSave();
   }, [enableSave]);
 };
 
