@@ -4,9 +4,14 @@ import { clsx } from 'clsx';
 import CheckIcon from '@/components/icon/CheckIcon';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { VerifyButtonType } from '@/types/fieldType';
+import { FaRegEye } from 'react-icons/fa';
+import { FaRegEyeSlash } from 'react-icons/fa';
 
 interface PrimaryInputProps {
   label: string;
+  isPassword?: boolean;
+  isPasswordVisible?: boolean;
+  handleVisibleClick?: () => void;
   isRequired?: boolean;
   isPending?: boolean;
   hasCheckIcon?: boolean;
@@ -21,6 +26,9 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
   (
     {
       label,
+      isPassword,
+      isPasswordVisible,
+      handleVisibleClick,
       isRequired,
       isPending,
       hasCheckIcon,
@@ -64,6 +72,14 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
                 <span className="absolute top-1/2 -translate-y-1/2 right-3">
                   <CheckIcon color="#a1c377" />
                 </span>
+              )}
+              {isPassword && (
+                <button
+                  type="button"
+                  onClick={handleVisibleClick}
+                  className="absolute top-1/2 -translate-y-1/2 right-5 text-gray-500 cursor-pointer">
+                  {isPasswordVisible ? <FaRegEyeSlash size={15} /> : <FaRegEye size={15} />}
+                </button>
               )}
             </div>
             {buttonLabel && (
