@@ -8,8 +8,9 @@ const useTransactionDraft = () => {
   const {
     watch,
     reset,
-    formState: { isDirty },
+    formState: { dirtyFields },
   } = useFormContext<TransactionFormDataType>();
+  const isChanged = Object.keys(dirtyFields).length > 0;
   const { shouldSave, enableSave } = useDraftStore();
   const formData = watch();
   const [searchParams] = useSearchParams();
@@ -31,8 +32,10 @@ const useTransactionDraft = () => {
 
   useEffect(() => {
     if (!shouldSave) return;
-    if (isDirty) sessionStorage.setItem('transaction-form-data', JSON.stringify(formData));
-  }, [formData, shouldSave, isDirty]);
+    if (isChanged) {
+      sessionStorage.setItem('transaction-form-data', JSON.stringify(formData));
+    }
+  }, [formData, shouldSave, isChanged]);
 
   useEffect(() => {
     return () => {
