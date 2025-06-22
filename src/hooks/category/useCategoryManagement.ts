@@ -1,5 +1,5 @@
 import useModal from '@/hooks/useModal';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import useDeleteCategory from '@/hooks/apis/category/useDeleteCategory';
 import { useLocation } from 'react-router-dom';
@@ -13,7 +13,7 @@ export const useCategoryManagement = () => {
   const queryParams = new URLSearchParams(location.search);
   const type = queryParams.get('type') as IncomeExpenseType;
 
-  const { mutate: deleteCategory, isSuccess, isPending: isDeletePending } = useDeleteCategory(type);
+  const { mutate: deleteCategory, isPending: isDeletePending } = useDeleteCategory(type, closeModal);
 
   const handleDeleteIconClick = (id: number, name: string) => {
     categoryRef.current = { name, id };
@@ -23,12 +23,6 @@ export const useCategoryManagement = () => {
   const handleDeleteCategory = (id: number) => {
     deleteCategory(id.toString());
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      closeModal();
-    }
-  }, [isSuccess, closeModal]);
 
   return {
     type,
