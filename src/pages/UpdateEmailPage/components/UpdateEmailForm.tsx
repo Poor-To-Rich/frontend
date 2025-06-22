@@ -38,7 +38,7 @@ const UpdateEmailForm = () => {
     <form className="flex flex-col justify-between grow px-5 py-8" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-3">
         <PrimaryInput label="현재 이메일" type="text" readOnly value={userEmail} />
-        <EmailField emailFieldName="newEmail" purpose="changeEmail" />
+        <EmailField emailFieldName="email" purpose="changeEmail" />
       </div>
       <div className="flex justify-end w-full">
         <PrimaryButton label="이메일 변경" disabled={buttonDisabled} type="submit" isPending={isUpdateEmailPending} />
