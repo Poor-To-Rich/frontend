@@ -6,6 +6,10 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date, cate
   const yearMonth = format(date, 'yyyy-MM');
   const yearMonthDay = format(date, 'yyyy-MM-dd');
 
+  queryClient.invalidateQueries({
+    queryKey: ['transaction'],
+  });
+
   // 월별/일별 데이터 조회관련 쿼리키
   queryClient.invalidateQueries({
     queryKey: ['dailyDetails'],

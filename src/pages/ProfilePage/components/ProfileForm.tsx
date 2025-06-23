@@ -14,7 +14,7 @@ import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
 import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
 import { useEffect } from 'react';
 import useUpdateUserDetails from '@/hooks/apis/auth/useUpdateUserDetails';
-import { filteredData } from '@/utils/filteredFormData';
+import { filteredData } from '@/utils/form/filteredFormData';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useNicknameFieldStore } from '@/stores/fields/useNicknameFieldStore';
 

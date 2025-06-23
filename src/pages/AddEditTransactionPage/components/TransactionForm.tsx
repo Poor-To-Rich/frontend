@@ -13,25 +13,27 @@ import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modal
 import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
 import useModal from '@/hooks/useModal';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
-import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
+import { getFinalData } from '@/utils/form/filterTransactionForm';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { LOADING_OPTIONS } from '@/constants/options';
 import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
 import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
+import { hasIterationChanged } from '@/utils/form/hasIterationChanged';
 
 interface Props {
   openEdit: () => void;
   initialIterationTypeRef: React.MutableRefObject<string>;
+  isIterationModifiedRef: React.MutableRefObject<boolean>;
 }
 
-const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
+const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifiedRef }: Props) => {
   const {
     handleSubmit,
     setValue,
     getValues,
     setError,
     watch,
-    formState: { isValid, dirtyFields },
+    formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
   const { isEditPage, transactionId } = useTransactionParams();
   const transactionType = watch('transactionType') as IncomeExpenseType;
@@ -47,6 +49,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     setError,
   });
   const {
+    transactionFormData,
     categoryOptions: options,
     isGetTransactionFetching,
     isCategoryPending,
@@ -58,7 +61,8 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
-    const isIterationModified = Boolean(dirtyFields.iterationType) || Boolean(dirtyFields.customIteration);
+    const isIterationModified = hasIterationChanged(transactionFormData, data);
+    isIterationModifiedRef.current = isIterationModified;
 
     let body = getFinalData(data, isIncome);
 

@@ -1,6 +1,7 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
 import { EXPENSE_METHODS } from '@/constants/options';
+import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
@@ -21,6 +22,7 @@ const TransactionFields = ({ type, options }: Props) => {
   const isExpense = type === '지출';
   const { setMainHeaderDate } = useHeaderDateStore();
   const { setCalenderDate } = useCalenderDateStore();
+  const { customIteration } = useResetCustomIteration();
   const {
     control,
     register,
@@ -41,6 +43,10 @@ const TransactionFields = ({ type, options }: Props) => {
     setCalenderDate(currentDate);
     setMainHeaderDate(currentDate);
 
+    const { customIteration: prevCustomIteration } = getValues();
+    const newDaysOfWeek =
+      prevCustomIteration?.iterationRule.type === 'weekly' ? prevCustomIteration.iterationRule.daysOfWeek : [koreanDay];
+
     const newCustomIteration = {
       end: {
         date: format(addMonths(currentDate, 2), 'yyyy-MM-dd'),
@@ -51,12 +57,13 @@ const TransactionFields = ({ type, options }: Props) => {
           week: getKoreanWeekOfMonth(currentDate),
           dayOfWeek: koreanDay,
         },
-
-        daysOfWeek: [koreanDay],
+        daysOfWeek: [...newDaysOfWeek],
       },
     };
-    const { customIteration: prevCustomIteration } = getValues();
-    const merged = merge({}, prevCustomIteration, newCustomIteration);
+
+    const merged = prevCustomIteration
+      ? merge({}, prevCustomIteration, newCustomIteration)
+      : merge({}, customIteration, newCustomIteration);
 
     setValue('date', format(currentDate, 'yyyy-MM-dd'), { shouldDirty: true });
     setValue('customIteration', merged, { shouldDirty: true });
