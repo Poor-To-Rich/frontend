@@ -34,6 +34,7 @@ const AddEditTransactionPage = () => {
     mode: 'onChange',
   });
 
+  const isIterationModifiedRef = useRef<boolean>(false);
   const initialIterationTypeRef = useRef(methods.getValues('iterationType'));
   const dateRef = useRef(methods.getValues('date'));
 
@@ -57,7 +58,11 @@ const AddEditTransactionPage = () => {
       <PageErrorBoundary>
         <FetchErrorBoundary>
           <FormProvider {...methods}>
-            <TransactionForm openEdit={openEdit} initialIterationTypeRef={initialIterationTypeRef} />
+            <TransactionForm
+              openEdit={openEdit}
+              initialIterationTypeRef={initialIterationTypeRef}
+              isIterationModifiedRef={isIterationModifiedRef}
+            />
             {isDeleteModalOpen &&
               (initialIterationTypeRef.current === 'none' ? (
                 <DefaultModal
@@ -71,7 +76,7 @@ const AddEditTransactionPage = () => {
                 <IterationChangeModal type="delete" onClose={closeDeleteModal} />
               ))}
             {isEditOpen && initialIterationTypeRef.current !== 'none' && (
-              <IterationChangeModal type="edit" onClose={closeEdit} />
+              <IterationChangeModal type="edit" onClose={closeEdit} isIterationModifiedRef={isIterationModifiedRef} />
             )}
           </FormProvider>
         </FetchErrorBoundary>

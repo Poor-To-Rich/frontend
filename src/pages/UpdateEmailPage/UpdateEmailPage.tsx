@@ -10,7 +10,7 @@ import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 const UpdateEmailPage = () => {
   const control = useForm<EmailChangeData>({
     defaultValues: {
-      newEmail: '',
+      email: '',
       verificationCode: 0,
     },
     resolver: zodResolver(emailChangeSchema),

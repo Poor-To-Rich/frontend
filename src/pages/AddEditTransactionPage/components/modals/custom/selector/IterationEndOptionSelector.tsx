@@ -9,6 +9,7 @@ const IterationEndOptionSelector = () => {
   const { calenderDate } = useCalenderDateStore();
   const { control, register, setValue } = useFormContext<TransactionFormDataType>();
   const end = useWatch({ control, name: 'customIteration.end' });
+  const baseId = useId();
 
   const options = [
     {
@@ -30,6 +31,9 @@ const IterationEndOptionSelector = () => {
                 type="tel"
                 inputMode="numeric"
                 pattern="[0-9]*"
+                min={10}
+                max={999}
+                maxLength={3}
                 placeholder="10"
                 className="w-[40px] text-center  placeholder:text-defaultGrey focus:outline-none"
                 value={field.value}
@@ -77,8 +81,8 @@ const IterationEndOptionSelector = () => {
         <div className="flex flex-col gap-5">
           <span>반복 종료</span>
           <div>
-            {options.map(({ label, value, input }) => {
-              const radioId = useId();
+            {options.map(({ label, value, input }, index) => {
+              const radioId = `${baseId}-${index}`;
               return (
                 <RadioOption
                   key={radioId}

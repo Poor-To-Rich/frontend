@@ -1,5 +1,5 @@
 import { TransactionFormDataType } from '@/types/transactionTypes';
-import { filteredData } from '@/utils/filteredFormData';
+import { filteredData } from '@/utils/form/filteredFormData';
 import { omit } from 'lodash';
 
 const getPayload = (data: TransactionFormDataType) => {

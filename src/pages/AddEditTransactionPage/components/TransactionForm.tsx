@@ -13,28 +13,32 @@ import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modal
 import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
 import useModal from '@/hooks/useModal';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
-import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
+import { getFinalData } from '@/utils/form/filterTransactionForm';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { LOADING_OPTIONS } from '@/constants/options';
 import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
+import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
+import { hasIterationChanged } from '@/utils/form/hasIterationChanged';
 
 interface Props {
   openEdit: () => void;
   initialIterationTypeRef: React.MutableRefObject<string>;
+  isIterationModifiedRef: React.MutableRefObject<boolean>;
 }
 
-const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
+const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifiedRef }: Props) => {
   const {
     handleSubmit,
     setValue,
     getValues,
     setError,
     watch,
-    formState: { isValid, dirtyFields },
+    formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
   const { isEditPage, transactionId } = useTransactionParams();
   const transactionType = watch('transactionType') as IncomeExpenseType;
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
+  const { hasDraftData } = useDraftMetaStore();
 
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
@@ -45,6 +49,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     setError,
   });
   const {
+    transactionFormData,
     categoryOptions: options,
     isGetTransactionFetching,
     isCategoryPending,
@@ -53,11 +58,11 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
     initialIterationTypeRef,
   });
   useTransactionDraft();
-  const isChanged = Object.keys(dirtyFields).length > 0;
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
-    const isIterationModified = Boolean(dirtyFields.iterationType);
+    const isIterationModified = hasIterationChanged(transactionFormData, data);
+    isIterationModifiedRef.current = isIterationModified;
 
     let body = getFinalData(data, isIncome);
 
@@ -107,7 +112,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef }: Props) => {
           data-testid="submit-button"
           label="저장"
           type="submit"
-          disabled={!isValid || !isChanged}
+          disabled={!isValid || !hasDraftData}
           isPending={isAddPending || isUpdatePending}
         />
       </div>
