@@ -11,7 +11,7 @@ import {
   ProfileFormData,
   ChangePasswordData,
   GetUserEmailRes,
-  EmailChangeData,
+  ChangeUserEmailReq,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -48,8 +48,8 @@ export const getUserEmail = async () => {
   return res.data?.email;
 };
 
-export const changeEmail = async (body: EmailChangeData) => {
-  const res = await fetchData<EmailChangeData, undefined>('PUT', endpoints.email.changeEmail, body);
+export const changeEmail = async (body: ChangeUserEmailReq) => {
+  const res = await fetchData<ChangeUserEmailReq, undefined>('PUT', endpoints.email.changeEmail, body);
   return res;
 };
 

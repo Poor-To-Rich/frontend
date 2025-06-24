@@ -21,6 +21,10 @@ export type GetUserEmailRes = {
   email: string;
 };
 
+export type ChangeUserEmailReq = {
+  email: string;
+};
+
 export const emailPurposeList = ['register', 'changeEmail'] as const;
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];

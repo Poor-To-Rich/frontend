@@ -3,7 +3,7 @@ import { IncomeExpenseType } from '@/types/transactionTypes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
-const useDeleteCategory = (type: IncomeExpenseType, closeModal: () => void) => {
+const useDeleteCategory = (type: IncomeExpenseType, closeModal?: () => void) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -16,7 +16,7 @@ const useDeleteCategory = (type: IncomeExpenseType, closeModal: () => void) => {
         queryKey: [`activeCategories`, type === '수입' ? 'income' : 'expense'],
       });
       toast.success(data.message);
-      closeModal();
+      if (closeModal) closeModal();
     },
   });
 };
