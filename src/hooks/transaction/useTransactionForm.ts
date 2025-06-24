@@ -72,6 +72,7 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   }, [transactionFormData, categoryOptions, setValue]);
 
   return {
+    transactionFormData,
     categoryOptions,
     isGetTransactionFetching,
     isCategoryPending,

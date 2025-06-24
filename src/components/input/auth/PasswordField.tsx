@@ -1,5 +1,5 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 const PasswordField = () => {
@@ -9,6 +9,11 @@ const PasswordField = () => {
     register,
     formState: { errors },
   } = useFormContext();
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleVisibleClick = () => {
+    setIsVisible(prev => !prev);
+  };
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
@@ -27,8 +32,11 @@ const PasswordField = () => {
         data-testid="password-input"
         label="비밀번호"
         isRequired
-        type="password"
+        type={isVisible ? 'text' : 'password'}
         errorMessage={errors.password?.message}
+        isPassword
+        isPasswordVisible={isVisible}
+        handleVisibleClick={handleVisibleClick}
       />
       <PrimaryInput
         {...register('passwordConfirm')}

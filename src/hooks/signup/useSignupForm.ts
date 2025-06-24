@@ -3,7 +3,7 @@ import { SignupFormType } from '@/types/authTypes';
 import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 import { useNicknameFieldStore } from '@/stores/fields/useNicknameFieldStore';
 import { useUsernameFieldStore } from '@/stores/fields/useUsernameFieldStore';
-import { filteredData } from '@/utils/filteredFormData';
+import { filteredData } from '@/utils/form/filteredFormData';
 import { omit } from 'lodash';
 import useSignup from '@/hooks/apis/auth/useSignup';
 

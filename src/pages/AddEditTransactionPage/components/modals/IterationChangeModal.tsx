@@ -4,17 +4,18 @@ import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction'
 import { IncomeExpenseType, IterationActionEnumType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
-import { getFinalData } from '@/pages/AddEditTransactionPage/utils/filterTransactionForm';
+import { getFinalData } from '@/utils/form/filterTransactionForm';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
-import useGetUpdateOptions from '../../hooks/useGetUpdateOptions';
 import { useRef } from 'react';
+import { getUpdateOptions } from '@/utils/form/getUpdateOptions';
 
 interface Props {
   type: 'delete' | 'edit';
   onClose: () => void;
+  isIterationModifiedRef?: React.MutableRefObject<boolean>;
 }
 
-const IterationChangeModal = ({ type, onClose }: Props) => {
+const IterationChangeModal = ({ type, onClose, isIterationModifiedRef }: Props) => {
   const {
     handleSubmit,
     setError,
@@ -24,14 +25,12 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const isEditType = type === 'edit';
   const isChanged = Object.keys(dirtyFields).length > 0;
 
-  const { content, options } = useGetUpdateOptions({
-    isEditType,
-    dirtyFields: dirtyFields as {
-      iterationType?: boolean;
-      customIteration?: boolean;
-    },
-  });
   const { transactionId, transactionMode } = useTransactionParams();
+  const { content, options } = getUpdateOptions({
+    isEditType,
+    isIterationModified: Boolean(isIterationModifiedRef?.current),
+  });
+
   const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
     type: transactionMode as IncomeExpenseType,
     setError: setError,
@@ -43,7 +42,7 @@ const IterationChangeModal = ({ type, onClose }: Props) => {
   const onSubmit = (data: TransactionFormDataType, iterationAction: IterationActionEnumType) => {
     optionRef.current = iterationAction;
     const isIncome = transactionMode === '수입';
-    const isIterationModified = Boolean(dirtyFields.iterationType);
+    const isIterationModified = isIterationModifiedRef?.current;
 
     if (isEditType) {
       const editBody = getFinalData({ ...data, isIterationModified, iterationAction }, isIncome);

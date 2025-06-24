@@ -1,3 +1,4 @@
+import { IncomeExpenseType } from '@/types/transactionTypes';
 import { useLocation } from 'react-router-dom';
 
 const useTransactionParams = () => {
@@ -5,7 +6,7 @@ const useTransactionParams = () => {
   const queryParams = new URLSearchParams(location.search);
   const pageType = queryParams.get('type');
   const transactionDate = queryParams.get('date');
-  const transactionMode = queryParams.get('transactionType');
+  const transactionMode = queryParams.get('transactionType') as IncomeExpenseType;
   const transactionId = pageType ? queryParams.get('id') : '';
   const isEditPage = pageType === 'edit';
 
