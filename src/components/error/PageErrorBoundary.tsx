@@ -10,8 +10,8 @@ const PageFallback = ({ error }: FallbackProps) => {
   }
 
   return (
-    <div className="w-full grow flex flex-col justify-center items-center gap-5">
-      <LuFileWarning size={80} color={'red'} />
+    <div className="w-full grow flex flex-col justify-center items-center gap-7">
+      <LuFileWarning size={70} color={'gray'} />
       <h1 className="text-xl font-bold">페이지를 불러오는 데 문제가 발생했습니다.</h1>
       <p>다시 시도하거나 홈으로 돌아가주세요.</p>
       <PrimaryButton label="새로고침" onClick={() => window.location.reload()} color={'bg-lightBlue text-oceanBlue'} />

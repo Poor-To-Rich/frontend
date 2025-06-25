@@ -7,10 +7,11 @@ import DailySummeryItem from '@/pages/MainPage/components/daily/DailySummeryItem
 import Skeleton from '@/components/loading/Skeleton';
 import { ko } from 'date-fns/locale';
 import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import { handleFetchError } from '@/utils/error/handleFetchError';
 
 const DailyTransactionList = () => {
   const { calenderDate } = useCalenderDateStore();
-  const { data: dailyDetails, isPending } = useGetDailyDetails(format(calenderDate, 'yyyy-MM-dd'));
+  const { data: dailyDetails, isPending, isError, error } = useGetDailyDetails(format(calenderDate, 'yyyy-MM-dd'));
   const isEmpty = dailyDetails?.dailyDetails.length === 0;
   const { selectedRef, targetItem } = useScrollToSelectedRef('id', dailyDetails?.dailyDetails);
 
@@ -29,6 +30,10 @@ const DailyTransactionList = () => {
         </div>
       </div>
     );
+  }
+
+  if (isError && error) {
+    return handleFetchError(error);
   }
 
   return (
