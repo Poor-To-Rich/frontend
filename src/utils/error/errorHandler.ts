@@ -1,6 +1,7 @@
 import { FieldValues, Path, UseFormSetError } from 'react-hook-form';
 import CustomError from '@/utils/error/CustomError';
 import toast from 'react-hot-toast';
+import * as Sentry from '@sentry/react';
 
 // 폼 데이터의 상태 변경이 필요한 Error 처리 핸들러
 export const createFormErrorHandler = <T extends FieldValues, E = unknown>(
@@ -29,6 +30,8 @@ export const createFormErrorHandler = <T extends FieldValues, E = unknown>(
     } else {
       toast.error('알 수 없는 오류가 발생했습니다.\n 잠시 후 다시 시도해주세요.');
     }
+
+    Sentry.captureException(error);
   };
 };
 
@@ -43,4 +46,6 @@ export const handleCustomError = (error: unknown, fallback?: (error: CustomError
   } else {
     toast.error('알 수 없는 오류가 발생했습니다.\n 잠시 후 다시 시도해주세요.');
   }
+
+  Sentry.captureException(error);
 };

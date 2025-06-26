@@ -3,6 +3,7 @@ import { updateCategoryVisibility } from '@/api/services/categoryService';
 import { CategoryVisibility, DefaultCategoriesType } from '@/types/categoryTypes';
 import toast from 'react-hot-toast';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import * as Sentry from '@sentry/react';
 
 interface Props {
   type: IncomeExpenseType;
@@ -37,6 +38,7 @@ const useUpdateCategoryVisibility = ({ type }: Props) => {
         queryClient.setQueryData(['defaultCategories', type], context.previousData);
       }
       toast.error(error.message);
+      Sentry.captureException(error);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['defaultCategories', type] });

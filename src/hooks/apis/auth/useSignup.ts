@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 
 interface Props {
   setError: UseFormSetError<SignupFormType>;
@@ -33,6 +34,8 @@ const useSignup = ({ setError, fieldStatusMap }: Props) => {
 
         resetFieldStatus?.();
       } else toast.error(error.message);
+
+      Sentry.captureException(error);
     },
   });
 };

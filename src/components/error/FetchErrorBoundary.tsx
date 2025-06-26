@@ -1,12 +1,21 @@
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import * as Sentry from '@sentry/react';
 import { handleFetchError } from '@/utils/error/handleFetchError';
+import { SentryFallbackProps } from '@/types/types';
 
-export const FetchFallback = ({ error }: FallbackProps) => {
+export const FetchFallback = ({ error }: SentryFallbackProps) => {
   return handleFetchError(error);
 };
 
 const FetchErrorBoundary = ({ children }: { children: React.ReactNode }) => {
-  return <ErrorBoundary FallbackComponent={FetchFallback}>{children}</ErrorBoundary>;
+  return (
+    <Sentry.ErrorBoundary
+      onError={error => {
+        Sentry.captureException(error);
+      }}
+      fallback={(props: SentryFallbackProps) => <FetchFallback {...props} />}>
+      {children}
+    </Sentry.ErrorBoundary>
+  );
 };
 
 export default FetchErrorBoundary;

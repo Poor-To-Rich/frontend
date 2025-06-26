@@ -1,11 +1,12 @@
-import { ErrorBoundary } from 'react-error-boundary';
-import { FallbackProps } from 'react-error-boundary';
+import * as Sentry from '@sentry/react';
 import ServerErrorFallback from './fallbacks/ServerErrorFallback';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import { LuFileWarning } from 'react-icons/lu';
+import { SentryFallbackProps } from '@/types/types';
+import CustomError from '@/utils/error/CustomError';
 
-const PageFallback = ({ error }: FallbackProps) => {
-  if (error.statusCode >= 500) {
+const PageFallback = ({ error }: SentryFallbackProps) => {
+  if (error instanceof CustomError && error.statusCode >= 500) {
     return <ServerErrorFallback />;
   }
 
@@ -25,7 +26,15 @@ const PageFallback = ({ error }: FallbackProps) => {
 };
 
 const PageErrorBoundary = ({ children }: { children: React.ReactNode }) => {
-  return <ErrorBoundary FallbackComponent={PageFallback}>{children}</ErrorBoundary>;
+  return (
+    <Sentry.ErrorBoundary
+      onError={error => {
+        Sentry.captureException(error);
+      }}
+      fallback={(props: SentryFallbackProps) => <PageFallback {...props} />}>
+      {children}
+    </Sentry.ErrorBoundary>
+  );
 };
 
 export default PageErrorBoundary;
