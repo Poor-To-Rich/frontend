@@ -17,6 +17,7 @@ import ChartPage from '@/pages/ChartPage/ChartPage';
 import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage';
 import ProtectedRoute from '@/components/route/ProtectedRoute';
 import RedirectIfLoggedInRoute from '@/components/route/RedirectIfLoggedInRoute';
+import ErrorPage from '@/pages/ErrorPage/ErrorPage';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/chart" element={<ChartPage />} />
         <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }

@@ -5,15 +5,25 @@ import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionRepo
 import { handleClickCategoryChart } from '@/pages/ChartPage/utils/handleClickCategoryChart';
 import { useNavigate } from 'react-router-dom';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
+import { handleFetchError } from '@/utils/error/handleFetchError';
 
 const ReportSummary = () => {
   const navigate = useNavigate();
   const { currentReportType } = useReportTypeStore();
   const { currentTransactionType } = useTransactionReportTypeStore();
   const formattedDate = useFormattedReportDate();
-  const { data: totalAndSavings, isPending } = useGetTotalAndSavings(currentTransactionType, formattedDate);
+  const {
+    data: totalAndSavings,
+    isPending,
+    isError,
+    error,
+  } = useGetTotalAndSavings(currentTransactionType, formattedDate);
 
   const categoryName = '저축/투자';
+
+  if (isError && error) {
+    return handleFetchError(error);
+  }
 
   return (
     <div className="w-full flex justify-between px-8 py-4 gap-3.5">

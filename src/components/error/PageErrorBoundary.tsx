@@ -1,17 +1,18 @@
-import { ErrorBoundary } from 'react-error-boundary';
-import { FallbackProps } from 'react-error-boundary';
+import * as Sentry from '@sentry/react';
 import ServerErrorFallback from './fallbacks/ServerErrorFallback';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import { LuFileWarning } from 'react-icons/lu';
+import { SentryFallbackProps } from '@/types/types';
+import CustomError from '@/utils/error/CustomError';
 
-const PageFallback = ({ error }: FallbackProps) => {
-  if (error.statusCode >= 500) {
+const PageFallback = ({ error }: SentryFallbackProps) => {
+  if (error instanceof CustomError && error.statusCode >= 500) {
     return <ServerErrorFallback />;
   }
 
   return (
-    <div className="w-full grow flex flex-col justify-center items-center gap-5">
-      <LuFileWarning size={80} color={'red'} />
+    <div className="w-full grow flex flex-col justify-center items-center gap-7">
+      <LuFileWarning size={70} color={'gray'} />
       <h1 className="text-xl font-bold">페이지를 불러오는 데 문제가 발생했습니다.</h1>
       <p>다시 시도하거나 홈으로 돌아가주세요.</p>
       <PrimaryButton label="새로고침" onClick={() => window.location.reload()} color={'bg-lightBlue text-oceanBlue'} />
@@ -25,7 +26,15 @@ const PageFallback = ({ error }: FallbackProps) => {
 };
 
 const PageErrorBoundary = ({ children }: { children: React.ReactNode }) => {
-  return <ErrorBoundary FallbackComponent={PageFallback}>{children}</ErrorBoundary>;
+  return (
+    <Sentry.ErrorBoundary
+      onError={error => {
+        Sentry.captureException(error);
+      }}
+      fallback={(props: SentryFallbackProps) => <PageFallback {...props} />}>
+      {children}
+    </Sentry.ErrorBoundary>
+  );
 };
 
 export default PageErrorBoundary;

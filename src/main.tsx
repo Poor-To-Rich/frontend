@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '@/libs/queryClient.ts';
 import GlobalErrorBoundary from '@/components/error/GlobalErrorBoundary.tsx';
+import './sentry';
 
 if (typeof window !== 'undefined') {
   if (import.meta.env.DEV) {

@@ -9,6 +9,7 @@ const useGetTotalAndSavings = (transactionType: IncomeExpenseType, date: string)
     queryKey: ['totalAndSavings', date, transactionType],
     queryFn: () => queryFn(date),
     placeholderData: keepPreviousData,
+    throwOnError: false,
     staleTime: 10 * 60 * 1000,
     gcTime: 15 * 60 * 1000,
   });

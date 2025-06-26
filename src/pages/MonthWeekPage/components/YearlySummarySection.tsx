@@ -4,18 +4,23 @@ import useGetYearlySummary from '@/hooks/apis/report/useGetYearlySummary';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { format } from 'date-fns';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { handleFetchError } from '@/utils/error/handleFetchError';
 
 const YearlySummarySection = () => {
   const { monthWeekHeaderDate } = useHeaderDateStore();
   const targetYear = format(monthWeekHeaderDate, 'yyyy');
-  const { data: yearlySummaryData, isPending } = useGetYearlySummary(targetYear);
+  const { data: yearlySummaryData, isPending, isError, error } = useGetYearlySummary(targetYear);
 
-  if (isPending || !yearlySummaryData) {
+  if (isPending) {
     return (
       <div className="flex flex-col grow justify-center items-center">
         <LoadingSpinner size={30} />
       </div>
     );
+  }
+
+  if (isError && error) {
+    return handleFetchError(error);
   }
 
   return (
