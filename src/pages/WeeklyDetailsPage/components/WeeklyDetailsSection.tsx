@@ -5,7 +5,6 @@ import { useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import useGetWeeklyDetailsInfiniteQuery from '@/hooks/apis/report/useGetWeeklyDetailsInfiniteQuery';
-import { format } from 'date-fns';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
 
@@ -57,7 +56,7 @@ const WeeklyDetailsSection = () => {
             <div className="flex flex-col gap-8">
               {weeklyDetailsSummary.map(({ date, transactions }, indx) => (
                 <div className="w-full flex flex-col gap-3.5" key={indx}>
-                  <span className="pl-3">{format(date, 'MM.dd')}</span>
+                  <span className="pl-3">{date}</span>
                   <div className="w-full flex flex-col items-center gap-3">
                     {transactions.map(transaction => (
                       <TransactionDetailItem
