@@ -66,6 +66,7 @@ export const DATA_OPTIONS: SettingOptionType[] = [
 ];
 
 export const INFORMATION_OPTIONS: SettingOptionType[] = [
+  { title: '앱으로 설치하기', modalType: 'pwa' },
   {
     title: '의견 보내기',
     externalUrl:
