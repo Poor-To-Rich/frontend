@@ -5,9 +5,25 @@ import DailyTransactionList from '@/pages/MainPage/components/daily/DailyTransac
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import MonthlyContainer from '@/pages/MainPage/components/MonthlyContainer';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import { useEffect } from 'react';
+import useModal from '@/hooks/useModal';
+import PWAInstallModal from '@/components/modal/PWAInstallModal';
 
 const MainPage = () => {
   const { mainHeaderDate, setMainHeaderDate } = useHeaderDateStore();
+  const { isOpen, openModal, closeModal } = useModal();
+
+  const handleClose = () => {
+    closeModal();
+    localStorage.setItem('hasVisited', 'true');
+  };
+
+  useEffect(() => {
+    const hasVisited = Boolean(localStorage.getItem('hasVisited'));
+    if (!hasVisited) {
+      openModal();
+    }
+  }, [openModal]);
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
@@ -20,6 +36,7 @@ const MainPage = () => {
         </PageErrorBoundary>
       </div>
       <TapBar page="main" />
+      {isOpen && <PWAInstallModal closeModal={handleClose} />}
     </div>
   );
 };
