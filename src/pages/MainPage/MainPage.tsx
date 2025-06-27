@@ -4,30 +4,39 @@ import TapBar from '@/components/tapbar/TapBar';
 import DailyTransactionList from '@/pages/MainPage/components/daily/DailyTransactionList';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import MonthlyContainer from '@/pages/MainPage/components/MonthlyContainer';
-import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
-import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { format } from 'date-fns';
+import { useEffect } from 'react';
+import useModal from '@/hooks/useModal';
+import PWAInstallModal from '@/components/modal/PWAInstallModal';
 
 const MainPage = () => {
   const { mainHeaderDate, setMainHeaderDate } = useHeaderDateStore();
-  const { calenderDate } = useCalenderDateStore();
+  const { isOpen, openModal, closeModal } = useModal();
+
+  const handleClose = () => {
+    closeModal();
+    localStorage.setItem('hasVisited', 'true');
+  };
+
+  useEffect(() => {
+    const hasVisited = Boolean(localStorage.getItem('hasVisited'));
+    if (!hasVisited) {
+      openModal();
+    }
+  }, [openModal]);
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DateControlHeader headerDate={mainHeaderDate} setHeaderDate={setMainHeaderDate} />
       <div className="flex flex-col grow">
         <PageErrorBoundary>
-          <FetchErrorBoundary key={format(mainHeaderDate, 'yyyy-MM')}>
-            <MonthlyContainer />
-          </FetchErrorBoundary>
-          <FetchErrorBoundary key={format(calenderDate, 'yyyy-MM-dd')}>
-            <DailyTransactionList />
-          </FetchErrorBoundary>
+          <MonthlyContainer />
+          <DailyTransactionList />
           <PlusCircleButton />
         </PageErrorBoundary>
       </div>
       <TapBar page="main" />
+      {isOpen && <PWAInstallModal closeModal={handleClose} />}
     </div>
   );
 };

@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/postcss';
+import { VitePWA } from 'vite-plugin-pwa';
 import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -25,7 +26,36 @@ const vitestConfig = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr()],
+  plugins: [
+    react(),
+    svgr(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: '부자될거지',
+        short_name: '부자될거지',
+        start_url: '/',
+        display: 'standalone',
+        background_color: '#ffffff',
+        theme_color: '#ffffff',
+        icons: [
+          {
+            src: '/icon/pwa-192x192.png',
+            sizes: '192x192',
+            type: 'image/png',
+          },
+          {
+            src: '/icon/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png',
+          },
+        ],
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+      },
+    }),
+  ],
 
   css: {
     postcss: {
@@ -38,12 +68,6 @@ export default defineConfig({
     },
   },
   server: {
-    // proxy: {
-    //   '/': {
-    //     target: process.env.VITE_API_URL,
-    //     changeOrigin: true,
-    //   },
-    // },
     https: useHttps
       ? {
           key: fs.readFileSync(path.resolve(__dirname, 'localhost+2-key.pem')),

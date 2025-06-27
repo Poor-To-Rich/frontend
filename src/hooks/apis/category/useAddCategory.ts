@@ -1,7 +1,7 @@
 import { addExpenseCategory, addIncomeCategory } from '@/api/services/categoryService';
 import { BaseCategoriesType } from '@/types/categoryTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
-import CustomError from '@/utils/error/CustomError';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -29,12 +29,7 @@ const useAddCategory = ({ type, setError }: Props) => {
       toast.success(data.message);
       navigate(-1);
     },
-    onError: (error: CustomError) => {
-      setError('name', {
-        type: 'server',
-        message: `${error.message}`,
-      });
-    },
+    onError: createFormErrorHandler(setError),
   });
 };
 

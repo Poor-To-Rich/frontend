@@ -4,6 +4,7 @@ import { AnnualFinanceReportType, WeeklyDetailsSummaryType, WeeklySummaryType } 
 
 export const getYearlySummary = async (date: string) => {
   const res = await fetchData<undefined, AnnualFinanceReportType>('GET', endpoints.report.getYearlySummary(date));
+  if (!res.data) throw new Error('No data');
   return res.data;
 };
 

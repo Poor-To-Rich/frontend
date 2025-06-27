@@ -7,4 +7,23 @@ export type SettingOptionType = {
 
 export type TapBarType = 'main' | 'month-week' | 'chart' | 'talk' | 'setting';
 
-export type ModalType = 'logout' | 'dataReset' | null;
+export type ModalType = 'logout' | 'dataReset' | 'pwa' | null;
+
+export interface SentryFallbackProps {
+  error: unknown;
+  componentStack?: string;
+  eventId?: string;
+  resetError?: () => void;
+}
+
+export type StepData = {
+  title: string;
+  description: string;
+  icon?: React.ReactNode;
+};
+
+export type DeviceConfig = {
+  title: string;
+  subtitle: string;
+  steps: StepData[];
+};

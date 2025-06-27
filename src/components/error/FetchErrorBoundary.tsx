@@ -1,22 +1,21 @@
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { isFetchError } from '@/utils/error/isFetchError';
-import { getFetchFallbackByStatus } from '@/components/error/getFetchFallbackByStatus';
+import * as Sentry from '@sentry/react';
+import { handleFetchError } from '@/utils/error/handleFetchError';
+import { SentryFallbackProps } from '@/types/types';
 
-const FetchFallback = ({ error }: FallbackProps) => {
-  if (isFetchError(error)) {
-    return (
-      <div className="w-full grow flex flex-col justify-center items-center gap-3.5 p-5">
-        {getFetchFallbackByStatus(error)}
-      </div>
-    );
-  }
-
-  // PageErrorBoundary로 throw
-  throw error;
+export const FetchFallback = ({ error }: SentryFallbackProps) => {
+  return handleFetchError(error);
 };
 
 const FetchErrorBoundary = ({ children }: { children: React.ReactNode }) => {
-  return <ErrorBoundary FallbackComponent={FetchFallback}>{children}</ErrorBoundary>;
+  return (
+    <Sentry.ErrorBoundary
+      onError={error => {
+        Sentry.captureException(error);
+      }}
+      fallback={(props: SentryFallbackProps) => <FetchFallback {...props} />}>
+      {children}
+    </Sentry.ErrorBoundary>
+  );
 };
 
 export default FetchErrorBoundary;

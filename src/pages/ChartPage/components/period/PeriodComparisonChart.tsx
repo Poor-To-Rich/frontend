@@ -8,6 +8,7 @@ import useFormattedReportDate from '@/hooks/chart/useFormattedReportDate';
 import Skeleton from '@/components/loading/Skeleton';
 import CustomXAxisTick from '@/pages/ChartPage/components/period/CustomXAxisTick';
 import PeriodComparisonCustomLabel from '@/pages/ChartPage/components/period/PeriodComparisonCustomLabel';
+import { handleFetchError } from '@/utils/error/handleFetchError';
 
 const PeriodComparisonChart = () => {
   const formattedDate = useFormattedReportDate();
@@ -15,13 +16,13 @@ const PeriodComparisonChart = () => {
   const { currentTransactionType } = useTransactionReportTypeStore();
   const { currentReportType } = useReportTypeStore();
 
-  const { data: barChartData, isPending } = useGetBarChart(currentTransactionType, formattedDate);
+  const { data: barChartData, isPending, isError, error } = useGetBarChart(currentTransactionType, formattedDate);
 
   const handleBarCharClick = (date: string) => {
     setChartHeaderDate(new Date(date));
   };
 
-  if (!barChartData || isPending) {
+  if (isPending) {
     return (
       <div className="flex flex-col grow p-5 gap-30">
         <div className="flex flex-col gap-3">
@@ -35,6 +36,10 @@ const PeriodComparisonChart = () => {
         </div>
       </div>
     );
+  }
+
+  if (isError && error) {
+    return handleFetchError(error);
   }
 
   return (

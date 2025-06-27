@@ -30,6 +30,7 @@ export const getExpenseStackedBarChart = async (date: string) => {
     'GET',
     endpoints.chart.getExpenseStackedBarChart(date),
   );
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
 
@@ -38,16 +39,19 @@ export const getIncomeStackedBarChart = async (date: string) => {
     'GET',
     endpoints.chart.getIncomeStackedBarChart(date),
   );
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
 
 export const getExpenseBarChart = async (date: string) => {
   const res = await fetchData<undefined, BarChartResponse>('GET', endpoints.chart.getExpenseBarChart(date));
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
 
 export const getIncomeBarChart = async (date: string) => {
   const res = await fetchData<undefined, BarChartResponse>('GET', endpoints.chart.getIncomeBarChart(date));
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
 
@@ -56,6 +60,7 @@ export const getCategoryDetailsLineChart = async (categoryId: string, date: stri
     'GET',
     endpoints.chart.getLineChart(categoryId, date),
   );
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
 
@@ -64,6 +69,7 @@ export const getCategoryDetailsBarChart = async (categoryId: string, date: strin
     'GET',
     endpoints.chart.getVerticalBarChart(categoryId, date),
   );
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
 
