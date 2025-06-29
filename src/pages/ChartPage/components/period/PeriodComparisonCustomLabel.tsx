@@ -6,7 +6,7 @@ const PeriodComparisonCustomLabel = (props: LabelProps) => {
   const numericY = Number(y);
   const numericWidth = Number(width);
 
-  const adjustedY = value === '0원' ? 215 : numericY - 10;
+  const adjustedY = value === '0원' ? 265 : numericY - 10;
 
   return (
     <text x={numericX + numericWidth / 2} y={adjustedY} fill="#000000" fontSize={14} textAnchor="middle">

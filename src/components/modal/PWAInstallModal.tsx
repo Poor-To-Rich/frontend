@@ -12,8 +12,7 @@ const PWAInstallModal = ({ closeModal }: Props) => {
   useEffect(() => {
     const userAgent = navigator.userAgent;
 
-    console.log(userAgent);
-    if (/iPhone|Mac|iPad|iPod/.test(userAgent)) {
+    if (/iPhone|iPad|iPod/.test(userAgent) || (userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1)) {
       setDeviceType('ios');
     } else if (/Android/.test(userAgent)) {
       setDeviceType('android');
