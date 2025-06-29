@@ -2,13 +2,15 @@ import { z } from 'zod';
 
 export const daysOfWeekEnum = z.enum(['월', '화', '수', '목', '금', '토', '일']);
 
+const modeEnum = z.enum(['dayOfMonth', 'weekdayOfMonth', 'endOfMonth']);
+
 const monthlyOptionSchema = z.discriminatedUnion('mode', [
   z.object({
-    mode: z.literal('dayOfMonth'),
+    mode: modeEnum,
     day: z.number(),
+    week: z.number().min(0).max(4),
+    dayOfWeek: daysOfWeekEnum,
   }),
-  z.object({ mode: z.literal('weekdayOfMonth'), week: z.number().min(0).max(4), dayOfWeek: daysOfWeekEnum }),
-  z.object({ mode: z.literal('endOfMonth') }),
 ]);
 
 const iterationRuleSchema = z.discriminatedUnion('type', [
