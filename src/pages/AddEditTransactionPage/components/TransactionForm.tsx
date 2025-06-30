@@ -91,8 +91,6 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
     }
   };
 
-  console.log(isValid, hasDraftData);
-
   if (isGetTransactionFetching) {
     return (
       <div className="w-full flex grow items-center justify-center">

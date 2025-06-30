@@ -43,16 +43,16 @@ const PeriodComparisonChart = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col justify-between grow">
       <PeriodSummary
         currentTransactionType={currentTransactionType}
         currentReportType={currentReportType}
         differenceAmount={barChartData.differenceAmount}
         averageAmount={barChartData.averageAmount}
       />
-      <div className="w-full h-[250px] mb-4 flex justify-center items-center relative">
+      <div className="w-full h-[300px] mb-4 flex justify-center items-center relative">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={barChartData.totalAmounts} margin={{ top: 20, right: 10, bottom: 0, left: 10 }}>
+          <BarChart data={barChartData.totalAmounts} margin={{ top: 40, right: 10, bottom: 0, left: 10 }}>
             <XAxis
               dataKey="period"
               type="category"
