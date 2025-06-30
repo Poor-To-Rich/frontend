@@ -13,7 +13,7 @@ interface Props {
 const PeriodSummary = ({ currentTransactionType, currentReportType, differenceAmount, averageAmount }: Props) => {
   const { chartHeaderDate } = useHeaderDateStore();
   return (
-    <div className="p-5 mb-10">
+    <div className="p-5">
       <div className="text-xl">
         {format(chartHeaderDate, currentReportType === '월별' ? 'M' : 'yyyy')}
         {currentReportType === '월별' ? '월' : '년'}에는 {currentReportType === '월별' ? '전월' : '작년'}보다{' '}

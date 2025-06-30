@@ -10,12 +10,12 @@ import { queryClient } from '@/libs/queryClient.ts';
 import GlobalErrorBoundary from '@/components/error/GlobalErrorBoundary.tsx';
 import './sentry';
 
-if (typeof window !== 'undefined') {
-  if (import.meta.env.DEV) {
-    const { worker } = await import('@/mocks/browser');
-    await worker.start();
-  }
-}
+// if (typeof window !== 'undefined') {
+//   if (import.meta.env.DEV) {
+//     const { worker } = await import('@/mocks/browser');
+//     await worker.start();
+//   }
+// }
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
