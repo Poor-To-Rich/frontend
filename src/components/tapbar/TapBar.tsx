@@ -7,12 +7,17 @@ import { TapBarType } from '@/types/types';
 import { useState } from 'react';
 import TapItem from '@/components/tapbar/TapItem';
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 interface Props {
   page: TapBarType;
 }
 
 const TapBar = ({ page }: Props) => {
+  const userAgent = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/.test(userAgent) || (userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
+  const isInStandaloneMode = (navigator as any).standalone === true;
+
   const [currentTap, setCurrentTap] = useState<TapBarType>(page);
   const navigate = useNavigate();
 
@@ -23,7 +28,11 @@ const TapBar = ({ page }: Props) => {
   };
 
   return (
-    <div className="w-full h-[5rem] sticky bottom-0 bg-white flex justify-around border-t border-strokeGray">
+    <div
+      className={clsx(
+        isIOS && isInStandaloneMode ? 'h-[8rem] pb-[3rem]' : 'h-[5rem]',
+        'w-full sticky bottom-0 bg-white flex justify-around border-t border-strokeGray',
+      )}>
       <TapItem currentTap={currentTap} targetTap="main" onClick={handleTapClick} icon={<CalenderIcon />} />
       <TapItem currentTap={currentTap} targetTap="month-week" onClick={handleTapClick} icon={<MonthWeekIcon />} />
       <TapItem currentTap={currentTap} targetTap="chart" onClick={handleTapClick} icon={<ChartIcon />} />

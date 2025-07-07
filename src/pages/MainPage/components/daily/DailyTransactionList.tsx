@@ -39,8 +39,8 @@ const DailyTransactionList = () => {
   return (
     <div
       className={clsx(
-        isEmpty ? 'justify-center items-center grow' : 'min-h-[20rem] max-h-[30rem] ',
-        'flex flex-col w-full items-center gap-5 border-t py-5 pb-7 border-strokeGray overflow-y-auto custom-scrollbar',
+        isEmpty ? 'justify-center items-center grow' : 'max-h-[30rem] ',
+        'flex flex-col w-full items-center min-h-[20rem] gap-5 border-t py-5 pb-7 border-strokeGray overflow-y-auto custom-scrollbar',
       )}>
       {isEmpty || !dailyDetails ? (
         <span className="text-defaultGrey">내역이 없습니다.</span>
