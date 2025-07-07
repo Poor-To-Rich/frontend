@@ -73,6 +73,7 @@ https://www.poortorich.site/
 <br/>
 
 #### ♻️ 반복 가계부 추가/수정/삭제
+- 수정/삭제 3가지 옵션 제공 : "이 내역에만 적용" , "이후 내역에도 적용", "모든 내역에 적용"
 <table>
   <tr>
     <td align="center">
@@ -85,7 +86,7 @@ https://www.poortorich.site/
     </td>
     <td align="center">
       <p>🗑️ 반복 가계부 삭제</p>
-      <img src="https://github.com/user-attachments/assets/94922f5d-6872-4fd1-baa0-00a32182f12e" width="250"/>
+      <img src="https://github.com/user-attachments/assets/34eea243-f1b4-4577-aaa3-acd0c49c4468" width="250"/>
     </td>
   </tr>
 </table>
