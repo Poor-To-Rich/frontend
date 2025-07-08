@@ -39,15 +39,21 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
       const { customIteration: prevCustomIteration } = getValues();
 
       if (transactionFormData.iterationType !== 'custom') {
-        reset({
-          ...transactionFormData,
-          transactionType,
-          customIteration: prevCustomIteration,
-        });
+        reset(
+          {
+            ...transactionFormData,
+            transactionType,
+            customIteration: prevCustomIteration,
+          },
+          { keepDirty: false, keepDefaultValues: true },
+        );
       } else {
         const merged = merge({}, prevCustomIteration, transactionFormData.customIteration);
 
-        reset({ ...transactionFormData, transactionType, customIteration: merged });
+        reset(
+          { ...transactionFormData, transactionType, customIteration: merged },
+          { keepDirty: false, keepDefaultValues: true },
+        );
       }
 
       initialIterationTypeRef.current = transactionFormData.iterationType;

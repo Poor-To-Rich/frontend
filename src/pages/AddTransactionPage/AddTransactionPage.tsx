@@ -26,13 +26,13 @@ const AddTransactionPage = () => {
   const dateRef = useRef(methods.getValues('date'));
   const { setCalenderDate } = useCalenderDateStore();
 
+  const resetCalenderDate = () => {
+    setCalenderDate(new Date(dateRef.current));
+  };
+
   return (
     <div className="flex flex-col w-full min-h-screen max-h-fit relative">
-      <DefaultHeader
-        label={'가계부 추가'}
-        hasBackButton
-        resetCalenderDate={() => setCalenderDate(new Date(dateRef.current))}
-      />
+      <DefaultHeader label={'가계부 추가'} hasBackButton resetCalenderDate={resetCalenderDate} />
       <PageErrorBoundary>
         <FormProvider {...methods}>
           <AddTransactionForm />

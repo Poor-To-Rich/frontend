@@ -71,7 +71,7 @@ const TransactionFields = ({ type, options }: Props) => {
               thousandSeparator: true,
               allowNegative: false,
               onValueChange: values => {
-                field.onChange(values.floatValue ?? '');
+                field.onChange(values.floatValue ?? 0);
               },
               getInputRef: (el: HTMLInputElement | null) => {
                 field.ref(el);

@@ -3,11 +3,7 @@ import { TransactionFormDataType } from '@/types/transactionTypes';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-const useFilteredCategories = (
-  activeCategories: string[] | undefined,
-  currentCategoryName?: string,
-  transactionFormData?: TransactionFormDataType,
-) => {
+const useFilteredCategories = (activeCategories: string[] | undefined, currentCategoryName?: string) => {
   const [categoryOptions, setCategoryOptions] = useState<SelectOptionsType[]>([]);
   const { setValue } = useFormContext<TransactionFormDataType>();
 
@@ -47,13 +43,13 @@ const useFilteredCategories = (
 
       if (storageFormData && categoryOptions.some(option => option.value === storageFormData.categoryName)) {
         setValue('categoryName', storageFormData.categoryName);
-      } else if (transactionFormData) {
-        setValue('categoryName', transactionFormData.categoryName);
+      } else if (currentCategoryName) {
+        setValue('categoryName', currentCategoryName);
       } else {
         setValue('categoryName', categoryOptions[0].value);
       }
     }
-  }, [transactionFormData, categoryOptions, setValue]);
+  }, [currentCategoryName, categoryOptions, setValue]);
 
   return {
     categoryOptions,

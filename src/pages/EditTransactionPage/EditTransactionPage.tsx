@@ -1,7 +1,7 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import { FormProvider, useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
-import TransactionForm from '@/pages/EditTransactionPage/components/TransactionForm';
+import EditTransactionForm from '@/pages/EditTransactionPage/components/EditTransactionForm';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { transactionSchema } from '@/schemas/transactionSchema';
@@ -58,7 +58,7 @@ const EditTransactionPage = () => {
       <PageErrorBoundary>
         <FetchErrorBoundary>
           <FormProvider {...methods}>
-            <TransactionForm
+            <EditTransactionForm
               openEdit={openEdit}
               initialIterationTypeRef={initialIterationTypeRef}
               isIterationModifiedRef={isIterationModifiedRef}

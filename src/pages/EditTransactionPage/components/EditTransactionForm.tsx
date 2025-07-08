@@ -14,7 +14,6 @@ import { getFinalData } from '@/utils/form/filterTransactionForm';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { LOADING_OPTIONS } from '@/constants/options';
 import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
-import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
 import { hasIterationChanged } from '@/utils/form/hasIterationChanged';
 import TransactionFields from '@/components/input/transaction/TransactionFields';
 import IterationCycleModal from '@/components/modal/IterationCycleModal';
@@ -25,7 +24,7 @@ interface Props {
   isIterationModifiedRef: React.MutableRefObject<boolean>;
 }
 
-const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifiedRef }: Props) => {
+const EditTransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifiedRef }: Props) => {
   const {
     handleSubmit,
     setValue,
@@ -37,7 +36,6 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
   const { transactionId } = useTransactionParams();
   const transactionType = watch('transactionType') as IncomeExpenseType;
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
-  const { hasDraftData } = useDraftMetaStore();
 
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
@@ -55,7 +53,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
     transactionType,
     initialIterationTypeRef,
   });
-  useTransactionDraft();
+  const { hasDraftData } = useTransactionDraft();
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
@@ -98,6 +96,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
       <IncomeExpenseButton
         type={transactionType}
         onClick={(value: IncomeExpenseType) => setValue('transactionType', value, { shouldDirty: true })}
+        isEdit
       />
       <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : options} />
       <div className="w-full flex justify-between items-center">
@@ -122,4 +121,4 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
   );
 };
 
-export default TransactionForm;
+export default EditTransactionForm;
