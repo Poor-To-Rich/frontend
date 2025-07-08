@@ -62,7 +62,7 @@ export const profileSchema = baseSignupSchema
 
 export const changePasswordSchema = passwordMatchRefinement(
   z.object({
-    currentPassword: passwordSchema,
+    currentPassword: z.string({ message: '비밀번호를 입력해주세요' }),
     newPassword: passwordSchema,
     confirmNewPassword: z.string(),
   }),
