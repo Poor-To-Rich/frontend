@@ -10,8 +10,8 @@ const useCategoryForm = () => {
   const { reset, setError } = useFormContext();
   const { categoryType, categoryId, isEdit } = useCategoryParams();
   const { data, isFetching } = useGetCategory(categoryId!, isEdit);
-  const { mutate: addCategory, isPending: isAddPending } = useAddCategory({ type: categoryType, setError });
-  const { mutate: updateCategory, isPending: isUpdatePending } = useUpdateCategory(categoryType);
+  const { mutate: addCategory, isPending: isAddPending } = useAddCategory(categoryType, setError);
+  const { mutate: updateCategory, isPending: isUpdatePending } = useUpdateCategory(categoryType, setError);
 
   const onSubmit = (data: BaseCategoriesType) => {
     if (isEdit) {
