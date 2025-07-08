@@ -1,14 +1,13 @@
-import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import { clsx } from 'clsx';
 
 interface Props {
   type: IncomeExpenseType;
   onClick: (value: IncomeExpenseType) => void;
+  isEdit?: boolean;
 }
 
-const IncomeExpenseButton = ({ type, onClick }: Props) => {
-  const { isEditPage } = useTransactionParams();
+const IncomeExpenseButton = ({ type, onClick, isEdit }: Props) => {
   const options: { label: IncomeExpenseType; color: string }[] = [
     { label: '지출', color: 'bg-pinkRed font-bold' },
     { label: '수입', color: 'bg-lightBlue font-bold' },
@@ -22,13 +21,13 @@ const IncomeExpenseButton = ({ type, onClick }: Props) => {
           key={label}
           value={label}
           type="button"
-          disabled={isEditPage}
+          disabled={isEdit}
           className={clsx(
             'w-1/2 h-[3rem] rounded-lg cursor-pointer',
             label === '지출' && 'text-sunsetRose',
             label === '수입' && 'text-oceanBlue',
             type === label ? color : 'border border-strokeGray',
-            isEditPage && type !== label && 'bg-strokeGray text-defaultGrey!',
+            isEdit && type !== label && 'bg-strokeGray text-defaultGrey!',
           )}
           onClick={() => onClick(label)}>
           {label}

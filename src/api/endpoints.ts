@@ -63,6 +63,6 @@ export const endpoints = {
     getLineChart: (categoryId: string, date: string) => `/chart/${categoryId}/line?date=${date}`,
     getVerticalBarChart: (categoryId: string, date: string) => `/chart/${categoryId}/vertical?date=${date}`,
     getCategoryLogs: (categoryId: string, date: string, cursor: string | null, isDescending: boolean) =>
-      `/chart/${categoryId}/section?date=${date}${cursor ? `&cursor=${cursor}` : ''}${isDescending ? '' : '&sortDirection=desc'}`,
+      `/chart/${categoryId}/section?date=${date}${cursor ? `&cursor=${cursor}` : ''}${isDescending ? '' : '&sortDirection=DESC'}`,
   },
 };

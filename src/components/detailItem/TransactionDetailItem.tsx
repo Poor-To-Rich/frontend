@@ -26,7 +26,7 @@ const TransactionDetailItem = ({
   const handleClick = (id: number, type: string) => {
     const transactionType = type === 'EXPENSE' ? '지출' : '수입';
     sessionStorage.setItem('selected-id', JSON.stringify(id));
-    navigate(`/transaction?type=edit&transactionType=${transactionType}&date=${date}&id=${id}`);
+    navigate(`/edit-transaction?transactionType=${transactionType}&date=${date}&id=${id}`);
   };
 
   return (

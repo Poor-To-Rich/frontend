@@ -7,12 +7,7 @@ import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-interface Props {
-  type: IncomeExpenseType;
-  setError: UseFormSetError<BaseCategoriesType>;
-}
-
-const useAddCategory = ({ type, setError }: Props) => {
+const useAddCategory = (type: IncomeExpenseType, setError: UseFormSetError<BaseCategoriesType>) => {
   const queryClient = useQueryClient();
   const mutationFn = type === '지출' ? addExpenseCategory : addIncomeCategory;
   const navigate = useNavigate();

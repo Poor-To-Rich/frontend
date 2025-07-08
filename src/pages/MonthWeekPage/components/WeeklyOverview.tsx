@@ -15,7 +15,7 @@ const WeeklyOverview = ({ targetDate, selectedRef, targetItem }: Props) => {
 
   const handleClick = (period: string, week: number) => {
     sessionStorage.setItem('selected-period', `${period}-${week}`);
-    navigate(`/weeklyDetails?date=${targetDate}&week=${week}`);
+    navigate(`/weekly-details?date=${targetDate}&week=${week}`);
   };
 
   return (

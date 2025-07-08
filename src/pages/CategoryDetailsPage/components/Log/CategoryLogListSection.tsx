@@ -26,7 +26,7 @@ const CategoryLogListSection = ({ transactionType, categoryId, date, isSavings }
   const totalCount = data?.pages[0]?.countOfLogs ?? 0;
   const isEmpty = allCategoryLogs?.length === 0;
 
-  const handleClick = () => {
+  const handleSorting = () => {
     if (!isPending) {
       setIsDescending(prev => !prev);
     }
@@ -36,7 +36,7 @@ const CategoryLogListSection = ({ transactionType, categoryId, date, isSavings }
     <div className="w-full flex flex-col flex-grow mt-5">
       <div className="flex justify-between px-6 py-1.5 items-center w-full h-[3.5rem] border-b border-strokeGray">
         <span>총 {totalCount}건</span>
-        <SortingButton isDescending={isDescending} onClick={handleClick} />
+        <SortingButton isDescending={isDescending} onClick={handleSorting} />
       </div>
       <CategoryLogList
         transactionType={transactionType}
