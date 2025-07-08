@@ -34,7 +34,7 @@ function App() {
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/category" element={<AddEditCategoryPage />} />
         <Route path="/month-week" element={<MonthWeekPage />} />
-        <Route path="/weeklyDetails" element={<WeeklyDetailsPage />} />
+        <Route path="/weekly-details" element={<WeeklyDetailsPage />} />
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/update-password" element={<UpdatePasswordPage />} />
