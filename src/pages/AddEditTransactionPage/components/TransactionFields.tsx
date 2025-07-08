@@ -8,7 +8,6 @@ import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { SelectOptionsType } from '@/types/fieldType';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
-import { formatNumber } from '@/utils/number';
 import { addMonths, format, getDate } from 'date-fns';
 import { merge } from 'lodash';
 import { Controller, useFormContext } from 'react-hook-form';
@@ -30,11 +29,6 @@ const TransactionFields = ({ type, options }: Props) => {
     setValue,
     formState: { errors },
   } = useFormContext<TransactionFormDataType>();
-
-  const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
-    const formattedValue = value.replace(/[^\d]/g, '');
-    onChange(Number(formattedValue));
-  };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -112,12 +106,20 @@ const TransactionFields = ({ type, options }: Props) => {
           <PrimaryInput
             data-testid="cost-input"
             label="금액"
+            asNumberFormat
             isRequired
             type="tel"
             inputMode="numeric"
-            value={formatNumber(field.value === 0 ? '' : field.value)}
-            onChange={e => {
-              handleCostChange(e.target.value, field.onChange);
+            numericFormatProps={{
+              value: field.value === 0 ? '' : field.value,
+              thousandSeparator: true,
+              allowNegative: false,
+              onValueChange: values => {
+                field.onChange(values.floatValue ?? '');
+              },
+              getInputRef: (el: HTMLInputElement | null) => {
+                field.ref(el);
+              },
             }}
             errorMessage={errors.cost?.message}
           />
