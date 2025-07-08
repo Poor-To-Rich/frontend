@@ -1,11 +1,13 @@
 import { updateCategory } from '@/api/services/categoryService';
 import { BaseCategoriesType } from '@/types/categoryTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { UseFormSetError } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-const useUpdateCategory = (type: IncomeExpenseType) => {
+const useUpdateCategory = (type: IncomeExpenseType, setError: UseFormSetError<BaseCategoriesType>) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -21,6 +23,7 @@ const useUpdateCategory = (type: IncomeExpenseType) => {
       toast.success(data.message);
       navigate(-1);
     },
+    onError: createFormErrorHandler(setError),
   });
 };
 

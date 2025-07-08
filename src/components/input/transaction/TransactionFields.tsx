@@ -1,17 +1,11 @@
 import PrimaryInput from '@/components/input/PrimaryInput';
 import SelectBox from '@/components/input/SelectBox';
 import { EXPENSE_METHODS } from '@/constants/options';
-import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
-import MemoInput from '@/pages/AddEditTransactionPage/components/MemoInput';
-import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
-import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import { SelectOptionsType } from '@/types/fieldType';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
-import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
-import { formatNumber } from '@/utils/number';
-import { addMonths, format, getDate } from 'date-fns';
-import { merge } from 'lodash';
 import { Controller, useFormContext } from 'react-hook-form';
+import MemoInput from '@/components/input/transaction/MemoInput';
+import { useUpdateIterationByDate } from '@/hooks/transaction/useUpdateIterationByDate';
 
 interface Props {
   type: IncomeExpenseType;
@@ -20,53 +14,16 @@ interface Props {
 
 const TransactionFields = ({ type, options }: Props) => {
   const isExpense = type === '지출';
-  const { setMainHeaderDate } = useHeaderDateStore();
-  const { setCalenderDate } = useCalenderDateStore();
-  const { customIteration } = useResetCustomIteration();
+  const form = useFormContext<TransactionFormDataType>();
   const {
     control,
     register,
-    getValues,
-    setValue,
     formState: { errors },
-  } = useFormContext<TransactionFormDataType>();
-
-  const handleCostChange = (value: string, onChange: (value: number | string) => void) => {
-    const formattedValue = value.replace(/[^\d]/g, '');
-    onChange(Number(formattedValue));
-  };
+  } = form;
+  const updateByDate = useUpdateIterationByDate(form);
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const currentDate = new Date(e.target.value);
-    const koreanDay = getKoreanDay(currentDate);
-
-    setCalenderDate(currentDate);
-    setMainHeaderDate(currentDate);
-
-    const { customIteration: prevCustomIteration } = getValues();
-    const newDaysOfWeek =
-      prevCustomIteration?.iterationRule.type === 'weekly' ? prevCustomIteration.iterationRule.daysOfWeek : [koreanDay];
-
-    const newCustomIteration = {
-      end: {
-        date: format(addMonths(currentDate, 2), 'yyyy-MM-dd'),
-      },
-      iterationRule: {
-        monthlyOption: {
-          day: getDate(currentDate),
-          week: getKoreanWeekOfMonth(currentDate),
-          dayOfWeek: koreanDay,
-        },
-        daysOfWeek: [...newDaysOfWeek],
-      },
-    };
-
-    const merged = prevCustomIteration
-      ? merge({}, prevCustomIteration, newCustomIteration)
-      : merge({}, customIteration, newCustomIteration);
-
-    setValue('date', format(currentDate, 'yyyy-MM-dd'), { shouldDirty: true });
-    setValue('customIteration', merged, { shouldDirty: true });
+    updateByDate(e.target.value);
   };
 
   return (
@@ -105,12 +62,20 @@ const TransactionFields = ({ type, options }: Props) => {
           <PrimaryInput
             data-testid="cost-input"
             label="금액"
+            asNumberFormat
             isRequired
             type="tel"
             inputMode="numeric"
-            value={formatNumber(field.value === 0 ? '' : field.value)}
-            onChange={e => {
-              handleCostChange(e.target.value, field.onChange);
+            numericFormatProps={{
+              value: field.value === 0 ? '' : field.value,
+              thousandSeparator: true,
+              allowNegative: false,
+              onValueChange: values => {
+                field.onChange(values.floatValue ?? 0);
+              },
+              getInputRef: (el: HTMLInputElement | null) => {
+                field.ref(el);
+              },
             }}
             errorMessage={errors.cost?.message}
           />

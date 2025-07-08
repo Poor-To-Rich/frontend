@@ -18,7 +18,7 @@ const CategoryLogItem = ({ id, title, amount, date, transactionType, isSavings, 
 
   const handleClick = (id: number) => {
     sessionStorage.setItem('selected-id', JSON.stringify(id));
-    navigate(`/transaction?type=edit&transactionType=${transactionType}&date=${date}&id=${id}`);
+    navigate(`/edit-transaction?transactionType=${transactionType}&date=${date}&id=${id}`);
   };
 
   return (

@@ -3,7 +3,6 @@ import './App.css';
 import LoginPage from '@/pages/LoginPage/LoginPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 import MainPage from '@/pages/MainPage/MainPage';
-import AddEditTransactionPage from '@/pages/AddEditTransactionPage/AddEditTransactionPage';
 import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage';
 import AddEditCategoryPage from '@/pages/AddEditCategoryPage/AddEditCategoryPage';
 import MonthWeekPage from '@/pages/MonthWeekPage/MonthWeekPage';
@@ -18,6 +17,8 @@ import CategoryDetailsPage from '@/pages/CategoryDetailsPage/CategoryDetailsPage
 import ProtectedRoute from '@/components/route/ProtectedRoute';
 import RedirectIfLoggedInRoute from '@/components/route/RedirectIfLoggedInRoute';
 import ErrorPage from '@/pages/ErrorPage/ErrorPage';
+import AddTransactionPage from '@/pages/AddTransactionPage/AddTransactionPage';
+import EditTransactionPage from '@/pages/EditTransactionPage/EditTransactionPage';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
-        <Route path="/transaction" element={<AddEditTransactionPage />} />
+        <Route path="/add-transaction" element={<AddTransactionPage />} />
+        <Route path="/edit-transaction" element={<EditTransactionPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
         <Route path="/category" element={<AddEditCategoryPage />} />
         <Route path="/month-week" element={<MonthWeekPage />} />

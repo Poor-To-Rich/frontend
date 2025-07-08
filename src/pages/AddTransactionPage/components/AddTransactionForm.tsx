@@ -1,32 +1,24 @@
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
-import TransactionFields from '@/pages/AddEditTransactionPage/components/TransactionFields';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
-import useTransactionForm from '@/hooks/transaction/useTransactionForm';
 import useAddTransaction from '@/hooks/apis/transaction/useAddTransaction';
 import { useFormContext } from 'react-hook-form';
-import useTransactionParams from '@/hooks/transaction/useTransactionParams';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes';
-import IterationCycleModal from '@/pages/AddEditTransactionPage/components/modals/IterationCycleModal';
-import CustomIterationModal from '@/pages/AddEditTransactionPage/components/modals/custom/CustomIterationModal';
+import CustomIterationModal from '@/components/modal/custom/CustomIterationModal';
 import useModal from '@/hooks/useModal';
-import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
 import { getFinalData } from '@/utils/form/filterTransactionForm';
-import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { LOADING_OPTIONS } from '@/constants/options';
 import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
-import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
-import { hasIterationChanged } from '@/utils/form/hasIterationChanged';
+import useGetActiveCategory from '@/hooks/apis/category/useGetActiveCategory';
+import TransactionFields from '@/components/input/transaction/TransactionFields';
+import IterationCycleModal from '@/components/modal/IterationCycleModal';
+import useFilteredCategories from '@/hooks/category/useFilteredCategories ';
+import useTransactionParams from '@/hooks/transaction/useTransactionParams';
+import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 
-interface Props {
-  openEdit: () => void;
-  initialIterationTypeRef: React.MutableRefObject<string>;
-  isIterationModifiedRef: React.MutableRefObject<boolean>;
-}
-
-const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifiedRef }: Props) => {
+const AddTransactionForm = () => {
   const {
     handleSubmit,
     setValue,
@@ -35,49 +27,27 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
     watch,
     formState: { isValid },
   } = useFormContext<TransactionFormDataType>();
-  const { isEditPage, transactionId } = useTransactionParams();
+  const { transactionDate } = useTransactionParams();
+  const { setCalenderDate } = useCalenderDateStore();
   const transactionType = watch('transactionType') as IncomeExpenseType;
+  const isExpense = transactionType === '지출';
   const [backupCustomIteration, setBackupCustomIteration] = useState<CustomIterationType | null>(null);
-  const { hasDraftData } = useDraftMetaStore();
 
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
 
   const { mutate: addTransaction, isPending: isAddPending } = useAddTransaction({ type: transactionType, setError });
-  const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
-    type: transactionType,
-    setError,
-  });
-  const {
-    transactionFormData,
-    categoryOptions: options,
-    isGetTransactionFetching,
-    isCategoryPending,
-  } = useTransactionForm({
-    transactionType,
-    initialIterationTypeRef,
-  });
-  useTransactionDraft();
+  const { data: activeCategories, isPending: isCategoryPending } = useGetActiveCategory(
+    isExpense ? 'expense' : 'income',
+  );
+  const { categoryOptions } = useFilteredCategories(activeCategories);
+  const { hasDraftData } = useTransactionDraft();
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIncome = transactionType === '수입';
-    const isIterationModified = hasIterationChanged(transactionFormData, data);
-    isIterationModifiedRef.current = isIterationModified;
+    const body = getFinalData(data, isIncome);
 
-    let body = getFinalData(data, isIncome);
-
-    if (isEditPage) {
-      if (initialIterationTypeRef.current !== 'none') {
-        openEdit();
-        return;
-      }
-
-      body = { ...body, isIterationModified };
-
-      updateTransaction({ id: transactionId!, body });
-    } else {
-      addTransaction(body);
-    }
+    addTransaction(body);
   };
 
   const handleIterationTypeClick = (value: IterationCycleValue) => {
@@ -91,13 +61,11 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
     }
   };
 
-  if (isGetTransactionFetching) {
-    return (
-      <div className="w-full flex grow items-center justify-center">
-        <LoadingSpinner size={30} />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (transactionDate) {
+      setCalenderDate(new Date(transactionDate));
+    }
+  }, [transactionDate, setCalenderDate]);
 
   return (
     <form className="flex flex-col w-full grow justify-between py-8 px-5" onSubmit={handleSubmit(onSubmit)}>
@@ -105,7 +73,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
         type={transactionType}
         onClick={(value: IncomeExpenseType) => setValue('transactionType', value, { shouldDirty: true })}
       />
-      <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : options} />
+      <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : categoryOptions} />
       <div className="w-full flex justify-between items-center">
         <RepeatCircleButton openModal={openModal} />
         <PrimaryButton
@@ -113,7 +81,7 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
           label="저장"
           type="submit"
           disabled={!isValid || !hasDraftData}
-          isPending={isAddPending || isUpdatePending}
+          isPending={isAddPending}
         />
       </div>
       {isOpen && <IterationCycleModal onClose={closeModal} onClick={handleIterationTypeClick} />}
@@ -128,4 +96,4 @@ const TransactionForm = ({ openEdit, initialIterationTypeRef, isIterationModifie
   );
 };
 
-export default TransactionForm;
+export default AddTransactionForm;
