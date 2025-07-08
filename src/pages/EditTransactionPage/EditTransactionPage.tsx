@@ -1,12 +1,12 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import { FormProvider, useForm } from 'react-hook-form';
 import useModal from '@/hooks/useModal';
-import TransactionForm from '@/pages/AddEditTransactionPage/components/TransactionForm';
+import TransactionForm from '@/pages/EditTransactionPage/components/TransactionForm';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { transactionSchema } from '@/schemas/transactionSchema';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
-import IterationChangeModal from '@/pages/AddEditTransactionPage/components/modals/IterationChangeModal';
+import IterationChangeModal from '@/pages/EditTransactionPage/components/modals/IterationChangeModal';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
@@ -14,9 +14,9 @@ import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
-const AddEditTransactionPage = () => {
+const EditTransactionPage = () => {
   const { setCalenderDate } = useCalenderDateStore();
-  const { transactionId, transactionDate, transactionMode, isEditPage } = useTransactionParams();
+  const { transactionId, transactionDate, transactionMode } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
   const { mutate: deleteTransaction, isPending } = useDeleteTransaction(transactionMode! as IncomeExpenseType);
@@ -49,9 +49,9 @@ const AddEditTransactionPage = () => {
   return (
     <div className="flex flex-col w-full min-h-screen max-h-fit relative">
       <DefaultHeader
-        label={isEditPage ? '가계부 편집' : '가계부 추가'}
+        label={'가계부 편집'}
         hasBackButton
-        hasTrashButton={isEditPage}
+        hasTrashButton
         onClick={openDeleteModal}
         resetCalenderDate={resetCalenderDate}
       />
@@ -85,4 +85,4 @@ const AddEditTransactionPage = () => {
   );
 };
 
-export default AddEditTransactionPage;
+export default EditTransactionPage;

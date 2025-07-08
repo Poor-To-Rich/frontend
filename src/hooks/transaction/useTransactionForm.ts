@@ -15,15 +15,13 @@ interface Props {
 
 const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props) => {
   const { setCalenderDate } = useCalenderDateStore();
-  const { reset, setValue, getValues } = useFormContext<TransactionFormDataType>();
-  const { transactionDate, transactionId, isEditPage } = useTransactionParams();
+  const { reset, getValues } = useFormContext<TransactionFormDataType>();
+  const { transactionDate, transactionId } = useTransactionParams();
   const isExpense = transactionType === '지출';
-  const enabled = Boolean(isEditPage && transactionId && transactionType);
 
   const { data: transactionFormData, isFetching: isGetTransactionFetching } = useGetTransaction(
     transactionType!,
     transactionId!,
-    enabled,
   );
   const { data: activeCategories, isPending: isCategoryPending } = useGetActiveCategory(
     isExpense ? 'expense' : 'income',
@@ -55,21 +53,6 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
       initialIterationTypeRef.current = transactionFormData.iterationType;
     }
   }, [transactionFormData, initialIterationTypeRef, reset]);
-
-  useEffect(() => {
-    if (categoryOptions.length > 0) {
-      const raw = sessionStorage.getItem('transaction-form-data');
-      const storageFormData = raw ? JSON.parse(raw) : null;
-
-      if (storageFormData && categoryOptions.some(option => option.value === storageFormData.categoryName)) {
-        setValue('categoryName', storageFormData.categoryName);
-      } else if (transactionFormData) {
-        setValue('categoryName', transactionFormData.categoryName);
-      } else {
-        setValue('categoryName', categoryOptions[0].value);
-      }
-    }
-  }, [transactionFormData, categoryOptions, setValue]);
 
   return {
     transactionFormData,

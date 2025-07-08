@@ -1,8 +1,15 @@
 import { SelectOptionsType } from '@/types/fieldType';
+import { TransactionFormDataType } from '@/types/transactionTypes';
 import { useEffect, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 
-const useFilteredCategories = (activeCategories: string[] | undefined, currentCategoryName?: string) => {
+const useFilteredCategories = (
+  activeCategories: string[] | undefined,
+  currentCategoryName?: string,
+  transactionFormData?: TransactionFormDataType,
+) => {
   const [categoryOptions, setCategoryOptions] = useState<SelectOptionsType[]>([]);
+  const { setValue } = useFormContext<TransactionFormDataType>();
 
   useEffect(() => {
     if (!activeCategories) return;
@@ -32,6 +39,21 @@ const useFilteredCategories = (activeCategories: string[] | undefined, currentCa
 
     setCategoryOptions(result);
   }, [activeCategories, currentCategoryName]);
+
+  useEffect(() => {
+    if (categoryOptions.length > 0) {
+      const raw = sessionStorage.getItem('transaction-form-data');
+      const storageFormData = raw ? JSON.parse(raw) : null;
+
+      if (storageFormData && categoryOptions.some(option => option.value === storageFormData.categoryName)) {
+        setValue('categoryName', storageFormData.categoryName);
+      } else if (transactionFormData) {
+        setValue('categoryName', transactionFormData.categoryName);
+      } else {
+        setValue('categoryName', categoryOptions[0].value);
+      }
+    }
+  }, [transactionFormData, categoryOptions, setValue]);
 
   return {
     categoryOptions,

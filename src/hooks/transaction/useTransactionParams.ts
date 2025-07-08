@@ -8,13 +8,11 @@ const useTransactionParams = () => {
   const transactionDate = queryParams.get('date');
   const transactionMode = queryParams.get('transactionType') as IncomeExpenseType;
   const transactionId = pageType ? queryParams.get('id') : '';
-  const isEditPage = pageType === 'edit';
 
   return {
     transactionDate,
     transactionMode,
     transactionId,
-    isEditPage,
   };
 };
 

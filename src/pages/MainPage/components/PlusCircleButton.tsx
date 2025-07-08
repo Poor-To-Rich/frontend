@@ -11,7 +11,7 @@ const PlusCircleButton = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/transaction?type=add&date=${format(calenderDate, 'yyyy-MM-dd')}`);
+    navigate(`/add-transaction?&date=${format(calenderDate, 'yyyy-MM-dd')}`);
   };
 
   return (

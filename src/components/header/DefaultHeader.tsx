@@ -19,7 +19,7 @@ const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, re
   const { disableSave } = useDraftStore();
 
   const handleBackClick = () => {
-    if (pathname === '/transaction' && resetCalenderDate) {
+    if ((pathname === '/add-transaction' || pathname === '/edit-transaction') && resetCalenderDate) {
       disableSave();
       sessionStorage.removeItem('transaction-form-data');
       resetCalenderDate();
