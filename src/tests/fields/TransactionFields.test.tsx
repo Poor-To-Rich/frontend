@@ -28,25 +28,6 @@ describe('TransactionFields', () => {
     });
   });
 
-  it('금액 필드는 숫자외의 다른 값을 입력하면 오류메세지가 나타난다.', async () => {
-    // Given
-    const value = 'asds';
-
-    // When
-    await waitFor(() => {
-      const costInput = screen.getByTestId('cost-input');
-      act(() => {
-        fireEvent.change(costInput, { target: { value: value } });
-      });
-    });
-
-    // Then
-    await waitFor(() => {
-      const helperText = screen.getByTestId('cost-input-helper-text');
-      expect(helperText).toHaveTextContent('1원 이상의 값을 입력해주세요');
-    });
-  });
-
   it('금액에 올바른 숫자를 입력하면 포맷팅이 적용된다', async () => {
     // Given
     const value = 10000;

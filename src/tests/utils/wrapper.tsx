@@ -18,7 +18,7 @@ export const renderAddPage = async (date?: Date) => {
   await act(async () => {
     render(<App />, {
       wrapper: ({ children }) => (
-        <Wrapper initialEntry={`/transaction?type=add&date=${format(date || new Date(), 'yyyy-MM-dd')}`}>
+        <Wrapper initialEntry={`/add-transaction?date=${format(date || new Date(), 'yyyy-MM-dd')}`}>
           {children}
           <LocationDisplay />
         </Wrapper>
@@ -33,7 +33,7 @@ export const renderEditPage = async (id: string, transactionType: string) => {
       wrapper: ({ children }) => {
         return (
           <Wrapper
-            initialEntry={`/transaction?type=edit&date=${format(new Date(), 'yyyy-MM-dd')}&id=${id}&transactionType=${transactionType}`}>
+            initialEntry={`/edit-transaction?date=${format(new Date(), 'yyyy-MM-dd')}&id=${id}&transactionType=${transactionType}`}>
             {children}
             <LocationDisplay />
           </Wrapper>
