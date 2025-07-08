@@ -37,7 +37,14 @@ const TransactionFields = ({ type, options }: Props) => {
   };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const currentDate = new Date(e.target.value);
+    const value = e.target.value;
+
+    if (!value) {
+      setValue('date', '', { shouldValidate: true });
+      return;
+    }
+
+    const currentDate = new Date(value);
     const koreanDay = getKoreanDay(currentDate);
 
     setCalenderDate(currentDate);
@@ -65,7 +72,7 @@ const TransactionFields = ({ type, options }: Props) => {
       ? merge({}, prevCustomIteration, newCustomIteration)
       : merge({}, customIteration, newCustomIteration);
 
-    setValue('date', format(currentDate, 'yyyy-MM-dd'), { shouldDirty: true });
+    setValue('date', format(currentDate, 'yyyy-MM-dd'), { shouldDirty: true, shouldValidate: true });
     setValue('customIteration', merged, { shouldDirty: true });
   };
 
