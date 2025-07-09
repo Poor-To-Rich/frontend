@@ -20,7 +20,6 @@ const AddTransactionPage = () => {
       iterationType: 'none',
     },
     resolver: zodResolver(transactionSchema),
-    shouldUnregister: false,
     mode: 'onChange',
   });
   const dateRef = useRef(methods.getValues('date'));
