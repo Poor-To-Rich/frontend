@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import ModalDimmed from '@/components/modal/ModalDimmed';
-import InstallSteps from '@/components/modal/InstallSteps';
+import InstallSteps from '@/components/modal/pwa/InstallSteps';
+import { isIOS } from '@/utils/deviceUtils';
 
 interface Props {
   closeModal: () => void;
@@ -12,7 +13,7 @@ const PWAInstallModal = ({ closeModal }: Props) => {
   useEffect(() => {
     const userAgent = navigator.userAgent;
 
-    if (/iPhone|iPad|iPod/.test(userAgent) || (userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1)) {
+    if (isIOS()) {
       setDeviceType('ios');
     } else if (/Android/.test(userAgent)) {
       setDeviceType('android');

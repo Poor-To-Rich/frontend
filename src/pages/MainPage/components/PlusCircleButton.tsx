@@ -1,12 +1,10 @@
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import { isIOSPWA } from '@/utils/deviceUtils';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 
 const PlusCircleButton = () => {
-  const userAgent = navigator.userAgent;
-  const isIOS = /iPhone|iPad|iPod/.test(userAgent) || (userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
-  const isInStandaloneMode = (navigator as any).standalone === true;
   const { calenderDate } = useCalenderDateStore();
   const navigate = useNavigate();
 
@@ -16,10 +14,7 @@ const PlusCircleButton = () => {
 
   return (
     <button
-      className={clsx(
-        isIOS && isInStandaloneMode ? 'bottom-[9rem]' : 'bottom-[6rem]',
-        'w-fit h-fit absolute right-3  cursor-pointer',
-      )}
+      className={clsx(isIOSPWA ? 'bottom-[9rem]' : 'bottom-[6rem]', 'w-fit h-fit absolute right-3  cursor-pointer')}
       onClick={handleClick}>
       <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

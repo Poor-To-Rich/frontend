@@ -17,6 +17,8 @@ import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
 import { hasIterationChanged } from '@/utils/form/hasIterationChanged';
 import TransactionFields from '@/components/input/transaction/TransactionFields';
 import IterationCycleModal from '@/components/modal/IterationCycleModal';
+import clsx from 'clsx';
+import { isIOSPWA } from '@/utils/deviceUtils';
 
 interface Props {
   openEdit: () => void;
@@ -99,7 +101,7 @@ const EditTransactionForm = ({ openEdit, initialIterationTypeRef, isIterationMod
         isEdit
       />
       <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : options} />
-      <div className="w-full flex justify-between items-center">
+      <div className={clsx(isIOSPWA && 'mb-9', 'w-full flex justify-between items-center')}>
         <RepeatCircleButton openModal={openModal} />
         <PrimaryButton
           data-testid="submit-button"

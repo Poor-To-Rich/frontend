@@ -17,6 +17,8 @@ import IterationCycleModal from '@/components/modal/IterationCycleModal';
 import useFilteredCategories from '@/hooks/category/useFilteredCategories ';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
+import clsx from 'clsx';
+import { isIOSPWA } from '@/utils/deviceUtils';
 
 const AddTransactionForm = () => {
   const {
@@ -74,7 +76,7 @@ const AddTransactionForm = () => {
         onClick={(value: IncomeExpenseType) => setValue('transactionType', value, { shouldDirty: true })}
       />
       <TransactionFields type={transactionType} options={isCategoryPending ? LOADING_OPTIONS : categoryOptions} />
-      <div className="w-full flex justify-between items-center">
+      <div className={clsx(isIOSPWA && 'mb-9', 'w-full flex justify-between items-center')}>
         <RepeatCircleButton openModal={openModal} />
         <PrimaryButton
           data-testid="submit-button"

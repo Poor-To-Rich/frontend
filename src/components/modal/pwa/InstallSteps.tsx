@@ -1,6 +1,6 @@
 import { DeviceConfig } from '@/types/types';
 import { Share, MoreVertical, Download } from 'lucide-react';
-import StepItem from '@/components/modal/StepItem';
+import StepItem from '@/components/modal/pwa/StepItem';
 
 interface Props {
   deviceType: string;
