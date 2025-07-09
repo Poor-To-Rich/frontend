@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { TransactionFormDataType, IncomeExpenseType } from '@/types/transactionTypes';
 import { CustomIterationType, IterationCycleValue } from '@/types/iterationTypes';
 import useModal from '@/hooks/useModal';
-import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
 import { getFinalData } from '@/utils/form/filterTransactionForm';
 
 export const useTransactionFormLogic = () => {
@@ -21,7 +20,6 @@ export const useTransactionFormLogic = () => {
 
   const { isOpen, openModal, closeModal } = useModal();
   const { isOpen: isCustomOpen, openModal: openCustom, closeModal: closeCustom } = useModal();
-  const { hasDraftData } = useTransactionDraft();
 
   const handleIterationTypeClick = (value: IterationCycleValue) => {
     if (value !== 'custom') {
@@ -54,7 +52,6 @@ export const useTransactionFormLogic = () => {
     isCustomOpen,
     openCustom,
     closeCustom,
-    hasDraftData,
     handleIterationTypeClick,
     getFormData,
   };

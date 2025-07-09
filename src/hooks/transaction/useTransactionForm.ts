@@ -12,7 +12,7 @@ interface Props {
   initialIterationTypeRef: React.MutableRefObject<string>;
 }
 
-const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props) => {
+const useSettingTransactionForm = ({ transactionType, initialIterationTypeRef }: Props) => {
   const { setCalenderDate } = useCalenderDateStore();
   const { reset, getValues } = useFormContext<TransactionFormDataType>();
   const { transactionDate, transactionId } = useTransactionParams();
@@ -53,7 +53,7 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
 
       initialIterationTypeRef.current = transactionFormData.iterationType;
     }
-  }, [transactionFormData, initialIterationTypeRef, reset]);
+  }, [hasDraftData, transactionFormData, initialIterationTypeRef, reset]);
 
   return {
     isExpense,
@@ -62,4 +62,4 @@ const useTransactionForm = ({ transactionType, initialIterationTypeRef }: Props)
   };
 };
 
-export default useTransactionForm;
+export default useSettingTransactionForm;

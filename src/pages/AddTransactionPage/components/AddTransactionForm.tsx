@@ -8,6 +8,7 @@ import { LOADING_OPTIONS } from '@/constants/options';
 import { useTransactionFormLogic } from '@/hooks/transaction/useTransactionFormLogic';
 import TransactionFormContent from '@/components/form/TransactionFormContent';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
+import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
 
 const AddTransactionForm = () => {
   const { transactionDate } = useTransactionParams();
@@ -25,7 +26,6 @@ const AddTransactionForm = () => {
     closeModal,
     isCustomOpen,
     closeCustom,
-    hasDraftData,
     handleIterationTypeClick,
     getFormData,
   } = useTransactionFormLogic();
@@ -39,6 +39,8 @@ const AddTransactionForm = () => {
     isExpense ? 'expense' : 'income',
   );
   const { categoryOptions } = useFilteredCategories(activeCategories);
+
+  const { hasDraftData } = useTransactionDraft();
 
   const onSubmit = (data: TransactionFormDataType) => {
     const body = getFormData(data);

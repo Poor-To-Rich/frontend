@@ -1,4 +1,4 @@
-import useTransactionForm from '@/hooks/transaction/useTransactionForm';
+import useSettingTransactionForm from '@/hooks/transaction/useSettingTransactionForm';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
@@ -7,6 +7,9 @@ import { hasIterationChanged } from '@/utils/form/hasIterationChanged';
 import { useTransactionFormLogic } from '@/hooks/transaction/useTransactionFormLogic';
 import TransactionFormContent from '@/components/form/TransactionFormContent';
 import { TransactionFormDataType, IncomeExpenseType } from '@/types/transactionTypes';
+import useGetActiveCategory from '@/hooks/apis/category/useGetActiveCategory';
+import useFilteredCategories from '@/hooks/category/useFilteredCategories ';
+import useTransactionDraft from '@/hooks/transaction/useTransactionDraft';
 
 interface Props {
   openEdit: () => void;
@@ -29,25 +32,26 @@ const EditTransactionForm = ({ openEdit, initialIterationTypeRef, isIterationMod
     closeModal,
     isCustomOpen,
     closeCustom,
-    hasDraftData,
     handleIterationTypeClick,
     getFormData,
   } = useTransactionFormLogic();
+
+  const { isExpense, transactionFormData, isGetTransactionFetching } = useSettingTransactionForm({
+    transactionType,
+    initialIterationTypeRef,
+  });
 
   const { mutate: updateTransaction, isPending: isUpdatePending } = useUpdateTransaction({
     type: transactionType,
     setError,
   });
 
-  const {
-    transactionFormData,
-    categoryOptions: options,
-    isGetTransactionFetching,
-    isCategoryPending,
-  } = useTransactionForm({
-    transactionType,
-    initialIterationTypeRef,
-  });
+  const { data: activeCategories, isPending: isCategoryPending } = useGetActiveCategory(
+    isExpense ? 'expense' : 'income',
+  );
+  const { categoryOptions } = useFilteredCategories(activeCategories, transactionFormData?.categoryName);
+
+  const { hasDraftData } = useTransactionDraft();
 
   const onSubmit = (data: TransactionFormDataType) => {
     const isIterationModified = hasIterationChanged(transactionFormData, data);
@@ -79,7 +83,7 @@ const EditTransactionForm = ({ openEdit, initialIterationTypeRef, isIterationMod
   return (
     <TransactionFormContent
       transactionType={transactionType}
-      options={isCategoryPending ? LOADING_OPTIONS : options}
+      options={isCategoryPending ? LOADING_OPTIONS : categoryOptions}
       isValid={isValid}
       hasDraftData={hasDraftData}
       isPending={isUpdatePending}
