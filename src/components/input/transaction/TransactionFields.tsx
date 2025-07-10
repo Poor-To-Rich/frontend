@@ -61,6 +61,7 @@ const TransactionFields = ({ type, options }: Props) => {
         render={({ field }) => (
           <PrimaryInput
             data-testid="cost-input"
+            defaultValue={0}
             label="금액"
             asNumberFormat
             isRequired
@@ -71,6 +72,10 @@ const TransactionFields = ({ type, options }: Props) => {
               thousandSeparator: true,
               allowNegative: false,
               onValueChange: values => {
+                const floatVal = values.floatValue;
+
+                if (floatVal === field.value) return;
+
                 field.onChange(values.floatValue ?? 0);
               },
               getInputRef: (el: HTMLInputElement | null) => {

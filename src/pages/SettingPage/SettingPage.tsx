@@ -1,6 +1,6 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import DefaultModal from '@/components/modal/DefaultModal';
-import PWAInstallModal from '@/components/modal/PWAInstallModal';
+import PWAInstallModal from '@/components/modal/pwa/PWAInstallModal';
 import TapBar from '@/components/tapbar/TapBar';
 import { ACCOUNT_OPTIONS, DATA_OPTIONS, INFORMATION_OPTIONS } from '@/constants/options';
 import useLogout from '@/hooks/apis/auth/useLogout';
@@ -24,7 +24,7 @@ const SettingPage = () => {
       setSelectedModal(modalType);
     }
     if (externalUrl) {
-      window.location.href = externalUrl;
+      window.open(externalUrl, '_blank', 'noopener,noreferrer');
     }
   };
 

@@ -7,7 +7,7 @@ import MonthlyContainer from '@/pages/MainPage/components/MonthlyContainer';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import { useEffect } from 'react';
 import useModal from '@/hooks/useModal';
-import PWAInstallModal from '@/components/modal/PWAInstallModal';
+import PWAInstallModal from '@/components/modal/pwa/PWAInstallModal';
 
 const MainPage = () => {
   const { mainHeaderDate, setMainHeaderDate } = useHeaderDateStore();
@@ -28,7 +28,7 @@ const MainPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DateControlHeader headerDate={mainHeaderDate} setHeaderDate={setMainHeaderDate} />
-      <div className="flex flex-col grow">
+      <div className="flex flex-col grow ">
         <PageErrorBoundary>
           <MonthlyContainer />
           <DailyTransactionList />

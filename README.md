@@ -3,6 +3,19 @@
 
 <br/>
 
+![Group 57](https://github.com/user-attachments/assets/36dd11cb-fd6c-4c27-bcc0-808484a41cd0)
+![Group 58](https://github.com/user-attachments/assets/813a8ab9-f2f1-4abb-b5cd-e517dfae755a)
+
+<br/>
+
+## 📆 개발 기간 
+
+- **개발 기간**: 2025.01 ~ (진행중)
+- **참여 인원**: 총 3명 (프론트엔드 1, 백엔드 2)
+- **채팅 기능 업데이트 예정**
+
+<br/>
+
 ## 🧠 기획 의도
 - 단순 기록을 넘어 **소비 습관을 분석하고 개선할 수 있는 도구**를 만들고자 시작
 - 반복되는 고정 지출/수입도 관리할 수 있도록 반복 가계부 기능 추가
@@ -87,6 +100,27 @@ https://www.poortorich.site/
     <td align="center">
       <p>🗑️ 반복 가계부 삭제</p>
       <img src="https://github.com/user-attachments/assets/34eea243-f1b4-4577-aaa3-acd0c49c4468" width="250"/>
+    </td>
+  </tr>
+</table>
+
+<br/>
+
+#### 🗂️ 카테고리 추가/수정/삭제  
+- 사용자 정의 카테고리 관리 가능  
+<table>
+  <tr>
+    <td align="center">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;➕ 카테고리 추가</p>
+      <img src="https://github.com/user-attachments/assets/d1b81b90-481f-4115-ad3f-cd209d46a027" width="250"/>
+    </td>
+    <td align="center">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;✏️ 카테고리 수정</p>
+      <img src="https://github.com/user-attachments/assets/74bcb987-632c-47e3-a8b5-e7dab7267e8a" width="250"/>
+    </td>
+    <td align="center">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;🗑️ 카테고리 삭제</p>
+      <img src="https://github.com/user-attachments/assets/1b9ee20b-a20a-4b6e-9acf-ba2c729ee8a5" width="250"/>
     </td>
   </tr>
 </table>
