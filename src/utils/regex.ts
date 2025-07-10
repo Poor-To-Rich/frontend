@@ -1,6 +1,6 @@
 export const userNameRegex = /^[A-Za-z0-9]+$/;
 
-export const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/;
+export const passwordRegex = /^(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/;
 
 export const koreanOnlyRegex = /^[가-힣]+$/;
 
