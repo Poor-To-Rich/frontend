@@ -9,7 +9,7 @@ const passwordSchema = z
   .string()
   .min(8, '비밀번호는 최소 8자 이상입니다')
   .max(15, '비밀번호는 최대 15자 입니다')
-  .regex(passwordRegex, '대문자 ,소문자 , 숫자, 특수문자가 각각 하나 이상 포함되어야 합니다');
+  .regex(passwordRegex, '영문자, 숫자, 특수문자가 각각 하나 이상 포함되어야 합니다');
 
 export const loginSchema = z.object({
   username: z.string({ message: '아이디를 입력해주세요.' }).min(1, { message: '아이디를 입력해주세요.' }),
