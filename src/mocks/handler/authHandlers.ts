@@ -119,7 +119,7 @@ export const authHandlers = [
           username: 'test',
         },
       },
-      { status: 201 },
+      { status: 404 },
     );
   }),
 

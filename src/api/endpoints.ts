@@ -13,7 +13,7 @@ export const endpoints = {
     dataReset: '/user/reset',
     findUsername: '/user/username-recovery',
     verifyUser: '/user/verify-user',
-    resetPassword: '/auth/reset-password',
+    resetPassword: '/user/reset-password',
   },
   email: {
     getUserEmail: '/user/email',

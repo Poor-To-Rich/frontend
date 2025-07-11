@@ -1,9 +1,8 @@
-import SignButton from '@/pages/IDLoginPage/components/SignButton';
-import Logo from '/image/Logo.png';
 import FloatingLabelInput from '@/pages/IDLoginPage/components/FloatingLabelInput';
 import useLoginForm from '@/hooks/login/useLoginForm';
 import { useNavigate } from 'react-router-dom';
 import DefaultHeader from '@/components/header/DefaultHeader';
+import SignButton from '@/components/button/SignButton';
 
 const IDLoginPage = () => {
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ const IDLoginPage = () => {
     <div className="flex flex-col h-screen items-center justify-center bg-vanillaCream">
       <DefaultHeader hasBackButton bgColor={'bg-vanillaCream'} />
       <div className="flex flex-col w-full grow items-center justify-center gap-36">
-        <img src={Logo} alt="로고 이미지" className="w-[20rem] aspect-square" />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-3/5 gap-10">
           <div className="flex flex-col w-full gap-7">
             <FloatingLabelInput

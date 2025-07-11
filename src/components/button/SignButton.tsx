@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
-import LoadingSpinner from '../../../components/loading/LoadingSpinner';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
-  label: '아이디로 로그인' | '로그인' | '회원가입';
+  label: '카카오로 로그인' | '아이디로 로그인' | '로그인' | '회원가입';
   disabled?: boolean;
   type?: 'submit' | 'button' | 'reset';
   isPending?: boolean;
