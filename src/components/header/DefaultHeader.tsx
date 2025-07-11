@@ -38,7 +38,7 @@ const DefaultHeader = ({
   };
 
   return (
-    <header className={clsx(bgColor ? bgColor : 'bg-white', 'header-common')}>
+    <header className={clsx(bgColor, 'header-common')}>
       {hasBackButton && (
         <span className="absolute left-0 h-full aspect-square">
           <LeftArrowButton onClick={handleBackClick} />
