@@ -19,12 +19,14 @@ import RedirectIfLoggedInRoute from '@/components/route/RedirectIfLoggedInRoute'
 import ErrorPage from '@/pages/ErrorPage/ErrorPage';
 import AddTransactionPage from '@/pages/AddTransactionPage/AddTransactionPage';
 import EditTransactionPage from '@/pages/EditTransactionPage/EditTransactionPage';
+import FindIDPage from '@/pages/FindIDPage/FindIDPage';
 
 function App() {
   return (
     <Routes>
       <Route element={<RedirectIfLoggedInRoute />}>
         <Route path="/login/id" element={<IDLoginPage />} />
+        <Route path="/login/find-id" element={<FindIDPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>

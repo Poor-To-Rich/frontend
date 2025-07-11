@@ -72,3 +72,9 @@ export const emailChangeSchema = z.object({
   email: baseSignupSchema.shape.email,
   verificationCode: baseSignupSchema.shape.verificationCode,
 });
+
+export const findUsernameSchema = z.object({
+  username: z.string({ message: '아이디를 입력해주세요.' }).min(1, { message: '아이디를 입력해주세요.' }),
+  email: baseSignupSchema.shape.email,
+  verificationCode: baseSignupSchema.shape.verificationCode,
+});
