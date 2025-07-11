@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import LoginPage from '@/pages/LoginPage/LoginPage';
+import IDLoginPage from '@/pages/IDLoginPage/LoginPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 import MainPage from '@/pages/MainPage/MainPage';
 import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage';
@@ -24,7 +24,7 @@ function App() {
   return (
     <Routes>
       <Route element={<RedirectIfLoggedInRoute />}>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login/id" element={<IDLoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>

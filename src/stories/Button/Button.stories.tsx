@@ -4,7 +4,7 @@ import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/TransactionTypeButton';
-import SignButton from '@/pages/LoginPage/components/SignButton';
+import SignButton from '@/pages/IDLoginPage/components/SignButton';
 import VerifyButton from '@/components/button/VerifyButton';
 import type { Meta, StoryObj } from '@storybook/react';
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';

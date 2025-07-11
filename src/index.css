@@ -71,7 +71,7 @@
 
 @layer components {
   .header-common {
-    @apply w-full h-[4.5rem] sticky top-0 flex justify-center items-center bg-white border-b border-strokeGray font-bold z-10;
+    @apply w-full h-[4.5rem] sticky top-0 flex justify-center items-center border-b border-strokeGray font-bold z-10;
   }
 
   .input-common {
