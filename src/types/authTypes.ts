@@ -2,9 +2,11 @@ import { z } from 'zod';
 import {
   changePasswordSchema,
   emailChangeSchema,
+  findUserForPasswordSchema,
   findUsernameSchema,
   loginSchema,
   profileSchema,
+  resetPasswordSchema,
   signupSchema,
 } from '@/schemas/authSchema';
 
@@ -49,6 +51,10 @@ export type ChangePasswordData = z.infer<typeof changePasswordSchema>;
 export type EmailChangeData = z.infer<typeof emailChangeSchema>;
 
 export type FindUsernameReq = z.infer<typeof findUsernameSchema>;
+
+export type FindUserForPassword = z.infer<typeof findUserForPasswordSchema>;
+
+export type ResetPassword = z.infer<typeof resetPasswordSchema>;
 
 export type TokenRes = {
   accessToken: string;

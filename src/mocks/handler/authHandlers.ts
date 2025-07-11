@@ -122,4 +122,30 @@ export const authHandlers = [
       { status: 201 },
     );
   }),
+
+  http.post(endpoints.auth.verifyUser, () => {
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: '등록된 회원입니다.',
+        data: {
+          username: 'test',
+        },
+      },
+      { status: 201 },
+    );
+  }),
+
+  http.post(endpoints.auth.resetPassword, () => {
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: '비밀번호 변경에 성공했습니다.',
+        data: {
+          username: 'test',
+        },
+      },
+      { status: 201 },
+    );
+  }),
 ];

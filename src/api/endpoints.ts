@@ -11,8 +11,9 @@ export const endpoints = {
     updateUserDetails: '/user/update',
     updatePassword: '/user/password',
     dataReset: '/user/reset',
-    findUsername: '/user/find-id',
-    findPassword: '/user/find-password',
+    findUsername: '/user/username-recovery',
+    verifyUser: '/user/verify-user',
+    resetPassword: '/auth/reset-password',
   },
   email: {
     getUserEmail: '/user/email',

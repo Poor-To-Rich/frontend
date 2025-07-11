@@ -14,6 +14,8 @@ import {
   ChangeUserEmailReq,
   FindUsernameReq,
   FindUsernameRes,
+  FindUserForPassword,
+  ResetPassword,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -114,7 +116,12 @@ export const findUsername = async (body: FindUsernameReq) => {
   return res;
 };
 
-export const findPassword = async () => {
-  const res = await fetchData<undefined, undefined>('POST', endpoints.auth.findPassword);
+export const findUserForPassword = async (body: FindUserForPassword) => {
+  const res = await fetchData<FindUserForPassword, undefined>('POST', endpoints.auth.verifyUser, body);
+  return res;
+};
+
+export const resetPassword = async (body: ResetPassword) => {
+  const res = await fetchData<ResetPassword>('POST', endpoints.auth.resetPassword, body);
   return res;
 };

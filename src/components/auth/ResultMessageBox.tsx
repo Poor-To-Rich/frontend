@@ -7,7 +7,7 @@ interface Props {
   username?: string;
 }
 
-const DisplayFoundUsername = ({ isNotFound, username }: Props) => {
+const ResultMessageBox = ({ isNotFound, username }: Props) => {
   const navigate = useNavigate();
   const message = isNotFound ? FIND_ID_NOT_FOUND : FIND_ID_SUCCESS;
   const buttonLabel = isNotFound ? '회원가입 하기' : '로그인 하기';
@@ -30,4 +30,4 @@ const DisplayFoundUsername = ({ isNotFound, username }: Props) => {
   );
 };
 
-export default DisplayFoundUsername;
+export default ResultMessageBox;

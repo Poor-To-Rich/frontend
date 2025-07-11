@@ -20,6 +20,7 @@ import ErrorPage from '@/pages/ErrorPage/ErrorPage';
 import AddTransactionPage from '@/pages/AddTransactionPage/AddTransactionPage';
 import EditTransactionPage from '@/pages/EditTransactionPage/EditTransactionPage';
 import FindUsernamePage from '@/pages/FindUsernamePage/FindUsernamePage';
+import FindPasswordPage from '@/pages/FindPasswordPage/FindPasswordPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route element={<RedirectIfLoggedInRoute />}>
         <Route path="/login/id" element={<IDLoginPage />} />
         <Route path="/login/find-id" element={<FindUsernamePage />} />
+        <Route path="/login/find-password" element={<FindPasswordPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>
