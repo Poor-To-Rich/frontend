@@ -44,10 +44,10 @@ export const EXPENSE_CATEGORIES = [
 ];
 
 export const EXPENSE_METHODS = [
-  { label: '현금', value: '현금' },
-  { label: '신용카드', value: '신용카드' },
   { label: '체크카드', value: '체크카드' },
+  { label: '신용카드', value: '신용카드' },
   { label: '계좌이체', value: '계좌이체' },
+  { label: '현금', value: '현금' },
 ];
 
 export const ACCOUNT_OPTIONS: SettingOptionType[] = [

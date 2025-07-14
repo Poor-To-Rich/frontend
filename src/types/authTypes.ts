@@ -2,8 +2,11 @@ import { z } from 'zod';
 import {
   changePasswordSchema,
   emailChangeSchema,
+  findUserForPasswordSchema,
+  findUsernameSchema,
   loginSchema,
   profileSchema,
+  resetPasswordSchema,
   signupSchema,
 } from '@/schemas/authSchema';
 
@@ -25,7 +28,11 @@ export type ChangeUserEmailReq = {
   email: string;
 };
 
-export const emailPurposeList = ['register', 'changeEmail'] as const;
+export type FindUsernameRes = {
+  username: string;
+};
+
+export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'changePassword'] as const;
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];
 
@@ -42,6 +49,12 @@ export type ProfileFormData = z.infer<typeof profileSchema>;
 export type ChangePasswordData = z.infer<typeof changePasswordSchema>;
 
 export type EmailChangeData = z.infer<typeof emailChangeSchema>;
+
+export type FindUsernameReq = z.infer<typeof findUsernameSchema>;
+
+export type FindUserForPassword = z.infer<typeof findUserForPasswordSchema>;
+
+export type ResetPassword = z.infer<typeof resetPasswordSchema>;
 
 export type TokenRes = {
   accessToken: string;

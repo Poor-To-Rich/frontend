@@ -17,6 +17,7 @@ const TransactionDetailItem = ({
   isIteration,
   type,
   cost,
+  memo,
   selectedRef,
   targetItem,
 }: Props) => {
@@ -34,24 +35,29 @@ const TransactionDetailItem = ({
       onClick={() => handleClick(id, type)}
       ref={isSelected ? selectedRef : undefined}
       className={clsx(
-        'w-[98%] h-[3.5rem] flex justify-between items-center px-3 border border-strokeGray rounded-lg cursor-pointer hover:bg-lightGray active:bg-lightGray',
+        'w-[98%] h-[5rem] flex justify-between items-center px-3 border border-strokeGray rounded-lg cursor-pointer hover:bg-lightGray active:bg-lightGray',
         isSelected ? 'bg-lightGray' : 'bg-white',
       )}>
-      <div className="flex items-center gap-2.5">
-        <span style={{ color }} className="font-semibold min-w-fit">
+      <div className="flex items-center gap-3 overflow-hidden">
+        <p style={{ color }} className="font-semibold min-w-fit">
           {categoryName}
+        </p>
+        <div className="flex flex-col items-start p-2.5 overflow-hidden">
+          {title && <p className="text-md w-fit">{title}</p>}
+          {memo && <p className="text-sm text-start text-defaultGrey truncate max-w-[160px] w-[160px]">{memo}</p>}
+        </div>
+      </div>
+      <div className="flex items-center gap-2.5 flex-shrink-0">
+        <span
+          className={clsx(
+            'text-md sm:text-base text-right',
+            type === 'INCOME' && 'text-oceanBlue',
+            type === 'EXPENSE' && 'text-sunsetRose',
+          )}>
+          {cost.toLocaleString()}원
         </span>
-        {title && <span className="text-sm text-defaultGrey min-w-fit">{title}</span>}
         {isIteration && <IterationIcon />}
       </div>
-      <span
-        className={clsx(
-          'truncate max-w-1/2 text-md sm:text-base',
-          type === 'INCOME' && 'text-oceanBlue',
-          type === 'EXPENSE' && 'text-sunsetRose',
-        )}>
-        {cost.toLocaleString()}원
-      </span>
     </button>
   );
 };

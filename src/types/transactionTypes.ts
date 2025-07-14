@@ -24,6 +24,7 @@ export type TransactionItemType = {
   isIteration?: boolean;
   type: TransactionType;
   cost: number;
+  memo?: string | null;
 };
 
 export type DailyTransactionType = {
