@@ -4,6 +4,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { ChangePasswordData } from '@/types/authTypes';
 import useUpdatePassword from '@/hooks/apis/auth/useUpdatePassword';
 import PasswordField from '@/components/input/auth/PasswordField';
+import { useState } from 'react';
 
 const UpdatePasswordForm = () => {
   const {
@@ -13,6 +14,9 @@ const UpdatePasswordForm = () => {
     formState: { errors, isValid },
   } = useFormContext<ChangePasswordData>();
   const { mutate: updatePassword, isPending } = useUpdatePassword(setError);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handleVisibleClick = () => setIsVisible(prev => !prev);
 
   const onSubmit = (data: ChangePasswordData) => {
     updatePassword(data);
@@ -28,8 +32,11 @@ const UpdatePasswordForm = () => {
             <PrimaryInput
               {...field}
               label="현재 비밀번호"
-              type="password"
+              type={isVisible ? 'text' : 'password'}
               errorMessage={errors.currentPassword?.message}
+              isPassword
+              isPasswordVisible={isVisible}
+              handleVisibleClick={handleVisibleClick}
             />
           )}
         />

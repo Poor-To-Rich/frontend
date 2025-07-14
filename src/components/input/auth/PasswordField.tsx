@@ -14,6 +14,7 @@ const PasswordField = ({ passwordName = 'password', confirmPasswordName = 'passw
     trigger,
     formState: { errors },
   } = useFormContext();
+  const fieldLabel = passwordName === 'password' ? '비밀번호' : '새 비밀번호';
   const [isVisible, setIsVisible] = useState(false);
 
   const handleVisibleClick = () => setIsVisible(prev => !prev);
@@ -32,7 +33,7 @@ const PasswordField = ({ passwordName = 'password', confirmPasswordName = 'passw
     <>
       <PrimaryInput
         {...register(passwordName)}
-        label="비밀번호"
+        label={fieldLabel}
         isRequired
         type={isVisible ? 'text' : 'password'}
         errorMessage={errors[passwordName]?.message}

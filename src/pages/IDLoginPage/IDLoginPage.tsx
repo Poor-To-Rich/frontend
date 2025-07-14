@@ -3,10 +3,14 @@ import useLoginForm from '@/hooks/login/useLoginForm';
 import { useNavigate } from 'react-router-dom';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import SignButton from '@/components/button/SignButton';
+import { useState } from 'react';
 
 const IDLoginPage = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
   const { errors, isValid, isPending, errorMessage, onSubmit, handleSubmit, registerWithResetError } = useLoginForm();
+
+  const handleVisibleClick = () => setIsVisible(prev => !prev);
 
   return (
     <div className="flex flex-col h-screen items-center justify-center bg-vanillaCream">
@@ -23,10 +27,13 @@ const IDLoginPage = () => {
             />
             <FloatingLabelInput
               label="비밀번호"
-              type="password"
+              type={isVisible ? 'text' : 'password'}
               maxLength={15}
               {...registerWithResetError('password')}
               errorMessage={errors.password?.message}
+              isPassword
+              isPasswordVisible={isVisible}
+              handleVisibleClick={handleVisibleClick}
             />
             <span className="text-sm text-sunsetRose">{errorMessage}</span>
           </div>
