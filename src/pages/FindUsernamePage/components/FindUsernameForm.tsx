@@ -24,7 +24,7 @@ const FindUsernameForm = ({ onSubmit, isPending }: Props) => {
       <form className="flex flex-col justify-between grow" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2.5">
           <PrimaryInput {...register('name')} label="이름" type="text" isRequired errorMessage={errors.name?.message} />
-          <EmailField emailFieldName="email" purpose="changeEmail" />
+          <EmailField emailFieldName="email" purpose="findUsername" />
         </div>
         <div className="w-full flex justify-end">
           <PrimaryButton

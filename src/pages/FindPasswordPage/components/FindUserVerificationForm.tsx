@@ -31,7 +31,7 @@ const FindUserVerificationForm = ({ onSubmit, isPending }: Props) => {
             isRequired
             errorMessage={errors.username?.message}
           />
-          <EmailField emailFieldName="email" purpose="changeEmail" />
+          <EmailField emailFieldName="email" purpose="changePassword" />
         </div>
         <div className="w-full flex justify-end">
           <PrimaryButton

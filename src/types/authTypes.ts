@@ -32,7 +32,7 @@ export type FindUsernameRes = {
   username: string;
 };
 
-export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'findPassword'] as const;
+export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'changePassword'] as const;
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];
 
