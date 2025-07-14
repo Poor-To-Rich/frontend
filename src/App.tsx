@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import LoginPage from '@/pages/LoginPage/LoginPage';
+import IDLoginPage from '@/pages/IDLoginPage/IDLoginPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 import MainPage from '@/pages/MainPage/MainPage';
 import CategoriesPage from '@/pages/CategoriesPage/CategoriesPage';
@@ -19,12 +19,18 @@ import RedirectIfLoggedInRoute from '@/components/route/RedirectIfLoggedInRoute'
 import ErrorPage from '@/pages/ErrorPage/ErrorPage';
 import AddTransactionPage from '@/pages/AddTransactionPage/AddTransactionPage';
 import EditTransactionPage from '@/pages/EditTransactionPage/EditTransactionPage';
+import FindUsernamePage from '@/pages/FindUsernamePage/FindUsernamePage';
+import FindPasswordPage from '@/pages/FindPasswordPage/FindPasswordPage';
+import LoginChoicePage from '@/pages/LoginChoicePage/LoginChoicePage';
 
 function App() {
   return (
     <Routes>
       <Route element={<RedirectIfLoggedInRoute />}>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginChoicePage />} />
+        <Route path="/login/id" element={<IDLoginPage />} />
+        <Route path="/login/find-id" element={<FindUsernamePage />} />
+        <Route path="/login/find-password" element={<FindPasswordPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>
