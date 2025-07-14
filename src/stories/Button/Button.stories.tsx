@@ -4,13 +4,13 @@ import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/TransactionTypeButton';
-import SignButton from '@/pages/IDLoginPage/components/SignButton';
 import VerifyButton from '@/components/button/VerifyButton';
 import type { Meta, StoryObj } from '@storybook/react';
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import ToggleSwitch from '@/components/button/ToggleSwitch';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
+import SignButton from '@/components/button/SignButton';
 
 function Button() {
   return (

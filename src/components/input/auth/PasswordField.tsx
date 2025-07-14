@@ -21,7 +21,6 @@ const PasswordField = ({ passwordName = 'password', confirmPasswordName = 'passw
 
   useEffect(() => {
     const subscription = watch((_, { name }) => {
-      console.log(name, passwordName, confirmPasswordName);
       if (name === passwordName) {
         trigger([confirmPasswordName]);
       }
@@ -33,6 +32,7 @@ const PasswordField = ({ passwordName = 'password', confirmPasswordName = 'passw
     <>
       <PrimaryInput
         {...register(passwordName)}
+        data-testid="password-input"
         label={fieldLabel}
         isRequired
         type={isVisible ? 'text' : 'password'}
@@ -43,6 +43,7 @@ const PasswordField = ({ passwordName = 'password', confirmPasswordName = 'passw
       />
       <PrimaryInput
         {...register(confirmPasswordName)}
+        data-testid="confirm-password-input"
         label="비밀번호 재입력"
         isRequired
         type="password"
