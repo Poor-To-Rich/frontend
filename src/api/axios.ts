@@ -18,7 +18,7 @@ apiClient.interceptors.request.use(config => {
   const token = tokenManager.getToken();
 
   if (token) {
-    config.headers.Authorization = token;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   if (config.data instanceof FormData) {
