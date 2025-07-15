@@ -179,4 +179,17 @@ export const authHandlers = [
       { status: 201 },
     );
   }),
+
+  http.get(endpoints.auth.getUserRole, () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '사용자 역할 조회 성공',
+        data: {
+          role: 'PENDING',
+        },
+      },
+      { status: 200 },
+    );
+  }),
 ];

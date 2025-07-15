@@ -43,6 +43,10 @@ export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'cha
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];
 
+export type UserRoleType = {
+  role: 'USER' | 'ADMIN' | 'TEST' | 'PENDING';
+};
+
 export type SendEmailReq = { email: string; purpose: EmailPurposeType; username?: string };
 
 export type EmailRes = { notificationMessage: string };

@@ -7,23 +7,22 @@ import { OnboardingFormType, ProfileFormData } from '@/types/authTypes';
 type UseUserProfileFormParams<T extends FieldValues> = {
   getHook: () => { data?: T; isPending: boolean };
   updateHook: (setError: UseFormSetError<T>) => { mutate: (data: FormData) => void; isPending?: boolean };
-  setError: UseFormSetError<T>;
   checkChanged?: boolean;
 };
 
 export const useUserProfileForm = <TForm extends ProfileFormData | OnboardingFormType>({
   getHook,
   updateHook,
-  setError,
   checkChanged,
 }: UseUserProfileFormParams<TForm>) => {
-  const { data, isPending } = getHook();
-  const { mutate, isPending: isMutating } = updateHook(setError);
   const {
     reset,
     handleSubmit,
+    setError,
     formState: { isValid, dirtyFields },
   } = useFormContext<TForm>();
+  const { data, isPending } = getHook();
+  const { mutate, isPending: isMutating } = updateHook(setError);
 
   const { nicknameStatus } = useNicknameFieldStore();
   const isNicknameChanged = Boolean((dirtyFields as any).nickname);

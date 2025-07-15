@@ -16,6 +16,7 @@ import {
   FindUsernameRes,
   ResetPassword,
   OnboardingFormType,
+  UserRoleType,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -125,4 +126,9 @@ export const getOnboardingUserDetails = async () => {
 export const updateOnboardingUserDetails = async (body: FormData) => {
   const res = await fetchData<FormData>('PUT', endpoints.auth.updateOnboardingUserDetails, body);
   return res;
+};
+
+export const getUserRole = async () => {
+  const res = await fetchData<undefined, UserRoleType>('GET', endpoints.auth.getUserRole);
+  if (res.data) return res.data.role;
 };

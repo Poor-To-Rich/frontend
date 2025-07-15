@@ -32,11 +32,12 @@ function App() {
         <Route path="/login/id" element={<IDLoginPage />} />
         <Route path="/login/find-id" element={<FindUsernamePage />} />
         <Route path="/login/find-password" element={<FindPasswordPage />} />
-        <Route path="/onboarding/profile" element={<ProfileOnboardingPage />} />
         <Route path="/signup" element={<SignupPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/onboarding/profile" element={<ProfileOnboardingPage />} />
+
         <Route path="/add-transaction" element={<AddTransactionPage />} />
         <Route path="/edit-transaction" element={<EditTransactionPage />} />
         <Route path="/categories" element={<CategoriesPage />} />

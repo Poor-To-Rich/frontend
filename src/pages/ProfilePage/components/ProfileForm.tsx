@@ -7,7 +7,6 @@ import JobField from '@/components/input/auth/JobField';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import useModal from '@/hooks/useModal';
 import DefaultModal from '@/components/modal/DefaultModal';
-import { useFormContext } from 'react-hook-form';
 import { ProfileFormData } from '@/types/authTypes';
 import DeleteUserButton from '@/pages/ProfilePage/components/DeleteUserButton';
 import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
@@ -17,7 +16,6 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useUserProfileForm } from '@/hooks/field/useUserProfileForm';
 
 const ProfileForm = () => {
-  const { setError } = useFormContext<ProfileFormData>();
   const { isOpen, openModal, closeModal } = useModal();
   const { mutate: deleteUser } = useDeleteUser();
 
@@ -29,7 +27,6 @@ const ProfileForm = () => {
   } = useUserProfileForm<ProfileFormData>({
     getHook: useGetUserDetails,
     updateHook: useUpdateUserDetails,
-    setError,
     checkChanged: true,
   });
 
