@@ -4,7 +4,7 @@ import FindUsernameForm from './components/FindUsernameForm';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { findUsernameSchema } from '@/schemas/authSchema';
 import useFindUsername from '@/hooks/apis/auth/useFindUsername';
-import { FindUsernameReq } from '@/types/authTypes';
+import { FindUsernameFormType } from '@/types/authTypes';
 import CustomError from '@/utils/error/CustomError';
 import ResultMessageBox from '@/components/auth/ResultMessageBox';
 
@@ -16,8 +16,9 @@ const FindUsernamePage = () => {
   const { mutate: findUsername, data, isSuccess, error, isError, isPending } = useFindUsername(method.setError);
   const isNotFound = isError && (error as CustomError).statusCode === 404;
 
-  const onSubmit = (data: FindUsernameReq) => {
-    findUsername(data);
+  const onSubmit = (data: FindUsernameFormType) => {
+    const body = { email: data.email };
+    findUsername(body);
   };
 
   return (
