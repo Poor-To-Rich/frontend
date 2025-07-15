@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = () => {
   const isLogin = useAuthStatus();
-  const { data: userRole, isLoading: isUserRoleLoading } = useGetUserRole();
+  const { data: userRole, isLoading: isUserRoleLoading } = useGetUserRole({ enabled: isLogin === true });
   const location = useLocation();
 
   if (isLogin === null || isUserRoleLoading) return null;

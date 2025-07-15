@@ -37,7 +37,6 @@ function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/onboarding/profile" element={<ProfileOnboardingPage />} />
-
         <Route path="/add-transaction" element={<AddTransactionPage />} />
         <Route path="/edit-transaction" element={<EditTransactionPage />} />
         <Route path="/categories" element={<CategoriesPage />} />
