@@ -74,20 +74,19 @@ export const emailChangeSchema = z.object({
 });
 
 export const findUsernameSchema = z.object({
-  name: z.string({ message: '이름을 입력해주세요.' }).min(1, { message: '이름을 입력해주세요.' }),
   email: baseSignupSchema.shape.email,
   verificationCode: baseSignupSchema.shape.verificationCode,
 });
 
 export const findUserForPasswordSchema = z.object({
   username: z.string({ message: '아이디를 입력해주세요.' }).min(1, { message: '아이디를 입력해주세요.' }),
-  name: z.string({ message: '이름을 입력해주세요.' }).min(1, { message: '이름을 입력해주세요.' }),
   email: baseSignupSchema.shape.email,
   verificationCode: baseSignupSchema.shape.verificationCode,
 });
 
 export const resetPasswordSchema = passwordMatchRefinement(
   z.object({
+    email: z.string().optional(),
     newPassword: passwordSchema,
     confirmNewPassword: z.string(),
   }),

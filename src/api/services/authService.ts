@@ -14,7 +14,6 @@ import {
   ChangeUserEmailReq,
   FindUsernameReq,
   FindUsernameRes,
-  FindUserForPassword,
   ResetPassword,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
@@ -33,17 +32,13 @@ export const checkNicknameDuplication = async ({ nickname }: NicknameDuplication
   return res;
 };
 
-export const sendEmailCode = async ({ email, purpose }: SendEmailReq) => {
-  const res = await fetchData<SendEmailReq, EmailRes>('POST', endpoints.email.sendEmail, { email, purpose });
+export const sendEmailCode = async (body: SendEmailReq) => {
+  const res = await fetchData<SendEmailReq, EmailRes>('POST', endpoints.email.sendEmail, body);
   return res;
 };
 
-export const verifyEmailCode = async ({ email, purpose, verificationCode }: VerifyEmailCodeReq) => {
-  const res = await fetchData<VerifyEmailCodeReq, EmailRes>('POST', endpoints.email.verifyCode, {
-    email,
-    purpose,
-    verificationCode,
-  });
+export const verifyEmailCode = async (body: VerifyEmailCodeReq) => {
+  const res = await fetchData<VerifyEmailCodeReq, EmailRes>('POST', endpoints.email.verifyCode, body);
   return res;
 };
 
@@ -113,11 +108,6 @@ export const resetData = async () => {
 
 export const findUsername = async (body: FindUsernameReq) => {
   const res = await fetchData<FindUsernameReq, FindUsernameRes>('POST', endpoints.auth.findUsername, body);
-  return res;
-};
-
-export const findUserForPassword = async (body: FindUserForPassword) => {
-  const res = await fetchData<FindUserForPassword, undefined>('POST', endpoints.auth.verifyUser, body);
   return res;
 };
 
