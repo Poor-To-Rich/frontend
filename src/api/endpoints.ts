@@ -8,6 +8,8 @@ export const endpoints = {
     checkUsernameDuplicate: '/user/exists/username',
     refreshToken: '/auth/refresh',
     getUserDetails: '/user/detail',
+    getOnboardingUserDetails: '/user/oauth/profile',
+    updateOnboardingUserDetails: '/user/oauth/profile',
     updateUserDetails: '/user/update',
     updatePassword: '/user/password',
     dataReset: '/user/reset',

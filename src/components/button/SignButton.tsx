@@ -16,6 +16,7 @@ const SignButton = ({ label, onClick, isPending, disabled, type = 'button' }: Pr
         'w-full h-[3.6rem] rounded-lg text-md cursor-pointer flex items-center justify-center',
         (label === '아이디로 로그인' || label === '로그인') &&
           (disabled ? 'bg-strokeGray text-defaultGrey' : 'bg-pastelLime text-oliveGreen'),
+        label === '카카오로 로그인' && 'bg-[#FEE500] text-[#191919]',
         label === '회원가입' && 'bg-pinkRed text-sunsetRose',
       )}
       type={type}

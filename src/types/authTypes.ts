@@ -5,12 +5,15 @@ import {
   findUserForPasswordSchema,
   findUsernameSchema,
   loginSchema,
+  onboardingProfileSchema,
   profileSchema,
   resetPasswordSchema,
   signupSchema,
 } from '@/schemas/authSchema';
 
 export type SignupFormType = z.infer<typeof signupSchema>;
+
+export type OnboardingFormType = z.infer<typeof onboardingProfileSchema>;
 
 export type UsernameDuplicationReq = {
   username: string;
