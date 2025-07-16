@@ -24,7 +24,7 @@ const useAddTransaction = ({ type, setError }: Props) => {
     mutationFn: (body: TransactionFormDataType) => mutationFn(body),
     onSuccess: data => {
       useDraftStore.getState().disableSave();
-      invalidateTransactionQueries(queryClient, calenderDate);
+      invalidateTransactionQueries(queryClient, calenderDate, data.data?.categoryId);
       sessionStorage.setItem('selected-id', String(data.data?.id));
       sessionStorage.removeItem('transaction-form-data');
       navigate('/');
