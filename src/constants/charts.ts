@@ -11,3 +11,5 @@ export const BAR_CHART_COLORS: Record<CharTransactionType, string> = {
   지출: '#ffcbc4',
   '저축/투자': '#E6F4D1',
 };
+
+export const CHART_SORTING_KEY = 'category-log-sorting';
