@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 
-const invalidateTransactionQueries = (queryClient: QueryClient, date: Date, categoryId?: number) => {
+const invalidateTransactionQueries = (queryClient: QueryClient, date: Date) => {
   const year = format(date, 'yyyy');
   const yearMonth = format(date, 'yyyy-MM');
   const yearMonthDay = format(date, 'yyyy-MM-dd');
@@ -49,7 +49,7 @@ const invalidateTransactionQueries = (queryClient: QueryClient, date: Date, cate
     queryKey: ['totalAndSavings'],
   });
   queryClient.refetchQueries({
-    queryKey: ['categoryLogs', categoryId],
+    queryKey: ['categoryLogs'],
   });
 };
 

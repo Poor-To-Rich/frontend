@@ -13,6 +13,7 @@ const useUpdateTransaction = ({
   setError,
 }: {
   type: IncomeExpenseType;
+  currentCategoryId?: number;
   setError: UseFormSetError<TransactionFormDataType>;
 }) => {
   const navigate = useNavigate();
@@ -22,9 +23,9 @@ const useUpdateTransaction = ({
 
   return useMutation({
     mutationFn: ({ id, body }: { id: string; body: TransactionFormDataType }) => mutationFn(id, body),
-    onSuccess: data => {
+    onSuccess: () => {
       useDraftStore.getState().disableSave();
-      invalidateTransactionQueries(queryClient, calenderDate, data.data?.categoryId);
+      invalidateTransactionQueries(queryClient, calenderDate);
       sessionStorage.removeItem('transaction-form-data');
       navigate(-1);
     },
