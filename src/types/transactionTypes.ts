@@ -52,6 +52,7 @@ export type DeleteTransactionRes = {
 
 export type UpdateTransactionRes = {
   categoryId: number;
+  prevCategoryId?: number;
 };
 
 export type IncomeExpenseType = '지출' | '수입';
