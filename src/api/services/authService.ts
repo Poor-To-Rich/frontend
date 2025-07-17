@@ -15,6 +15,8 @@ import {
   FindUsernameReq,
   FindUsernameRes,
   ResetPassword,
+  OnboardingFormType,
+  UserRoleType,
 } from '@/types/authTypes';
 import { tokenManager } from '@/utils/tokenManager';
 
@@ -114,4 +116,19 @@ export const findUsername = async (body: FindUsernameReq) => {
 export const resetPassword = async (body: ResetPassword) => {
   const res = await fetchData<ResetPassword>('POST', endpoints.auth.resetPassword, body);
   return res;
+};
+
+export const getOnboardingUserDetails = async () => {
+  const res = await fetchData<undefined, OnboardingFormType>('GET', endpoints.auth.getOnboardingUserDetails);
+  return res.data;
+};
+
+export const updateOnboardingUserDetails = async (body: FormData) => {
+  const res = await fetchData<FormData>('PUT', endpoints.auth.updateOnboardingUserDetails, body);
+  return res;
+};
+
+export const getUserRole = async () => {
+  const res = await fetchData<undefined, UserRoleType>('GET', endpoints.auth.getUserRole);
+  if (res.data) return res.data.role;
 };

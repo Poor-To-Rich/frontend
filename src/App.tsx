@@ -22,6 +22,7 @@ import EditTransactionPage from '@/pages/EditTransactionPage/EditTransactionPage
 import FindUsernamePage from '@/pages/FindUsernamePage/FindUsernamePage';
 import FindPasswordPage from '@/pages/FindPasswordPage/FindPasswordPage';
 import LoginChoicePage from '@/pages/LoginChoicePage/LoginChoicePage';
+import ProfileOnboardingPage from '@/pages/ProfileOnboardingPage/ProfileOnboardingPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
       </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/onboarding/profile" element={<ProfileOnboardingPage />} />
         <Route path="/add-transaction" element={<AddTransactionPage />} />
         <Route path="/edit-transaction" element={<EditTransactionPage />} />
         <Route path="/categories" element={<CategoriesPage />} />

@@ -5,12 +5,15 @@ import {
   findUserForPasswordSchema,
   findUsernameSchema,
   loginSchema,
+  onboardingProfileSchema,
   profileSchema,
   resetPasswordSchema,
   signupSchema,
 } from '@/schemas/authSchema';
 
 export type SignupFormType = z.infer<typeof signupSchema>;
+
+export type OnboardingFormType = z.infer<typeof onboardingProfileSchema>;
 
 export type UsernameDuplicationReq = {
   username: string;
@@ -39,6 +42,10 @@ export type FindUsernameRes = {
 export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'changePassword'] as const;
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];
+
+export type UserRoleType = {
+  role: 'USER' | 'ADMIN' | 'TEST' | 'PENDING';
+};
 
 export type SendEmailReq = { email: string; purpose: EmailPurposeType; username?: string };
 

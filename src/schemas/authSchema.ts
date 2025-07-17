@@ -60,6 +60,19 @@ export const profileSchema = baseSignupSchema
     isDefaultProfile: z.boolean(),
   });
 
+export const onboardingProfileSchema = baseSignupSchema
+  .pick({
+    profileImage: true,
+    name: true,
+    nickname: true,
+    birth: true,
+    gender: true,
+    job: true,
+  })
+  .extend({
+    isDefaultProfile: z.boolean(),
+  });
+
 export const changePasswordSchema = passwordMatchRefinement(
   z.object({
     currentPassword: z.string({ message: '비밀번호를 입력해주세요' }),
