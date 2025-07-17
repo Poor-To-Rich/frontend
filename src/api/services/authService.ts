@@ -18,6 +18,7 @@ import {
   OnboardingFormType,
   UserRoleType,
 } from '@/types/authTypes';
+import CustomError from '@/utils/error/CustomError';
 import { tokenManager } from '@/utils/tokenManager';
 
 export const checkUsernameDuplication = async ({ username }: UsernameDuplicationReq) => {
@@ -77,11 +78,13 @@ export const deleteUser = async () => {
 export const refreshToken = async () => {
   const res = await fetchData<undefined, TokenRes>('POST', endpoints.auth.refreshToken);
 
-  if (res.data) {
+  if (res.data?.accessToken) {
     const newToken = res.data.accessToken;
     tokenManager.setToken(newToken);
     return newToken;
   }
+
+  throw new CustomError('access token 재발급 실패', 401);
 };
 
 export const getUserDetails = async () => {
