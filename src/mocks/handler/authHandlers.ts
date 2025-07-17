@@ -12,6 +12,7 @@ import {
 } from '@/mocks/constants/auth';
 import Cookies from 'js-cookie';
 import { ChangePasswordData } from '@/types/authTypes';
+import { createMockRefreshToken } from '../utils/createMockToken';
 
 export const authHandlers = [
   http.post(endpoints.auth.checkUsernameDuplicate, async ({ request }) => {
@@ -146,6 +147,49 @@ export const authHandlers = [
         },
       },
       { status: 201 },
+    );
+  }),
+
+  http.get(endpoints.auth.getOnboardingUserDetails, () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '회원 상세 조회 성공',
+        data: {
+          profileImage: '어쩌구url',
+          isDefaultProfile: false,
+          name: '홍길동',
+          nickname: 'happy123',
+          birth: '2025-07-14',
+          gender: 'MALE',
+          job: '무직',
+        },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.put(endpoints.auth.updateOnboardingUserDetails, () => {
+    Cookies.set('refreshToken', createMockRefreshToken(), { expires: 7 });
+    return HttpResponse.json(
+      {
+        status: 201,
+        message: '회원 정보 추가 성공',
+      },
+      { status: 201 },
+    );
+  }),
+
+  http.get(endpoints.auth.getUserRole, () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '사용자 역할 조회 성공',
+        data: {
+          role: 'PENDING',
+        },
+      },
+      { status: 200 },
     );
   }),
 ];
