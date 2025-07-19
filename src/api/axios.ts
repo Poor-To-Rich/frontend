@@ -35,12 +35,14 @@ apiClient.interceptors.response.use(
   res => res,
   async error => {
     const originalRequest = error.config;
+    const message: string = error.response?.data?.message || '';
 
+    const isEmailCodeError = message.includes('인증 코드');
     const isRefreshRequest = originalRequest.url?.includes(endpoints.auth.refreshToken);
     const alreadyTried = originalRequest._retry;
 
     // 토큰 만료 + 재시도 안 했던 요청만
-    if (error.response?.status === 401 && !alreadyTried && !isRefreshRequest) {
+    if (error.response?.status === 401 && !alreadyTried && !isRefreshRequest && !isEmailCodeError) {
       originalRequest._retry = true;
 
       // 이미 갱신 중이면 그걸 기다렸다가 사용
@@ -70,9 +72,9 @@ apiClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return await apiClient(originalRequest);
       } catch (err) {
-        // if (err instanceof CustomError) {
-        //   if (typeof window !== 'undefined') window.location.replace(`/login?failMessage=${err.message}`);
-        // }
+        if (err instanceof CustomError) {
+          if (typeof window !== 'undefined') window.location.replace(`/login?failMessage=${err.message}`);
+        }
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
