@@ -6,6 +6,7 @@ import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/postcss';
 import { VitePWA } from 'vite-plugin-pwa';
 import fs from 'fs';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -56,7 +57,18 @@ export default defineConfig({
       },
     }),
   ],
-
+  build: {
+    rollupOptions: {
+      plugins: [
+        visualizer({
+          filename: 'dist/stats.html',
+          open: true,
+          gzipSize: true,
+          brotliSize: true,
+        }) as any,
+      ],
+    },
+  },
   css: {
     postcss: {
       plugins: [tailwindcss()],
