@@ -6,15 +6,18 @@ import { createFormErrorHandler } from '@/utils/error/errorHandler';
 import { useMutation } from '@tanstack/react-query';
 import { UseFormSetError } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import useGetUserRole from './useGetUserRole';
 
 const useUpdateOnboardingUserDetails = (setError: UseFormSetError<OnboardingFormType>) => {
   const navigate = useNavigate();
   const { resetNicknameStatus } = useNicknameVerification();
   const handleProfileError = createFormErrorHandler(setError);
+  const { refetch: refetchUserRole } = useGetUserRole({ enabled: false });
 
   return useMutation({
     mutationFn: updateOnboardingUserDetails,
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchUserRole();
       navigate('/');
     },
     onError: error => {
