@@ -1,7 +1,7 @@
 import CameraIcon from '@/components/icon/CameraIcon';
 import { forwardRef } from 'react';
 import TrashButton from '@/components/button/icon/TrashButton';
-import DefaultProfileImage from '/image/default-profile-image.png';
+import DefaultProfileImage from '/image/default-profile-image.webp';
 
 interface Props {
   value: string | File | undefined;
