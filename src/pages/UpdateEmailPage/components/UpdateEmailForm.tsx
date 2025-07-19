@@ -6,7 +6,7 @@ import useGetUserEmail from '@/hooks/apis/auth/useGetUserEmail';
 import EmailField from '@/components/input/auth/EmailField';
 import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 import useChangeEmail from '@/hooks/apis/auth/useChangeEmail';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 const UpdateEmailForm = () => {

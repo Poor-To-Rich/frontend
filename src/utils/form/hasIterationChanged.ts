@@ -1,5 +1,5 @@
 import { TransactionFormDataType } from '@/types/transactionTypes';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 export const hasIterationChanged = (prev: TransactionFormDataType | undefined, current: TransactionFormDataType) => {
   const prevType = prev?.iterationType;

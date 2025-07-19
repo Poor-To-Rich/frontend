@@ -4,7 +4,7 @@ import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import useGetTransaction from '@/hooks/apis/transaction/useGetTransaction';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 import { useDraftMetaStore } from '@/stores/useDraftMetaStore';
 
 interface Props {

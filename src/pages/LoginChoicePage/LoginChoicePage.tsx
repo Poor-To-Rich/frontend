@@ -1,5 +1,5 @@
 import SignButton from '@/components/button/SignButton';
-import Logo from '/image/Logo.png';
+import Logo from '/image/Logo.webp';
 import { useNavigate } from 'react-router-dom';
 
 const LoginChoicePage = () => {

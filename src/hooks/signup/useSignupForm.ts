@@ -4,7 +4,7 @@ import { useEmailFieldStore } from '@/stores/fields/useEmailFieldStore';
 import { useNicknameFieldStore } from '@/stores/fields/useNicknameFieldStore';
 import { useUsernameFieldStore } from '@/stores/fields/useUsernameFieldStore';
 import { filteredData } from '@/utils/form/filteredFormData';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import useSignup from '@/hooks/apis/auth/useSignup';
 
 export const useSignupForm = () => {

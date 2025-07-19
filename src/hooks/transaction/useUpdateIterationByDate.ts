@@ -1,5 +1,5 @@
 import { format, addMonths, getDate } from 'date-fns';
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 import { getKoreanDay, getKoreanWeekOfMonth } from '@/utils/date';
 import { TransactionFormDataType } from '@/types/transactionTypes';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
