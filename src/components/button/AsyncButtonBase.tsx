@@ -8,6 +8,7 @@ const AsyncButtonBase = ({
   loadingSize = 20,
   fullWidth = false,
   className,
+  spinnerColor,
   disabled,
   ...rest
 }: AsyncButtonBaseProps) => {
@@ -23,7 +24,7 @@ const AsyncButtonBase = ({
       <span className={isPending ? 'invisible' : 'visible'}>{label}</span>
       {isPending && (
         <span className="absolute inset-0 flex items-center justify-center">
-          <LoadingSpinner size={loadingSize} />
+          <LoadingSpinner size={loadingSize} color={spinnerColor} />
         </span>
       )}
     </button>

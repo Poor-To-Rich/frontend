@@ -3,38 +3,64 @@ import MinusCircleButton from '@/components/button/icon/MinusCircleButton';
 import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
-import ReportTypeButton from '@/components/button/TransactionTypeButton';
+import TransactionTypeToggle from '@/components/button/toggle/TransactionTypeToggle';
 import SubActionButton from '@/components/button/SubActionButton';
 import type { Meta, StoryObj } from '@storybook/react';
-import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
+import IncomeExpenseToggle from '@/components/button/toggle/IncomeExpenseToggle';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
-import ToggleSwitch from '@/components/button/ToggleSwitch';
+import ToggleSwitch from '@/components/button/toggle/ToggleSwitch';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import SignButton from '@/components/button/SignButton';
+import ChatActionButton from '@/components/button/ChatActionButton';
 
 function Button() {
   return (
-    <div className="flex flex-col gap-5">
-      <h2> 기본 버튼 </h2>
+    <div className="flex flex-col gap-5 relative">
+      <h2> PrimaryButton </h2>
       <div className="flex gap-3">
         <PrimaryButton label="회원가입" />
       </div>
+
+      <h2> ModalButton </h2>
       <div className="flex gap-3">
         <ModalButton label="예" />
         <ModalButton label="아니요" />
       </div>
-      <div className="flex gap-3">
+
+      <h2> SignButton </h2>
+      <div className="flex flex-col gap-3 w-3/5">
         <SignButton label="로그인" />
         <SignButton label="회원가입" />
+        <SignButton label="아이디로 로그인" />
+        <SignButton label="카카오로 로그인" />
       </div>
+
+      <h2> ChatActionButton </h2>
+      <div className="flex flex-col gap-3 w-4/5">
+        <ChatActionButton label="채팅 참여하기" />
+        <ChatActionButton label="채팅 참여하기" hasPassword />
+        <ChatActionButton label="참여중인 채팅방" />
+        <ChatActionButton label="참여중인 채팅방" hasPassword />
+        <ChatActionButton label="채팅방 나가기" />
+        <ChatActionButton label="채팅방 나가기" disabled />
+        <ChatActionButton label="채팅방 삭제 및 나가기" />
+      </div>
+
       <br />
       <h2>지출, 수입 버튼</h2>
-      <IncomeExpenseButton type="지출" onClick={() => {}} />
-      <ReportTypeButton />
+      <IncomeExpenseToggle type="지출" onClick={() => {}} />
+      <TransactionTypeToggle />
+
+      <br />
       <h2>검증 버튼</h2>
       <SubActionButton label="인증" />
       <SubActionButton label="확인" />
       <SubActionButton label="중복확인" />
+      <SubActionButton label="위임" />
+      <SubActionButton label="검색" />
+      <SubActionButton label="전송" />
+
+      <br />
       <h2>기타 버튼</h2>
       <PlusCircleButton />
       <RepeatCircleButton openModal={() => {}} />

@@ -2,7 +2,7 @@ import { useTransactionReportTypeStore } from '@/stores/chart/useTransactionRepo
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import { clsx } from 'clsx';
 
-const TransactionTypeButton = () => {
+const TransactionTypeToggle = () => {
   const { currentTransactionType, setCurrentTransactionType } = useTransactionReportTypeStore();
 
   const options: { label: IncomeExpenseType; color: string }[] = [
@@ -29,4 +29,4 @@ const TransactionTypeButton = () => {
   );
 };
 
-export default TransactionTypeButton;
+export default TransactionTypeToggle;
