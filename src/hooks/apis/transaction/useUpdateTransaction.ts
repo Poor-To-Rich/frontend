@@ -24,7 +24,7 @@ const useUpdateTransaction = ({
     mutationFn: ({ id, body }: { id: string; body: TransactionFormDataType }) => mutationFn(id, body),
     onSuccess: data => {
       useDraftStore.getState().disableSave();
-      invalidateTransactionQueries(queryClient, calenderDate, data.data?.categoryId);
+      invalidateTransactionQueries(queryClient, calenderDate, data.data?.categoryId, data.data?.prevCategoryId);
       sessionStorage.removeItem('transaction-form-data');
       navigate(-1);
     },

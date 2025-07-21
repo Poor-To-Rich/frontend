@@ -4,6 +4,7 @@ import useCategoryLogsInfiniteQuery from '@/hooks/apis/chart/useCategoryLogsInfi
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import CategoryLogList from '@/pages/CategoryDetailsPage/components/Log/CategoryLogList ';
 import { IncomeExpenseType } from '@/types/transactionTypes';
+import { CHART_SORTING_KEY } from '@/constants/charts';
 
 interface Props {
   transactionType: IncomeExpenseType;
@@ -13,7 +14,11 @@ interface Props {
 }
 
 const CategoryLogListSection = ({ transactionType, categoryId, date, isSavings }: Props) => {
-  const [isDescending, setIsDescending] = useState<boolean>(true);
+  const [isDescending, setIsDescending] = useState<boolean>(() => {
+    const saved = sessionStorage.getItem(CHART_SORTING_KEY);
+    return saved === null ? true : JSON.parse(saved);
+  });
+
   const observerRef = useRef<HTMLDivElement | null>(null);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useCategoryLogsInfiniteQuery(
     categoryId,
@@ -28,7 +33,11 @@ const CategoryLogListSection = ({ transactionType, categoryId, date, isSavings }
 
   const handleSorting = () => {
     if (!isPending) {
-      setIsDescending(prev => !prev);
+      setIsDescending(prev => {
+        const next = !prev;
+        sessionStorage.setItem(CHART_SORTING_KEY, JSON.stringify(next));
+        return next;
+      });
     }
   };
 

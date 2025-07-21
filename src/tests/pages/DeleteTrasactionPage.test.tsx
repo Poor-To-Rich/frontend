@@ -45,8 +45,6 @@ describe('DeleteTransactionPage', () => {
         userEvent.click(deleteButton);
       });
 
-      screen.debug(undefined, 1000000);
-
       // Then
       const IterationChangeModal = await screen.findByTestId('iteration-change-modal');
       expect(IterationChangeModal).toBeInTheDocument();

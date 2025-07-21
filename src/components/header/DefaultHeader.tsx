@@ -2,10 +2,12 @@ import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import PlusButton from '@/components/button/icon/PlusButton';
 import TrashButton from '@/components/button/icon/TrashButton';
 import { useDraftStore } from '@/stores/useDraftStore';
+import clsx from 'clsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
-  label: string;
+  label?: string;
+  bgColor?: string;
   hasBackButton?: boolean;
   hasPlusButton?: boolean;
   hasTrashButton?: boolean;
@@ -13,7 +15,15 @@ interface Props {
   onClick?: () => void;
 }
 
-const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, resetCalenderDate, onClick }: Props) => {
+const DefaultHeader = ({
+  label,
+  bgColor,
+  hasBackButton,
+  hasPlusButton,
+  hasTrashButton,
+  resetCalenderDate,
+  onClick,
+}: Props) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { disableSave } = useDraftStore();
@@ -28,7 +38,7 @@ const DefaultHeader = ({ label, hasBackButton, hasPlusButton, hasTrashButton, re
   };
 
   return (
-    <header className="header-common">
+    <header className={clsx(bgColor, 'header-common')}>
       {hasBackButton && (
         <span className="absolute left-0 h-full aspect-square">
           <LeftArrowButton onClick={handleBackClick} />

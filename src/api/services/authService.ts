@@ -12,7 +12,13 @@ import {
   ChangePasswordData,
   GetUserEmailRes,
   ChangeUserEmailReq,
+  FindUsernameReq,
+  FindUsernameRes,
+  ResetPassword,
+  OnboardingFormType,
+  UserRoleType,
 } from '@/types/authTypes';
+import CustomError from '@/utils/error/CustomError';
 import { tokenManager } from '@/utils/tokenManager';
 
 export const checkUsernameDuplication = async ({ username }: UsernameDuplicationReq) => {
@@ -29,17 +35,13 @@ export const checkNicknameDuplication = async ({ nickname }: NicknameDuplication
   return res;
 };
 
-export const sendEmailCode = async ({ email, purpose }: SendEmailReq) => {
-  const res = await fetchData<SendEmailReq, EmailRes>('POST', endpoints.email.sendEmail, { email, purpose });
+export const sendEmailCode = async (body: SendEmailReq) => {
+  const res = await fetchData<SendEmailReq, EmailRes>('POST', endpoints.email.sendEmail, body);
   return res;
 };
 
-export const verifyEmailCode = async ({ email, purpose, verificationCode }: VerifyEmailCodeReq) => {
-  const res = await fetchData<VerifyEmailCodeReq, EmailRes>('POST', endpoints.email.verifyCode, {
-    email,
-    purpose,
-    verificationCode,
-  });
+export const verifyEmailCode = async (body: VerifyEmailCodeReq) => {
+  const res = await fetchData<VerifyEmailCodeReq, EmailRes>('POST', endpoints.email.verifyCode, body);
   return res;
 };
 
@@ -76,11 +78,13 @@ export const deleteUser = async () => {
 export const refreshToken = async () => {
   const res = await fetchData<undefined, TokenRes>('POST', endpoints.auth.refreshToken);
 
-  if (res.data) {
+  if (res.data?.accessToken) {
     const newToken = res.data.accessToken;
     tokenManager.setToken(newToken);
     return newToken;
   }
+
+  throw new CustomError('access token 재발급 실패', 401);
 };
 
 export const getUserDetails = async () => {
@@ -105,4 +109,29 @@ export const updatePassword = async (body: ChangePasswordData) => {
 export const resetData = async () => {
   const res = await fetchData<undefined, undefined>('DELETE', endpoints.auth.dataReset);
   return res;
+};
+
+export const findUsername = async (body: FindUsernameReq) => {
+  const res = await fetchData<FindUsernameReq, FindUsernameRes>('POST', endpoints.auth.findUsername, body);
+  return res;
+};
+
+export const resetPassword = async (body: ResetPassword) => {
+  const res = await fetchData<ResetPassword>('POST', endpoints.auth.resetPassword, body);
+  return res;
+};
+
+export const getOnboardingUserDetails = async () => {
+  const res = await fetchData<undefined, OnboardingFormType>('GET', endpoints.auth.getOnboardingUserDetails);
+  return res.data;
+};
+
+export const updateOnboardingUserDetails = async (body: FormData) => {
+  const res = await fetchData<FormData>('PUT', endpoints.auth.updateOnboardingUserDetails, body);
+  return res;
+};
+
+export const getUserRole = async () => {
+  const res = await fetchData<undefined, UserRoleType>('GET', endpoints.auth.getUserRole);
+  if (res.data) return res.data.role;
 };

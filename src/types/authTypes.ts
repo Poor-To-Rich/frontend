@@ -2,12 +2,18 @@ import { z } from 'zod';
 import {
   changePasswordSchema,
   emailChangeSchema,
+  findUserForPasswordSchema,
+  findUsernameSchema,
   loginSchema,
+  onboardingProfileSchema,
   profileSchema,
+  resetPasswordSchema,
   signupSchema,
 } from '@/schemas/authSchema';
 
 export type SignupFormType = z.infer<typeof signupSchema>;
+
+export type OnboardingFormType = z.infer<typeof onboardingProfileSchema>;
 
 export type UsernameDuplicationReq = {
   username: string;
@@ -25,11 +31,23 @@ export type ChangeUserEmailReq = {
   email: string;
 };
 
-export const emailPurposeList = ['register', 'changeEmail'] as const;
+export type FindUsernameReq = {
+  email: string;
+};
+
+export type FindUsernameRes = {
+  username: string;
+};
+
+export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'changePassword'] as const;
 
 export type EmailPurposeType = (typeof emailPurposeList)[number];
 
-export type SendEmailReq = { email: string; purpose: EmailPurposeType };
+export type UserRoleType = {
+  role: 'USER' | 'ADMIN' | 'TEST' | 'PENDING';
+};
+
+export type SendEmailReq = { email: string; purpose: EmailPurposeType; username?: string };
 
 export type EmailRes = { notificationMessage: string };
 
@@ -42,6 +60,12 @@ export type ProfileFormData = z.infer<typeof profileSchema>;
 export type ChangePasswordData = z.infer<typeof changePasswordSchema>;
 
 export type EmailChangeData = z.infer<typeof emailChangeSchema>;
+
+export type FindUsernameFormType = z.infer<typeof findUsernameSchema>;
+
+export type FindUserForPassword = z.infer<typeof findUserForPasswordSchema>;
+
+export type ResetPassword = z.infer<typeof resetPasswordSchema>;
 
 export type TokenRes = {
   accessToken: string;

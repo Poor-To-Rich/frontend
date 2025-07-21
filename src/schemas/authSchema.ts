@@ -60,6 +60,19 @@ export const profileSchema = baseSignupSchema
     isDefaultProfile: z.boolean(),
   });
 
+export const onboardingProfileSchema = baseSignupSchema
+  .pick({
+    profileImage: true,
+    name: true,
+    nickname: true,
+    birth: true,
+    gender: true,
+    job: true,
+  })
+  .extend({
+    isDefaultProfile: z.boolean(),
+  });
+
 export const changePasswordSchema = passwordMatchRefinement(
   z.object({
     currentPassword: z.string({ message: '비밀번호를 입력해주세요' }),
@@ -72,3 +85,22 @@ export const emailChangeSchema = z.object({
   email: baseSignupSchema.shape.email,
   verificationCode: baseSignupSchema.shape.verificationCode,
 });
+
+export const findUsernameSchema = z.object({
+  email: baseSignupSchema.shape.email,
+  verificationCode: baseSignupSchema.shape.verificationCode,
+});
+
+export const findUserForPasswordSchema = z.object({
+  username: z.string({ message: '아이디를 입력해주세요.' }).min(1, { message: '아이디를 입력해주세요.' }),
+  email: baseSignupSchema.shape.email,
+  verificationCode: baseSignupSchema.shape.verificationCode,
+});
+
+export const resetPasswordSchema = passwordMatchRefinement(
+  z.object({
+    email: z.string().optional(),
+    newPassword: passwordSchema,
+    confirmNewPassword: z.string(),
+  }),
+);

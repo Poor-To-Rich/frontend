@@ -19,7 +19,7 @@ const useSignup = ({ setError, fieldStatusMap }: Props) => {
     mutationFn: signup,
     onSuccess: data => {
       toast.success(data.message);
-      navigate('/login', { replace: true });
+      navigate('/login/id', { replace: true });
     },
     onError: (error: CustomError<{ field: keyof SignupFormType }>) => {
       const field = error.data?.field;

@@ -8,7 +8,7 @@ import { TransactionFormDataType } from '@/types/transactionTypes';
 import { isMonthOfLastDay } from '@/utils/date';
 import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { useEffect } from 'react';
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 import { useResetCustomIteration } from '@/hooks/useResetCustomIteration';
 
 interface Props {

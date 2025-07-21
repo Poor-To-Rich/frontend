@@ -18,7 +18,7 @@ apiClient.interceptors.request.use(config => {
   const token = tokenManager.getToken();
 
   if (token) {
-    config.headers.Authorization = token;
+    config.headers.Authorization = `Bearer ${token}`;
   }
 
   if (config.data instanceof FormData) {
@@ -29,24 +29,33 @@ apiClient.interceptors.request.use(config => {
 });
 
 let isRefreshing = false;
+let requestQueue: (() => void)[] = [];
 
 apiClient.interceptors.response.use(
   res => res,
   async error => {
     const originalRequest = error.config;
+    const message: string = error.response?.data?.message || '';
 
+    const isEmailCodeError = message.includes('인증 코드');
     const isRefreshRequest = originalRequest.url?.includes(endpoints.auth.refreshToken);
-    const hasToken = !!tokenManager.getToken();
+    const alreadyTried = originalRequest._retry;
 
     // 토큰 만료 + 재시도 안 했던 요청만
-    if (error.response?.status === 401 && !originalRequest._retry && !isRefreshRequest && hasToken) {
+    if (error.response?.status === 401 && !alreadyTried && !isRefreshRequest && !isEmailCodeError) {
       originalRequest._retry = true;
 
       // 이미 갱신 중이면 그걸 기다렸다가 사용
       if (isRefreshing) {
-        await refreshToken();
-        originalRequest.headers.Authorization = `Bearer ${tokenManager.getToken()}`;
-        return apiClient(originalRequest);
+        // 다른 요청들이 기다리도록 큐에 등록
+        return new Promise(resolve => {
+          requestQueue.push(() => {
+            const token = tokenManager.getToken();
+
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            resolve(apiClient(originalRequest));
+          });
+        });
       }
 
       // 토큰 재발급 로직
@@ -55,6 +64,11 @@ apiClient.interceptors.response.use(
 
       try {
         const newToken = await refreshToken();
+
+        // 대기 중이던 요청들 다시 실행
+        requestQueue.forEach(cb => cb());
+        requestQueue = [];
+
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return await apiClient(originalRequest);
       } catch (err) {

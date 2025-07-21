@@ -8,9 +8,15 @@ import ReportSummary from '@/pages/ChartPage/components/summary/ReportSummary';
 import { useHeaderDateStore } from '@/stores/useHeaderDateStore';
 import CategoryChartBoard from '@/pages/ChartPage/components/categories/CategoryChartBoard';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import { useEffect } from 'react';
+import { CHART_SORTING_KEY } from '@/constants/charts';
 
 const ChartPage = () => {
   const { chartHeaderDate, setChartHeaderDate } = useHeaderDateStore();
+
+  useEffect(() => {
+    sessionStorage.removeItem(CHART_SORTING_KEY);
+  }, []);
 
   return (
     <div className="flex flex-col w-full min-h-screen">

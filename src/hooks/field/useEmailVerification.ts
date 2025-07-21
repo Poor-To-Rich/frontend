@@ -40,10 +40,13 @@ const useEmailVerification = ({ emailFieldName, purpose }: Props) => {
   });
 
   const handleEmailSend = () => {
-    const emailError = errors.email;
     const email = getValues(emailFieldName);
-    if (email && !emailError && (!emailCodeStatus.isVerify || !sendEmailStatus.isVerify)) {
-      sendEmail({ email, purpose });
+
+    if (email && (!emailCodeStatus.isVerify || !sendEmailStatus.isVerify)) {
+      if (purpose === 'changePassword') {
+        const username = getValues('username');
+        sendEmail({ username, email, purpose });
+      } else sendEmail({ email, purpose });
     }
   };
 

@@ -28,7 +28,7 @@ const ReportSummary = () => {
   return (
     <div className="w-full flex justify-between px-8 py-4 gap-3.5">
       <>
-        <SummaryItem title="총액" isPending={isPending} total={totalAndSavings?.totalAmount} />
+        <SummaryItem title="총액" isPending={isPending} total={isPending ? 0 : totalAndSavings?.totalAmount} />
         <SummaryItem
           title="저축/투자"
           isPending={isPending}

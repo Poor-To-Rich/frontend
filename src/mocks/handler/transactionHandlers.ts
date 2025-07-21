@@ -15,6 +15,7 @@ export const transactionHandlers = [
         title: '상하이버거세트',
         isIteration: true,
         type: 'EXPENSE',
+        memo: '엄마가 줌zzzzzzzzzzzzzzzzz',
         cost: 4562654688,
       },
       {
@@ -23,6 +24,7 @@ export const transactionHandlers = [
         categoryName: '용돈',
         title: '용돈이지롱',
         type: 'INCOME',
+        memo: '야호우야호우야호우야호우야호우야호우야호우야호우야호우야호우야호우야호우야호우야호우',
         cost: 12678689,
       },
       {

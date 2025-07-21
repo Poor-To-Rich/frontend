@@ -43,8 +43,6 @@ describe('반복 가계부 편집 - 반복 설정까지 수정', () => {
     const submitButton = screen.getByTestId('submit-button');
     await userEvent.click(submitButton);
 
-    screen.debug(undefined, 10000);
-
     const IterationChangeModal = await screen.findByTestId('iteration-change-modal');
     expect(IterationChangeModal).toBeInTheDocument();
     const buttons = within(IterationChangeModal).getAllByRole('button');

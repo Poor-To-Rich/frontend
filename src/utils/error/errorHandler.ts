@@ -12,7 +12,7 @@ export const createFormErrorHandler = <T extends FieldValues, E = unknown>(
 ) => {
   return (error: unknown) => {
     if (error instanceof CustomError) {
-      const field = overrideField ?? (error.data?.field as Path<T> | undefined);
+      const field = (error.data?.field as Path<T>) ?? overrideField;
       const message = overrideMessage ? overrideMessage(error) : error.message;
 
       if (field) {
