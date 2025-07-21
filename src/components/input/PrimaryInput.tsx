@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { NumericFormat, NumericFormatProps } from 'react-number-format';
 import { clsx } from 'clsx';
-import VerifyButton from '@/components/button/VerifyButton';
+import SubActionButton from '@/components/button/SubActionButton';
 import CheckIcon from '@/components/icon/CheckIcon';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
@@ -91,7 +91,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
               )}
             </div>
             {buttonLabel && (
-              <VerifyButton
+              <SubActionButton
                 data-testid="verify-button"
                 type="button"
                 label={buttonLabel}

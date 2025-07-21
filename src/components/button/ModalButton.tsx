@@ -1,28 +1,11 @@
-import LoadingSpinner from '../loading/LoadingSpinner';
+import AsyncButtonBase from '@/components/button/AsyncButtonBase';
+import { AsyncButtonBaseProps } from '@/types/propsTypes';
+import clsx from 'clsx';
 
-interface Props {
-  label: string;
-  disabled?: boolean;
-  isPending?: boolean;
-  onClick?: () => void;
-}
+const ModalButton = ({ disabled, ...rest }: AsyncButtonBaseProps) => {
+  const colorStyle = disabled ? 'bg-strokeGray text-defaultGrey' : 'bg-pastelLime text-oliveGreen';
 
-const ModalButton = ({ label, disabled, isPending, onClick, ...rest }: Props) => {
-  return (
-    <button
-      className="flex justify-center items-center w-fit min-w-[9rem] h-[3.5rem] px-8 rounded-lg text-md bg-pastelLime text-oliveGreen cursor-pointer relative"
-      type="button"
-      disabled={isPending || disabled}
-      onClick={onClick}
-      {...rest}>
-      <span className={isPending ? 'invisible' : 'visible'}>{label}</span>
-      {isPending && (
-        <span className="absolute inset-0 flex items-center justify-center">
-          <LoadingSpinner size={20} />
-        </span>
-      )}
-    </button>
-  );
+  return <AsyncButtonBase {...rest} className={clsx('min-w-[9rem] px-8 h-[3.5rem]', colorStyle)} />;
 };
 
 export default ModalButton;

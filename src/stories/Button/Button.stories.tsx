@@ -4,7 +4,7 @@ import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
 import ModalButton from '@/components/button/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import ReportTypeButton from '@/components/button/TransactionTypeButton';
-import VerifyButton from '@/components/button/VerifyButton';
+import SubActionButton from '@/components/button/SubActionButton';
 import type { Meta, StoryObj } from '@storybook/react';
 import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
@@ -32,9 +32,9 @@ function Button() {
       <IncomeExpenseButton type="지출" onClick={() => {}} />
       <ReportTypeButton />
       <h2>검증 버튼</h2>
-      <VerifyButton label="인증" />
-      <VerifyButton label="확인" />
-      <VerifyButton label="중복확인" />
+      <SubActionButton label="인증" />
+      <SubActionButton label="확인" />
+      <SubActionButton label="중복확인" />
       <h2>기타 버튼</h2>
       <PlusCircleButton />
       <RepeatCircleButton openModal={() => {}} />
