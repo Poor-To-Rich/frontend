@@ -15,6 +15,7 @@ import ChatActionButton from '@/components/button/ChatActionButton';
 import ModalActionButton from '@/components/button/ModalActionButton';
 import UtilityButton from '@/components/button/UtilityButton';
 import NoticeOptionButton from '@/components/button/NoticeOptionButton';
+import ChatroomViewModeToggle from '@/components/button/toggle/ChatroomViewModeToggle';
 
 function Button() {
   return (
@@ -83,6 +84,10 @@ function Button() {
         <NoticeOptionButton label="다시 열지 않음" />
         <NoticeOptionButton label="접어두기" />
       </div>
+
+      <br />
+      <h2>ChatroomViewModeToggle</h2>
+      <ChatroomViewModeToggle />
 
       <br />
       <h2>기타 버튼</h2>
