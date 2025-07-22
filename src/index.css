@@ -78,7 +78,7 @@
   }
 
   .header-item-common {
-    @apply absolute h-full aspect-square;
+    @apply h-full px-7 flex items-center justify-center cursor-pointer font-medium;
   }
 
   .input-common {
