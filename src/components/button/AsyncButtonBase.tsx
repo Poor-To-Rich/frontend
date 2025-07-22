@@ -6,7 +6,6 @@ const AsyncButtonBase = ({
   label,
   isPending,
   loadingSize = 20,
-  fullWidth = false,
   className,
   spinnerColor,
   disabled,
@@ -14,11 +13,7 @@ const AsyncButtonBase = ({
 }: AsyncButtonBaseProps) => {
   return (
     <button
-      className={clsx(
-        'relative flex justify-center items-center rounded-lg text-md cursor-pointer',
-        fullWidth ? 'w-full' : 'w-fit',
-        className,
-      )}
+      className={clsx('relative flex justify-center items-center rounded-lg text-md cursor-pointer', className)}
       disabled={isPending || disabled}
       {...rest}>
       <span className={isPending ? 'invisible' : 'visible'}>{label}</span>

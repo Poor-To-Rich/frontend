@@ -8,7 +8,7 @@ const SubActionButton = ({ disabled, ...rest }: AsyncButtonBaseProps) => {
       disabled={disabled}
       loadingSize={18}
       spinnerColor="#e6e6e6"
-      className={'h-full border border-strokeGray bg-white px-3 whitespace-nowrap'}
+      className={'w-fit h-full border border-strokeGray bg-white px-3 whitespace-nowrap'}
     />
   );
 };
