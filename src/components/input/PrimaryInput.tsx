@@ -5,7 +5,6 @@ import SubActionButton from '@/components/button/SubActionButton';
 import CheckIcon from '@/components/icon/CheckIcon';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import { VerifyButtonType } from '@/types/fieldType';
 
 interface PrimaryInputProps {
   label: string;
@@ -15,7 +14,7 @@ interface PrimaryInputProps {
   isRequired?: boolean;
   isPending?: boolean;
   hasCheckIcon?: boolean;
-  buttonLabel?: VerifyButtonType;
+  buttonLabel?: string;
   handleClick?: () => void;
   successMessage?: string;
   errorMessage?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;

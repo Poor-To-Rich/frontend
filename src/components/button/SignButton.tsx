@@ -16,15 +16,7 @@ const SignButton = ({ label, disabled, ...rest }: Props) => {
     return '';
   })();
 
-  return (
-    <AsyncButtonBase
-      {...rest}
-      label={label}
-      disabled={disabled}
-      fullWidth
-      className={clsx('h-[4rem] px-4', colorClass)}
-    />
-  );
+  return <AsyncButtonBase {...rest} label={label} disabled={disabled} className={clsx('h-[4rem] px-4', colorClass)} />;
 };
 
 export default SignButton;
