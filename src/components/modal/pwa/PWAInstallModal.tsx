@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import InstallSteps from '@/components/modal/pwa/InstallSteps';
 import { isIOS } from '@/utils/deviceUtils';
-import ModalActionButton from '@/components/button/ModalActionButton';
+import ModalActionButton from '@/components/button/modal/ModalActionButton';
 
 interface Props {
   closeModal: () => void;

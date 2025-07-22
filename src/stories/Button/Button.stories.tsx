@@ -1,7 +1,7 @@
 import CategoryEditButton from '@/components/button/icon/CategoryEditButton';
 import MinusCircleButton from '@/components/button/icon/MinusCircleButton';
 import PlusCircleButton from '@/pages/MainPage/components/PlusCircleButton';
-import ModalButton from '@/components/button/ModalButton';
+import ModalButton from '@/components/button/modal/ModalButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import TransactionTypeToggle from '@/components/button/toggle/TransactionTypeToggle';
 import SubActionButton from '@/components/button/SubActionButton';
@@ -12,10 +12,11 @@ import ToggleSwitch from '@/components/button/toggle/ToggleSwitch';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import SignButton from '@/components/button/SignButton';
 import ChatActionButton from '@/components/button/ChatActionButton';
-import ModalActionButton from '@/components/button/ModalActionButton';
+import ModalActionButton from '@/components/button/modal/ModalActionButton';
 import UtilityButton from '@/components/button/UtilityButton';
 import NoticeOptionButton from '@/components/button/NoticeOptionButton';
 import ChatroomViewModeToggle from '@/components/button/toggle/ChatroomViewModeToggle';
+import ChatroomSortOptions from '@/components/button/ChatroomSortOptions';
 
 function Button() {
   return (
@@ -88,6 +89,10 @@ function Button() {
       <br />
       <h2>ChatroomViewModeToggle</h2>
       <ChatroomViewModeToggle />
+
+      <br />
+      <h2>ChatroomSortOptions</h2>
+      <ChatroomSortOptions />
 
       <br />
       <h2>기타 버튼</h2>
