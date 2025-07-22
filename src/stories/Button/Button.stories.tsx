@@ -26,6 +26,9 @@ import ChatroomMenuButton from '@/components/button/icon/ChatroomMenuButton';
 import HelpTooltipButton from '@/components/button/icon/HelpTooltipButton';
 import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
 import ShareButton from '@/components/button/icon/ShareButton';
+import GlobalChatroomDropDown from '@/components/menu/GlobalChatroomDropDown';
+import SingleChatroomDropdown from '@/components/menu/SingleChatroomDropdown';
+import NoticeDropdown from '@/components/menu/NoticeDropdown';
 
 function Button() {
   return (
@@ -102,6 +105,12 @@ function Button() {
       <br />
       <h2>ChatroomSortOptions</h2>
       <ChatroomSortOptions />
+
+      <br />
+      <h2>DropdownMenu</h2>
+      <GlobalChatroomDropDown />
+      <SingleChatroomDropdown />
+      <NoticeDropdown />
 
       <br />
       <h2>아이콘 버튼</h2>

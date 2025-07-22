@@ -10,3 +10,9 @@ export interface DefaultButtonProps {
   label: string;
   onClick?: () => void;
 }
+
+export type DropDownMenuOption = {
+  label: string;
+  onClick?: () => void;
+  danger?: boolean;
+};
