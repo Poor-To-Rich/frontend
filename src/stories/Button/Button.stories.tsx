@@ -17,6 +17,15 @@ import UtilityButton from '@/components/button/UtilityButton';
 import NoticeOptionButton from '@/components/button/NoticeOptionButton';
 import ChatroomViewModeToggle from '@/components/button/toggle/ChatroomViewModeToggle';
 import ChatroomSortOptions from '@/components/button/ChatroomSortOptions';
+import MyHostedChatroomsButton from '@/components/button/icon/MyHostedChatroomsButton';
+import ChatroomSettingsButton from '@/components/button/icon/ChatroomSettingsButton';
+import ChatroomSearchButton from '@/components/button/icon/ChatroomSearchButton';
+import LikeButton from '@/components/button/icon/LikeButton';
+import PostMoreButton from '@/components/button/icon/PostMoreButton';
+import ChatroomMenuButton from '@/components/button/icon/ChatroomMenuButton';
+import HelpTooltipButton from '@/components/button/icon/HelpTooltipButton';
+import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
+import ShareButton from '@/components/button/icon/ShareButton';
 
 function Button() {
   return (
@@ -95,13 +104,24 @@ function Button() {
       <ChatroomSortOptions />
 
       <br />
-      <h2>기타 버튼</h2>
+      <h2>아이콘 버튼</h2>
       <PlusCircleButton />
       <RepeatCircleButton openModal={() => {}} />
       <ToggleSwitch id={'1'} visibility type={'지출'} />
       <CategoryLinkButton type="지출" />
       <MinusCircleButton onClick={() => {}} />
       <CategoryEditButton id={1} />
+      <div className="flex gap-3">
+        <ChatroomSearchButton />
+        <MyHostedChatroomsButton />
+        <ChatroomSettingsButton />
+      </div>
+      <LikeButton />
+      <PostMoreButton />
+      <ChatroomMenuButton />
+      <HelpTooltipButton />
+      <ImageUploadButton />
+      <ShareButton />
     </div>
   );
 }
