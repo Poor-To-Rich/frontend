@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import InstallSteps from '@/components/modal/pwa/InstallSteps';
 import { isIOS } from '@/utils/deviceUtils';
+import ModalActionButton from '@/components/button/ModalActionButton';
 
 interface Props {
   closeModal: () => void;
@@ -54,11 +55,7 @@ const PWAInstallModal = ({ closeModal }: Props) => {
         </div>
 
         <div className="p-4 border-t border-strokeGray">
-          <button
-            onClick={closeModal}
-            className="w-full bg-gray-100 cursor-pointer text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors">
-            나중에 설치하기
-          </button>
+          <ModalActionButton label="나중에 설치하기" onClick={closeModal} />
         </div>
       </div>
     </ModalDimmed>

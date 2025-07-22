@@ -12,6 +12,9 @@ import ToggleSwitch from '@/components/button/toggle/ToggleSwitch';
 import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import SignButton from '@/components/button/SignButton';
 import ChatActionButton from '@/components/button/ChatActionButton';
+import ModalActionButton from '@/components/button/ModalActionButton';
+import UtilityButton from '@/components/button/UtilityButton';
+import NoticeOptionButton from '@/components/button/NoticeOptionButton';
 
 function Button() {
   return (
@@ -21,10 +24,16 @@ function Button() {
         <PrimaryButton label="회원가입" />
       </div>
 
+      <br />
       <h2> ModalButton </h2>
       <div className="flex gap-3">
         <ModalButton label="예" />
         <ModalButton label="아니요" />
+      </div>
+
+      <div className="flex flex-col gap-3 w-3/5">
+        <ModalActionButton label="나중에 설치하기" />
+        <ModalActionButton label="확인" />
       </div>
 
       <h2> SignButton </h2>
@@ -35,6 +44,7 @@ function Button() {
         <SignButton label="카카오로 로그인" />
       </div>
 
+      <br />
       <h2> ChatActionButton </h2>
       <div className="flex flex-col gap-3 w-4/5">
         <ChatActionButton label="채팅 참여하기" />
@@ -52,13 +62,27 @@ function Button() {
       <TransactionTypeToggle />
 
       <br />
-      <h2>검증 버튼</h2>
+      <h2>SubActionButton</h2>
       <SubActionButton label="인증" />
       <SubActionButton label="확인" />
       <SubActionButton label="중복확인" />
       <SubActionButton label="위임" />
       <SubActionButton label="검색" />
       <SubActionButton label="전송" />
+
+      <br />
+      <h2>UtilityButton</h2>
+      <UtilityButton label="내보내기" />
+      <UtilityButton label="신고하기" />
+      <UtilityButton label="커버보기" />
+      <UtilityButton label="프로필 편집" />
+
+      <br />
+      <h2>NoticeOptionButton</h2>
+      <div className="flex w-full gap-5 px-5">
+        <NoticeOptionButton label="다시 열지 않음" />
+        <NoticeOptionButton label="접어두기" />
+      </div>
 
       <br />
       <h2>기타 버튼</h2>

@@ -2,7 +2,11 @@ export interface AsyncButtonBaseProps extends React.ButtonHTMLAttributes<HTMLBut
   label: string;
   isPending?: boolean;
   loadingSize?: number;
-  fullWidth?: boolean;
   spinnerColor?: string;
   className?: string;
+}
+
+export interface DefaultButtonProps {
+  label: string;
+  onClick?: () => void;
 }
