@@ -77,6 +77,10 @@
     @apply w-full h-[4.5rem] sticky top-0 flex justify-center items-center bg-white border-b border-strokeGray font-bold z-10;
   }
 
+  .header-item-common {
+    @apply absolute h-full aspect-square;
+  }
+
   .input-common {
     @apply w-full border border-strokeGray rounded-lg focus:outline-none focus:bg-lightGray px-3;
   }

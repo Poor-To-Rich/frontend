@@ -6,6 +6,8 @@ import FindUserVerificationForm from '@/pages/FindPasswordPage/components/FindUs
 import { findUserForPasswordSchema, resetPasswordSchema } from '@/schemas/authSchema';
 import ResetPasswordForm from '@/pages/FindPasswordPage/components/ResetPasswordForm';
 import useResetPassword from '@/hooks/apis/auth/useResetPassword';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import { useNavigate } from 'react-router-dom';
 
 const FindPasswordPage = () => {
   const verifyForm = useForm({
@@ -18,12 +20,13 @@ const FindPasswordPage = () => {
     resolver: zodResolver(resetPasswordSchema),
   });
 
+  const navigate = useNavigate();
   const [step, setStep] = useState<'verifyUser' | 'resetPassword'>('verifyUser');
   const { mutate: resetPassword, isPending: isResetPending } = useResetPassword(resetForm.setError);
 
   return (
     <div className="flex flex-col h-screen items-center justify-center">
-      <DefaultHeader hasBackButton label="비밀번호 찾기" />
+      <DefaultHeader label="비밀번호 찾기" leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} />
       {step === 'verifyUser' && (
         <FormProvider {...verifyForm}>
           <FindUserVerificationForm

@@ -8,6 +8,7 @@ import DateInput from '@/components/header/DateInput';
 import { useReportTypeStore } from '@/stores/chart/useReportTypeStore';
 import { useDateControl } from '@/hooks/useDateControl';
 import { useLocation } from 'react-router-dom';
+import DefaultHeader from '@/components/header/DefaultHeader';
 
 interface Props {
   headerDate: Date;
@@ -25,25 +26,23 @@ const DateControlHeader = ({ headerDate, setHeaderDate }: Props) => {
   const isMonthType = (currentReportType === '월별' && pathname !== '/month-week') || pathname === '/';
 
   return (
-    <header className="header-common">
-      <span className="absolute left-0 h-full aspect-square cursor-pointer">
-        <LeftArrowButton onClick={isMonthType ? prevMonthHandler : prevYearHandler} />
-      </span>
-      <DatePicker
-        locale={ko}
-        selected={headerDate}
-        onChange={date => {
-          if (date) setHeaderDate(date);
-        }}
-        showMonthYearPicker={isMonthType}
-        showYearPicker={!isMonthType}
-        dateFormat={isMonthType ? 'yyyy년 MM월' : 'yyyy년'}
-        customInput={<DateInput />}
-      />
-      <span className="absolute right-0 h-full aspect-square cursor-pointer">
-        <RightArrowButton onClick={isMonthType ? nextMonthHandler : nextYearHandler} />
-      </span>
-    </header>
+    <DefaultHeader
+      leftButton={<LeftArrowButton onClick={isMonthType ? prevMonthHandler : prevYearHandler} />}
+      label={
+        <DatePicker
+          locale={ko}
+          selected={headerDate}
+          onChange={date => {
+            if (date) setHeaderDate(date);
+          }}
+          showMonthYearPicker={isMonthType}
+          showYearPicker={!isMonthType}
+          dateFormat={isMonthType ? 'yyyy년 MM월' : 'yyyy년'}
+          customInput={<DateInput />}
+        />
+      }
+      rightButton={<RightArrowButton onClick={isMonthType ? nextMonthHandler : nextYearHandler} />}
+    />
   );
 };
 
