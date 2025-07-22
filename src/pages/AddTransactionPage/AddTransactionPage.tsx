@@ -2,12 +2,12 @@ import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import useTransactionParams from '@/hooks/transaction/useTransactionParams';
 import { transactionSchema } from '@/schemas/transactionSchema';
-import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import { TransactionFormDataType } from '@/types/transactionTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRef } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import AddTransactionForm from '@/pages/AddTransactionPage/components/AddTransactionForm';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import { useTransactionBack } from '@/hooks/transaction/useTransactionBack';
 
 const AddTransactionPage = () => {
   const { transactionDate } = useTransactionParams();
@@ -22,16 +22,12 @@ const AddTransactionPage = () => {
     resolver: zodResolver(transactionSchema),
     mode: 'onChange',
   });
-  const dateRef = useRef(methods.getValues('date'));
-  const { setCalenderDate } = useCalenderDateStore();
 
-  const resetCalenderDate = () => {
-    setCalenderDate(new Date(dateRef.current));
-  };
+  const handleBackClick = useTransactionBack(methods.getValues('date'));
 
   return (
     <div className="flex flex-col w-full min-h-screen max-h-fit relative">
-      <DefaultHeader label={'가계부 추가'} hasBackButton resetCalenderDate={resetCalenderDate} />
+      <DefaultHeader leftButton={<LeftArrowButton onClick={handleBackClick} />} label={'가계부 추가'} />
       <PageErrorBoundary>
         <FormProvider {...methods}>
           <AddTransactionForm />

@@ -7,8 +7,11 @@ import { ProfileFormData } from '@/types/authTypes';
 import ProfileForm from '@/pages/ProfilePage/components/ProfileForm';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
+import { useNavigate } from 'react-router-dom';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 
 const ProfilePage = () => {
+  const navigate = useNavigate();
   const methods = useForm<ProfileFormData>({
     defaultValues: {
       profileImage: undefined,
@@ -24,7 +27,7 @@ const ProfilePage = () => {
 
   return (
     <div className="w-full h-screen min-h-screen flex flex-col relative">
-      <DefaultHeader label="프로필 편집" hasBackButton />
+      <DefaultHeader label="프로필 편집" leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} />
       <PageErrorBoundary>
         <FetchErrorBoundary>
           <FormProvider {...methods}>

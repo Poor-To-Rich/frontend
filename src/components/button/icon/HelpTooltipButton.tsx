@@ -2,7 +2,7 @@ import HelpIcon from '@/components/icon/HelpIcon';
 
 const HelpTooltipButton = () => {
   return (
-    <button className="w-fit aspect-square cursor-pointer">
+    <button className="header-item-common">
       <HelpIcon size={30} />
     </button>
   );

@@ -4,11 +4,7 @@ interface Props {
 
 const TrashIcon = ({ onClick }: Props) => {
   return (
-    <button
-      data-testid="delete-button"
-      className="w-full h-full flex items-center justify-center cursor-pointer"
-      type="button"
-      onClick={onClick}>
+    <button data-testid="delete-button" className="header-item-common" type="button" onClick={onClick}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fillRule="evenodd"

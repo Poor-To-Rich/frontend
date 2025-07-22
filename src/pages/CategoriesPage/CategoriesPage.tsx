@@ -5,6 +5,8 @@ import { useCategoryManagement } from '@/hooks/category/useCategoryManagement';
 import CategoryListContainer from '@/pages/CategoriesPage/components/CategoryListContainer';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import PlusButton from '@/components/button/icon/PlusButton';
 
 const CategoriesPage = () => {
   const navigate = useNavigate();
@@ -15,9 +17,8 @@ const CategoriesPage = () => {
     <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader
         label={`${type} 카테고리`}
-        hasBackButton
-        hasPlusButton
-        onClick={() => navigate(`/category?type=add&categoryType=${type}`)}
+        leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+        rightButton={<PlusButton onClick={() => navigate(`/category?type=add&categoryType=${type}`)} />}
       />
       <PageErrorBoundary>
         <FetchErrorBoundary key={type}>

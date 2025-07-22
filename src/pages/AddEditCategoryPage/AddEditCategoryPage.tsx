@@ -11,6 +11,8 @@ import useDeleteCategory from '@/hooks/apis/category/useDeleteCategory';
 import { useEffect } from 'react';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import TrashButton from '@/components/button/icon/TrashButton';
 
 const AddEditCategoryPage = () => {
   const method = useForm({
@@ -43,9 +45,8 @@ const AddEditCategoryPage = () => {
     <div className="w-full h-screen flex flex-col relative">
       <DefaultHeader
         label={`카테고리 ${isEdit ? '편집' : '추가'}`}
-        hasBackButton
-        hasTrashButton={isEdit}
-        onClick={openDeleteModal}
+        leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+        rightButton={<TrashButton onClick={openDeleteModal} />}
       />
       <PageErrorBoundary>
         <FetchErrorBoundary>

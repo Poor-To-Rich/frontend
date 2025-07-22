@@ -10,12 +10,13 @@ import IterationChangeModal from '@/pages/EditTransactionPage/components/modals/
 import DefaultModal from '@/components/modal/DefaultModal';
 import { useRef } from 'react';
 import useDeleteTransaction from '@/hooks/apis/transaction/useDeleteTransaction';
-import { useCalenderDateStore } from '@/stores/useCalenderDateStore';
 import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
+import { useTransactionBack } from '@/hooks/transaction/useTransactionBack';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
+import TrashButton from '@/components/button/icon/TrashButton';
 
 const EditTransactionPage = () => {
-  const { setCalenderDate } = useCalenderDateStore();
   const { transactionId, transactionDate, transactionMode } = useTransactionParams();
   const { isOpen: isDeleteModalOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
   const { isOpen: isEditOpen, openModal: openEdit, closeModal: closeEdit } = useModal();
@@ -35,24 +36,19 @@ const EditTransactionPage = () => {
 
   const isIterationModifiedRef = useRef<boolean>(false);
   const initialIterationTypeRef = useRef(methods.getValues('iterationType'));
-  const dateRef = useRef(methods.getValues('date'));
 
   const handleDelete = () => {
     deleteTransaction({ id: transactionId!, body: {} });
   };
 
-  const resetCalenderDate = () => {
-    setCalenderDate(new Date(dateRef.current));
-  };
+  const handleBackClick = useTransactionBack(methods.getValues('date'));
 
   return (
     <div className="flex flex-col w-full min-h-screen max-h-fit relative">
       <DefaultHeader
         label={'가계부 편집'}
-        hasBackButton
-        hasTrashButton
-        onClick={openDeleteModal}
-        resetCalenderDate={resetCalenderDate}
+        leftButton={<LeftArrowButton onClick={handleBackClick} />}
+        rightButton={<TrashButton onClick={openDeleteModal} />}
       />
       <PageErrorBoundary>
         <FetchErrorBoundary>
