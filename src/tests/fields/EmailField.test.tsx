@@ -110,7 +110,7 @@ describe('EmailField 테스트', () => {
     expect(await screen.findByText(content => content.includes(SEND_EMAIL_SUCCESS_MSG))).toBeInTheDocument();
 
     const verifyCodeInput = screen.getByTestId('verification-code-input') as HTMLInputElement;
-    const verifyButton = screen.getByRole('button', { name: /확인/i });
+    const SubActionButton = screen.getByRole('button', { name: /확인/i });
 
     // 이메일이 인증 된 것을 확인
     expect(verifyCodeInput.readOnly).toBe(false);
@@ -118,7 +118,7 @@ describe('EmailField 테스트', () => {
     const code = 465652;
 
     fireEvent.change(verifyCodeInput, { target: { value: code } });
-    fireEvent.click(verifyButton);
+    fireEvent.click(SubActionButton);
 
     // 인증 완료 메세지가 나온다.
     await waitFor(() => {
@@ -132,7 +132,7 @@ describe('EmailField 테스트', () => {
     expect(await screen.findByText(content => content.includes(SEND_EMAIL_SUCCESS_MSG))).toBeInTheDocument();
 
     const verifyCodeInput = screen.getByTestId('verification-code-input') as HTMLInputElement;
-    const verifyButton = screen.getByRole('button', { name: /확인/i });
+    const SubActionButton = screen.getByRole('button', { name: /확인/i });
 
     // 이메일이 인증 된 것을 확인
     expect(verifyCodeInput.readOnly).toBe(false);
@@ -140,7 +140,7 @@ describe('EmailField 테스트', () => {
     const code = 123456;
 
     fireEvent.change(verifyCodeInput, { target: { value: code } });
-    fireEvent.click(verifyButton);
+    fireEvent.click(SubActionButton);
 
     // 만료 된 인증 코드 메세지가 나온다.
     const errorMessage = await screen.findByText(content => content.includes(TIME_OUT_EMAIL_CODE_MSG));
@@ -154,7 +154,7 @@ describe('EmailField 테스트', () => {
     expect(await screen.findByText(content => content.includes(SEND_EMAIL_SUCCESS_MSG))).toBeInTheDocument();
 
     const verifyCodeInput = screen.getByTestId('verification-code-input') as HTMLInputElement;
-    const verifyButton = screen.getByRole('button', { name: /확인/i });
+    const SubActionButton = screen.getByRole('button', { name: /확인/i });
 
     // 이메일이 인증 된 것을 확인
     expect(verifyCodeInput.readOnly).toBe(false);
@@ -162,7 +162,7 @@ describe('EmailField 테스트', () => {
     const code = 12345;
 
     fireEvent.change(verifyCodeInput, { target: { value: code } });
-    fireEvent.click(verifyButton);
+    fireEvent.click(SubActionButton);
 
     // 잘못 된 인증 코드 메세지가 나온다.
     const errorMessage = await screen.findByText(content => content.includes(WRONG_EMAIL_CODE_MSG));

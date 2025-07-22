@@ -7,7 +7,7 @@ interface Props {
   isEdit?: boolean;
 }
 
-const IncomeExpenseButton = ({ type, onClick, isEdit }: Props) => {
+const IncomeExpenseToggle = ({ type, onClick, isEdit }: Props) => {
   const options: { label: IncomeExpenseType; color: string }[] = [
     { label: '지출', color: 'bg-pinkRed font-bold' },
     { label: '수입', color: 'bg-lightBlue font-bold' },
@@ -37,4 +37,4 @@ const IncomeExpenseButton = ({ type, onClick, isEdit }: Props) => {
   );
 };
 
-export default IncomeExpenseButton;
+export default IncomeExpenseToggle;

@@ -186,7 +186,7 @@ export const authHandlers = [
         status: 200,
         message: '사용자 역할 조회 성공',
         data: {
-          role: 'PENDING',
+          role: 'USER',
         },
       },
       { status: 200 },

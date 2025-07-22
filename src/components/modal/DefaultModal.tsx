@@ -1,4 +1,4 @@
-import ModalButton from '@/components/button/ModalButton';
+import ModalButton from '@/components/button/modal/ModalButton';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 
 interface Props {
