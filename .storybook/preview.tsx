@@ -1,5 +1,4 @@
 import type { Preview } from '@storybook/react';
-import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../src/index.css';
