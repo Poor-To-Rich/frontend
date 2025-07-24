@@ -3,7 +3,7 @@ import UserProfile from '@/components/profile/UserProfile';
 
 const meta: Meta<typeof UserProfile> = {
   component: UserProfile,
-  title: 'Photo/UserProfile',
+  title: 'Profile/UserProfile',
 };
 
 export default meta;
@@ -16,6 +16,6 @@ export const Default: Story = {
     isHost: true,
     userId: 1,
     rankingType: 'FLEXER',
-    profileType: 'default',
+    nicknameAlign: 'center',
   },
 };
