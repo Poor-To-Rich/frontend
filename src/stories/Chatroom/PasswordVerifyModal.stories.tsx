@@ -1,17 +1,18 @@
-import DefaultModal from '@/components/modal/DefaultModal';
 import type { Meta, StoryObj } from '@storybook/react';
+import PasswordVerifyModal from '@/components/chatroom/modal/PasswordVerifyModal';
 
-function Modal() {
+function ChatroomModal() {
   return (
     <div className="w-[500px] relative">
-      <DefaultModal content="“냠냠” 카테고리를 삭제하시겠습니까?" onClose={() => {}} />
+      <PasswordVerifyModal />;
     </div>
   );
 }
 
 const meta = {
-  component: Modal,
-} satisfies Meta<typeof Modal>;
+  title: 'Chatroom/ChatroomModal',
+  component: ChatroomModal,
+} satisfies Meta<typeof ChatroomModal>;
 
 export default meta;
 
