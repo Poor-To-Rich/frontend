@@ -1,6 +1,5 @@
 import ModalButton from '@/components/button/modal/ModalButton';
-import CheckedCircleIcon from '@/components/icon/CheckedCircleIcon';
-import DefaultCircleIcon from '@/components/icon/DefaultCircleIcon';
+import CircleCheckBox from '@/components/checkbox/CircleCheckBox';
 import { useState } from 'react';
 
 interface Props {
@@ -22,14 +21,7 @@ const ConsentModal = ({ content, leftButtonLabel, rightButtonLabel, isPending, o
       {...rest}>
       <p className="text-center text-md w-fit whitespace-pre-line">{content}</p>
       <div className="flex justify-center items-center gap-2.5">
-        <button
-          type="button"
-          role="checkbox"
-          aria-checked={isChecked}
-          onClick={() => setIsChecked(prev => !prev)}
-          className="flex items-center gap-2 cursor-pointer">
-          {isChecked ? <CheckedCircleIcon /> : <DefaultCircleIcon />}
-        </button>
+        <CircleCheckBox isChecked={isChecked} onClick={() => setIsChecked(prev => !prev)} />
         <p className="text-md">위 내용을 모두 확인했습니다.</p>
       </div>
       <div className="flex justify-center gap-4">
