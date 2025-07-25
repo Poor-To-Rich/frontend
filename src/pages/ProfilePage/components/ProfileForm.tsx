@@ -14,6 +14,7 @@ import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
 import useUpdateUserDetails from '@/hooks/apis/auth/useUpdateUserDetails';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useUserProfileForm } from '@/hooks/field/useUserProfileForm';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 
 const ProfileForm = () => {
   const { isOpen, openModal, closeModal } = useModal();
@@ -55,7 +56,11 @@ const ProfileForm = () => {
           <PrimaryButton label="저장" type="submit" disabled={isDisabled} isPending={isUpdateUserDetailsPending} />
         </div>
       </form>
-      {isOpen && <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />}
+      {isOpen && (
+        <ModalDimmed onClose={closeModal}>
+          <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />
+        </ModalDimmed>
+      )}
     </>
   );
 };
