@@ -13,6 +13,7 @@ import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import TrashButton from '@/components/button/icon/TrashButton';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 
 const AddEditCategoryPage = () => {
   const method = useForm({
@@ -56,12 +57,14 @@ const AddEditCategoryPage = () => {
         </FetchErrorBoundary>
       </PageErrorBoundary>
       {isDeleteModalOpen && (
-        <DefaultModal
-          content="해당 카테고리를 삭제하시겠습니까?"
-          isPending={isPending}
-          onClick={handleDelete}
-          onClose={closeDeleteModal}
-        />
+        <ModalDimmed onClose={closeDeleteModal}>
+          <DefaultModal
+            content="해당 카테고리를 삭제하시겠습니까?"
+            isPending={isPending}
+            onClick={handleDelete}
+            onClose={closeDeleteModal}
+          />
+        </ModalDimmed>
       )}
     </div>
   );

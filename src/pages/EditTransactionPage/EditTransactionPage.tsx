@@ -15,6 +15,7 @@ import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 import { useTransactionBack } from '@/hooks/transaction/useTransactionBack';
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import TrashButton from '@/components/button/icon/TrashButton';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 
 const EditTransactionPage = () => {
   const { transactionId, transactionDate, transactionMode } = useTransactionParams();
@@ -60,13 +61,15 @@ const EditTransactionPage = () => {
             />
             {isDeleteModalOpen &&
               (initialIterationTypeRef.current === 'none' ? (
-                <DefaultModal
-                  data-testid="delete-confirm-modal"
-                  content="해당 내역을 삭제하시겠습니까?"
-                  isPending={isPending}
-                  onClose={closeDeleteModal}
-                  onClick={methods.handleSubmit(handleDelete)}
-                />
+                <ModalDimmed onClose={closeDeleteModal}>
+                  <DefaultModal
+                    data-testid="delete-confirm-modal"
+                    content="해당 내역을 삭제하시겠습니까?"
+                    isPending={isPending}
+                    onClose={closeDeleteModal}
+                    onClick={methods.handleSubmit(handleDelete)}
+                  />
+                </ModalDimmed>
               ) : (
                 <IterationChangeModal type="delete" onClose={closeDeleteModal} />
               ))}
