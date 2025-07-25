@@ -4,6 +4,7 @@ import ConsentModal from '@/components/chatroom/modal/ConsentModal';
 import { getHostTransferNotice, HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
 import DefaultModal from '@/components/modal/DefaultModal';
 import ReportReasonModal from '@/components/chatroom/modal/ReportReasonModal';
+import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
 
 function ChatroomModal() {
   return (
@@ -13,6 +14,7 @@ function ChatroomModal() {
       <ConsentModal content={HOST_LEAVE_CHATROOM_NOTICE} leftButtonLabel="나가기" rightButtonLabel="취소" />
       <ConsentModal content={getHostTransferNotice('데굴')} leftButtonLabel="나가기" rightButtonLabel="취소" />
       <ReportReasonModal />
+      <RankingInfoModal />
     </div>
   );
 }
