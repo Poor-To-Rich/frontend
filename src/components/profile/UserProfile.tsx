@@ -1,21 +1,14 @@
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import CrownIcon from '@/components/icon/CrownIcon';
-import clsx from 'clsx';
-import { RankingType } from '@/types/profileType';
+import { UserProfileType } from '@/types/profileType';
 
-interface Props {
-  profileImage: string;
-  nickname: string;
-  userId: number;
-  isHost: boolean;
-  rankingType: RankingType;
-  nicknameAlign: 'center' | 'top';
+interface Props extends UserProfileType {
   createAt?: string;
 }
 
-const UserProfile = ({ profileImage, nickname, userId, isHost, rankingType, nicknameAlign, createAt }: Props) => {
+const UserProfile = ({ profileImage, nickname, userId, isHost, rankingType, createAt }: Props) => {
   return (
-    <div className={clsx('flex gap-5', nicknameAlign === 'center' ? 'items-center ' : 'items-start')}>
+    <div className={'flex gap-5 items-center'}>
       <ProfilePhoto
         photo={profileImage}
         rankingType={rankingType}
