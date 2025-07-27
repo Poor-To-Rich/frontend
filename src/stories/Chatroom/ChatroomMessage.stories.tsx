@@ -94,6 +94,13 @@ function ChatroomMessage() {
             isHost: false,
             rankingType: 'NONE',
           },
+          {
+            userId: 103,
+            profileImage: '/image/default-profile-image.webp',
+            nickname: '짠돌이부자3',
+            isHost: false,
+            rankingType: 'FLEXER',
+          },
         ],
         flexerRankings: [
           {

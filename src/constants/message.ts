@@ -21,3 +21,17 @@ export const RANKING_DISABLED_MESSAGE = `💤 현재 이 채팅방은 랭킹 기
 
 채팅방 편집에서 랭킹 기능을 활성화하면 
 플렉스 왕과 절약 왕을 확인할 수 있어요! 👑`;
+
+export const RANKING_RESULT_ANNOUNCEMENT_MESSAGE = `왕좌를 차지한 두 사람에게 박수를! 
+
+다음 주의 랭킹은 과연 누가 차지할까요? 
+지금부터 다시 도전해보세요!
+`;
+
+export const RANKING_RESULT_NOT_AVAILABLE_MESSAGE = `🚨️ 이번 주 랭킹이 집계되지 않았어요 🚨️
+
+이번 주는 <strong>랭킹 후보가 2명 미만</strong>이어서  
+플렉스왕과 절약왕이 선정되지 않았습니다.
+
+가계부를 3일 이상 작성하면  
+다음 주 랭킹에 도전할 수 있어요! 💪`;
