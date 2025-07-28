@@ -1,6 +1,8 @@
 import ChatBody from '@/components/chatroom/chat/ChatBody';
+import NoticeSection from '@/components/chatroom/notice/NoticeSection';
 import { ChatMessageUnion } from '@/types/messageType';
 import { UserProfileType } from '@/types/profileType';
+import { ChatroomNoticeBanner } from '@/utils/chat/notice';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function ChatroomMessage() {
@@ -138,8 +140,17 @@ function ChatroomMessage() {
     },
   };
 
+  const notice: ChatroomNoticeBanner = {
+    status: 'DEFAULT',
+    noticeId: 1,
+    preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 다 같이 부자됩시다!',
+    createdAt: '2025-07-01T15:14:00Z',
+    authorNickname: '데굴',
+  };
+
   return (
-    <div>
+    <div className="w-full relative h-screen overflow-y-auto">
+      <NoticeSection {...notice} />
       <ChatBody
         myUserId={103}
         messages={previousMessagesResponse.messages as ChatMessageUnion[]}
