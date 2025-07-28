@@ -16,6 +16,5 @@ export const Default: Story = {
     isHost: true,
     userId: 1,
     rankingType: 'FLEXER',
-    nicknameAlign: 'center',
   },
 };
