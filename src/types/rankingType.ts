@@ -6,3 +6,10 @@ export type RankingPreviewType = {
   saver: UserProfileType;
   flexer: UserProfileType;
 };
+
+export type BaseRankingType = {
+  rankingId?: number;
+  rankedAt?: string;
+  saverRankings: UserProfileType[];
+  flexerRankings: UserProfileType[];
+};

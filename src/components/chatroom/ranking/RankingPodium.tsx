@@ -15,7 +15,7 @@ const RankingPodium = ({ rankings, rankingType }: Props) => {
 
   return (
     <div className="flex flex-col items-center">
-      <h4 className="flex items-center gap-2 text-xl font-semibold mt-3">
+      <h4 className="flex items-center gap-2 mt-3">
         <img src={isSaver ? SaverIcon : FlexerIcon} width={30} height={30} alt={`${rankingType}`} />
         {isSaver ? '절약왕' : '플렉스왕'}
       </h4>

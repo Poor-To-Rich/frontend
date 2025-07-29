@@ -6,6 +6,8 @@ import RankingPreviewBox from '@/components/chatroom/detail/RankingPreviewBox';
 import { RankingType } from '@/types/profileType';
 import ChatMemberBox from '@/components/chatroom/detail/ChatMemberBox';
 import NoticeItem from '@/components/chatroom/notice/NoticeItem';
+import RankingItem from '@/components/chatroom/ranking/RankingItem';
+import { BaseRankingType } from '@/types/rankingType';
 
 function ChatroomDetail() {
   const photos = (() => {
@@ -71,6 +73,43 @@ function ChatroomDetail() {
     authorNickname: '데굴',
   };
 
+  const rankings = {
+    rankingId: 3246,
+    rankedAt: '2025-07-01',
+    saverRankings: [
+      {
+        userId: 555,
+        profileImage: Photo,
+        nickname: '짠돌이부자',
+        isHost: true,
+        rankingType: 'SAVER' as RankingType,
+      },
+      {
+        userId: 556,
+        profileImage: Photo,
+        nickname: '짠돌이부자2',
+        isHost: false,
+        rankingType: 'NONE' as RankingType,
+      },
+    ],
+    flexerRankings: [
+      {
+        userId: 6123,
+        profileImage: Photo,
+        nickname: '짠돌이부자3' as RankingType,
+        isHost: true,
+        rankingType: 'FLEXER' as RankingType,
+      },
+      {
+        userId: 3545,
+        profileImage: Photo,
+        nickname: '짠돌이부자4' as RankingType,
+        isHost: false,
+        rankingType: 'NONE',
+      },
+    ],
+  } as BaseRankingType;
+
   return (
     <div>
       <PhotoPreviewBox photos={photos} />
@@ -78,6 +117,7 @@ function ChatroomDetail() {
       <RankingPreviewBox {...ranking} />
       <ChatMemberBox members={members} />
       <NoticeItem {...notice} hasUnderLine />
+      <RankingItem {...rankings} hasUnderLine />
     </div>
   );
 }
