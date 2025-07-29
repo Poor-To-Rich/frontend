@@ -1,4 +1,4 @@
-import { UserProfileType } from './profileType';
+import { BaseRankingType } from '@/types/rankingType';
 
 export type ChatMessageUnion = ChatMessageType | SystemMessageType | RankingMessageType | RankingStatusMessageType;
 
@@ -30,13 +30,9 @@ export type RankingType = 'SAVER' | 'FLEXER' | 'NONE';
 export type RankingMessageType = {
   type: 'RANKING_MESSAGE';
   messageId: number;
-  rankingId?: number;
   chatroomId: number;
-  rankedAt?: string;
   sentAt: string;
-  saverRankings: UserProfileType[];
-  flexerRankings: UserProfileType[];
-};
+} & BaseRankingType;
 
 export type RankingStatusMessageType = {
   type: 'RANKING_STATUS_MESSAGE';
