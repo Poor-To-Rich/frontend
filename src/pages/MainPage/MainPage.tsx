@@ -28,6 +28,7 @@ const MainPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DateControlHeader headerDate={mainHeaderDate} setHeaderDate={setMainHeaderDate} />
+      zz
       <div className="flex flex-col grow ">
         <PageErrorBoundary>
           <MonthlyContainer />
