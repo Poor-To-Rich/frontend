@@ -2,12 +2,10 @@ import ImageIcon from '@/components/icon/ImageIcon';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
 import clsx from 'clsx';
 import SeeMoreButton from '@/components/chatroom/detail/SeeMoreButton';
+import { PhotoType } from '@/types/photoType';
 
 interface Props {
-  photos: {
-    photoId: number;
-    photoUrl: string;
-  }[];
+  photos: PhotoType[];
 }
 
 const PhotoPreviewBox = ({ photos }: Props) => {

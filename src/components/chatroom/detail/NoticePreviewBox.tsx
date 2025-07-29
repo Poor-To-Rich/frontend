@@ -1,11 +1,9 @@
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
 import SeeMoreButton from '@/components/chatroom/detail/SeeMoreButton';
+import { BaseNoticeType } from '@/types/noticeType';
 
 interface Props {
-  notices: {
-    noticeId: number;
-    preview: string;
-  }[];
+  notices: BaseNoticeType[];
 }
 
 const NoticePreviewBox = ({ notices }: Props) => {
