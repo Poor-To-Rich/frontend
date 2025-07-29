@@ -5,6 +5,7 @@ import NoticePreviewBox from '@/components/chatroom/detail/NoticePreviewBox';
 import RankingPreviewBox from '@/components/chatroom/detail/RankingPreviewBox';
 import { RankingType } from '@/types/profileType';
 import ChatMemberBox from '@/components/chatroom/detail/ChatMemberBox';
+import NoticeItem from '@/components/chatroom/notice/NoticeItem';
 
 function ChatroomDetail() {
   const photos = (() => {
@@ -63,12 +64,20 @@ function ChatroomDetail() {
     return result;
   })();
 
+  const notice = {
+    noticeId: 1,
+    preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 다들 부자됩시다',
+    createdAt: '2025-07-01T15:14:00Z',
+    authorNickname: '데굴',
+  };
+
   return (
     <div>
       <PhotoPreviewBox photos={photos} />
       <NoticePreviewBox notices={notices} />
       <RankingPreviewBox {...ranking} />
       <ChatMemberBox members={members} />
+      <NoticeItem {...notice} hasUnderLine />
     </div>
   );
 }
