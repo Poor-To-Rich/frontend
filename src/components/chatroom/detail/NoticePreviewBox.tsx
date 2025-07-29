@@ -23,7 +23,7 @@ const NoticePreviewBox = ({ notices }: Props) => {
       {isEmpty ? (
         <div className="w-full h-32 flex items-center justify-center text-defaultGrey">공지가 없습니다</div>
       ) : (
-        <div className="flex flex-col w-full gap-5 overflow-x-hidden select-none">
+        <div className="flex flex-col w-full gap-5">
           {notices.map(({ noticeId, preview }) => (
             <p key={noticeId} className="whitespace-nowrap truncate cursor-pointer">
               {preview}

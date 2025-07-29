@@ -2,6 +2,8 @@ import PhotoPreviewBox from '@/components/chatroom/detail/PhotoPreviewBox';
 import Photo from '/image/default-profile-image.webp';
 import type { Meta, StoryObj } from '@storybook/react';
 import NoticePreviewBox from '@/components/chatroom/detail/NoticePreviewBox';
+import RankingPreviewBox from '@/components/chatroom/detail/RankingPreviewBox';
+import { RankingType } from '@/types/profileType';
 
 function ChatroomDetail() {
   const photos = (() => {
@@ -27,10 +29,30 @@ function ChatroomDetail() {
     },
   ];
 
+  const ranking = {
+    rankedAt: '2025-07-01T15:14:00Z',
+    rankingId: 3245,
+    saver: {
+      userId: 555,
+      profileImage: Photo,
+      nickname: '짠돌이부자',
+      isHost: true,
+      rankingType: 'SAVER' as RankingType,
+    },
+    flexer: {
+      userId: 6123,
+      profileImage: Photo,
+      nickname: '짠돌이부자3',
+      isHost: true,
+      rankingType: 'FLEXER' as RankingType,
+    },
+  };
+
   return (
     <div>
       <PhotoPreviewBox photos={photos} />
       <NoticePreviewBox notices={notices} />
+      <RankingPreviewBox {...ranking} />
     </div>
   );
 }

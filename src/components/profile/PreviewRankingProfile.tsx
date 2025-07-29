@@ -1,16 +1,11 @@
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
-import { RankingType } from '@/types/profileType';
+import { UserProfileType } from '@/types/profileType';
 import SaverIcon from '/icon/SaverIcon.webp';
 import FlexerIcon from '/icon/FlexerIcon.webp';
 
-interface Props {
-  profileImage: string;
-  nickname: string;
-  userId: number;
-  rankingType: Exclude<RankingType, 'NONE'>;
-}
+const PreviewRankingProfile = ({ profileImage, nickname, userId, rankingType }: UserProfileType) => {
+  if (rankingType === 'NONE') return null;
 
-const PreviewRankingProfile = ({ profileImage, nickname, userId, rankingType }: Props) => {
   const rankingMetaMap = {
     SAVER: {
       title: '절약왕',
@@ -22,7 +17,7 @@ const PreviewRankingProfile = ({ profileImage, nickname, userId, rankingType }: 
     },
   } as const;
 
-  const rankingMeta = rankingMetaMap[rankingType] ?? '';
+  const rankingMeta = rankingMetaMap[rankingType];
 
   return (
     <div className="flex w-fit h-fit flex-col items-center gap-2.5">
