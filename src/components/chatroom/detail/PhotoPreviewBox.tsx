@@ -11,6 +11,7 @@ interface Props {
 }
 
 const PhotoPreviewBox = ({ photos }: Props) => {
+  const isEmpty = photos.length === 0;
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
 
@@ -23,30 +24,33 @@ const PhotoPreviewBox = ({ photos }: Props) => {
         </h4>
         <SeeMoreButton />
       </div>
-
-      <div
-        ref={scrollRef}
-        className="flex w-full gap-3 overflow-x-hidden select-none"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseUp}
-        onMouseUp={handleMouseUp}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleEnd}>
-        {photos.map(({ photoId, photoUrl }, index) => (
-          <img
-            key={photoId}
-            src={photoUrl}
-            alt={`photo-${photoId}`}
-            draggable={false}
-            className={clsx(
-              'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray rounded-lg',
-              index === photos.length - 1 && 'mr-7',
-            )}
-          />
-        ))}
-      </div>
+      {isEmpty ? (
+        <div className="w-full h-32 flex items-center justify-center text-defaultGrey">사진이 없습니다</div>
+      ) : (
+        <div
+          ref={scrollRef}
+          className="flex w-full gap-3 overflow-x-hidden select-none"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseUp}
+          onMouseUp={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleEnd}>
+          {photos.map(({ photoId, photoUrl }, index) => (
+            <img
+              key={photoId}
+              src={photoUrl}
+              alt={`photo-${photoId}`}
+              draggable={false}
+              className={clsx(
+                'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray rounded-lg',
+                index === photos.length - 1 && 'mr-7',
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
