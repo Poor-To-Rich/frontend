@@ -42,7 +42,7 @@ const PhotoPreviewBox = ({ photos }: Props) => {
               alt={`photo-${photoId}`}
               draggable={false}
               className={clsx(
-                'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray rounded-lg',
+                'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray',
                 index === photos.length - 1 && 'mr-7',
               )}
             />

@@ -8,11 +8,12 @@ import ChatMemberBox from '@/components/chatroom/detail/ChatMemberBox';
 import NoticeItem from '@/components/chatroom/notice/NoticeItem';
 import RankingItem from '@/components/chatroom/ranking/RankingItem';
 import { BaseRankingType } from '@/types/rankingType';
+import DateGroupedImageGrid from '@/components/photo/DateGroupedImageGrid';
 
 function ChatroomDetail() {
   const photos = (() => {
     const result = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {
       result.push({ photoId: i, photoUrl: Photo });
     }
     return result;
@@ -110,6 +111,11 @@ function ChatroomDetail() {
     ],
   } as BaseRankingType;
 
+  const photoByDate = {
+    date: '2027-01-02',
+    photos: photos,
+  };
+
   return (
     <div>
       <PhotoPreviewBox photos={photos} />
@@ -118,6 +124,7 @@ function ChatroomDetail() {
       <ChatMemberBox members={members} />
       <NoticeItem {...notice} hasUnderLine />
       <RankingItem {...rankings} hasUnderLine />
+      <DateGroupedImageGrid {...photoByDate} />
     </div>
   );
 }
