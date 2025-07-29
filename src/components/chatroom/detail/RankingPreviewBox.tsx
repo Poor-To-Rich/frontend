@@ -22,7 +22,7 @@ const RankingPreviewBox = ({ rankedAt, saver, flexer }: Props) => {
         <SeeMoreButton />
       </div>
       {!saver || !flexer ? (
-        <div className="w-full h-32 flex items-center justify-center text-defaultGrey">공지가 없습니다</div>
+        <div className="w-full h-32 flex items-center justify-center text-defaultGrey">랭킹이 집계되지 않았습니다</div>
       ) : (
         <div className="flex justify-center gap-28">
           <PreviewRankingProfile {...saver} />

@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import NoticePreviewBox from '@/components/chatroom/detail/NoticePreviewBox';
 import RankingPreviewBox from '@/components/chatroom/detail/RankingPreviewBox';
 import { RankingType } from '@/types/profileType';
+import ChatMemberBox from '@/components/chatroom/detail/ChatMemberBox';
 
 function ChatroomDetail() {
   const photos = (() => {
@@ -48,11 +49,26 @@ function ChatroomDetail() {
     },
   };
 
+  const members = (() => {
+    const result = [];
+    for (let i = 0; i < 1; i++) {
+      result.push({
+        userId: 555,
+        profileImage: Photo,
+        nickname: '짠돌이부자',
+        isHost: false,
+        rankingType: 'NONE' as RankingType,
+      });
+    }
+    return result;
+  })();
+
   return (
     <div>
       <PhotoPreviewBox photos={photos} />
       <NoticePreviewBox notices={notices} />
       <RankingPreviewBox {...ranking} />
+      <ChatMemberBox members={members} />
     </div>
   );
 }
