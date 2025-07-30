@@ -1,15 +1,9 @@
 import SubActionButton from '@/components/button/SubActionButton';
 import UserIcon from '@/components/icon/UserIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
+import { PublicChatroomType } from '@/types/chatTypes';
 
-interface Props {
-  chatroomImage: string;
-  chatroomTitle: string;
-  description: string;
-  hashtags?: string[];
-  currentMemberCount: number;
-  maxMemberCount: number;
-  lastMessageTime: string;
+interface Props extends PublicChatroomType {
   isEditMode?: boolean;
 }
 
@@ -24,7 +18,7 @@ const PublicChatroomItem = ({
   isEditMode,
 }: Props) => {
   return (
-    <div className="flex items-center gap-7 w-full min-w-0 p-5 cursor-pointer">
+    <div className="flex items-center gap-7 w-full min-w-0 cursor-pointer">
       <ProfilePhoto photo={chatroomImage} className="w-32 shrink-0" />
       <div className="flex flex-col gap-2.5 flex-1 min-w-0">
         <p className="truncate">{chatroomTitle}</p>
