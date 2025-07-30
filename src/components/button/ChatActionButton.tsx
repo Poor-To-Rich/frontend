@@ -7,9 +7,10 @@ interface Props {
   isPending?: boolean;
   hasPassword?: boolean;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
-const ChatActionButton = ({ label, isPending, hasPassword, disabled, ...rest }: Props) => {
+const ChatActionButton = ({ label, isPending, hasPassword, disabled, onClick }: Props) => {
   const { colorClass, spinnerColor } = (() => {
     if (label === '채팅 참여하기' || label === '참여중인 채팅방') {
       return { colorClass: 'bg-lightBlue text-oceanBlue', spinnerColor: '#81aaf6' };
@@ -27,7 +28,7 @@ const ChatActionButton = ({ label, isPending, hasPassword, disabled, ...rest }: 
         disabled ? 'bg-strokeGray text-defaultGrey' : colorClass,
       )}
       disabled={isPending || disabled}
-      {...rest}>
+      onClick={onClick}>
       <div className="flex items-center gap-2">
         {hasPassword && <LockKeyIcon />}
         <span className={isPending ? 'invisible' : 'visible'}>{label}</span>

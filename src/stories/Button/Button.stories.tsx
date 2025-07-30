@@ -100,15 +100,15 @@ function Button() {
 
       <br />
       <h2>ChatroomViewModeToggle</h2>
-      <ChatroomViewModeToggle />
+      <ChatroomViewModeToggle viewMode="all" onClick={() => {}} />
 
       <br />
       <h2>ChatroomSortOptions</h2>
-      <ChatroomSortOptions />
+      <ChatroomSortOptions sortOption="createdAt" onClick={() => {}} />
 
       <br />
       <h2>DropdownMenu</h2>
-      <GlobalChatroomDropDown />
+      <GlobalChatroomDropDown viewMode="all" closeMenu={() => {}} openModal={() => {}} />
       <SingleChatroomDropdown />
       <NoticeDropdown />
 
