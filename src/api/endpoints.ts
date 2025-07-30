@@ -78,5 +78,6 @@ export const endpoints = {
       `/chatrooms?sortBy=${sortBy}${cursor ? `&cursor=${cursor}` : ''}`,
     getJoinedChatrooms: (cursor?: string | null) => `/users/me/chatrooms${cursor ? `?cursor=${cursor}` : ''}`,
     markAllAsRead: '/chatrooms/read-all',
+    leaveMultipleChatrooms: '/chatrooms/leave',
   },
 };

@@ -7,7 +7,7 @@ import ChatroomViewModeToggle from '@/components/button/toggle/ChatroomViewModeT
 import DefaultHeader from '@/components/header/DefaultHeader';
 import TapBar from '@/components/tapbar/TapBar';
 import { ChatroomSortOptionValue, ChatroomViewModeValue } from '@/types/chatTypes';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AllChatroomsList from '@/pages/ChatLobbyPage/components/AllChatroomsList';
 import JoinedChatroomList from '@/pages/ChatLobbyPage/components/JoinedChatroomList';
 import GlobalChatroomDropDown from '@/components/menu/GlobalChatroomDropDown';
@@ -15,6 +15,7 @@ import useModal from '@/hooks/useModal';
 import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import useClickOutside from '@/hooks/useClickOutside';
+import { useLocation } from 'react-router-dom';
 
 const ChatLobbyPage = () => {
   const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
@@ -23,11 +24,18 @@ const ChatLobbyPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
-
+  const location = useLocation();
+  const state = location.state as { viewMode?: ChatroomViewModeValue };
   useClickOutside({
     refs: [dropdownRef, settingsButtonRef],
     onClickOutside: () => setIsMenuOpen(false),
   });
+
+  useEffect(() => {
+    if (state?.viewMode) {
+      setViewMode(state.viewMode);
+    }
+  }, [state?.viewMode]);
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
@@ -63,7 +71,7 @@ const ChatLobbyPage = () => {
             <AllChatroomsList sortOption={sortOption} />
           </>
         ) : (
-          <JoinedChatroomList />
+          <JoinedChatroomList onClick={() => {}} />
         )}
       </div>
       {isOpen && (

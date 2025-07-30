@@ -1,6 +1,7 @@
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { markAllChatroomsAsRead } from '@/api/services/chatService';
 import { JoinedChatroomsRes } from '@/types/chatTypes';
+import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
 
 export const useMarkAllChatroomsAsRead = (closeMenu: () => void) => {
   const queryClient = useQueryClient();
@@ -8,7 +9,7 @@ export const useMarkAllChatroomsAsRead = (closeMenu: () => void) => {
   return useMutation({
     mutationFn: markAllChatroomsAsRead,
     onSuccess: () => {
-      queryClient.setQueryData<InfiniteData<JoinedChatroomsRes>>(['joinedChatrooms'], prev => {
+      queryClient.setQueryData<InfiniteData<JoinedChatroomsRes>>(joinedChatroomsQueryKey, prev => {
         if (!prev) return prev;
         return {
           ...prev,

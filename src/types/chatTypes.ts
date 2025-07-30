@@ -22,7 +22,7 @@ export type JoinedChatroomType = {
   currentMemberCount: number;
   lastMessageTime: string;
   lastMessage?: string;
-  isHost?: boolean;
+  isHost: boolean;
   unreadMessageCount?: number | string;
 };
 
@@ -36,4 +36,12 @@ export type JoinedChatroomsRes = {
   nextCursor: string;
   hasNext: boolean;
   chatrooms: JoinedChatroomType[];
+};
+
+export type leaveMultipleChatroomsReq = {
+  chatroomsToLeave: number[];
+};
+
+export type leaveMultipleChatroomsRes = {
+  deletedChatroomIds: number[];
 };

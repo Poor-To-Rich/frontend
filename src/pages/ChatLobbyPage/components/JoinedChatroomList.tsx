@@ -3,7 +3,13 @@ import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroom
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useRef } from 'react';
 
-const JoinedChatroomList = () => {
+interface Props {
+  isEditMode?: boolean;
+  selectedChatrooms?: { id: number; isHost: boolean }[];
+  onClick: (id: number, isHost: boolean) => void;
+}
+
+const JoinedChatroomList = ({ isEditMode, selectedChatrooms, onClick }: Props) => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJoinedChatroomsInfiniteQuery();
 
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -15,7 +21,13 @@ const JoinedChatroomList = () => {
   return (
     <div className="flex-grow flex flex-col gap-5 pt-7">
       {joinedChatrooms.map(chatroom => (
-        <JoinedChatroomItem key={chatroom.chatroomId} {...chatroom} />
+        <JoinedChatroomItem
+          key={chatroom.chatroomId}
+          {...chatroom}
+          isEditMode={isEditMode}
+          isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
+          onClick={() => onClick(chatroom.chatroomId, chatroom.isHost)}
+        />
       ))}
       {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
     </div>

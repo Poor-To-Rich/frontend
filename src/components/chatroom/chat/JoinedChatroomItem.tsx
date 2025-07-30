@@ -6,6 +6,8 @@ import clsx from 'clsx';
 
 interface Props extends JoinedChatroomType {
   isEditMode?: boolean;
+  isChecked?: boolean;
+  onClick?: () => void;
 }
 
 const JoinedChatroomItem = ({
@@ -17,13 +19,15 @@ const JoinedChatroomItem = ({
   isHost,
   unreadMessageCount,
   isEditMode,
+  isChecked,
+  onClick,
 }: Props) => {
   return (
-    <div role="button" className="flex w-full items-center cursor-pointer">
-      {isEditMode && <CircleCheckBox className="p-10 shrink-0" />}
+    <div role="button" className="flex w-full items-center cursor-pointer" onClick={onClick}>
+      {isEditMode && <CircleCheckBox className="p-7 shrink-0" isChecked={isChecked} />}
       <div className="flex flex-1 justify-between gap-3.5 min-w-0">
         <div className="flex flex-1 items-center gap-3 min-w-0">
-          <ProfilePhoto photo={chatroomImage} className="w-25 shrink-0" />
+          <ProfilePhoto photo={chatroomImage} className="w-25 shrink-0 cursor-pointer" />
           <div className="flex flex-col gap-1.5 flex-1 min-w-0">
             <p className="flex gap-2.5 items-center min-w-0">
               {isHost && <CrownIcon />}

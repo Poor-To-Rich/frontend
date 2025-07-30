@@ -1,5 +1,5 @@
-import { AllChatroomsRes, ChatroomSortParam, JoinedChatroomType } from '@/types/chatTypes';
-import { http, HttpResponse } from 'msw';
+import { AllChatroomsRes, ChatroomSortParam, JoinedChatroomType, leaveMultipleChatroomsReq } from '@/types/chatTypes';
+import { delay, http, HttpResponse } from 'msw';
 import Profile from '/image/default-profile-image.webp';
 import { endpoints } from '@/api/endpoints';
 
@@ -67,5 +67,11 @@ export const chatHandlers = [
   }),
   http.patch(endpoints.chat.markAllAsRead, () => {
     return HttpResponse.json({ status: 200, message: '메세지를 모두 읽음 처리했습니다.' }, { status: 200 });
+  }),
+  http.delete(endpoints.chat.leaveMultipleChatrooms, async ({ request }) => {
+    await delay(500);
+    const { chatroomsToLeave } = (await request.json()) as leaveMultipleChatroomsReq;
+
+    return HttpResponse.json({ data: { deletedChatroomIds: chatroomsToLeave } }, { status: 200 });
   }),
 ];

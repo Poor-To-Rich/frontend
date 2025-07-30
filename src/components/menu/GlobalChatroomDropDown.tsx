@@ -2,6 +2,7 @@ import DropdownMenuBase from '@/components/menu/DropdownMenuBase';
 import { useMarkAllChatroomsAsRead } from '@/hooks/apis/chat/useMarkAllChatroomsAsRead';
 import { ChatroomViewModeValue } from '@/types/chatTypes';
 import { DropDownMenuOption } from '@/types/propsTypes';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   viewMode: ChatroomViewModeValue;
@@ -10,9 +11,10 @@ interface Props {
 }
 
 const GlobalChatroomDropDown = ({ viewMode, closeMenu, openModal }: Props) => {
+  const navigate = useNavigate();
   const { mutate: allChatroomRead } = useMarkAllChatroomsAsRead(closeMenu);
   const joinedOptions: DropDownMenuOption[] = [
-    { label: '채팅방 편집' },
+    { label: '채팅방 편집', onClick: () => navigate('/chat/edit') },
     { label: '모두 읽음', onClick: allChatroomRead },
   ];
 
