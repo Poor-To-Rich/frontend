@@ -85,7 +85,7 @@ apiClient.interceptors.response.use(
 );
 
 export const fetchData = async <RequestType = undefined, ResponseDataType = undefined, ErrorType = unknown>(
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   endpoint: string,
   data?: RequestType,
   config?: AxiosRequestConfig,
@@ -102,6 +102,9 @@ export const fetchData = async <RequestType = undefined, ResponseDataType = unde
         break;
       case 'PUT':
         response = await apiClient.put(endpoint, data, config);
+        break;
+      case 'PATCH':
+        response = await apiClient.patch(endpoint, data, config);
         break;
       case 'DELETE':
         response = await apiClient.delete(endpoint, {

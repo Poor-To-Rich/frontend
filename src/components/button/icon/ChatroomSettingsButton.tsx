@@ -1,6 +1,13 @@
-const ChatroomSettingsButton = () => {
+import { forwardRef } from 'react';
+
+interface Props {
+  isMenuOpen?: boolean;
+  onClick?: () => void;
+}
+
+const ChatroomSettingsButton = forwardRef<HTMLButtonElement, Props>(({ isMenuOpen, onClick }, ref) => {
   return (
-    <button className="w-fit h-full cursor-pointer">
+    <button ref={ref} onClick={onClick} className={`${isMenuOpen && 'opacity-30'} w-fit h-full cursor-pointer`}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fill-rule="evenodd"
@@ -17,6 +24,6 @@ const ChatroomSettingsButton = () => {
       </svg>
     </button>
   );
-};
+});
 
 export default ChatroomSettingsButton;

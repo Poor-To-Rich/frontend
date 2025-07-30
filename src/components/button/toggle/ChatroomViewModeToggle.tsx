@@ -16,6 +16,7 @@ const ChatroomViewModeToggle = ({ viewMode, onClick }: Props) => {
     <div className="flex gap-4">
       {options.map(({ label, value }) => (
         <button
+          key={value}
           onClick={() => onClick(value)}
           className={clsx(
             'px-5 py-1 border text-md rounded-4xl cursor-pointer',

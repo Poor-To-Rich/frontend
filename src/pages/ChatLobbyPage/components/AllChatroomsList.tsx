@@ -18,7 +18,7 @@ const AllChatroomsList = ({ sortOption }: Props) => {
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
-    <div className="flex-grow flex flex-col gap-2.5 pt-5">
+    <div className="flex-grow flex flex-col gap-2.5 pt-3.5">
       {allChatrooms.map(chatroom => (
         <PublicChatroomItem key={chatroom.chatroomId} {...chatroom} />
       ))}

@@ -17,6 +17,7 @@ const ChatroomSortOptions = ({ sortOption, onClick }: Props) => {
     <div className="flex gap-5 mx-2.5 mt-2.5">
       {options.map(({ label, value }) => (
         <button
+          key={value}
           onClick={() => onClick(value)}
           className={clsx('py-2 text-md cursor-pointer', value === sortOption ? 'text-black' : 'text-defaultGrey')}>
           {label}

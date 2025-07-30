@@ -7,10 +7,10 @@ interface Props {
 
 const DropdownMenuBase = ({ options }: Props) => {
   return (
-    <div className="w-[15rem] rounded-xl border border-strokeGray bg-white shadow opacity-75">
-      {options.map((option, i) => (
+    <div className="w-[15rem] rounded-xl border border-strokeGray bg-white shadow">
+      {options.map(option => (
         <button
-          key={i}
+          key={option.label}
           onClick={option.onClick}
           className={clsx('block w-full text-left p-4 text-md rounded-md cursor-pointer', {
             'text-sunsetRose': option.danger,

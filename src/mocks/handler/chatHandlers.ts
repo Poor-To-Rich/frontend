@@ -1,6 +1,7 @@
 import { AllChatroomsRes, ChatroomSortParam, JoinedChatroomType } from '@/types/chatTypes';
 import { http, HttpResponse } from 'msw';
 import Profile from '/image/default-profile-image.webp';
+import { endpoints } from '@/api/endpoints';
 
 export const chatHandlers = [
   http.get('/chatrooms', ({ request }) => {
@@ -63,5 +64,8 @@ export const chatHandlers = [
       },
       { status: 200 },
     );
+  }),
+  http.patch(endpoints.chat.markAllAsRead, () => {
+    return HttpResponse.json({ status: 200, message: '메세지를 모두 읽음 처리했습니다.' }, { status: 200 });
   }),
 ];

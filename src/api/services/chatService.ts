@@ -13,3 +13,8 @@ export const getJoinedChatrooms = async (cursor?: string | null) => {
   if (!res.data) throw new Error('No Data');
   return res.data;
 };
+
+export const markAllChatroomsAsRead = async () => {
+  const res = await fetchData<undefined, undefined>('PATCH', endpoints.chat.markAllAsRead);
+  return res.data;
+};

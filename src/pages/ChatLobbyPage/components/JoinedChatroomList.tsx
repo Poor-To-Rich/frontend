@@ -15,7 +15,7 @@ const JoinedChatroomList = () => {
   return (
     <div className="flex-grow flex flex-col gap-5 pt-7">
       {joinedChatrooms.map(chatroom => (
-        <JoinedChatroomItem {...chatroom} />
+        <JoinedChatroomItem key={chatroom.chatroomId} {...chatroom} />
       ))}
       {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
     </div>
