@@ -5,7 +5,7 @@ export type SettingOptionType = {
   externalUrl?: string;
 };
 
-export type TapBarType = 'main' | 'month-week' | 'chart' | 'talk' | 'setting';
+export type TapBarType = 'main' | 'month-week' | 'chart' | 'chat' | 'setting';
 
 export type ModalType = 'logout' | 'dataReset' | 'pwa' | null;
 

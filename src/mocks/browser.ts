@@ -7,7 +7,8 @@ import { totalHandlers } from '@/mocks/handler/totalHandlers';
 import { transactionHandlers } from '@/mocks/handler/transactionHandlers';
 import { categoryHandlers } from '@/mocks/handler/categoryHandlers';
 import { chartHandlers } from '@/mocks/handler/chartHandlers';
-import { categoryLogsHandler } from './handler/categoryLogsHandler';
+import { categoryLogsHandler } from '@/mocks/handler/categoryLogsHandler';
+import { chatHandlers } from '@/mocks/handler/chatHandlers';
 
 export const worker = setupWorker(
   ...loginHandlers,
@@ -19,4 +20,5 @@ export const worker = setupWorker(
   ...categoryHandlers,
   ...chartHandlers,
   categoryLogsHandler,
+  ...chatHandlers,
 );

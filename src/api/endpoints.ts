@@ -1,3 +1,5 @@
+import { ChatroomSortParam } from '@/types/chatTypes';
+
 export const endpoints = {
   auth: {
     signup: '/user/register',
@@ -70,5 +72,10 @@ export const endpoints = {
     getVerticalBarChart: (categoryId: string, date: string) => `/chart/${categoryId}/vertical?date=${date}`,
     getCategoryLogs: (categoryId: string, date: string, cursor: string | null, isDescending: boolean) =>
       `/chart/${categoryId}/section?date=${date}${cursor ? `&cursor=${cursor}` : ''}${isDescending ? '' : '&sortDirection=DESC'}`,
+  },
+  chat: {
+    getAllChatrooms: (sortBy: ChatroomSortParam, cursor?: string | null) =>
+      `/chatrooms?sortBy=${sortBy}${cursor ? `&cursor=${cursor}` : ''}`,
+    getJoinedChatrooms: (cursor?: string | null) => `/users/me/chatrooms${cursor ? `?cursor=${cursor}` : ''}`,
   },
 };
