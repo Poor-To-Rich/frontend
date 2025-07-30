@@ -14,7 +14,7 @@ const ChatroomSortOptions = ({ sortOption, onClick }: Props) => {
   ];
 
   return (
-    <div className="flex gap-5 mx-2.5 mt-2.5">
+    <div className="flex gap-5 mx-7">
       {options.map(({ label, value }) => (
         <button
           key={value}

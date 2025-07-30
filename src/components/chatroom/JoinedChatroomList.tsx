@@ -19,7 +19,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, onClick }: Props) =
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
-    <div className="flex flex-col flex-grow gap-5 pt-7">
+    <div className="flex flex-col flex-grow gap-5 px-7 py-4">
       {isEmpty ? (
         <div className="flex-grow flex items-center justify-center text-defaultGrey">참여중인 채팅방이 없습니다</div>
       ) : (

@@ -2,6 +2,7 @@ import { AllChatroomsRes, ChatroomSortParam, JoinedChatroomType, leaveMultipleCh
 import { delay, http, HttpResponse } from 'msw';
 import Profile from '/image/default-profile-image.webp';
 import { endpoints } from '@/api/endpoints';
+import { getRandomTime } from '../utils/getRandomTime';
 
 export const chatHandlers = [
   http.get('/chatrooms', ({ request }) => {
@@ -18,7 +19,7 @@ export const chatHandlers = [
       hashtags: ['#일상', '#스터디'],
       currentMemberCount: Math.floor(Math.random() * 10) + 1,
       maxMemberCount: 20,
-      lastMessageTime: new Date().toISOString(),
+      lastMessageTime: getRandomTime(),
     }));
 
     const isLastPage = baseId >= 30;
@@ -45,7 +46,7 @@ export const chatHandlers = [
         chatroomImage: Profile,
         chatroomTitle: `참여중인 채팅방 ${id}`,
         currentMemberCount: Math.floor(Math.random() * 10) + 1,
-        lastMessageTime: new Date(Date.now() - i * 1000 * 60).toISOString(),
+        lastMessageTime: getRandomTime(),
         lastMessage: `마지막 메시지 ${id}`,
         isHost: id % 3 === 0,
         unreadMessageCount: id % 5 === 0 ? '99+' : Math.floor(Math.random() * 10),

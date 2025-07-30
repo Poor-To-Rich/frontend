@@ -2,6 +2,7 @@ import SubActionButton from '@/components/button/SubActionButton';
 import UserIcon from '@/components/icon/UserIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import { PublicChatroomType } from '@/types/chatTypes';
+import { formatPublicLastMessageTime } from '@/utils/chat/timeFormta';
 
 interface Props extends PublicChatroomType {
   isEditMode?: boolean;
@@ -17,6 +18,7 @@ const PublicChatroomItem = ({
   lastMessageTime,
   isEditMode,
 }: Props) => {
+  const messageTimeFormat = formatPublicLastMessageTime(lastMessageTime);
   return (
     <div className="flex items-center gap-7 w-full min-w-0 cursor-pointer">
       <ProfilePhoto photo={chatroomImage} className="w-32 shrink-0" />
@@ -32,7 +34,7 @@ const PublicChatroomItem = ({
             <span className="text-defaultGrey">
               {currentMemberCount}/{maxMemberCount}
             </span>{' '}
-            | <span>{lastMessageTime}</span>
+            {messageTimeFormat && <time>| {messageTimeFormat}</time>}
           </p>
         </div>
       </div>

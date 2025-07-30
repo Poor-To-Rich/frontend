@@ -26,10 +26,16 @@ const ChatLobbyPage = () => {
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const state = location.state as { viewMode?: ChatroomViewModeValue };
+  const scrollPositions = useRef<{ all: number; joined: number }>({ all: 0, joined: 0 });
   useClickOutside({
     refs: [dropdownRef, settingsButtonRef],
     onClickOutside: () => setIsMenuOpen(false),
   });
+
+  const handleViewModeChange = (next: ChatroomViewModeValue) => {
+    scrollPositions.current[viewMode] = window.scrollY;
+    setViewMode(next);
+  };
 
   useEffect(() => {
     if (state?.viewMode) {
@@ -37,42 +43,55 @@ const ChatLobbyPage = () => {
     }
   }, [state?.viewMode]);
 
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPositions.current[viewMode]);
+    });
+  }, [viewMode]);
+
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader label="지갑 봉합소" rightButton={<PlusButton />} />
-      <div className="flex flex-col flex-grow p-5">
-        <div className="flex justify-between relative">
-          <ChatroomViewModeToggle viewMode={viewMode} onClick={(value: ChatroomViewModeValue) => setViewMode(value)} />
-          <div className="flex gap-3">
-            <ChatroomSearchButton />
-            <MyHostedChatroomsButton />
-            <ChatroomSettingsButton
-              isMenuOpen={isMenuOpen}
-              onClick={() => setIsMenuOpen(prev => !prev)}
-              ref={settingsButtonRef}
+      <div className="flex flex-col flex-grow ">
+        <div className="sticky top-18 p-5 bg-white z-10">
+          <div className=" flex justify-between relative">
+            <ChatroomViewModeToggle
+              viewMode={viewMode}
+              onClick={(nextMode: ChatroomViewModeValue) => handleViewModeChange(nextMode)}
             />
-          </div>
-          {isMenuOpen && (
-            <div className="absolute right-0 top-15" ref={dropdownRef}>
-              <GlobalChatroomDropDown
-                viewMode={viewMode}
-                closeMenu={() => setIsMenuOpen(false)}
-                openModal={openModal}
+            <div className="flex gap-3">
+              <ChatroomSearchButton />
+              <MyHostedChatroomsButton />
+              <ChatroomSettingsButton
+                isMenuOpen={isMenuOpen}
+                onClick={() => setIsMenuOpen(prev => !prev)}
+                ref={settingsButtonRef}
               />
             </div>
+            {isMenuOpen && (
+              <div className="absolute right-0 top-15" ref={dropdownRef}>
+                <GlobalChatroomDropDown
+                  viewMode={viewMode}
+                  closeMenu={() => setIsMenuOpen(false)}
+                  openModal={openModal}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col flex-grow overflow-y-auto">
+          {viewMode === 'all' ? (
+            <>
+              <ChatroomSortOptions
+                sortOption={sortOption}
+                onClick={(value: ChatroomSortOptionValue) => setSortOption(value)}
+              />
+              <AllChatroomsList sortOption={sortOption} />
+            </>
+          ) : (
+            <JoinedChatroomList onClick={() => {}} />
           )}
         </div>
-        {viewMode === 'all' ? (
-          <>
-            <ChatroomSortOptions
-              sortOption={sortOption}
-              onClick={(value: ChatroomSortOptionValue) => setSortOption(value)}
-            />
-            <AllChatroomsList sortOption={sortOption} />
-          </>
-        ) : (
-          <JoinedChatroomList onClick={() => {}} />
-        )}
       </div>
       {isOpen && (
         <ModalDimmed onClose={closeModal}>

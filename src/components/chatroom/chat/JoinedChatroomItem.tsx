@@ -2,6 +2,7 @@ import CircleCheckBox from '@/components/checkbox/CircleCheckBox';
 import CrownIcon from '@/components/icon/CrownIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import { JoinedChatroomType } from '@/types/chatTypes';
+import { formatDetailLastMessageTime } from '@/utils/chat/timeFormta';
 import clsx from 'clsx';
 
 interface Props extends JoinedChatroomType {
@@ -22,6 +23,7 @@ const JoinedChatroomItem = ({
   isChecked,
   onClick,
 }: Props) => {
+  const messageTimeFormat = formatDetailLastMessageTime(lastMessageTime);
   return (
     <div role="button" className="flex w-full items-center cursor-pointer" onClick={onClick}>
       {isEditMode && <CircleCheckBox className="p-7 shrink-0" isChecked={isChecked} />}
@@ -40,7 +42,7 @@ const JoinedChatroomItem = ({
           </div>
         </div>
         <div className="flex flex-col items-end justify-center gap-2.5 shrink-0">
-          <time className="w-fit text-sm whitespace-nowrap">{lastMessageTime}</time>
+          <time className="w-fit text-sm whitespace-nowrap">{messageTimeFormat}</time>
           <div
             className={clsx(
               'w-fit flex items-center justify-center min-h-8 aspect-square text-sm rounded-full text-white p-1.5',
