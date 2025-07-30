@@ -9,7 +9,7 @@ import TapBar from '@/components/tapbar/TapBar';
 import { ChatroomSortOptionValue, ChatroomViewModeValue } from '@/types/chatTypes';
 import { useEffect, useRef, useState } from 'react';
 import AllChatroomsList from '@/pages/ChatLobbyPage/components/AllChatroomsList';
-import JoinedChatroomList from '@/pages/ChatLobbyPage/components/JoinedChatroomList';
+import JoinedChatroomList from '@/components/chatroom/JoinedChatroomList';
 import GlobalChatroomDropDown from '@/components/menu/GlobalChatroomDropDown';
 import useModal from '@/hooks/useModal';
 import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
@@ -40,7 +40,7 @@ const ChatLobbyPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader label="지갑 봉합소" rightButton={<PlusButton />} />
-      <div className="flex-grow p-5">
+      <div className="flex flex-col flex-grow p-5">
         <div className="flex justify-between relative">
           <ChatroomViewModeToggle viewMode={viewMode} onClick={(value: ChatroomViewModeValue) => setViewMode(value)} />
           <div className="flex gap-3">

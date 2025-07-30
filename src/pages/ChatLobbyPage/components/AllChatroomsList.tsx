@@ -19,9 +19,12 @@ const AllChatroomsList = ({ sortOption }: Props) => {
 
   return (
     <div className="flex-grow flex flex-col gap-2.5 pt-3.5">
-      {allChatrooms.map(chatroom => (
-        <PublicChatroomItem key={chatroom.chatroomId} {...chatroom} />
-      ))}
+      {isEmpty ? (
+        <div className="flex-grow flex items-center justify-center text-defaultGrey">채팅방이 없습니다</div>
+      ) : (
+        allChatrooms.map(chatroom => <PublicChatroomItem key={chatroom.chatroomId} {...chatroom} />)
+      )}
+
       {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
     </div>
   );

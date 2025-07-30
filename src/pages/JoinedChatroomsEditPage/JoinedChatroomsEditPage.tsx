@@ -1,7 +1,7 @@
 import ChatActionButton from '@/components/button/ChatActionButton';
 import ChatroomEditHeader from '@/components/header/ChatroomEditHeader';
 import { useNavigate } from 'react-router-dom';
-import JoinedChatroomList from '../ChatLobbyPage/components/JoinedChatroomList';
+import JoinedChatroomList from '../../components/chatroom/JoinedChatroomList';
 import { useState } from 'react';
 import useLeaveMultipleChatrooms from '@/hooks/apis/chat/useLeaveMultipleChatrooms';
 import useModal from '@/hooks/useModal';

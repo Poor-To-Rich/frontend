@@ -19,16 +19,21 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, onClick }: Props) =
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
-    <div className="flex-grow flex flex-col gap-5 pt-7">
-      {joinedChatrooms.map(chatroom => (
-        <JoinedChatroomItem
-          key={chatroom.chatroomId}
-          {...chatroom}
-          isEditMode={isEditMode}
-          isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
-          onClick={() => onClick(chatroom.chatroomId, chatroom.isHost)}
-        />
-      ))}
+    <div className="flex flex-col flex-grow gap-5 pt-7">
+      {isEmpty ? (
+        <div className="flex-grow flex items-center justify-center text-defaultGrey">참여중인 채팅방이 없습니다</div>
+      ) : (
+        joinedChatrooms.map(chatroom => (
+          <JoinedChatroomItem
+            key={chatroom.chatroomId}
+            {...chatroom}
+            isEditMode={isEditMode}
+            isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
+            onClick={() => onClick(chatroom.chatroomId, chatroom.isHost)}
+          />
+        ))
+      )}
+
       {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
     </div>
   );
