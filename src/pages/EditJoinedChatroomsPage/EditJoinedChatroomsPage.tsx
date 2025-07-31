@@ -9,7 +9,7 @@ import ConsentModal from '@/components/chatroom/modal/ConsentModal';
 import { HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 
-const JoinedChatroomsEditPage = () => {
+const EditJoinedChatroomsPage = () => {
   const navigate = useNavigate();
   const [selectedChatrooms, setSelectedChatrooms] = useState<{ id: number; isHost: boolean }[]>([]);
   const [hasHostedChatroom, setHasHostedChatroom] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const JoinedChatroomsEditPage = () => {
       <ChatroomEditHeader
         buttonLabel={`${selectedChatrooms.length > 0 ? `${selectedChatrooms.length} ` : ''}선택해제`}
         disabled={selectedChatrooms.length === 0}
-        onLeftClick={() => navigate('/chat', { state: { viewMode: 'joined' } })}
+        onLeftClick={() => navigate('/chat')}
         onRightClick={clearSelectedStatus}
       />
       <div className="flex-grow pr-5">
@@ -68,4 +68,4 @@ const JoinedChatroomsEditPage = () => {
   );
 };
 
-export default JoinedChatroomsEditPage;
+export default EditJoinedChatroomsPage;

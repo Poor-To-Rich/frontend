@@ -79,5 +79,6 @@ export const endpoints = {
     getJoinedChatrooms: (cursor?: string | null) => `/users/me/chatrooms${cursor ? `?cursor=${cursor}` : ''}`,
     markAllAsRead: '/chatrooms/read-all',
     leaveMultipleChatrooms: '/chatrooms/leave',
+    searchChatrooms: (keyword: string) => `/chatrooms/search?keyword=${keyword}`,
   },
 };

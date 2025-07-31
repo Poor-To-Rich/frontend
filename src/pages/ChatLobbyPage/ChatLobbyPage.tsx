@@ -15,7 +15,6 @@ import useModal from '@/hooks/useModal';
 import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import useClickOutside from '@/hooks/useClickOutside';
-import { useLocation } from 'react-router-dom';
 
 const ChatLobbyPage = () => {
   const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
@@ -24,8 +23,6 @@ const ChatLobbyPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
-  const location = useLocation();
-  const state = location.state as { viewMode?: ChatroomViewModeValue };
   const scrollPositions = useRef<{ all: number; joined: number }>({ all: 0, joined: 0 });
   useClickOutside({
     refs: [dropdownRef, settingsButtonRef],
@@ -35,13 +32,13 @@ const ChatLobbyPage = () => {
   const handleViewModeChange = (next: ChatroomViewModeValue) => {
     scrollPositions.current[viewMode] = window.scrollY;
     setViewMode(next);
+    sessionStorage.setItem('viewMode', next);
   };
 
   useEffect(() => {
-    if (state?.viewMode) {
-      setViewMode(state.viewMode);
-    }
-  }, [state?.viewMode]);
+    const storagedViewMode = sessionStorage.getItem('viewMode') ?? 'all';
+    setViewMode(storagedViewMode as ChatroomViewModeValue);
+  }, []);
 
   useEffect(() => {
     requestAnimationFrame(() => {

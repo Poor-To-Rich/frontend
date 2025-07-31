@@ -6,6 +6,7 @@ import {
   JoinedChatroomsRes,
   leaveMultipleChatroomsReq,
   leaveMultipleChatroomsRes,
+  SearchChatroomsRes,
 } from '@/types/chatTypes';
 
 export const getAllChatrooms = async (sortBy: ChatroomSortParam, cursor?: string | null) => {
@@ -32,4 +33,9 @@ export const leaveMultipleChatrooms = async (body: leaveMultipleChatroomsReq) =>
     body,
   );
   return res.data;
+};
+
+export const searchChatrooms = async (keyword: string) => {
+  const res = await fetchData<undefined, SearchChatroomsRes>('GET', endpoints.chat.searchChatrooms(keyword));
+  return res.data?.chatrooms;
 };

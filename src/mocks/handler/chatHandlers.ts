@@ -75,4 +75,21 @@ export const chatHandlers = [
 
     return HttpResponse.json({ data: { deletedChatroomIds: chatroomsToLeave } }, { status: 200 });
   }),
+  http.get('/chatrooms/search', () => {
+    const chatrooms = Array.from({ length: 10 }).map((_, i) => {
+      const baseId = 0;
+      return {
+        chatroomId: baseId + i,
+        chatroomImage: Profile,
+        chatroomTitle: `채팅방 ${baseId + i}`,
+        description: `채팅방입니다`,
+        hashtags: ['#일상', '#스터디'],
+        currentMemberCount: Math.floor(Math.random() * 10) + 1,
+        maxMemberCount: 20,
+        lastMessageTime: getRandomTime(),
+      };
+    });
+
+    return HttpResponse.json({ data: { chatrooms: chatrooms } }, { status: 200 });
+  }),
 ];
