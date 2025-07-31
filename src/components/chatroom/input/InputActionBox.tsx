@@ -2,8 +2,8 @@ import SubActionButton from '@/components/button/SubActionButton';
 
 interface Props {
   placeholder: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   buttonLabel?: string;
   onSubmit?: () => void;
 }
