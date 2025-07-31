@@ -45,3 +45,7 @@ export type leaveMultipleChatroomsReq = {
 export type leaveMultipleChatroomsRes = {
   deletedChatroomIds: number[];
 };
+
+export type SearchChatroomsRes = {
+  chatrooms: PublicChatroomType[];
+};
