@@ -3,6 +3,7 @@ import UserIcon from '@/components/icon/UserIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import { PublicChatroomType } from '@/types/chatTypes';
 import { formatPublicLastMessageTime } from '@/utils/chat/timeFormta';
+import { useNavigate } from 'react-router-dom';
 
 interface Props extends PublicChatroomType {
   isEditMode?: boolean;
@@ -18,6 +19,7 @@ const PublicChatroomItem = ({
   lastMessageTime,
   isEditMode,
 }: Props) => {
+  const navigate = useNavigate();
   const messageTimeFormat = formatPublicLastMessageTime(lastMessageTime);
   return (
     <div className="flex items-center gap-7 w-full min-w-0 cursor-pointer">
@@ -40,7 +42,7 @@ const PublicChatroomItem = ({
       </div>
       {isEditMode && (
         <div className="h-12">
-          <SubActionButton label="편집" />
+          <SubActionButton label="편집" onClick={() => navigate('/chat/chatroom/edit')} />
         </div>
       )}
     </div>

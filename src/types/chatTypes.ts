@@ -49,3 +49,7 @@ export type leaveMultipleChatroomsRes = {
 export type SearchChatroomsRes = {
   chatrooms: PublicChatroomType[];
 };
+
+export type HostedChatroomsRes = {
+  chatrooms: PublicChatroomType[];
+};

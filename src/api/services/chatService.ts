@@ -3,6 +3,7 @@ import { endpoints } from '@/api/endpoints';
 import {
   AllChatroomsRes,
   ChatroomSortParam,
+  HostedChatroomsRes,
   JoinedChatroomsRes,
   leaveMultipleChatroomsReq,
   leaveMultipleChatroomsRes,
@@ -37,5 +38,10 @@ export const leaveMultipleChatrooms = async (body: leaveMultipleChatroomsReq) =>
 
 export const searchChatrooms = async (keyword: string) => {
   const res = await fetchData<undefined, SearchChatroomsRes>('GET', endpoints.chat.searchChatrooms(keyword));
+  return res.data?.chatrooms;
+};
+
+export const getHostedChatrooms = async () => {
+  const res = await fetchData<undefined, HostedChatroomsRes>('GET', endpoints.chat.getHostedChatrooms);
   return res.data?.chatrooms;
 };
