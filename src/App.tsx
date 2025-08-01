@@ -29,6 +29,7 @@ const ProfileOnboardingPage = lazy(() => import('@/pages/ProfileOnboardingPage/P
 const ChatLobbyPage = lazy(() => import('@/pages/ChatLobbyPage/ChatLobbyPage'));
 const EditJoinedChatroomsPage = lazy(() => import('@/pages/EditJoinedChatroomsPage/EditJoinedChatroomsPage'));
 const SearchChatroomsPage = lazy(() => import('@/pages/SearchChatroomsPage/SearchChatroomsPage'));
+const HostedChatroomsPage = lazy(() => import('@/pages/HostedChatroomsPage/HostedChatroomsPage'));
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
           <Route path="/chat" element={<ChatLobbyPage />} />
           <Route path="/chat/edit" element={<EditJoinedChatroomsPage />} />
           <Route path="/chat/search" element={<SearchChatroomsPage />} />
+          <Route path="/chat/hosted" element={<HostedChatroomsPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

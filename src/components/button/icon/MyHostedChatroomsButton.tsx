@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
+
 const MyHostedChatroomsButton = () => {
   return (
-    <button className="flex justify-center items-center cursor-pointer">
+    <Link to="/chat/hosted" className="flex justify-center items-center">
       <svg width="25" height="22" viewBox="0 0 25 22" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fill-rule="evenodd"
@@ -13,7 +15,7 @@ const MyHostedChatroomsButton = () => {
           fill="black"
         />
       </svg>
-    </button>
+    </Link>
   );
 };
 
