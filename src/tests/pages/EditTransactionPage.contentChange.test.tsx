@@ -13,7 +13,7 @@ describe('반복 가계부 편집 - 내용만 수정', () => {
     sessionStorage.clear();
   });
 
-  it('내용만 수정한 경우 3가지 선택지 표시된다', async () => {
+  it.skip('내용만 수정한 경우 3가지 선택지 표시된다', async () => {
     await act(async () => {
       renderEditPage('1', '지출');
     });

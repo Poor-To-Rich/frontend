@@ -12,7 +12,7 @@ export interface CheckVerifyFieldProps<T extends FieldValues> {
 }
 
 export type SelectOptionsType = {
-  label: string | number;
+  label: string;
   value: string | number;
   visibility?: boolean;
 };

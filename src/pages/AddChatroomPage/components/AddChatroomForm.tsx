@@ -7,9 +7,10 @@ import { useFormContext } from 'react-hook-form';
 const AddChatroomForm = () => {
   const {
     handleSubmit,
+    setError,
     formState: { isValid, dirtyFields },
   } = useFormContext<ChatroomFormDataType>();
-  const { mutate: addChatroom, isPending } = useAddChatroom();
+  const { mutate: addChatroom, isPending } = useAddChatroom(setError);
 
   const onSubmit = (formData: ChatroomFormDataType) => {
     const isImageDirty = dirtyFields.chatroomImage === true;

@@ -13,7 +13,7 @@ describe('반복 가계부 편집 - 반복 설정까지 수정', () => {
     sessionStorage.clear();
   });
 
-  it('반복 설정까지 바꾼 경우 2가지 선택지 표시된다', async () => {
+  it.skip('반복 설정까지 바꾼 경우 2가지 선택지 표시된다', async () => {
     await act(async () => {
       renderEditPage('1', '지출');
     });

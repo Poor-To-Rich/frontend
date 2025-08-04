@@ -46,7 +46,7 @@ const useFilteredCategories = (activeCategories: string[] | undefined, currentCa
       } else if (currentCategoryName) {
         setValue('categoryName', currentCategoryName);
       } else {
-        setValue('categoryName', categoryOptions[0].value);
+        setValue('categoryName', categoryOptions[0].value as string);
       }
     }
   }, [currentCategoryName, categoryOptions, setValue]);
