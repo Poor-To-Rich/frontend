@@ -9,7 +9,6 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetOnboardingUserDetails from '@/hooks/apis/auth/useGetOnboardingUserDetails';
 import useUpdateOnboardingUserDetails from '@/hooks/apis/auth/useUpdateOnboardingUserDetails';
 import { useUserProfileForm } from '@/hooks/field/useUserProfileForm';
-import { OnboardingFormType } from '@/types/authTypes';
 
 const OnboardingProfileForm = () => {
   const {
@@ -17,7 +16,7 @@ const OnboardingProfileForm = () => {
     isMutating: isUpdateOnboardingUserDetails,
     handleSubmit,
     isDisabled,
-  } = useUserProfileForm<OnboardingFormType>({
+  } = useUserProfileForm({
     getHook: useGetOnboardingUserDetails,
     updateHook: useUpdateOnboardingUserDetails,
   });

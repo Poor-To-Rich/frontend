@@ -1,13 +1,13 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import { FormProvider, useForm } from 'react-hook-form';
 import OnboardingProfileForm from '@/pages/ProfileOnboardingPage/components/OnboardingProfileForm';
-import { onboardingProfileSchema } from '@/schemas/authSchema';
-import { OnboardingFormType } from '@/types/authTypes';
+import { profileSchema } from '@/schemas/authSchema';
+import { ProfileFormData } from '@/types/authTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const ProfileOnboardingPage = () => {
-  const methods = useForm<OnboardingFormType>({
-    resolver: zodResolver(onboardingProfileSchema),
+  const methods = useForm<ProfileFormData>({
+    resolver: zodResolver(profileSchema),
     mode: 'onChange',
   });
 
