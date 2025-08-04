@@ -45,7 +45,7 @@ const IDLoginPage = () => {
               isPending={isPending}
               type="submit"
             />
-            <SignButton label="회원가입" onClick={() => navigate('/signup')} />
+            <SignButton label="회원가입" onClick={() => navigate('/signup')} type="button" />
           </div>
           <div className="flex justify-center gap-4 text-defaultGrey">
             <button
