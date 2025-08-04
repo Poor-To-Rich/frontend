@@ -110,4 +110,17 @@ export const chatHandlers = [
 
     return HttpResponse.json({ data: { chatrooms: chatrooms } }, { status: 200 });
   }),
+
+  http.post(endpoints.chat.addChatroom, () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방을 생성했습니다.',
+        data: {
+          newChatroomId: 1,
+        },
+      },
+      { status: 200 },
+    );
+  }),
 ];

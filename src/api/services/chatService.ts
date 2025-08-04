@@ -1,6 +1,7 @@
 import { fetchData } from '@/api/axios';
 import { endpoints } from '@/api/endpoints';
 import {
+  AddChatroomRes,
   AllChatroomsRes,
   ChatroomSortParam,
   HostedChatroomsRes,
@@ -44,4 +45,9 @@ export const searchChatrooms = async (keyword: string) => {
 export const getHostedChatrooms = async () => {
   const res = await fetchData<undefined, HostedChatroomsRes>('GET', endpoints.chat.getHostedChatrooms);
   return res.data?.chatrooms;
+};
+
+export const addChatroom = async (body: FormData) => {
+  const res = await fetchData<FormData, AddChatroomRes>('POST', endpoints.chat.addChatroom, body);
+  return res.data?.newChatroomId;
 };

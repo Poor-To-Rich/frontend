@@ -58,3 +58,7 @@ export type HostedChatroomsRes = {
 };
 
 export type ChatroomFormDataType = z.infer<typeof ChatroomSchema>;
+
+export type AddChatroomRes = {
+  newChatroomId: number;
+};

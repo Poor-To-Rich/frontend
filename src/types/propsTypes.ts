@@ -9,6 +9,7 @@ export interface AsyncButtonBaseProps extends React.ButtonHTMLAttributes<HTMLBut
 export interface DefaultButtonProps {
   label: string;
   className?: string;
+  type?: 'button' | 'reset' | 'submit';
   onClick?: () => void;
 }
 

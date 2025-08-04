@@ -21,7 +21,10 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props & React.TextareaHTMLAttri
           {isRequired && <span className="text-sunsetRose absolute top-[-0.5rem]">*</span>}
         </div>
         <textarea
-          className={clsx(errorMessage && 'border-sunsetRose!', 'input-common p-7 aspect-[4/1] resize-none')}
+          className={clsx(
+            errorMessage && 'border-sunsetRose!',
+            'input-common p-7 aspect-[4/1] resize-none whitespace-pre-line',
+          )}
           ref={ref}
           {...rest}
           value={value}

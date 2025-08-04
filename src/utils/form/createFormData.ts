@@ -18,7 +18,11 @@ export const createFormData = <T extends Record<string, any>>(
   const form = new FormData();
 
   Object.entries(filtered).forEach(([key, value]) => {
-    form.append(key, typeof value === 'boolean' ? String(value) : value);
+    if (Array.isArray(value)) {
+      value.forEach(v => form.append(key, v));
+    } else {
+      form.append(key, typeof value === 'boolean' ? String(value) : value);
+    }
   });
 
   return form;
