@@ -8,5 +8,5 @@ export const ChatroomSchema = z.object({
   hashtags: z.array(z.string()).max(10, '태그는 최대 10개까지 입력 가능합니다'),
   isRankingEnabled: z.boolean().optional(),
   chatroomPassword: z.string().max(20, '비밀번호는 최대 20자까지 가능합니다').optional(),
-  isDefaultProfile: z.boolean(),
+  isDefaultProfile: z.boolean().optional(),
 });

@@ -18,7 +18,7 @@ const AddChatroomForm = () => {
     addChatroom(body);
   };
 
-  return <ChatroomFormContent onSubmit={handleSubmit(onSubmit)} isPending={isPending} isValid={isValid} />;
+  return <ChatroomFormContent onSubmit={handleSubmit(onSubmit)} isPending={isPending} disabled={!isValid} />;
 };
 
 export default AddChatroomForm;

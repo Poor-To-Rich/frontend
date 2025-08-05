@@ -82,5 +82,8 @@ export const endpoints = {
     leaveMultipleChatrooms: '/chatrooms/leave',
     searchChatrooms: (keyword: string) => `/chatrooms/search?keyword=${keyword}`,
     addChatroom: '/chatrooms',
+    getChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
+    editChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
+    leaveChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}`,
   },
 };

@@ -3,9 +3,12 @@ import { endpoints } from '@/api/endpoints';
 import {
   AddChatroomRes,
   AllChatroomsRes,
+  ChatroomFormDataType,
   ChatroomSortParam,
+  EditChatroomRes,
   HostedChatroomsRes,
   JoinedChatroomsRes,
+  LeaveChatroomRes,
   leaveMultipleChatroomsReq,
   leaveMultipleChatroomsRes,
   SearchChatroomsRes,
@@ -50,4 +53,19 @@ export const getHostedChatrooms = async () => {
 export const addChatroom = async (body: FormData) => {
   const res = await fetchData<FormData, AddChatroomRes>('POST', endpoints.chat.addChatroom, body);
   return res.data?.newChatroomId;
+};
+
+export const getChatroom = async (chatroomId: string) => {
+  const res = await fetchData<undefined, ChatroomFormDataType>('GET', endpoints.chat.getChatroom(chatroomId));
+  return res.data;
+};
+
+export const editChatroom = async (chatroomId: string, body: FormData) => {
+  const res = await fetchData<FormData, EditChatroomRes>('PUT', endpoints.chat.editChatroom(chatroomId), body);
+  return res;
+};
+
+export const leaveChatroom = async (chatroomId: string) => {
+  const res = await fetchData<undefined, LeaveChatroomRes>('DELETE', endpoints.chat.leaveChatroom(chatroomId));
+  return res.data;
 };
