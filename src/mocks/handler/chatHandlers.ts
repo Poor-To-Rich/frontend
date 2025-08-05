@@ -1,4 +1,10 @@
-import { AllChatroomsRes, ChatroomSortParam, JoinedChatroomType, leaveMultipleChatroomsReq } from '@/types/chatTypes';
+import {
+  AllChatroomsRes,
+  ChatroomFormDataType,
+  ChatroomSortParam,
+  JoinedChatroomType,
+  leaveMultipleChatroomsReq,
+} from '@/types/chatTypes';
 import { delay, http, HttpResponse } from 'msw';
 import Profile from '/image/default-profile-image.webp';
 import { endpoints } from '@/api/endpoints';
@@ -83,7 +89,7 @@ export const chatHandlers = [
         chatroomImage: Profile,
         chatroomTitle: `채팅방 ${baseId + i}`,
         description: `채팅방입니다`,
-        hashtags: ['#일상', '#스터디'],
+        hashtags: ['일상', '스터디'],
         currentMemberCount: Math.floor(Math.random() * 10) + 1,
         maxMemberCount: 20,
         lastMessageTime: getRandomTime(),
@@ -101,7 +107,7 @@ export const chatHandlers = [
         chatroomImage: Profile,
         chatroomTitle: `채팅방 ${baseId + i}`,
         description: `채팅방입니다`,
-        hashtags: ['#일상', '#스터디'],
+        hashtags: ['일상', '스터디'],
         currentMemberCount: Math.floor(Math.random() * 10) + 1,
         maxMemberCount: 20,
         lastMessageTime: getRandomTime(),
@@ -118,6 +124,52 @@ export const chatHandlers = [
         message: '채팅방을 생성했습니다.',
         data: {
           newChatroomId: 1,
+        },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/chatrooms/:chatroomId/edit', () => {
+    const response: ChatroomFormDataType = {
+      chatroomTitle: `부자되는 채팅방`,
+      maxMemberCount: 50,
+      description: `채팅방입니다 다들 부자 됩시다!!`,
+      hashtags: ['일상', '스터디', '절약', '부자'],
+      isRankingEnabled: false,
+      isDefaultProfile: true,
+    };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 조회에 성공했습니다.',
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.put('/chatrooms/:chatroomId/edit', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 편집에 성공했습니다.',
+        data: {
+          chatroomId: 2,
+        },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.delete('/chatrooms/:chatroomId', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 삭제에 성공했습니다.',
+        data: {
+          deletedChatroomId: 2,
         },
       },
       { status: 200 },

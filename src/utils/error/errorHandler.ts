@@ -41,7 +41,7 @@ export const handleCustomError = (error: unknown, fallback?: (error: CustomError
     if (error.statusCode >= 500) {
       toast.error('서버에 문제가 발생했습니다.\n 잠시 후 다시 시도해주세요.');
     } else {
-      fallback?.(error); // 예외적 처리 (ex: setErrorMessage 등)
+      fallback?.(error);
     }
   } else {
     toast.error('알 수 없는 오류가 발생했습니다.\n 잠시 후 다시 시도해주세요.');

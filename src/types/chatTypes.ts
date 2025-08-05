@@ -62,3 +62,11 @@ export type ChatroomFormDataType = z.infer<typeof ChatroomSchema>;
 export type AddChatroomRes = {
   newChatroomId: number;
 };
+
+export type EditChatroomRes = {
+  chatroomId: number;
+};
+
+export type LeaveChatroomRes = {
+  deletedChatroomId: number;
+};

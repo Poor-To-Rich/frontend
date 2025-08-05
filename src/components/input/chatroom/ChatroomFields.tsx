@@ -36,6 +36,7 @@ const ChatroomFields = () => {
               options={MAX_MEMBER_COUNT_OPTIONS}
               isRequired
               errorMessage={errors.maxMemberCount?.message}
+              value={field.value}
               onChange={e => field.onChange(Number(e.target.value))}
             />
           )}
@@ -58,7 +59,7 @@ const ChatroomFields = () => {
           name="hashtags"
           control={control}
           render={({ field }) => (
-            <HashtagInput label="태그" maxLength={10} isRequired errorMessage={errors.hashtags?.message} {...field} />
+            <HashtagInput label="태그" maxLength={10} errorMessage={errors.hashtags?.message} {...field} />
           )}
         />
         <Controller

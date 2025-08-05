@@ -10,6 +10,7 @@ interface Props extends PublicChatroomType {
 }
 
 const PublicChatroomItem = ({
+  chatroomId,
   chatroomImage,
   chatroomTitle,
   description,
@@ -42,7 +43,7 @@ const PublicChatroomItem = ({
       </div>
       {isEditMode && (
         <div className="h-12">
-          <SubActionButton label="편집" onClick={() => navigate('/chat/chatroom/edit')} />
+          <SubActionButton label="편집" onClick={() => navigate(`/chat/chatroom/edit/${chatroomId}`)} />
         </div>
       )}
     </div>
