@@ -7,7 +7,6 @@ import JobField from '@/components/input/auth/JobField';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import useModal from '@/hooks/useModal';
 import DefaultModal from '@/components/modal/DefaultModal';
-import { ProfileFormData } from '@/types/authTypes';
 import DeleteUserButton from '@/pages/ProfilePage/components/DeleteUserButton';
 import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
 import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
@@ -25,7 +24,7 @@ const ProfileForm = () => {
     isMutating: isUpdateUserDetailsPending,
     handleSubmit,
     isDisabled,
-  } = useUserProfileForm<ProfileFormData>({
+  } = useUserProfileForm({
     getHook: useGetUserDetails,
     updateHook: useUpdateUserDetails,
     checkChanged: true,

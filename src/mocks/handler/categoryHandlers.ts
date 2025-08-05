@@ -18,7 +18,7 @@ const IncomeCategories = INCOME_CATEGORIES.map(({ value, color }, index) => ({
 }));
 
 export const categoryHandlers = [
-  http.get('category/active', async ({ request }) => {
+  http.get('/category/active', async ({ request }) => {
     const url = new URL(request.url);
     const type = url.searchParams.get('type');
 

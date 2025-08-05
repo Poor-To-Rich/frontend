@@ -15,8 +15,10 @@ import useModal from '@/hooks/useModal';
 import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import useClickOutside from '@/hooks/useClickOutside';
+import { useNavigate } from 'react-router-dom';
 
 const ChatLobbyPage = () => {
+  const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
   const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>('popularity');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -48,7 +50,7 @@ const ChatLobbyPage = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
-      <DefaultHeader label="지갑 봉합소" rightButton={<PlusButton />} />
+      <DefaultHeader label="지갑 봉합소" rightButton={<PlusButton onClick={() => navigate('/chat/chatroom/add')} />} />
       <div className="flex flex-col flex-grow ">
         <div className="sticky top-18 p-5 bg-white z-10">
           <div className=" flex justify-between relative">

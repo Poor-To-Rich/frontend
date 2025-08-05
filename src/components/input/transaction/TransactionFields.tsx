@@ -4,8 +4,8 @@ import { EXPENSE_METHODS } from '@/constants/options';
 import { SelectOptionsType } from '@/types/fieldType';
 import { IncomeExpenseType, TransactionFormDataType } from '@/types/transactionTypes';
 import { Controller, useFormContext } from 'react-hook-form';
-import MemoInput from '@/components/input/transaction/MemoInput';
 import { useUpdateIterationByDate } from '@/hooks/transaction/useUpdateIterationByDate';
+import TextArea from '@/components/input/TextArea';
 
 interface Props {
   type: IncomeExpenseType;
@@ -98,7 +98,14 @@ const TransactionFields = ({ type, options }: Props) => {
       <Controller
         name="memo"
         render={({ field }) => (
-          <MemoInput data-testid="memo-input" maxLength={100} errorMessage={errors.memo?.message} {...field} />
+          <TextArea
+            data-testid="memo-input"
+            label="메모"
+            maxLength={100}
+            errorMessage={errors.memo?.message}
+            placeholder="메모를 입력해주세요"
+            {...field}
+          />
         )}
       />
     </div>

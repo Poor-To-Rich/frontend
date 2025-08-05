@@ -15,7 +15,6 @@ import {
   FindUsernameReq,
   FindUsernameRes,
   ResetPassword,
-  OnboardingFormType,
   UserRoleType,
 } from '@/types/authTypes';
 import CustomError from '@/utils/error/CustomError';
@@ -122,7 +121,7 @@ export const resetPassword = async (body: ResetPassword) => {
 };
 
 export const getOnboardingUserDetails = async () => {
-  const res = await fetchData<undefined, OnboardingFormType>('GET', endpoints.auth.getOnboardingUserDetails);
+  const res = await fetchData<undefined, ProfileFormData>('GET', endpoints.auth.getOnboardingUserDetails);
   return res.data;
 };
 

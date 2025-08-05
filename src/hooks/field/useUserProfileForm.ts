@@ -1,26 +1,22 @@
 import { useEffect } from 'react';
-import { FieldValues, useFormContext, UseFormSetError } from 'react-hook-form';
+import { useFormContext, UseFormSetError } from 'react-hook-form';
 import { useNicknameFieldStore } from '@/stores/fields/useNicknameFieldStore';
-import { filteredData } from '@/utils/form/filteredFormData';
-import { OnboardingFormType, ProfileFormData } from '@/types/authTypes';
+import { ProfileFormData } from '@/types/authTypes';
+import { createFormData } from '@/utils/form/createFormData';
 
-type UseUserProfileFormParams<T extends FieldValues> = {
-  getHook: () => { data?: T; isPending: boolean };
-  updateHook: (setError: UseFormSetError<T>) => { mutate: (data: FormData) => void; isPending?: boolean };
+type UseUserProfileFormParams = {
+  getHook: () => { data?: ProfileFormData; isPending: boolean };
+  updateHook: (setError: UseFormSetError<ProfileFormData>) => { mutate: (data: FormData) => void; isPending?: boolean };
   checkChanged?: boolean;
 };
 
-export const useUserProfileForm = <TForm extends ProfileFormData | OnboardingFormType>({
-  getHook,
-  updateHook,
-  checkChanged,
-}: UseUserProfileFormParams<TForm>) => {
+export const useUserProfileForm = ({ getHook, updateHook, checkChanged }: UseUserProfileFormParams) => {
   const {
     reset,
     handleSubmit,
     setError,
     formState: { isValid, dirtyFields },
-  } = useFormContext<TForm>();
+  } = useFormContext<ProfileFormData>();
   const { data, isPending } = getHook();
   const { mutate, isPending: isMutating } = updateHook(setError);
 
@@ -40,30 +36,10 @@ export const useUserProfileForm = <TForm extends ProfileFormData | OnboardingFor
     }
   }, [data, reset]);
 
-  const onSubmit = (formData: TForm) => {
-    const postData: Record<string, any> = { ...formData };
-
-    if ('profileImage' in dirtyFields) {
-      if (!formData.profileImage) {
-        postData.isDefaultProfile = true;
-      } else {
-        postData.isDefaultProfile = false;
-      }
-    } else {
-      delete postData.profileImage;
-    }
-
-    const requestData = filteredData(postData);
-    const form = new FormData();
-
-    Object.entries(requestData).forEach(([key, value]) => {
-      if (typeof value === 'boolean') {
-        value = String(value);
-      }
-      form.append(key, value);
-    });
-
-    mutate(form);
+  const onSubmit = (formData: ProfileFormData) => {
+    const isImageDirty = dirtyFields.profileImage === true;
+    const body = createFormData(formData, isImageDirty, 'profileImage');
+    mutate(body);
   };
 
   return {

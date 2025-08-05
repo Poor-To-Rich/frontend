@@ -1,3 +1,6 @@
+import { ChatroomSchema } from '@/schemas/chatSchema';
+import { z } from 'zod';
+
 export type ChatroomViewModeValue = 'all' | 'joined';
 
 export type ChatroomSortOptionValue = 'popularity' | 'createdAt' | 'likes';
@@ -52,4 +55,10 @@ export type SearchChatroomsRes = {
 
 export type HostedChatroomsRes = {
   chatrooms: PublicChatroomType[];
+};
+
+export type ChatroomFormDataType = z.infer<typeof ChatroomSchema>;
+
+export type AddChatroomRes = {
+  newChatroomId: number;
 };

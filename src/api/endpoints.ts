@@ -81,5 +81,6 @@ export const endpoints = {
     markAllAsRead: '/chatrooms/read-all',
     leaveMultipleChatrooms: '/chatrooms/leave',
     searchChatrooms: (keyword: string) => `/chatrooms/search?keyword=${keyword}`,
+    addChatroom: '/chatrooms',
   },
 };

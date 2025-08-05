@@ -82,3 +82,14 @@ export const REPORT_REASONS_OPTIONS = [
   { label: '정치 / 종교적 발언', value: 'POLITICAL' },
   { label: '기타 (직접 입력)', value: 'CUSTOM' },
 ];
+
+export const MAX_MEMBER_COUNT_OPTIONS = (() => {
+  const result = [];
+  for (let i = 1; i <= 10; i++) {
+    result.push({
+      label: 10 * i,
+      value: 10 * i,
+    });
+  }
+  return result;
+})();
