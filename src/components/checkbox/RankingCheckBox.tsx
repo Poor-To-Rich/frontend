@@ -1,7 +1,7 @@
 import HelpIcon from '@/components/icon/HelpIcon';
 import useModal from '@/hooks/useModal';
 import ModalDimmed from '../../modal/ModalDimmed';
-import RankingInfoModal from '../../chatroom/modal/RankingInfoModal';
+import RankingInfoModal from '../../modal/chat/RankingInfoModal';
 
 const RankingCheckBox = ({ ...props }: React.InputHTMLAttributes<HTMLInputElement>) => {
   const { isOpen, openModal, closeModal } = useModal();

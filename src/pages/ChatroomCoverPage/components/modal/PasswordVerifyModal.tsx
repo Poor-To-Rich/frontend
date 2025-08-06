@@ -1,4 +1,4 @@
-import PasswordActionBox from '../input/PasswordActionBox';
+import PasswordActionBox from './PasswordActionBox';
 import XIconButton from '@/components/button/icon/XIconButton';
 
 interface Props {

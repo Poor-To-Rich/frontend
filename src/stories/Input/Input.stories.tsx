@@ -1,6 +1,6 @@
 import ChatActionBox from '@/components/chatroom/input/ChatActionBox';
 import InputActionBox from '@/components/chatroom/input/InputActionBox';
-import PasswordActionBox from '@/components/chatroom/input/PasswordActionBox';
+import PasswordActionBox from '@/pages/ChatroomCoverPage/components/modal/PasswordActionBox';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function Input() {

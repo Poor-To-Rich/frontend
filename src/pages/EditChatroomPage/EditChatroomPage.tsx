@@ -11,7 +11,7 @@ import TrashButton from '@/components/button/icon/TrashButton';
 import useLeaveChatroom from '@/hooks/apis/chat/useLeaveChatroom';
 import useModal from '@/hooks/useModal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
-import ConsentModal from '@/components/chatroom/modal/ConsentModal';
+import ConsentModal from '@/components/modal/chat/ConsentModal';
 import { HOST_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
 
 const EditChatroomPage = () => {

@@ -1,8 +1,8 @@
-import CoverProfilePhoto from '@/components/chatroom/cover/CoverProfilePhoto';
+import CoverProfilePhoto from '@/pages/ChatroomCoverPage/components/CoverProfilePhoto';
 import ProfileImage from '/image/Logo.webp';
 import type { Meta, StoryObj } from '@storybook/react';
-import ChatroomInfoItem from '@/components/chatroom/cover/ChatroomInfoItem';
-import ChatroomSummary from '@/components/chatroom/cover/ChatroomSummary';
+import ChatroomInfoItem from '@/pages/ChatroomCoverPage/components/ChatroomInfoItem';
+import ChatroomSummary from '@/pages/ChatroomCoverPage/components/ChatroomSummary';
 
 function ChatroomCover() {
   return (
