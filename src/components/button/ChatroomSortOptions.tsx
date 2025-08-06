@@ -7,8 +7,8 @@ interface Props {
 }
 
 const ChatroomSortOptions = ({ sortOption, onClick }: Props) => {
-  const options: { label: '인기순' | '최근 생성순' | '좋아요순'; value: ChatroomSortOptionValue }[] = [
-    { label: '인기순', value: 'popularity' },
+  const options: { label: '최근 대화순' | '최근 생성순' | '좋아요순'; value: ChatroomSortOptionValue }[] = [
+    { label: '최근 대화순', value: 'popularity' },
     { label: '최근 생성순', value: 'createdAt' },
     { label: '좋아요순', value: 'likes' },
   ];
