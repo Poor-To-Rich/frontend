@@ -47,7 +47,7 @@ const ChatroomCoverPage = () => {
                 likeCount={likeStatus.likeCount}
               />
               <UserProfile {...chatroomCover.hostProfile} hideRanking />
-              <div className="flex flex-col gap-3.5">
+              <div className="flex flex-col gap-5">
                 <ChatroomInfoItem label="채팅방 소개" content={chatroomCover.description} />
                 <ChatroomInfoItem
                   label="해시태그"
@@ -56,7 +56,7 @@ const ChatroomCoverPage = () => {
               </div>
             </div>
           </div>
-          <div className="p-5">
+          <div className="p-5 mt-10">
             <ChatActionButton
               label={chatroomCover.isJoined ? '참여중인 채팅방' : '채팅 참여하기'}
               hasPassword={chatroomCover.hasPassword}
