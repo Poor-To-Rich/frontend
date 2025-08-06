@@ -3,6 +3,7 @@ import { endpoints } from '@/api/endpoints';
 import {
   AddChatroomRes,
   AllChatroomsRes,
+  ChatroomCoverType,
   ChatroomFormDataType,
   ChatroomSortParam,
   EditChatroomRes,
@@ -67,5 +68,10 @@ export const editChatroom = async (chatroomId: string, body: FormData) => {
 
 export const leaveChatroom = async (chatroomId: string) => {
   const res = await fetchData<undefined, LeaveChatroomRes>('DELETE', endpoints.chat.leaveChatroom(chatroomId));
+  return res.data;
+};
+
+export const getChatroomCover = async (chatroomId: string) => {
+  const res = await fetchData<undefined, ChatroomCoverType>('GET', endpoints.chat.getChatroomCover(chatroomId));
   return res.data;
 };
