@@ -218,4 +218,35 @@ export const chatHandlers = [
       { status: 200 },
     );
   }),
+
+  http.get('/chatrooms/:chatroomId/like', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 좋아요 상태조회에 성공했습니다.',
+        data: {
+          isLiked: true,
+          likeCount: 42,
+        },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.patch('/chatrooms/:chatroomId/like', async ({ request }) => {
+    const body = await request.json();
+    const { isLiked } = body as { isLiked: boolean };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 좋아요 갱신에 성공했습니다.',
+        data: {
+          isLiked: isLiked,
+          likeCount: isLiked ? 42 : 41,
+        },
+      },
+      { status: 200 },
+    );
+  }),
 ];

@@ -13,7 +13,9 @@ import {
   leaveMultipleChatroomsReq,
   leaveMultipleChatroomsRes,
   SearchChatroomsRes,
-  enterChatroomReq,
+  EnterChatroomReq,
+  LikeStatusRes,
+  LikedStatusReq,
 } from '@/types/chatTypes';
 
 export const getAllChatrooms = async (sortBy: ChatroomSortParam, cursor?: string | null) => {
@@ -77,7 +79,21 @@ export const getChatroomCover = async (chatroomId: string) => {
   return res.data;
 };
 
-export const enterChatroom = async (chatroomId: string, body?: enterChatroomReq) => {
-  const res = await fetchData<enterChatroomReq, ChatroomIdRes>('POST', endpoints.chat.enterChatroom(chatroomId), body);
+export const enterChatroom = async (chatroomId: string, body?: EnterChatroomReq) => {
+  const res = await fetchData<EnterChatroomReq, ChatroomIdRes>('POST', endpoints.chat.enterChatroom(chatroomId), body);
+  return res.data;
+};
+
+export const getChatroomLikeStatus = async (chatroomId: string) => {
+  const res = await fetchData<undefined, LikeStatusRes>('GET', endpoints.chat.getChatroomLikeStatus(chatroomId));
+  return res.data;
+};
+
+export const toggleChatroomLike = async (chatroomId: string, body: LikedStatusReq) => {
+  const res = await fetchData<LikedStatusReq, LikeStatusRes>(
+    'PATCH',
+    endpoints.chat.toggleChatroomLike(chatroomId),
+    body,
+  );
   return res.data;
 };

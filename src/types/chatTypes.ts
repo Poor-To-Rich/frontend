@@ -86,6 +86,14 @@ export type ChatroomCoverType = {
   hostProfile: UserProfileType;
 };
 
-export type enterChatroomReq = {
+export type EnterChatroomReq = {
   chatroomPassword: string;
+};
+
+export type LikedStatusReq = {
+  isLiked: boolean;
+};
+
+export type LikeStatusRes = LikedStatusReq & {
+  likeCount: number;
 };

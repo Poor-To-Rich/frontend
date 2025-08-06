@@ -12,12 +12,14 @@ import useGetChatroomCover from '@/hooks/apis/chat/useGetChatroomCover';
 import useModal from '@/hooks/useModal';
 import { format } from 'date-fns';
 import { useNavigate, useParams } from 'react-router-dom';
+import useGetChatroomLikeStatus from '@/hooks/apis/chat/useGetChatroomLikeStatus';
 
 const ChatroomCoverPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
   const { isOpen, openModal, closeModal } = useModal();
   const { data: chatroomCover } = useGetChatroomCover(chatroomId!);
+  const { data: likeStatus } = useGetChatroomLikeStatus(chatroomId!);
   const { mutate: enterChatroom, isPending: isEnterPending } = useEnterChatroom(chatroomId!);
 
   const handleEnterChatroom = () => {
@@ -31,7 +33,7 @@ const ChatroomCoverPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <DefaultHeader leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} />
-      {chatroomCover ? (
+      {chatroomCover && likeStatus ? (
         <div className="flex flex-col flex-grow justify-between">
           <div>
             <CoverProfilePhoto photo={chatroomCover.chatroomImage} />
@@ -41,7 +43,8 @@ const ChatroomCoverPage = () => {
                 currentMemberCount={chatroomCover.currentMemberCount}
                 maxMemberCount={chatroomCover.maxMemberCount}
                 createdAt={format(chatroomCover.createdAt, 'yyyy.MM.dd')}
-                likeCount={0}
+                isLiked={likeStatus.isLiked}
+                likeCount={likeStatus.likeCount}
               />
               <UserProfile {...chatroomCover.hostProfile} hideRanking />
               <div className="flex flex-col gap-3.5">
