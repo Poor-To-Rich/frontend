@@ -6,11 +6,12 @@ import clsx from 'clsx';
 interface Props {
   photo: string;
   rankingType?: RankingType;
+  hideRanking?: boolean;
   onClick?: () => void;
   className?: string;
 }
 
-const ProfilePhoto = ({ photo, rankingType, onClick, className }: Props) => {
+const ProfilePhoto = ({ photo, rankingType, hideRanking, onClick, className }: Props) => {
   const rankingIcon = (() => {
     if (rankingType === 'SAVER') return <img src={SaverIcon} width={25} height={25} />;
     if (rankingType === 'FLEXER') return <img src={FlexerIcon} width={30} height={30} />;
@@ -23,7 +24,7 @@ const ProfilePhoto = ({ photo, rankingType, onClick, className }: Props) => {
         src={photo}
         className={clsx('aspect-square object-cover bg-white border border-strokeGray rounded-xl', className)}
       />
-      <span className="absolute -bottom-2 -right-3">{rankingIcon}</span>
+      {!hideRanking && <span className="absolute -bottom-2 -right-3">{rankingIcon}</span>}
     </button>
   );
 };
