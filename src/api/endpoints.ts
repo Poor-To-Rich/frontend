@@ -85,5 +85,9 @@ export const endpoints = {
     getChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
     editChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
     leaveChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}`,
+    getChatroomCover: (chatroomId: string) => `/chatrooms/${chatroomId}`,
+    enterChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/enter`,
+    getChatroomLikeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/like`,
+    toggleChatroomLike: (chatroomId: string) => `/chatrooms/${chatroomId}/like`,
   },
 };

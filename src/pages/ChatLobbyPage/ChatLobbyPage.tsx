@@ -12,7 +12,7 @@ import AllChatroomsList from '@/pages/ChatLobbyPage/components/AllChatroomsList'
 import JoinedChatroomList from '@/components/chatroom/JoinedChatroomList';
 import GlobalChatroomDropDown from '@/components/menu/GlobalChatroomDropDown';
 import useModal from '@/hooks/useModal';
-import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
+import RankingInfoModal from '@/components/modal/chat/RankingInfoModal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import useClickOutside from '@/hooks/useClickOutside';
 import { useNavigate } from 'react-router-dom';

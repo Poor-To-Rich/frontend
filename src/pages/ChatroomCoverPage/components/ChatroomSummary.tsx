@@ -6,12 +6,20 @@ interface Props {
   currentMemberCount: number;
   maxMemberCount: number;
   createdAt: string;
+  isLiked: boolean;
   likeCount: number;
 }
 
-const ChatroomSummary = ({ chatroomTitle, currentMemberCount, maxMemberCount, createdAt, likeCount }: Props) => {
+const ChatroomSummary = ({
+  chatroomTitle,
+  currentMemberCount,
+  maxMemberCount,
+  createdAt,
+  isLiked,
+  likeCount,
+}: Props) => {
   return (
-    <div className="flex w-full justify-between p-5">
+    <div className="flex w-full justify-between">
       <div className="flex flex-col gap-1.5">
         <p className="text-2xl">{chatroomTitle}</p>
         <div className="flex items-center gap-1.5">
@@ -25,7 +33,7 @@ const ChatroomSummary = ({ chatroomTitle, currentMemberCount, maxMemberCount, cr
         </div>
       </div>
       <div className="flex flex-col items-center justify-start">
-        <LikeButton />
+        <LikeButton isLiked={isLiked} />
         <p className="text-sunsetRose text-md">{likeCount}</p>
       </div>
     </div>

@@ -3,15 +3,19 @@ import { endpoints } from '@/api/endpoints';
 import {
   AddChatroomRes,
   AllChatroomsRes,
+  ChatroomCoverType,
   ChatroomFormDataType,
   ChatroomSortParam,
-  EditChatroomRes,
+  ChatroomIdRes,
   HostedChatroomsRes,
   JoinedChatroomsRes,
   LeaveChatroomRes,
   leaveMultipleChatroomsReq,
   leaveMultipleChatroomsRes,
   SearchChatroomsRes,
+  EnterChatroomReq,
+  LikeStatusRes,
+  LikedStatusReq,
 } from '@/types/chatTypes';
 
 export const getAllChatrooms = async (sortBy: ChatroomSortParam, cursor?: string | null) => {
@@ -61,11 +65,35 @@ export const getChatroom = async (chatroomId: string) => {
 };
 
 export const editChatroom = async (chatroomId: string, body: FormData) => {
-  const res = await fetchData<FormData, EditChatroomRes>('PUT', endpoints.chat.editChatroom(chatroomId), body);
+  const res = await fetchData<FormData, ChatroomIdRes>('PUT', endpoints.chat.editChatroom(chatroomId), body);
   return res;
 };
 
 export const leaveChatroom = async (chatroomId: string) => {
   const res = await fetchData<undefined, LeaveChatroomRes>('DELETE', endpoints.chat.leaveChatroom(chatroomId));
+  return res.data;
+};
+
+export const getChatroomCover = async (chatroomId: string) => {
+  const res = await fetchData<undefined, ChatroomCoverType>('GET', endpoints.chat.getChatroomCover(chatroomId));
+  return res.data;
+};
+
+export const enterChatroom = async (chatroomId: string, body?: EnterChatroomReq) => {
+  const res = await fetchData<EnterChatroomReq, ChatroomIdRes>('POST', endpoints.chat.enterChatroom(chatroomId), body);
+  return res.data;
+};
+
+export const getChatroomLikeStatus = async (chatroomId: string) => {
+  const res = await fetchData<undefined, LikeStatusRes>('GET', endpoints.chat.getChatroomLikeStatus(chatroomId));
+  return res.data;
+};
+
+export const toggleChatroomLike = async (chatroomId: string, body: LikedStatusReq) => {
+  const res = await fetchData<LikedStatusReq, LikeStatusRes>(
+    'PATCH',
+    endpoints.chat.toggleChatroomLike(chatroomId),
+    body,
+  );
   return res.data;
 };

@@ -1,4 +1,4 @@
-import ChatroomBadge from '@/components/chatroom/cover/ChatroomBadge';
+import ChatroomBadge from '@/pages/ChatroomCoverPage/components/ChatroomBadge';
 
 interface Props {
   label: string;

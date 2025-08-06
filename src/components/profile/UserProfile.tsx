@@ -4,14 +4,16 @@ import { UserProfileType } from '@/types/profileType';
 
 interface Props extends UserProfileType {
   createAt?: string;
+  hideRanking?: boolean;
 }
 
-const UserProfile = ({ profileImage, nickname, userId, isHost, rankingType, createAt }: Props) => {
+const UserProfile = ({ profileImage, nickname, userId, isHost, rankingType, createAt, hideRanking }: Props) => {
   return (
     <div className={'flex gap-5 items-center'}>
       <ProfilePhoto
         photo={profileImage}
         rankingType={rankingType}
+        hideRanking={hideRanking}
         className="w-20"
         onClick={() => console.log(userId)}
       />

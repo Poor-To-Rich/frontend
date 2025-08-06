@@ -175,4 +175,78 @@ export const chatHandlers = [
       { status: 200 },
     );
   }),
+
+  http.get('/chatrooms/:chatroomId', () => {
+    const response = {
+      chatroomId: 101,
+      chatroomTitle: '절약왕들의 모임',
+      chatroomImage: Profile,
+      description: '소비를 줄이고 돈을 모으는 사람들의 모임입니다.',
+      hashtags: ['절약', '재테크', '자취'],
+      currentMemberCount: 12,
+      maxMemberCount: 30,
+      createdAt: '2025-07-20T14:32:00Z',
+      isJoined: true,
+      hasPassword: false,
+      hostProfile: {
+        userId: 555,
+        profileImage: Profile,
+        nickname: '짠돌이부자',
+        isHost: true,
+        rankingType: 'SAVER',
+      },
+    };
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 커버 조회에 성공했습니다.',
+        data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.post('/chatrooms/:chatroomId/enter', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 입장에 성공했습니다.',
+        data: {
+          chatroomId: 1,
+        },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.get('/chatrooms/:chatroomId/like', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 좋아요 상태조회에 성공했습니다.',
+        data: {
+          isLiked: true,
+          likeCount: 42,
+        },
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.patch('/chatrooms/:chatroomId/like', async ({ request }) => {
+    const body = await request.json();
+    const { isLiked } = body as { isLiked: boolean };
+
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 좋아요 갱신에 성공했습니다.',
+        data: {
+          isLiked: isLiked,
+          likeCount: isLiked ? 42 : 41,
+        },
+      },
+      { status: 200 },
+    );
+  }),
 ];

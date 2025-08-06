@@ -3,10 +3,10 @@ import SelectBox from '@/components/input/SelectBox';
 import TextArea from '@/components/input/TextArea';
 import { ChatroomFormDataType } from '@/types/chatTypes';
 import { Controller, useFormContext } from 'react-hook-form';
-import RankingCheckBox from '@/components/input/chatroom/RankingCheckBox';
 import { MAX_MEMBER_COUNT_OPTIONS } from '@/constants/options';
 import ProfileImageInput from '@/components/input/ProfileImageInput';
 import HashtagInput from './HashtagInput';
+import RankingCheckBox from '@/components/checkbox/RankingCheckBox';
 
 const ChatroomFields = () => {
   const {

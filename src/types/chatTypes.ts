@@ -1,5 +1,6 @@
 import { ChatroomSchema } from '@/schemas/chatSchema';
 import { z } from 'zod';
+import { UserProfileType } from './profileType';
 
 export type ChatroomViewModeValue = 'all' | 'joined';
 
@@ -63,10 +64,36 @@ export type AddChatroomRes = {
   newChatroomId: number;
 };
 
-export type EditChatroomRes = {
+export type ChatroomIdRes = {
   chatroomId: number;
 };
 
 export type LeaveChatroomRes = {
   deletedChatroomId: number;
+};
+
+export type ChatroomCoverType = {
+  chatroomId: number;
+  chatroomImage: string;
+  chatroomTitle: string;
+  description: string;
+  hashtags?: string[];
+  currentMemberCount: number;
+  maxMemberCount: number;
+  createdAt: string;
+  isJoined: boolean;
+  hasPassword: boolean;
+  hostProfile: UserProfileType;
+};
+
+export type EnterChatroomReq = {
+  chatroomPassword: string;
+};
+
+export type LikedStatusReq = {
+  isLiked: boolean;
+};
+
+export type LikeStatusRes = LikedStatusReq & {
+  likeCount: number;
 };

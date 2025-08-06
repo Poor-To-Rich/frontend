@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import PasswordVerifyModal from '@/components/chatroom/modal/PasswordVerifyModal';
-import ConsentModal from '@/components/chatroom/modal/ConsentModal';
+import PasswordVerifyModal from '@/pages/ChatroomCoverPage/components/modal/PasswordVerifyModal';
+import ConsentModal from '@/components/modal/chat/ConsentModal';
 import { getHostTransferNotice, HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
 import DefaultModal from '@/components/modal/DefaultModal';
-import ReportReasonModal from '@/components/chatroom/modal/ReportReasonModal';
-import RankingInfoModal from '@/components/chatroom/modal/RankingInfoModal';
+import ReportReasonModal from '@/components/modal/chat/ReportReasonModal';
+import RankingInfoModal from '@/components/modal/chat/RankingInfoModal';
 
 function ChatroomModal() {
   return (

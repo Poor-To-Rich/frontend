@@ -5,7 +5,7 @@ import JoinedChatroomList from '../../components/chatroom/JoinedChatroomList';
 import { useState } from 'react';
 import useLeaveMultipleChatrooms from '@/hooks/apis/chat/useLeaveMultipleChatrooms';
 import useModal from '@/hooks/useModal';
-import ConsentModal from '@/components/chatroom/modal/ConsentModal';
+import ConsentModal from '@/components/modal/chat/ConsentModal';
 import { HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 
