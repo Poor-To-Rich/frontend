@@ -9,7 +9,7 @@ interface Props {
 
 const XIconButton = ({ size = 24, color = 'black', className, onClick }: Props) => {
   return (
-    <button onClick={onClick} className={clsx('cursor-pointer', className)}>
+    <button type="button" onClick={onClick} className={clsx('cursor-pointer p-2', className)}>
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fillRule="evenodd"

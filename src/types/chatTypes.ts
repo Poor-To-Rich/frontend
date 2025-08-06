@@ -64,7 +64,7 @@ export type AddChatroomRes = {
   newChatroomId: number;
 };
 
-export type EditChatroomRes = {
+export type ChatroomIdRes = {
   chatroomId: number;
 };
 
@@ -84,4 +84,8 @@ export type ChatroomCoverType = {
   isJoined: boolean;
   hasPassword: boolean;
   hostProfile: UserProfileType;
+};
+
+export type enterChatroomReq = {
+  chatroomPassword: string;
 };

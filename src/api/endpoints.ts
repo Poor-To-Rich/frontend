@@ -86,5 +86,6 @@ export const endpoints = {
     editChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
     leaveChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}`,
     getChatroomCover: (chatroomId: string) => `/chatrooms/${chatroomId}`,
+    enterChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/enter`,
   },
 };

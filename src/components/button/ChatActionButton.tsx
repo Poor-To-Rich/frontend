@@ -24,7 +24,7 @@ const ChatActionButton = ({ label, isPending, hasPassword, disabled, onClick }: 
   return (
     <button
       className={clsx(
-        'w-full h-[5rem] px-4 relative flex justify-center items-center rounded-lg text-md cursor-pointer',
+        'w-full h-[5rem] px-4 relative flex justify-center items-center rounded-lg cursor-pointer',
         disabled ? 'bg-strokeGray text-defaultGrey' : colorClass,
       )}
       disabled={isPending || disabled}

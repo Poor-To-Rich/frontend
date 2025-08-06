@@ -3,16 +3,30 @@ import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import ChatroomInfoItem from '@/components/chatroom/cover/ChatroomInfoItem';
 import ChatroomSummary from '@/components/chatroom/cover/ChatroomSummary';
 import CoverProfilePhoto from '@/components/chatroom/cover/CoverProfilePhoto';
+import PasswordVerifyModal from '@/components/chatroom/modal/PasswordVerifyModal';
 import DefaultHeader from '@/components/header/DefaultHeader';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 import UserProfile from '@/components/profile/UserProfile';
+import useEnterChatroom from '@/hooks/apis/chat/useEnterChatroom';
 import useGetChatroomCover from '@/hooks/apis/chat/useGetChatroomCover';
+import useModal from '@/hooks/useModal';
 import { format } from 'date-fns';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const ChatroomCoverPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
+  const { isOpen, openModal, closeModal } = useModal();
   const { data: chatroomCover } = useGetChatroomCover(chatroomId!);
+  const { mutate: enterChatroom, isPending: isEnterPending } = useEnterChatroom(chatroomId!);
+
+  const handleEnterChatroom = () => {
+    if (chatroomCover?.hasPassword) {
+      openModal();
+    } else {
+      enterChatroom(undefined);
+    }
+  };
 
   return (
     <div className="w-full min-h-screen flex flex-col">
@@ -43,11 +57,18 @@ const ChatroomCoverPage = () => {
             <ChatActionButton
               label={chatroomCover.isJoined ? '참여중인 채팅방' : '채팅 참여하기'}
               hasPassword={chatroomCover.hasPassword}
+              onClick={handleEnterChatroom}
+              isPending={isEnterPending}
             />
           </div>
         </div>
       ) : (
         <div></div>
+      )}
+      {isOpen && (
+        <ModalDimmed onClose={closeModal}>
+          <PasswordVerifyModal closeModal={closeModal} />
+        </ModalDimmed>
       )}
     </div>
   );

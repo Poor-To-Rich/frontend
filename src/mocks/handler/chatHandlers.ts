@@ -187,7 +187,7 @@ export const chatHandlers = [
       maxMemberCount: 30,
       createdAt: '2025-07-20T14:32:00Z',
       isJoined: true,
-      hasPassword: true,
+      hasPassword: false,
       hostProfile: {
         userId: 555,
         profileImage: Profile,
@@ -201,6 +201,19 @@ export const chatHandlers = [
         status: 200,
         message: '채팅방 커버 조회에 성공했습니다.',
         data: response,
+      },
+      { status: 200 },
+    );
+  }),
+
+  http.post('/chatrooms/:chatroomId/enter', () => {
+    return HttpResponse.json(
+      {
+        status: 200,
+        message: '채팅방 입장에 성공했습니다.',
+        data: {
+          chatroomId: 1,
+        },
       },
       { status: 200 },
     );
