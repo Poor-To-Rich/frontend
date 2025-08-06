@@ -14,6 +14,7 @@ function ChatroomCover() {
         maxMemberCount={100}
         createdAt="2025.07.03"
         likeCount={0}
+        isLiked
       />
       <ChatroomInfoItem
         label="채팅방 소개"

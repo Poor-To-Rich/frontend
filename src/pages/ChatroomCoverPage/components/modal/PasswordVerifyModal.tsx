@@ -2,7 +2,7 @@ import PasswordActionBox from './PasswordActionBox';
 import XIconButton from '@/components/button/icon/XIconButton';
 
 interface Props {
-  closeModal: () => void;
+  closeModal?: () => void;
 }
 
 const PasswordVerifyModal = ({ closeModal }: Props) => {

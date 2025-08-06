@@ -4,7 +4,7 @@ import useToggleChatroomLikeStatus from '@/hooks/apis/chat/useToggleChatroomLike
 import { useParams } from 'react-router-dom';
 
 interface Props {
-  isLiked: boolean;
+  isLiked?: boolean;
 }
 
 const LikeButton = ({ isLiked }: Props) => {
