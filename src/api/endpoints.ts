@@ -27,10 +27,10 @@ export const endpoints = {
     verifyCode: '/email/verify',
   },
   total: {
-    getMonthlyTotal: (date: string) => `/report/monthly/total?date=${date}`,
+    getMonthlyTotal: (date: string) => `/transactions/monthly/total?date=${date}`,
   },
   transaction: {
-    getDailyDetails: (date: string) => `/report/daily/details?date=${date}`,
+    getDailyDetails: (date: string) => `/transactions/daily/details?date=${date}`,
     getIterationExpense: '/expense/iteration/details',
     getIterationIncome: '/income/iteration/details',
     addExpense: '/expense',
@@ -56,10 +56,10 @@ export const endpoints = {
     deleteCategory: (id: string) => `/category/${id}`,
   },
   report: {
-    getYearlySummary: (date: string) => `/report/yearly/total?date=${date}`,
-    getWeeklySummary: (date: string) => `/report/weekly/total?date=${date}`,
+    getYearlySummary: (date: string) => `/transactions/yearly/total?date=${date}`,
+    getWeeklySummary: (date: string) => `/transactions/weekly/total?date=${date}`,
     getWeeklyDetails: (date: string, week: string, cursor: string | null) =>
-      `/report/weekly/details?date=${date}&week=${week}${cursor ? `&cursor=${cursor}` : ''}`,
+      `/transactions/weekly/details?date=${date}&week=${week}${cursor ? `&cursor=${cursor}` : ''}`,
   },
   chart: {
     getExpenseTotalAndSavings: (date: string) => `/chart/expense/total?date=${date}`,

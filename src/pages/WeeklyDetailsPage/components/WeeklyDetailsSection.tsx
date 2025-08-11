@@ -4,7 +4,7 @@ import TransactionSummary from '@/components/summary/TransactionSummary';
 import { useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import useGetWeeklyDetailsInfiniteQuery from '@/hooks/apis/report/useGetWeeklyDetailsInfiniteQuery';
+import useGetWeeklyDetailsInfiniteQuery from '@/hooks/apis/transactions/useGetWeeklyDetailsInfiniteQuery';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
 

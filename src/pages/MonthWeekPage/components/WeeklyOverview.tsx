@@ -1,6 +1,6 @@
 import LogItem from '@/pages/MonthWeekPage/components/LogItem';
 import { useNavigate } from 'react-router-dom';
-import useGetWeeklySummary from '@/hooks/apis/report/useGetWeeklySummary';
+import useGetWeeklySummary from '@/hooks/apis/transactions/useGetWeeklySummary';
 import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
