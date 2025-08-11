@@ -17,6 +17,7 @@ import {
   LikeStatusRes,
   LikedStatusReq,
 } from '@/types/chatTypes';
+import { ChatRoomMessageRes } from '@/types/messageType';
 
 export const getAllChatrooms = async (sortBy: ChatroomSortParam, cursor?: string | null) => {
   const res = await fetchData<undefined, AllChatroomsRes>('GET', endpoints.chat.getAllChatrooms(sortBy, cursor));
@@ -95,5 +96,14 @@ export const toggleChatroomLike = async (chatroomId: string, body: LikedStatusRe
     endpoints.chat.toggleChatroomLike(chatroomId),
     body,
   );
+  return res.data;
+};
+
+export const getChatroomMessage = async (chatroomId: string, cursor?: number | null) => {
+  const res = await fetchData<undefined, ChatRoomMessageRes>(
+    'GET',
+    endpoints.chat.getChatroomMessages(chatroomId, cursor),
+  );
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };
