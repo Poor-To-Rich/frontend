@@ -3,6 +3,7 @@ import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
+import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,6 +14,7 @@ const ChatroomPage = () => {
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
+  const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });

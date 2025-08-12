@@ -92,5 +92,6 @@ export const endpoints = {
     getChatroomMessages: (chatroomId: string, cursor?: number | null) =>
       `/chatrooms/${chatroomId}/messages${cursor ? `?cursor=${cursor}` : ''}`,
     getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
+    getChatroomUserRole: (chatroomId: string) => `/chatrooms/${chatroomId}/role`,
   },
 };

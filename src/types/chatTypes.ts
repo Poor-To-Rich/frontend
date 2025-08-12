@@ -105,3 +105,10 @@ export type ChatroomDetailsRes = {
   currentMemberCount: number;
   isClosed: boolean;
 };
+
+export type UserRoleType = 'HOST' | 'MEMBER' | 'BANNED';
+
+export type ChatroomUserRoleRes = {
+  chatroomRole: UserRoleType;
+  userId: number;
+};
