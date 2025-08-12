@@ -91,5 +91,6 @@ export const endpoints = {
     toggleChatroomLike: (chatroomId: string) => `/chatrooms/${chatroomId}/like`,
     getChatroomMessages: (chatroomId: string, cursor?: number | null) =>
       `/chatrooms/${chatroomId}/messages${cursor ? `?cursor=${cursor}` : ''}`,
+    getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
   },
 };

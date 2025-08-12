@@ -16,6 +16,7 @@ import {
   EnterChatroomReq,
   LikeStatusRes,
   LikedStatusReq,
+  ChatroomDetailsRes,
 } from '@/types/chatTypes';
 import { ChatRoomMessageRes } from '@/types/messageType';
 
@@ -105,5 +106,10 @@ export const getChatroomMessage = async (chatroomId: string, cursor?: number | n
     endpoints.chat.getChatroomMessages(chatroomId, cursor),
   );
   if (!res.data) throw new Error('No Data');
+  return res.data;
+};
+
+export const getChatroomDetails = async (chatroomId: string) => {
+  const res = await fetchData<undefined, ChatroomDetailsRes>('GET', endpoints.chat.getChatroomDetails(chatroomId));
   return res.data;
 };

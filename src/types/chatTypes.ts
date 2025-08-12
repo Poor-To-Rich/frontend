@@ -97,3 +97,11 @@ export type LikedStatusReq = {
 export type LikeStatusRes = LikedStatusReq & {
   likeCount: number;
 };
+
+export type ChatroomDetailsRes = {
+  chatroomImage: string;
+  chatroomTitle: string;
+  isRankingEnabled: boolean;
+  currentMemberCount: number;
+  isClosed: boolean;
+};
