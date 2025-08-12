@@ -1,4 +1,4 @@
-import ChatMessage from '@/components/chatroom/chat/ChatMessage';
+import ChatMessage from '@/pages/ChatroomPage/components/message/ChatMessage';
 import CrownIcon from '@/components/icon/CrownIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import { ChatMessageType } from '@/types/messageType';

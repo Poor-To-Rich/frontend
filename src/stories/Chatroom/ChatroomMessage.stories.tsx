@@ -1,5 +1,5 @@
-import ChatBody from '@/components/chatroom/chat/ChatBody';
-import NoticeSection from '@/components/chatroom/notice/NoticeSection';
+import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
+import NoticeSection from '@/pages/ChatroomPage/components/notice/NoticeSection';
 import { ChatMessageUnion } from '@/types/messageType';
 import { UserProfileType } from '@/types/profileType';
 import { ChatroomNoticeBanner } from '@/utils/chat/notice';

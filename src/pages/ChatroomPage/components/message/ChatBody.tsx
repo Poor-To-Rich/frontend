@@ -1,10 +1,10 @@
 import { groupChatMessages } from '@/utils/chat/groupMessages';
 import { ChatMessageUnion } from '@/types/messageType';
-import SystemMessage from '@/components/chatroom/chat/SystemMessage';
-import ChatMessageGroup from '@/components/chatroom/chat/ChatMessageGroup';
+import SystemMessage from '@/pages/ChatroomPage/components/message/SystemMessage';
+import ChatMessageGroup from '@/pages/ChatroomPage/components/message/ChatMessageGroup';
 import { UserProfileType } from '@/types/profileType';
-import RankingMessage from '@/components/chatroom/chat/RankingMessage';
-import RankingStatusMessage from '@/components/chatroom/chat/RankingStatusMessage';
+import RankingMessage from '@/pages/ChatroomPage/components/message/RankingMessage';
+import RankingStatusMessage from '@/pages/ChatroomPage/components/message/RankingStatusMessage';
 
 interface Props {
   messages: ChatMessageUnion[];
