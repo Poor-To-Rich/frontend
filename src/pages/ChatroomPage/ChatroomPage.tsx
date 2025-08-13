@@ -7,6 +7,10 @@ import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import NoticeSection from '@/pages/ChatroomPage/components/notice/NoticeSection';
+import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
+import { UsersMap } from '@/types/messageType';
+import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
@@ -15,7 +19,15 @@ const ChatroomPage = () => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
+  const { data: recentNotice } = useGetRecentNotice(chatroomId!);
+
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const chatMessages = data?.pages?.flatMap(page => page.messages) || [];
+  const chatroomUsers =
+    data?.pages.reduce((acc, page) => {
+      return { ...acc, ...page.users };
+    }, {} as UsersMap) ?? {};
+  const isEmpty = chatMessages?.length === 0;
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
@@ -31,8 +43,11 @@ const ChatroomPage = () => {
         }
         rightButton={<ChatroomMenuButton />}
       />
-
-      {hasNextPage && <div ref={observerRef} className="h-4" />}
+      <div className="w-full relative h-screen overflow-y-auto">
+        {recentNotice && <NoticeSection {...recentNotice} />}
+        {userRole && <ChatBody myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />}
+        {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
+      </div>
     </div>
   );
 };

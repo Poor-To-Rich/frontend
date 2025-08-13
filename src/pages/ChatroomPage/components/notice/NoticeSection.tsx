@@ -1,18 +1,21 @@
 import UtilityButton from '@/components/button/UtilityButton';
 import DropdownIcon from '@/components/icon/DropdownIcon';
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
-import { ChatroomNoticeBanner, ChatroomNoticeStatus } from '@/utils/chat/notice';
+import useUpdateRecentNoticeStatus from '@/hooks/apis/notice/useUpdateRecentNoticeStatus';
+import { RecentNoticeType } from '@/types/noticeType';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const NoticeSection = ({ status, preview }: ChatroomNoticeBanner) => {
+const NoticeSection = ({ status, preview }: RecentNoticeType) => {
+  const { chatroomId } = useParams();
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [noticeStatus, setNoticeStatus] = useState<ChatroomNoticeStatus>(status);
+  const { mutate: updateRecentNoticeStatus } = useUpdateRecentNoticeStatus(chatroomId!);
 
-  if (noticeStatus === 'PERMANENT_HIDDEN') return null;
+  if (status === 'PERMANENT_HIDDEN') return null;
 
   return (
     <>
-      {noticeStatus === 'DEFAULT' && (
+      {status === 'DEFAULT' && (
         <div
           className="flex flex-col sticky top-0 z-10 gap-5 w-full border border-strokeGray rounded-3xl p-5 bg-white whitespace-nowrap min-w-0"
           onClick={() => setIsClicked(prev => !prev)}>
@@ -26,13 +29,13 @@ const NoticeSection = ({ status, preview }: ChatroomNoticeBanner) => {
               <UtilityButton
                 label="다시 열지않음"
                 className="flex-1"
-                onClick={() => setNoticeStatus('PERMANENT_HIDDEN')}
+                onClick={() => updateRecentNoticeStatus({ status: 'PERMANENT_HIDDEN' })}
               />
               <UtilityButton
                 label="접어두기"
                 className="flex-1"
                 onClick={() => {
-                  setNoticeStatus('TEMP_HIDDEN');
+                  updateRecentNoticeStatus({ status: 'TEMP_HIDDEN' });
                   setIsClicked(false);
                 }}
               />
@@ -40,11 +43,11 @@ const NoticeSection = ({ status, preview }: ChatroomNoticeBanner) => {
           )}
         </div>
       )}
-      {noticeStatus === 'TEMP_HIDDEN' && (
+      {status === 'TEMP_HIDDEN' && (
         <div className="w-full flex justify-end sticky top-0 z-50">
           <div
             className="w-fit p-3 rounded-full bg-white border border-strokeGray"
-            onClick={() => setNoticeStatus('DEFAULT')}>
+            onClick={() => updateRecentNoticeStatus({ status: 'DEFAULT' })}>
             <MegaphoneIcon />
           </div>
         </div>

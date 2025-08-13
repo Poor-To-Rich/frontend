@@ -94,4 +94,8 @@ export const endpoints = {
     getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
     getChatroomUserRole: (chatroomId: string) => `/chatrooms/${chatroomId}/role`,
   },
+  notice: {
+    getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    updateRecentNoticeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+  },
 };
