@@ -87,7 +87,7 @@ export type ChatroomCoverType = {
 };
 
 export type EnterChatroomReq = {
-  chatroomPassword: string;
+  chatroomPassword: string | null;
 };
 
 export type LikedStatusReq = {

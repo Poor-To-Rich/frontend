@@ -26,7 +26,7 @@ const ChatroomCoverPage = () => {
     if (chatroomCover?.hasPassword) {
       openModal();
     } else {
-      enterChatroom(undefined);
+      enterChatroom({ chatroomPassword: null });
     }
   };
 

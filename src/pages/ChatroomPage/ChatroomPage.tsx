@@ -5,12 +5,14 @@ import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
 import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import NoticeSection from '@/pages/ChatroomPage/components/notice/NoticeSection';
 import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
 import { UsersMap } from '@/types/messageType';
 import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
+import { stompClient } from '@/api/stomp';
+import ChatActionBox from '@/pages/ChatroomPage/components/ChatActionBox';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const ChatroomPage = () => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
-  const { data: recentNotice } = useGetRecentNotice(chatroomId!);
+  // const { data: recentNotice } = useGetRecentNotice(chatroomId!);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const chatMessages = data?.pages?.flatMap(page => page.messages) || [];
@@ -31,8 +33,22 @@ const ChatroomPage = () => {
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
+  useEffect(() => {
+    stompClient.activate();
+
+    stompClient.onConnect = () => {
+      stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
+        console.log('📩 받은 메시지:', message.body);
+      });
+    };
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, [chatroomId]);
+
   return (
-    <div>
+    <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader
         leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
         label={
@@ -43,11 +59,12 @@ const ChatroomPage = () => {
         }
         rightButton={<ChatroomMenuButton />}
       />
-      <div className="w-full relative h-screen overflow-y-auto">
-        {recentNotice && <NoticeSection {...recentNotice} />}
+      <div className="w-full relative flex-grow overflow-y-auto">
+        {/* {recentNotice && <NoticeSection {...recentNotice} />} */}
         {userRole && <ChatBody myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />}
         {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
       </div>
+      <ChatActionBox chatroomId={Number(chatroomId)} />
     </div>
   );
 };

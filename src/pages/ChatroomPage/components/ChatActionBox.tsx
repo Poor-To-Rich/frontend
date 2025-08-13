@@ -1,8 +1,13 @@
+import { stompClient } from '@/api/stomp';
 import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
 import SubActionButton from '@/components/button/SubActionButton';
 import { useRef } from 'react';
 
-const ChatActionBox = () => {
+interface Props {
+  chatroomId: number;
+}
+
+const ChatActionBox = ({ chatroomId }: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleInput = () => {
@@ -13,8 +18,30 @@ const ChatActionBox = () => {
     }
   };
 
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = textareaRef.current?.value.trim();
+    if (!text) return;
+
+    stompClient.publish({
+      destination: `/pub/chat/messages`,
+      body: JSON.stringify({
+        chatroomId,
+        messageType: 'TEXT',
+        content: text,
+      }),
+    });
+
+    if (textareaRef.current) {
+      textareaRef.current.value = '';
+      textareaRef.current.style.height = 'auto';
+    }
+  };
+
   return (
-    <div className="flex items-end w-full p-2.5 bg-white border-t border-strokeGray gap-2.5">
+    <form
+      className="sticky bottom-0 flex items-end w-full p-2.5 bg-white border-t border-strokeGray gap-2.5"
+      onSubmit={handleSendMessage}>
       <ImageUploadButton />
       <textarea
         ref={textareaRef}
@@ -26,7 +53,7 @@ const ChatActionBox = () => {
       <div className="h-12 mb-0.5">
         <SubActionButton type="submit" label="전송" />
       </div>
-    </div>
+    </form>
   );
 };
 
