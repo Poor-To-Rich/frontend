@@ -8,9 +8,10 @@ import { useRef, useState } from 'react';
 
 interface Props {
   chatroomId: number;
+  isClosed?: boolean;
 }
 
-const ChatActionBox = ({ chatroomId }: Props) => {
+const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { mutate: uploadChatroomPhoto } = useUploadChatroomPhoto(String(chatroomId), setPhotoFile);
@@ -76,18 +77,24 @@ const ChatActionBox = ({ chatroomId }: Props) => {
       <form
         className="flex items-end w-full p-2.5 bg-white border-t border-strokeGray gap-2.5"
         onSubmit={photoFile ? handleSendPhotoMessage : handleSendTextMessage}>
-        <ImageUploadButton handleImageChange={handleImageChange} />
-        <textarea
-          id="text"
-          ref={textareaRef}
-          onInput={handleInput}
-          rows={1}
-          placeholder="메시지를 입력하세요"
-          className="w-full max-h-[8rem] overflow-y-auto resize-none bg-strokeGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
-        />
-        <div className="h-12 mb-0.5">
-          <SubActionButton type="submit" label="전송" />
-        </div>
+        {isClosed ? (
+          <p className="w-full h-12 mb-0.5 flex items-center justify-center">대화할 수 없는 상태입니다.</p>
+        ) : (
+          <>
+            <ImageUploadButton handleImageChange={handleImageChange} />
+            <textarea
+              id="text"
+              ref={textareaRef}
+              onInput={handleInput}
+              rows={1}
+              placeholder="메시지를 입력하세요"
+              className="w-full max-h-[8rem] overflow-y-auto resize-none bg-strokeGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
+            />
+            <div className="h-12 mb-0.5">
+              <SubActionButton type="submit" label="전송" />
+            </div>
+          </>
+        )}
       </form>
     </div>
   );

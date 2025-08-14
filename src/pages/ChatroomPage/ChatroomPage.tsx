@@ -78,7 +78,7 @@ const ChatroomPage = () => {
         {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
         {userRole && <ChatBody myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />}
       </div>
-      <ChatActionBox chatroomId={Number(chatroomId)} />
+      <ChatActionBox chatroomId={Number(chatroomId)} isClosed={chatroomDetails?.isClosed} />
     </div>
   );
 };
