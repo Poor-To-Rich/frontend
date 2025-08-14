@@ -44,7 +44,7 @@ export function groupChatMessages(messages: ChatMessageUnion[]): GroupedMessage[
   for (const message of messages) {
     if (message.type === 'CHAT_MESSAGE') {
       const msg = message as ChatMessageType;
-      const mk = minuteKeyOf((msg as any).sendAt);
+      const mk = minuteKeyOf(msg.sentAt);
 
       if (buffer.length === 0) {
         buffer = [msg];

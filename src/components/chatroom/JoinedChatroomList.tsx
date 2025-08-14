@@ -7,9 +7,10 @@ import { useNavigate } from 'react-router-dom';
 interface Props {
   isEditMode?: boolean;
   selectedChatrooms?: { id: number; isHost: boolean }[];
+  handleSelectChatroom?: (id: number, isHost: boolean) => void;
 }
 
-const JoinedChatroomList = ({ isEditMode, selectedChatrooms }: Props) => {
+const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroom }: Props) => {
   const navigate = useNavigate();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJoinedChatroomsInfiniteQuery();
 
@@ -30,7 +31,10 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms }: Props) => {
             {...chatroom}
             isEditMode={isEditMode}
             isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
-            onClick={() => navigate(`/chat/chatroom/${chatroom.chatroomId}`)}
+            onClick={() => {
+              if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
+              else navigate(`/chat/chatroom/${chatroom.chatroomId}`);
+            }}
           />
         ))
       )}

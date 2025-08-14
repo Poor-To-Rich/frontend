@@ -1,8 +1,8 @@
 import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
 import NoticeSection from '@/pages/ChatroomPage/components/notice/NoticeSection';
 import { ChatMessageUnion } from '@/types/messageType';
+import { RecentNoticeType } from '@/types/noticeType';
 import { UserProfileType } from '@/types/profileType';
-import { ChatroomNoticeBanner } from '@/utils/chat/notice';
 import type { Meta, StoryObj } from '@storybook/react';
 
 function ChatroomMessage() {
@@ -140,7 +140,7 @@ function ChatroomMessage() {
     },
   };
 
-  const notice: ChatroomNoticeBanner = {
+  const notice: RecentNoticeType = {
     status: 'DEFAULT',
     noticeId: 1,
     preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 다 같이 부자됩시다!',

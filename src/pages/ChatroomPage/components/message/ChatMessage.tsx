@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) => {
-  const { messageType, content, sendAt, unreadBy } = message;
+  const { messageType, content, sentAt, unreadBy } = message;
 
   const renderMessageBox = (
     <div
@@ -39,7 +39,7 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
         {unreadBy.length > 0 && <p className="text-sm">{unreadBy.length}</p>}
         {showTime && (
           <p className="text-sm text-defaultGrey shrink-0 whitespace-nowrap">
-            {formatDetailChatroomMessageTime(sendAt)}
+            {formatDetailChatroomMessageTime(sentAt)}
           </p>
         )}
       </div>

@@ -42,7 +42,7 @@ const EditJoinedChatroomsPage = () => {
         <JoinedChatroomList
           isEditMode
           selectedChatrooms={selectedChatrooms}
-          onClick={(id: number, isHost: boolean) => handleSelectChatroom(id, isHost)}
+          handleSelectChatroom={(id: number, isHost: boolean) => handleSelectChatroom(id, isHost)}
         />
       </div>
       <div className="p-5 bg-white sticky bottom-0 z-10 border-t border-strokeGray">
