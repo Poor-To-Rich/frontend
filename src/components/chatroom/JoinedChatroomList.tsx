@@ -2,14 +2,16 @@ import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   isEditMode?: boolean;
   selectedChatrooms?: { id: number; isHost: boolean }[];
-  onClick: (id: number, isHost: boolean) => void;
+  handleSelectChatroom?: (id: number, isHost: boolean) => void;
 }
 
-const JoinedChatroomList = ({ isEditMode, selectedChatrooms, onClick }: Props) => {
+const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroom }: Props) => {
+  const navigate = useNavigate();
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJoinedChatroomsInfiniteQuery();
 
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -29,7 +31,10 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, onClick }: Props) =
             {...chatroom}
             isEditMode={isEditMode}
             isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
-            onClick={() => onClick(chatroom.chatroomId, chatroom.isHost)}
+            onClick={() => {
+              if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
+              else navigate(`/chat/chatroom/${chatroom.chatroomId}`);
+            }}
           />
         ))
       )}

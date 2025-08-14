@@ -7,3 +7,8 @@ export type PhotosByDateType = {
   date: string;
   photos: PhotoType[];
 };
+
+export type UploadPhotoRes = {
+  chatroomId: number;
+  photo: string;
+};

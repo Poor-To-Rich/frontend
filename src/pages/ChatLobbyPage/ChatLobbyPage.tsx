@@ -88,7 +88,7 @@ const ChatLobbyPage = () => {
               <AllChatroomsList sortOption={sortOption} />
             </>
           ) : (
-            <JoinedChatroomList onClick={() => {}} />
+            <JoinedChatroomList />
           )}
         </div>
       </div>

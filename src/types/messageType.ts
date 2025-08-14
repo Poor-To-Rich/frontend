@@ -1,4 +1,5 @@
 import { BaseRankingType } from '@/types/rankingType';
+import { UserProfileType } from '@/types/profileType';
 
 export type ChatMessageUnion = ChatMessageType | SystemMessageType | RankingMessageType | RankingStatusMessageType;
 
@@ -13,7 +14,7 @@ export type ChatMessageType = {
   unreadBy: number[];
 };
 
-export type SystemMessageCategory = 'ENTER' | 'LEAVE' | 'DELEGATE';
+export type SystemMessageCategory = 'ENTER' | 'LEAVE' | 'DELEGATE' | 'DATE' | 'CLOSE';
 
 export type SystemMessageType = {
   type: 'SYSTEM_MESSAGE';
@@ -40,4 +41,15 @@ export type RankingStatusMessageType = {
   chatroomId: number;
   isChatEnabled: boolean;
   sentAt: string;
+};
+
+export type UsersMap = {
+  [userId: string]: UserProfileType;
+};
+
+export type ChatRoomMessageRes = {
+  nextCursor: number | null;
+  hasNext: boolean;
+  messages: ChatMessageUnion[];
+  users: UsersMap;
 };

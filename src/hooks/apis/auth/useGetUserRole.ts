@@ -5,6 +5,8 @@ const useGetUserRole = (options = {}) => {
   return useQuery({
     queryKey: ['userRole'],
     queryFn: getUserRole,
+    staleTime: Infinity,
+    gcTime: Infinity,
     ...options,
   });
 };

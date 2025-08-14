@@ -1,4 +1,4 @@
-import ChatActionBox from '@/components/chatroom/input/ChatActionBox';
+import ChatActionBox from '@/pages/ChatroomPage/components/ChatActionBox';
 import InputActionBox from '@/components/chatroom/input/InputActionBox';
 import PasswordActionBox from '@/pages/ChatroomCoverPage/components/modal/PasswordActionBox';
 import type { Meta, StoryObj } from '@storybook/react';
@@ -9,7 +9,7 @@ function Input() {
       <PasswordActionBox />
       <InputActionBox placeholder="검색어를 입력해주세요" buttonLabel="검색" />
       <InputActionBox placeholder="닉네임 검색" />
-      <ChatActionBox />
+      <ChatActionBox chatroomId={1} />
     </div>
   );
 }

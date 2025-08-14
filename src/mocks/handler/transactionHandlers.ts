@@ -3,7 +3,7 @@ import { createRandomAmount } from '../utils/createMockTransaction';
 import { endpoints } from '@/api/endpoints';
 
 export const transactionHandlers = [
-  http.get('/report/daily/details', async ({ request }) => {
+  http.get('/transactions/daily/details', async ({ request }) => {
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
