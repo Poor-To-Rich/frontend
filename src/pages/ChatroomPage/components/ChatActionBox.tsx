@@ -35,7 +35,7 @@ const ChatActionBox = ({ chatroomId }: Props) => {
 
   const handleSendTextMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    const text = textareaRef.current?.value.trim();
+    const text = textareaRef.current?.value;
     if (!text) return;
 
     stompClient.publish({
@@ -68,7 +68,7 @@ const ChatActionBox = ({ chatroomId }: Props) => {
   return (
     <div className="sticky bottom-0">
       {photoFile && (
-        <div className="w-full flex justify-center bg-strokeGray relative">
+        <div className="w-full flex justify-center bg-strokeGray/30 relative">
           <XIconButton className="absolute right-0" onClick={() => setPhotoFile(null)} />
           <img className="w-1/2 aspect-square object-cover" src={URL.createObjectURL(photoFile)} />
         </div>
@@ -78,6 +78,7 @@ const ChatActionBox = ({ chatroomId }: Props) => {
         onSubmit={photoFile ? handleSendPhotoMessage : handleSendTextMessage}>
         <ImageUploadButton handleImageChange={handleImageChange} />
         <textarea
+          id="text"
           ref={textareaRef}
           onInput={handleInput}
           rows={1}
