@@ -4,7 +4,7 @@ import { Client } from '@stomp/stompjs';
 export const stompClient = new Client({
   brokerURL: `wss://${import.meta.env.VITE_API_BASE_URL}/chat-websocket`,
   connectHeaders: {
-    Authorization: `${tokenManager.getToken()}`,
+    Authorization: `Bearer ${tokenManager.getToken()}`,
   },
   debug: str => {
     if (str === '\n' || str.trim() === '') {

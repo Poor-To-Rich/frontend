@@ -1,6 +1,10 @@
-const ImageUploadButton = () => {
+interface Props {
+  handleImageChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const ImageUploadButton = ({ handleImageChange }: Props) => {
   return (
-    <button type="button" className="px-2.5 py-1.5 w-fit bg-strokeGray rounded-2xl cursor-pointer">
+    <div role="button" className="relative px-2.5 py-1.5 w-fit bg-strokeGray rounded-2xl cursor-pointer">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           fill-rule="evenodd"
@@ -19,7 +23,13 @@ const ImageUploadButton = () => {
           fill="#ADADAD"
         />
       </svg>
-    </button>
+      <input
+        type="file"
+        accept=".jpg, .jpeg, .png"
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        onChange={handleImageChange}
+      />
+    </div>
   );
 };
 

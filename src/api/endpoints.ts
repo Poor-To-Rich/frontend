@@ -98,4 +98,7 @@ export const endpoints = {
     getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
     updateRecentNoticeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
   },
+  photo: {
+    uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,
+  },
 };
