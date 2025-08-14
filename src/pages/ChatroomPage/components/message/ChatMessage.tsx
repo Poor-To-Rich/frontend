@@ -3,6 +3,7 @@ import { RankingType } from '@/types/profileType';
 import SaverIcon from '/icon/SaverIcon.webp';
 import FlexerIcon from '/icon/FlexerIcon.webp';
 import clsx from 'clsx';
+import { formatDetailChatroomMessageTime } from '@/utils/chat/timeFormta';
 
 interface Props {
   index?: number;
@@ -13,12 +14,12 @@ interface Props {
 }
 
 const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) => {
-  const { messageType, content, sentAt, unreadBy } = message;
+  const { messageType, content, sendAt, unreadBy } = message;
 
   const renderMessageBox = (
     <div
       className={clsx(
-        'relative w-fit rounded-md px-5 py-2',
+        'relative w-fit rounded-md px-5 py-2 whitespace-pre-line',
         isMine ? 'bg-pastelLime' : 'bg-white border border-strokeGray',
       )}>
       {messageType === 'TEXT' ? content : <img src={content!} alt="chat image" />}
@@ -35,8 +36,12 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
     <div className={clsx('flex items-end gap-2.5', isMine ? 'justify-end' : 'justify-start')}>
       {!isMine && renderMessageBox}
       <div className={clsx('flex flex-col', isMine ? 'items-end' : 'items-start')}>
-        <p className="text-sm">{unreadBy.length}</p>
-        {showTime && <p className="text-sm text-defaultGrey">{sentAt}</p>}
+        {unreadBy.length > 0 && <p className="text-sm">{unreadBy.length}</p>}
+        {showTime && (
+          <p className="text-sm text-defaultGrey shrink-0 whitespace-nowrap">
+            {formatDetailChatroomMessageTime(sendAt)}
+          </p>
+        )}
       </div>
       {isMine && renderMessageBox}
     </div>
