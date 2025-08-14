@@ -20,7 +20,7 @@ const ChatMessageGroup = ({ messages, isMine, userProfile }: Props) => {
           <ProfilePhoto
             photo={userProfile.profileImage}
             rankingType={userProfile.rankingType}
-            className="w-20"
+            className="w-20 h-20 shrink-0 self-start"
             onClick={() => console.log(userProfile.userId)}
           />
           <div className="flex flex-col items-start gap-1.5">

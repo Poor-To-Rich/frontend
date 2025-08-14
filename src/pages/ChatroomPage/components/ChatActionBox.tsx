@@ -26,14 +26,6 @@ const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
     e.target.value = '';
   };
 
-  const handleInput = () => {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = `${textarea.scrollHeight}px`;
-    }
-  };
-
   const handleSendTextMessage = (e: React.FormEvent) => {
     e.preventDefault();
     const text = textareaRef.current?.value;
@@ -50,7 +42,6 @@ const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
 
     if (textareaRef.current) {
       textareaRef.current.value = '';
-      textareaRef.current.style.height = 'auto';
     }
   };
 
@@ -85,10 +76,18 @@ const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
             <textarea
               id="text"
               ref={textareaRef}
-              onInput={handleInput}
-              rows={1}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  if (photoFile) {
+                    handleSendPhotoMessage(e as unknown as React.FormEvent);
+                  } else {
+                    handleSendTextMessage(e as unknown as React.FormEvent);
+                  }
+                }
+              }}
               placeholder="메시지를 입력하세요"
-              className="w-full max-h-[8rem] overflow-y-auto resize-none bg-strokeGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
+              className="w-full h-[6rem] overflow-y-auto resize-none bg-lightGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
             />
             <div className="h-12 mb-0.5">
               <SubActionButton type="submit" label="전송" />
