@@ -5,8 +5,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signupSchema } from '@/schemas/authSchema';
 import { SignupFormType } from '@/types/authTypes';
 import SignupForm from '@/pages/SignupPage/components/SignupForm';
+import { useNavigate } from 'react-router-dom';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const methods = useForm<SignupFormType>({
     defaultValues: {
       profileImage: undefined,
@@ -27,7 +30,7 @@ const SignupPage = () => {
 
   return (
     <div>
-      <DefaultHeader label="회원가입" hasBackButton />
+      <DefaultHeader label="회원가입" leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} />
       <FormProvider {...methods}>
         <SignupForm />
       </FormProvider>

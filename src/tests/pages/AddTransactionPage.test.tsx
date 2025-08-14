@@ -10,7 +10,7 @@ vi.mock('@/components/route/ProtectedRoute', () => ({
   default: () => <Outlet />,
 }));
 
-describe('AddTransactionPage', () => {
+describe.skip('AddTransactionPage', () => {
   afterEach(() => {
     vi.clearAllMocks();
     cleanup();

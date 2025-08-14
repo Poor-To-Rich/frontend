@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 import { generateDate } from '@/mocks/utils/createMockTransaction';
 
 export const totalHandlers = [
-  http.get('/report/monthly/total', async ({ request }) => {
+  http.get('/transactions/monthly/total', async ({ request }) => {
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -34,7 +34,7 @@ export const totalHandlers = [
     );
   }),
 
-  http.get('/report/yearly/total', async ({ request }) => {
+  http.get('/transactions/yearly/total', async ({ request }) => {
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
 
@@ -59,7 +59,7 @@ export const totalHandlers = [
     );
   }),
 
-  http.get('/report/weekly/total', async ({ request }) => {
+  http.get('/transactions/weekly/total', async ({ request }) => {
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
     const targetDate = new Date(date || '');
@@ -78,7 +78,7 @@ export const totalHandlers = [
     );
   }),
 
-  http.get('/report/weekly/details', async ({ request }) => {
+  http.get('/transactions/weekly/details', async ({ request }) => {
     const TOTAL_LOGS = 1;
     const PAGE_SIZE = 1;
 

@@ -21,8 +21,8 @@
       "destination": "https://api.poortorich.site/category/:match*"
     },
     {
-      "source": "/report/:match*",
-      "destination": "https://api.poortorich.site/report/:match*"
+      "source": "/transactions/:match*",
+      "destination": "https://api.poortorich.site/transactions/:match*"
     },
     {
       "source": "/chart/:match*",

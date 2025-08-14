@@ -26,6 +26,14 @@ const FindUsernamePage = lazy(() => import('@/pages/FindUsernamePage/FindUsernam
 const FindPasswordPage = lazy(() => import('@/pages/FindPasswordPage/FindPasswordPage'));
 const LoginChoicePage = lazy(() => import('@/pages/LoginChoicePage/LoginChoicePage'));
 const ProfileOnboardingPage = lazy(() => import('@/pages/ProfileOnboardingPage/ProfileOnboardingPage'));
+const ChatLobbyPage = lazy(() => import('@/pages/ChatLobbyPage/ChatLobbyPage'));
+const EditJoinedChatroomsPage = lazy(() => import('@/pages/EditJoinedChatroomsPage/EditJoinedChatroomsPage'));
+const SearchChatroomsPage = lazy(() => import('@/pages/SearchChatroomsPage/SearchChatroomsPage'));
+const HostedChatroomsPage = lazy(() => import('@/pages/HostedChatroomsPage/HostedChatroomsPage'));
+const AddChatroomPage = lazy(() => import('@/pages/AddChatroomPage/AddChatroomPage'));
+const EditChatroomPage = lazy(() => import('@/pages/EditChatroomPage/EditChatroomPage'));
+const ChatroomCoverPage = lazy(() => import('@/pages/ChatroomCoverPage/ChatroomCoverPage'));
+const ChatroomPage = lazy(() => import('@/pages/ChatroomPage/ChatroomPage'));
 
 function App() {
   return (
@@ -59,6 +67,14 @@ function App() {
           <Route path="/iteration-data" element={<IterationDataPage />} />
           <Route path="/chart" element={<ChartPage />} />
           <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
+          <Route path="/chat" element={<ChatLobbyPage />} />
+          <Route path="/chat/edit" element={<EditJoinedChatroomsPage />} />
+          <Route path="/chat/search" element={<SearchChatroomsPage />} />
+          <Route path="/chat/hosted" element={<HostedChatroomsPage />} />
+          <Route path="/chat/chatroom/add" element={<AddChatroomPage />} />
+          <Route path="/chat/chatroom/edit/:chatroomId" element={<EditChatroomPage />} />
+          <Route path="/chat/chatroom/cover/:chatroomId" element={<ChatroomCoverPage />} />
+          <Route path="/chat/chatroom/:chatroomId" element={<ChatroomPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

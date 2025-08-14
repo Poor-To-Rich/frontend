@@ -1,6 +1,6 @@
 import CategoryEditButton from '@/components/button/icon/CategoryEditButton';
 import MinusCircleButton from '@/components/button/icon/MinusCircleButton';
-import ToggleSwitch from '@/components/button/ToggleSwitch';
+import ToggleSwitch from '@/components/button/toggle/ToggleSwitch';
 import { DefaultCategoriesType, CustomCategoriesType } from '@/types/categoryTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 

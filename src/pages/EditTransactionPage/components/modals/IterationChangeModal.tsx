@@ -1,5 +1,5 @@
 import ModalDimmed from '@/components/modal/ModalDimmed';
-import ModalButton from '@/components/button/ModalButton';
+import ModalButton from '@/components/button/modal/ModalButton';
 import useUpdateTransaction from '@/hooks/apis/transaction/useUpdateTransaction';
 import { IncomeExpenseType, IterationActionEnumType, TransactionFormDataType } from '@/types/transactionTypes';
 import { useFormContext } from 'react-hook-form';

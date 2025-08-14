@@ -6,7 +6,7 @@ interface Props {
 }
 
 const LoadingSpinner = ({ size, color = '#a1c377' }: Props) => {
-  return <MoonLoader size={size} color={color} />;
+  return <MoonLoader data-testid="loading-spinner" size={size} color={color} />;
 };
 
 export default LoadingSpinner;

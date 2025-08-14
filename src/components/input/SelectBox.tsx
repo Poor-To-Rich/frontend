@@ -4,14 +4,13 @@ import CategoryLinkButton from '@/components/button/icon/CategoryLinkButton';
 import { clsx } from 'clsx';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import { SelectOptionsType } from '@/types/fieldType';
-import { ReportType } from '@/types/reportTypes';
 import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 
 interface SelectBoxProps {
   label?: string;
   isRequired?: boolean;
   options: SelectOptionsType[];
-  value?: ReportType;
+  value?: string | number;
   type?: IncomeExpenseType;
   hasEditButton?: boolean;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;

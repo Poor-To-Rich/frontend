@@ -7,13 +7,13 @@ import JobField from '@/components/input/auth/JobField';
 import PrimaryButton from '@/components/button/PrimaryButton';
 import useModal from '@/hooks/useModal';
 import DefaultModal from '@/components/modal/DefaultModal';
-import { ProfileFormData } from '@/types/authTypes';
 import DeleteUserButton from '@/pages/ProfilePage/components/DeleteUserButton';
 import useDeleteUser from '@/hooks/apis/auth/useDeleteUser';
 import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
 import useUpdateUserDetails from '@/hooks/apis/auth/useUpdateUserDetails';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { useUserProfileForm } from '@/hooks/field/useUserProfileForm';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 
 const ProfileForm = () => {
   const { isOpen, openModal, closeModal } = useModal();
@@ -24,7 +24,7 @@ const ProfileForm = () => {
     isMutating: isUpdateUserDetailsPending,
     handleSubmit,
     isDisabled,
-  } = useUserProfileForm<ProfileFormData>({
+  } = useUserProfileForm({
     getHook: useGetUserDetails,
     updateHook: useUpdateUserDetails,
     checkChanged: true,
@@ -55,7 +55,11 @@ const ProfileForm = () => {
           <PrimaryButton label="저장" type="submit" disabled={isDisabled} isPending={isUpdateUserDetailsPending} />
         </div>
       </form>
-      {isOpen && <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />}
+      {isOpen && (
+        <ModalDimmed onClose={closeModal}>
+          <DefaultModal content="회원탈퇴를 하시겠습니까?" onClick={deleteUser} onClose={closeModal} />
+        </ModalDimmed>
+      )}
     </>
   );
 };

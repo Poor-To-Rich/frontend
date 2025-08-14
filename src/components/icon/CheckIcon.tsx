@@ -1,8 +1,9 @@
 interface CheckIconProps {
   color?: string;
+  className?: string;
 }
 
-const CheckIcon = ({ color = 'black' }: CheckIconProps) => {
+const CheckIcon = ({ color = 'black', className }: CheckIconProps) => {
   return (
     <svg
       data-testid="check-icon"
@@ -10,6 +11,7 @@ const CheckIcon = ({ color = 'black' }: CheckIconProps) => {
       height="20"
       viewBox="0 0 20 20"
       fill="none"
+      className={className}
       xmlns="http://www.w3.org/2000/svg">
       <path
         fillRule="evenodd"

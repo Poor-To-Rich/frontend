@@ -73,3 +73,23 @@ export const INFORMATION_OPTIONS: SettingOptionType[] = [
       'https://docs.google.com/forms/d/e/1FAIpQLSd-IGtKdkMbo1lLe943G7g7lGlPyIHr6iSZPSm9D0b8y1_4Kw/viewform?usp=sharing&ouid=113670142221324954659',
   },
 ];
+
+export const REPORT_REASONS_OPTIONS = [
+  { label: '욕설 / 비하', value: 'INSULT' },
+  { label: '성희롱 / 불쾌한 표현', value: 'SEXUAL' },
+  { label: '광고 / 스팸', value: 'SPAM' },
+  { label: '도배 / 무의미한 글 반복', value: 'FLOOD' },
+  { label: '정치 / 종교적 발언', value: 'POLITICAL' },
+  { label: '기타 (직접 입력)', value: 'CUSTOM' },
+];
+
+export const MAX_MEMBER_COUNT_OPTIONS = (() => {
+  const result = [];
+  for (let i = 1; i <= 10; i++) {
+    result.push({
+      label: 10 * i,
+      value: 10 * i,
+    });
+  }
+  return result;
+})();

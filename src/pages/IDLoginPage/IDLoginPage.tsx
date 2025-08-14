@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import DefaultHeader from '@/components/header/DefaultHeader';
 import SignButton from '@/components/button/SignButton';
 import { useState } from 'react';
+import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 
 const IDLoginPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const IDLoginPage = () => {
 
   return (
     <div className="flex flex-col h-screen items-center justify-center bg-vanillaCream">
-      <DefaultHeader hasBackButton bgColor={'bg-vanillaCream'} />
+      <DefaultHeader bgColor={'bg-vanillaCream'} leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} />
       <div className="flex flex-col w-full grow items-center justify-center gap-36">
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-3/5 gap-10">
           <div className="flex flex-col w-full gap-7">
@@ -44,7 +45,7 @@ const IDLoginPage = () => {
               isPending={isPending}
               type="submit"
             />
-            <SignButton label="회원가입" onClick={() => navigate('/signup')} />
+            <SignButton label="회원가입" onClick={() => navigate('/signup')} type="button" />
           </div>
           <div className="flex justify-center gap-4 text-defaultGrey">
             <button

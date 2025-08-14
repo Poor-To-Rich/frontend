@@ -1,3 +1,5 @@
+import { ChatroomSortParam } from '@/types/chatTypes';
+
 export const endpoints = {
   auth: {
     signup: '/user/register',
@@ -25,10 +27,10 @@ export const endpoints = {
     verifyCode: '/email/verify',
   },
   total: {
-    getMonthlyTotal: (date: string) => `/report/monthly/total?date=${date}`,
+    getMonthlyTotal: (date: string) => `/transactions/monthly/total?date=${date}`,
   },
   transaction: {
-    getDailyDetails: (date: string) => `/report/daily/details?date=${date}`,
+    getDailyDetails: (date: string) => `/transactions/daily/details?date=${date}`,
     getIterationExpense: '/expense/iteration/details',
     getIterationIncome: '/income/iteration/details',
     addExpense: '/expense',
@@ -54,10 +56,10 @@ export const endpoints = {
     deleteCategory: (id: string) => `/category/${id}`,
   },
   report: {
-    getYearlySummary: (date: string) => `/report/yearly/total?date=${date}`,
-    getWeeklySummary: (date: string) => `/report/weekly/total?date=${date}`,
+    getYearlySummary: (date: string) => `/transactions/yearly/total?date=${date}`,
+    getWeeklySummary: (date: string) => `/transactions/weekly/total?date=${date}`,
     getWeeklyDetails: (date: string, week: string, cursor: string | null) =>
-      `/report/weekly/details?date=${date}&week=${week}${cursor ? `&cursor=${cursor}` : ''}`,
+      `/transactions/weekly/details?date=${date}&week=${week}${cursor ? `&cursor=${cursor}` : ''}`,
   },
   chart: {
     getExpenseTotalAndSavings: (date: string) => `/chart/expense/total?date=${date}`,
@@ -70,5 +72,33 @@ export const endpoints = {
     getVerticalBarChart: (categoryId: string, date: string) => `/chart/${categoryId}/vertical?date=${date}`,
     getCategoryLogs: (categoryId: string, date: string, cursor: string | null, isDescending: boolean) =>
       `/chart/${categoryId}/section?date=${date}${cursor ? `&cursor=${cursor}` : ''}${isDescending ? '' : '&sortDirection=DESC'}`,
+  },
+  chat: {
+    getAllChatrooms: (sortBy: ChatroomSortParam, cursor?: string | null) =>
+      `/chatrooms?sortBy=${sortBy}${cursor ? `&cursor=${cursor}` : ''}`,
+    getJoinedChatrooms: (cursor?: string | null) => `/users/me/chatrooms${cursor ? `?cursor=${cursor}` : ''}`,
+    getHostedChatrooms: '/users/hosted-chatrooms',
+    markAllAsRead: '/chatrooms/read-all',
+    leaveMultipleChatrooms: '/chatrooms/leave',
+    searchChatrooms: (keyword: string) => `/chatrooms/search?keyword=${keyword}`,
+    addChatroom: '/chatrooms',
+    getChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
+    editChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/edit`,
+    leaveChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}`,
+    getChatroomCover: (chatroomId: string) => `/chatrooms/${chatroomId}`,
+    enterChatroom: (chatroomId: string) => `/chatrooms/${chatroomId}/enter`,
+    getChatroomLikeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/like`,
+    toggleChatroomLike: (chatroomId: string) => `/chatrooms/${chatroomId}/like`,
+    getChatroomMessages: (chatroomId: string, cursor?: number | null) =>
+      `/chatrooms/${chatroomId}/messages${cursor ? `?cursor=${cursor}` : ''}`,
+    getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
+    getChatroomUserRole: (chatroomId: string) => `/chatrooms/${chatroomId}/role`,
+  },
+  notice: {
+    getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    updateRecentNoticeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+  },
+  photo: {
+    uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,
   },
 };

@@ -1,5 +1,6 @@
 import DefaultHeader from '@/components/header/DefaultHeader';
 import DefaultModal from '@/components/modal/DefaultModal';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 import PWAInstallModal from '@/components/modal/pwa/PWAInstallModal';
 import TapBar from '@/components/tapbar/TapBar';
 import { ACCOUNT_OPTIONS, DATA_OPTIONS, INFORMATION_OPTIONS } from '@/constants/options';
@@ -42,20 +43,24 @@ const SettingPage = () => {
       </div>
       <TapBar page="setting" />
       {selectedModal === 'logout' && (
-        <DefaultModal
-          content="로그아웃 하시겠습니까?"
-          onClick={logout}
-          onClose={handleModalClose}
-          isPending={isLogoutPending}
-        />
+        <ModalDimmed onClose={handleModalClose}>
+          <DefaultModal
+            content="로그아웃 하시겠습니까?"
+            onClick={logout}
+            onClose={handleModalClose}
+            isPending={isLogoutPending}
+          />
+        </ModalDimmed>
       )}
       {selectedModal === 'dataReset' && (
-        <DefaultModal
-          content={`초기화하게 되면\n입력된 모든 가계부 데이터가 삭제됩니다.\n전체 데이터를 초기화 하시겠습니까?`}
-          onClick={resetData}
-          onClose={handleModalClose}
-          isPending={isResetPending}
-        />
+        <ModalDimmed onClose={handleModalClose}>
+          <DefaultModal
+            content={`초기화하게 되면\n입력된 모든 가계부 데이터가 삭제됩니다.\n전체 데이터를 초기화 하시겠습니까?`}
+            onClick={resetData}
+            onClose={handleModalClose}
+            isPending={isResetPending}
+          />
+        </ModalDimmed>
       )}
       {selectedModal === 'pwa' && <PWAInstallModal closeModal={handleModalClose} />}
     </div>

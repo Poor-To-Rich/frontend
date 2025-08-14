@@ -1,5 +1,5 @@
 import React from 'react';
-import IncomeExpenseButton from '@/components/button/IncomeExpenseButton';
+import IncomeExpenseToggle from '@/components/button/toggle/IncomeExpenseToggle';
 import TransactionFields from '@/components/input/transaction/TransactionFields';
 import RepeatCircleButton from '@/components/button/icon/RepeatCircleButton';
 import PrimaryButton from '@/components/button/PrimaryButton';
@@ -48,7 +48,7 @@ const TransactionFormContent = ({
 }: Props) => {
   return (
     <form className="flex flex-col w-full grow justify-between py-8 px-5" onSubmit={onSubmit}>
-      <IncomeExpenseButton type={transactionType} onClick={onTransactionTypeChange} isEdit={isEdit} />
+      <IncomeExpenseToggle type={transactionType} onClick={onTransactionTypeChange} isEdit={isEdit} />
       <TransactionFields type={transactionType} options={options} />
       <div className={clsx(isIOSPWA && 'mb-9', 'w-full flex justify-between items-center')}>
         <RepeatCircleButton openModal={openModal} />

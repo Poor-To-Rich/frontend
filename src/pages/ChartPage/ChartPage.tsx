@@ -1,4 +1,4 @@
-import TransactionTypeButton from '@/components/button/TransactionTypeButton';
+import TransactionTypeToggle from '@/components/button/toggle/TransactionTypeToggle';
 import DateControlHeader from '@/components/header/DateControlHeader';
 import PeriodComparisonChart from '@/pages/ChartPage/components/period/PeriodComparisonChart';
 import Divider from '@/components/Divider';
@@ -25,7 +25,7 @@ const ChartPage = () => {
         <PageErrorBoundary>
           <div className="w-full flex justify-between items-center p-5">
             <ReportTypeSelection />
-            <TransactionTypeButton />
+            <TransactionTypeToggle />
           </div>
           <ReportSummary />
           <CategoryChartBoard />
