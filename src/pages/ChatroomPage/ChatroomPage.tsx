@@ -16,11 +16,13 @@ import ChatActionBox from '@/pages/ChatroomPage/components/ChatActionBox';
 import useChatScroll from '@/hooks/chat/useChatScroll';
 import { StompSubscription } from '@stomp/stompjs';
 import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFirstPage';
+import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
+  const markMessagesAsRead = useMarkMessagesAsRead();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
@@ -64,6 +66,8 @@ const ChatroomPage = () => {
           msg.type === 'RANKING_STATUS_MESSAGE'
         ) {
           prependMessageToFirstPage(chatroomId, msg.payload);
+        } else if (msg.type === 'MESSAGE_READ') {
+          markMessagesAsRead(chatroomId, msg.payload.userId);
         }
       });
 

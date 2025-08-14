@@ -1,9 +1,10 @@
 import { lazy, Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
 import ProtectedRoute from '@/components/route/ProtectedRoute';
 import RedirectIfLoggedInRoute from '@/components/route/RedirectIfLoggedInRoute';
-import LoadingSpinner from './components/loading/LoadingSpinner';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import ChatSocketProvider from './providers/ChatSocketProvider';
 
 const IDLoginPage = lazy(() => import('@/pages/IDLoginPage/IDLoginPage'));
 const SignupPage = lazy(() => import('@/pages/SignupPage/SignupPage'));
@@ -67,14 +68,21 @@ function App() {
           <Route path="/iteration-data" element={<IterationDataPage />} />
           <Route path="/chart" element={<ChartPage />} />
           <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
-          <Route path="/chat" element={<ChatLobbyPage />} />
           <Route path="/chat/edit" element={<EditJoinedChatroomsPage />} />
           <Route path="/chat/search" element={<SearchChatroomsPage />} />
           <Route path="/chat/hosted" element={<HostedChatroomsPage />} />
           <Route path="/chat/chatroom/add" element={<AddChatroomPage />} />
           <Route path="/chat/chatroom/edit/:chatroomId" element={<EditChatroomPage />} />
           <Route path="/chat/chatroom/cover/:chatroomId" element={<ChatroomCoverPage />} />
-          <Route path="/chat/chatroom/:chatroomId" element={<ChatroomPage />} />
+          <Route
+            element={
+              <ChatSocketProvider>
+                <Outlet />
+              </ChatSocketProvider>
+            }>
+            <Route path="/chat" element={<ChatLobbyPage />} />
+            <Route path="/chat/chatroom/:chatroomId" element={<ChatroomPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
