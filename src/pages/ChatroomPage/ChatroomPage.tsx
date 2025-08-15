@@ -11,13 +11,22 @@ import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
 import { UsersMap } from '@/types/messageType';
 // import NoticeSection from '@/pages/ChatroomPage/components/notice/NoticeSection';
 // import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
-import { stompClient } from '@/api/stomp';
+import { addOnConnect, stompClient } from '@/api/stomp';
 import ChatActionBox from '@/pages/ChatroomPage/components/ChatActionBox';
 import useChatScroll from '@/hooks/chat/useChatScroll';
+import { StompSubscription } from '@stomp/stompjs';
+import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFirstPage';
+import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
+import useUpdateUserProfileInCache from '@/hooks/chat/useUpdateUserProfileInCache';
+import useUpdateRecentNoticeInCache from '@/hooks/chat/useUpdateRecentNoticeInCache';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
+  const prependMessageToFirstPage = usePrependMessageToFirstPage();
+  const markMessagesAsRead = useMarkMessagesAsRead();
+  const updateUserProfileInCache = useUpdateUserProfileInCache();
+  const updateRecentNoticeInCache = useUpdateRecentNoticeInCache();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
@@ -43,21 +52,50 @@ const ChatroomPage = () => {
     enabled: true,
   });
 
+  useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
+
   useEffect(() => {
-    stompClient.onConnect = () => {
-      stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
-        console.log('📩 받은 메시지:', message.body);
+    if (!chatroomId) return;
+
+    let sub: StompSubscription | undefined;
+
+    const subscribe = () => {
+      sub = stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
+        const msg = JSON.parse(message.body);
+        if (
+          msg.type === 'CHAT_MESSAGE' ||
+          msg.type === 'SYSTEM_MESSAGE' ||
+          msg.type === 'RANKING_MESSAGE' ||
+          msg.type === 'RANKING_STATUS_MESSAGE'
+        ) {
+          prependMessageToFirstPage(chatroomId, msg.payload);
+        } else if (msg.type === 'MESSAGE_READ') {
+          markMessagesAsRead(chatroomId, msg.payload.userId);
+        } else if (msg.type === 'USER_UPDATED') {
+          updateUserProfileInCache(chatroomId, msg.payload);
+        } else if (msg.type === 'NOTICE') {
+          updateRecentNoticeInCache(chatroomId, msg.payload);
+        }
+      });
+
+      stompClient.publish({
+        destination: `/pub/chat/read`,
+        body: JSON.stringify({ chatroomId }),
       });
     };
 
-    stompClient.activate();
+    // 1) 이미 연결돼 있으면 즉시 한 번 실행
+    if (stompClient.connected) subscribe();
 
+    // 2) 앞으로 "연결/재연결"될 때마다 다시 실행하도록 리스너 등록
+    const off = addOnConnect(subscribe);
+
+    // 언마운트 시 정리
     return () => {
-      stompClient.deactivate();
+      off();
+      sub?.unsubscribe();
     };
   }, [chatroomId]);
-
-  useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
@@ -73,7 +111,7 @@ const ChatroomPage = () => {
       />
       <div
         ref={scrollRef}
-        className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-92.3px)] custom-scrollbar">
+        className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
         {/* {recentNotice && <NoticeSection {...recentNotice} />} */}
         {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
         {userRole && <ChatBody myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />}

@@ -19,7 +19,7 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
   const renderMessageBox = (
     <div
       className={clsx(
-        'relative w-fit rounded-md px-5 py-2 whitespace-pre-line',
+        'relative w-fit rounded-md px-5 py-2 whitespace-pre-line break-all',
         isMine ? 'bg-pastelLime' : 'bg-white border border-strokeGray',
       )}>
       {messageType === 'TEXT' ? content : <img src={content!} alt="chat image" />}
