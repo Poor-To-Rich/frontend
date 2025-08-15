@@ -1,7 +1,7 @@
 export type RankingType = 'SAVER' | 'FLEXER' | 'NONE';
 
 export type UserProfileType = {
-  userId?: number;
+  userId: number;
   profileImage: string;
   nickname: string;
   isHost: boolean;

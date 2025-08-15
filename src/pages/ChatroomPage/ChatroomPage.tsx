@@ -17,12 +17,14 @@ import useChatScroll from '@/hooks/chat/useChatScroll';
 import { StompSubscription } from '@stomp/stompjs';
 import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFirstPage';
 import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
+import useUpdateUserProfileInCache from '@/hooks/chat/useUpdateUserProfileInCache';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
   const markMessagesAsRead = useMarkMessagesAsRead();
+  const updateUserProfileInCache = useUpdateUserProfileInCache();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
@@ -68,6 +70,8 @@ const ChatroomPage = () => {
           prependMessageToFirstPage(chatroomId, msg.payload);
         } else if (msg.type === 'MESSAGE_READ') {
           markMessagesAsRead(chatroomId, msg.payload.userId);
+        } else if (msg.type === 'USER_UPDATED') {
+          updateUserProfileInCache(chatroomId, msg.payload);
         }
       });
 
