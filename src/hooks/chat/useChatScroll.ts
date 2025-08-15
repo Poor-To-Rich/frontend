@@ -55,7 +55,6 @@ const useChatScroll = ({
     if (!enabled) return;
     if (!didInitialScrollRef.current) return;
     if (isNearBottom()) scrollToBottom('smooth');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, messageDeps);
 
   // 3) 과거 페이지 로드 시 위치 보존

@@ -3,9 +3,7 @@ import { Client } from '@stomp/stompjs';
 
 export const stompClient = new Client({
   brokerURL: `wss://${import.meta.env.VITE_API_BASE_URL}/chat-websocket`,
-  connectHeaders: {
-    Authorization: `Bearer ${tokenManager.getToken()}`,
-  },
+  connectHeaders: {},
   debug: str => {
     if (str === '\n' || str.trim() === '') {
       console.log('%c💓 Heartbeat', 'color: #ff69b4');
@@ -31,4 +29,31 @@ export const stompClient = new Client({
   reconnectDelay: 5000,
   heartbeatIncoming: 10000,
   heartbeatOutgoing: 10000,
+
+  beforeConnect: () => {
+    const token = tokenManager.getToken();
+    stompClient.connectHeaders = {
+      Authorization: `Bearer ${token}`,
+    };
+  },
+  onWebSocketClose: evt => {
+    console.warn('[WebSocket closed]', 'code:', evt.code, 'reason:', evt.reason || '(no reason)');
+  },
 });
+
+const connectListeners = new Set<() => void>();
+stompClient.onConnect = () => connectListeners.forEach(fn => fn());
+
+export function addOnConnect(fn: () => void) {
+  connectListeners.add(fn);
+  return () => connectListeners.delete(fn);
+}
+
+export function ensureActive() {
+  if (!stompClient.active) {
+    stompClient.connectHeaders = {
+      Authorization: `Bearer ${tokenManager.getToken()}`,
+    };
+    stompClient.activate();
+  }
+}

@@ -19,11 +19,8 @@ const ProfilePhoto = ({ photo, rankingType, hideRanking, onClick, className }: P
   })();
 
   return (
-    <button className="relative cursor-pointe" onClick={onClick}>
-      <img
-        src={photo}
-        className={clsx('aspect-square object-cover bg-white border border-strokeGray rounded-xl', className)}
-      />
+    <button className={clsx('relative cursor-pointe', className)} onClick={onClick}>
+      <img src={photo} className={'aspect-square object-cover bg-white border border-strokeGray rounded-xl'} />
       {!hideRanking && <span className="absolute -bottom-2 -right-3">{rankingIcon}</span>}
     </button>
   );
