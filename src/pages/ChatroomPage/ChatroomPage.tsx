@@ -18,6 +18,7 @@ import { StompSubscription } from '@stomp/stompjs';
 import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFirstPage';
 import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import useUpdateUserProfileInCache from '@/hooks/chat/useUpdateUserProfileInCache';
+import useUpdateRecentNoticeInCache from '@/hooks/chat/useUpdateRecentNoticeInCache';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const ChatroomPage = () => {
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
   const markMessagesAsRead = useMarkMessagesAsRead();
   const updateUserProfileInCache = useUpdateUserProfileInCache();
+  const updateRecentNoticeInCache = useUpdateRecentNoticeInCache();
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
@@ -60,7 +62,6 @@ const ChatroomPage = () => {
     const subscribe = () => {
       sub = stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
         const msg = JSON.parse(message.body);
-        console.log(msg);
         if (
           msg.type === 'CHAT_MESSAGE' ||
           msg.type === 'SYSTEM_MESSAGE' ||
@@ -72,6 +73,8 @@ const ChatroomPage = () => {
           markMessagesAsRead(chatroomId, msg.payload.userId);
         } else if (msg.type === 'USER_UPDATED') {
           updateUserProfileInCache(chatroomId, msg.payload);
+        } else if (msg.type === 'NOTICE') {
+          updateRecentNoticeInCache(chatroomId, msg.payload);
         }
       });
 
