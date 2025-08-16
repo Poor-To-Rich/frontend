@@ -1,3 +1,4 @@
+import { ReportReasonType } from '@/types/chatTypes';
 import { SettingOptionType } from '@/types/types';
 
 export const LOADING_OPTIONS = [{ label: '불러오는 중..', value: '불러오는 중..' }];
@@ -74,7 +75,7 @@ export const INFORMATION_OPTIONS: SettingOptionType[] = [
   },
 ];
 
-export const REPORT_REASONS_OPTIONS = [
+export const REPORT_REASONS_OPTIONS: { label: string; value: ReportReasonType }[] = [
   { label: '욕설 / 비하', value: 'INSULT' },
   { label: '성희롱 / 불쾌한 표현', value: 'SEXUAL' },
   { label: '광고 / 스팸', value: 'SPAM' },

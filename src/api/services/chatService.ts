@@ -19,6 +19,8 @@ import {
   ChatroomDetailsRes,
   ChatroomUserRoleRes,
   KickUserRes,
+  ReportChatroomMemberReq,
+  ReportChatroomMemberRes,
 } from '@/types/chatTypes';
 import { ChatRoomMessageRes } from '@/types/messageType';
 
@@ -124,4 +126,13 @@ export const getChatroomUserRole = async (chatroomId: string) => {
 export const kickUser = async (chatroomId: string, userId: number) => {
   const res = await fetchData<undefined, KickUserRes>('DELETE', endpoints.chat.kickUser(chatroomId, userId));
   return res.data;
+};
+
+export const reportChatroomMember = async (chatroomId: string, userId: number, body: ReportChatroomMemberReq) => {
+  const res = await fetchData<ReportChatroomMemberReq, ReportChatroomMemberRes>(
+    'POST',
+    endpoints.chat.reportChatroomMember(chatroomId, userId),
+    body,
+  );
+  return res;
 };

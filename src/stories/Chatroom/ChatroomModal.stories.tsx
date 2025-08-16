@@ -3,7 +3,7 @@ import PasswordVerifyModal from '@/pages/ChatroomCoverPage/components/modal/Pass
 import ConsentModal from '@/components/modal/chat/ConsentModal';
 import { getHostTransferNotice, HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
 import DefaultModal from '@/components/modal/DefaultModal';
-import ReportReasonModal from '@/components/modal/chat/ReportReasonModal';
+import ReportReasonModal from '@/pages/ChatroomPage/components/modal/ReportReasonModal';
 import RankingInfoModal from '@/components/modal/chat/RankingInfoModal';
 
 function ChatroomModal() {

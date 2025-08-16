@@ -10,12 +10,15 @@ import { ChatroomUserRoleRes } from '@/types/chatTypes';
 import { UserProfileType } from '@/types/profileType';
 import { useQueryClient } from '@tanstack/react-query';
 import UserProfileImageModal from '@/pages/ChatroomPage/components/modal/UserProfileImageModal';
+import useReportChatroomMember from '@/hooks/apis/chat/useReportChatroomMember';
+import ReportReasonModal from '@/pages/ChatroomPage/components/modal/ReportReasonModal';
 
 interface Props {
   chatroomId: string;
   userProfile: UserProfileType;
   closeModal: () => void;
 }
+
 const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
   const queryClient = useQueryClient();
   const userRole = queryClient.getQueryData(['chatroomUserRole', chatroomId]) as ChatroomUserRoleRes;
@@ -25,8 +28,10 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
     closeModal: closeUserProfileImageModal,
   } = useModal();
   const { isOpen: isKickUserModal, openModal: openKickUserModal, closeModal: closeKickUserModal } = useModal();
+  const { isOpen: isReportModal, openModal: openReportModal, closeModal: closeReportModal } = useModal();
 
   const { mutate: kickUser } = useKickUser(chatroomId, closeKickUserModal);
+  const { mutate: reportChatroomMember } = useReportChatroomMember(chatroomId, userProfile.userId, closeReportModal);
 
   return (
     <div className="fixed inset-0 z-10 flex items-stretch justify-center">
@@ -45,7 +50,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
           <Divider weight={1.5} />
           <div className="flex gap-5 mb-30">
             {userRole.chatroomRole === 'HOST' && <UtilityButton label="내보내기" onClick={openKickUserModal} />}
-            <UtilityButton label="신고하기" />
+            <UtilityButton label="신고하기" onClick={openReportModal} />
           </div>
         </div>
       </div>
@@ -62,6 +67,11 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
             onClick={() => kickUser(userProfile.userId)}
             onClose={closeKickUserModal}
           />
+        </ModalDimmed>
+      )}
+      {isReportModal && (
+        <ModalDimmed onClose={closeReportModal}>
+          <ReportReasonModal handleSubmit={reportChatroomMember} closeModal={closeReportModal} />
         </ModalDimmed>
       )}
     </div>
