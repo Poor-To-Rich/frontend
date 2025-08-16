@@ -50,7 +50,6 @@ const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
     if (!photoFile) return;
 
     const body = createFormData({
-      chatroomId: chatroomId,
       photo: photoFile,
     });
 

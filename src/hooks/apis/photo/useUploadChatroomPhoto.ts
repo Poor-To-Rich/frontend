@@ -14,7 +14,7 @@ const useUploadChatroomPhoto = (
         body: JSON.stringify({
           chatroomId: Number(chatroomId),
           messageType: 'PHOTO',
-          content: data?.photo,
+          content: data?.photoUrl,
         }),
       });
       setPhotoFile(null);
