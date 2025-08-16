@@ -112,3 +112,7 @@ export type ChatroomUserRoleRes = {
   chatroomRole: UserRoleType;
   userId: number;
 };
+
+export type KickUserRes = {
+  kickedUserId: number;
+};
