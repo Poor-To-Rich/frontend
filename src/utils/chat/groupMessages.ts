@@ -10,7 +10,7 @@ type GroupedMessage =
   | { type: 'GROUP'; senderId: number; minuteKey: string; messages: ChatMessageType[] }
   | { type: 'SYSTEM_MESSAGE'; message: SystemMessageType }
   | { type: 'RANKING_MESSAGE'; message: RankingMessageType }
-  | { type: 'RANKING_STATUS_MESSAGE'; message: RankingStatusMessageType };
+  | { type: 'RANKING_STATUS'; message: RankingStatusMessageType };
 
 function minuteKeyOf(ts: string | number | Date) {
   const d = new Date(ts);
@@ -68,8 +68,8 @@ export function groupChatMessages(messages: ChatMessageUnion[]): GroupedMessage[
         result.push({ type: 'SYSTEM_MESSAGE', message: message as SystemMessageType });
       } else if (message.type === 'RANKING_MESSAGE') {
         result.push({ type: 'RANKING_MESSAGE', message: message as RankingMessageType });
-      } else if (message.type === 'RANKING_STATUS_MESSAGE') {
-        result.push({ type: 'RANKING_STATUS_MESSAGE', message: message as RankingStatusMessageType });
+      } else if (message.type === 'RANKING_STATUS') {
+        result.push({ type: 'RANKING_STATUS', message: message as RankingStatusMessageType });
       }
     }
   }

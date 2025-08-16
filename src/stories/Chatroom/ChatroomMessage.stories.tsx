@@ -58,7 +58,7 @@ function ChatroomMessage() {
         unreadBy: [],
       },
       {
-        type: 'RANKING_STATUS_MESSAGE',
+        type: 'RANKING_STATUS',
         messageId: 105,
         chatroomId: 1,
         isChatEnabled: false,

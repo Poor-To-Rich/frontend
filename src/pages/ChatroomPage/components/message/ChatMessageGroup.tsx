@@ -3,15 +3,19 @@ import CrownIcon from '@/components/icon/CrownIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import { ChatMessageType } from '@/types/messageType';
 import { UserProfileType } from '@/types/profileType';
+import useModal from '@/hooks/useModal';
+import UserProfileModal from '@/pages/ChatroomPage/components/modal/UserProfileModal';
 import clsx from 'clsx';
 
 interface Props {
+  chatroomId: string;
   messages: ChatMessageType[];
   isMine: boolean;
   userProfile: UserProfileType;
 }
-const ChatMessageGroup = ({ messages, isMine, userProfile }: Props) => {
+const ChatMessageGroup = ({ chatroomId, messages, isMine, userProfile }: Props) => {
   const [first, ...rest] = messages;
+  const { isOpen, openModal, closeModal } = useModal();
 
   return (
     <div className="flex flex-col w-full">
@@ -20,8 +24,8 @@ const ChatMessageGroup = ({ messages, isMine, userProfile }: Props) => {
           <ProfilePhoto
             photo={userProfile.profileImage}
             rankingType={userProfile.rankingType}
-            className="w-20 h-20 shrink-0 self-start"
-            onClick={() => console.log(userProfile.userId)}
+            className="w-20 h-20 shrink-0 self-start cursor-pointer"
+            onClick={() => openModal()}
           />
           <div className="flex flex-col items-start gap-1.5">
             <div className="flex items-center gap-2">
@@ -63,6 +67,8 @@ const ChatMessageGroup = ({ messages, isMine, userProfile }: Props) => {
               />
             ))}
       </div>
+
+      {isOpen && <UserProfileModal chatroomId={chatroomId} userProfile={userProfile} closeModal={closeModal} />}
     </div>
   );
 };
