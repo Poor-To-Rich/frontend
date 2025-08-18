@@ -21,3 +21,7 @@ export type RecentNoticeType = {
 export type updateRecentNoticeReq = {
   status: RecentNoticeStatus;
 };
+
+export type RecentNoticeListRes = {
+  notices: BaseNoticeType[];
+};

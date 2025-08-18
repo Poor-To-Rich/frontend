@@ -98,10 +98,11 @@ export const endpoints = {
   },
   notice: {
     getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    getRecentNoticeList: (chatroomId: string) => `/chatrooms/${chatroomId}/notices/preview`,
     updateRecentNoticeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
   },
   photo: {
     uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,
-    getRecentPhotos: (chatroomId: string) => `/chatrooms/${chatroomId}/photos/preview`,
+    getRecentPhotoList: (chatroomId: string) => `/chatrooms/${chatroomId}/photos/preview`,
   },
 };

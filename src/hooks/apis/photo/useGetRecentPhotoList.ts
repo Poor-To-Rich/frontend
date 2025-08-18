@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetRecentPhotoList = (chatroomId: string) => {
   return useQuery({
-    queryKey: ['recentPhotos', chatroomId],
+    queryKey: ['recentPhotoList', chatroomId],
     queryFn: () => getRecentPhotoList(chatroomId),
   });
 };

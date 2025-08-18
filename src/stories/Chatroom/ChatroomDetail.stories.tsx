@@ -19,21 +19,6 @@ function ChatroomDetail() {
     return result;
   })();
 
-  const notices = [
-    {
-      noticeId: 1,
-      preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 부자됩시다',
-    },
-    {
-      noticeId: 2,
-      preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 부자됩시다',
-    },
-    {
-      noticeId: 3,
-      preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 부자됩시다',
-    },
-  ];
-
   const ranking = {
     rankedAt: '2025-07-01T15:14:00Z',
     rankingId: 3245,
@@ -118,8 +103,8 @@ function ChatroomDetail() {
 
   return (
     <div>
-      <PhotoPreviewBox photos={photos} />
-      <NoticePreviewBox notices={notices} />
+      <PhotoPreviewBox chatroomId="1" />
+      <NoticePreviewBox chatroomId="1" />
       <RankingPreviewBox {...ranking} />
       <ChatMemberBox members={members} />
       <NoticeItem {...notice} hasUnderLine />
