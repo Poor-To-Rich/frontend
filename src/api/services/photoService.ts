@@ -7,7 +7,7 @@ export const uploadChatroomPhoto = async (chatroomId: string, body: FormData) =>
   return res.data;
 };
 
-export const getRecentPhotos = async (chatroomId: string) => {
-  const res = await fetchData<undefined, RecentPhotosRes>('GET', endpoints.photo.getRecentPhotos(chatroomId));
+export const getRecentPhotoList = async (chatroomId: string) => {
+  const res = await fetchData<undefined, RecentPhotosRes>('GET', endpoints.photo.getRecentPhotoList(chatroomId));
   return res.data?.photos;
 };

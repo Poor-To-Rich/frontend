@@ -2,14 +2,20 @@ import ImageIcon from '@/components/icon/ImageIcon';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
 import clsx from 'clsx';
 import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
-import useGetRecentPhotos from '@/hooks/apis/photo/useGetRecentPhotos';
+import useGetRecentPhotoList from '@/hooks/apis/photo/useGetRecentPhotoList';
 
 interface Props {
   chatroomId: string;
 }
 
 const PhotoPreviewBox = ({ chatroomId }: Props) => {
-  const { data: photos } = useGetRecentPhotos(chatroomId);
+  // const { data: photos } = useGetRecentPhotoList(chatroomId);
+  const photos = [
+    {
+      photoId: 101,
+      photoUrl: 'https://example.com/images/101.jpg',
+    },
+  ];
   const isEmpty = photos?.length === 0;
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
