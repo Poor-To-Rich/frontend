@@ -19,25 +19,6 @@ function ChatroomDetail() {
     return result;
   })();
 
-  const ranking = {
-    rankedAt: '2025-07-01T15:14:00Z',
-    rankingId: 3245,
-    saver: {
-      userId: 555,
-      profileImage: Photo,
-      nickname: '짠돌이부자',
-      isHost: true,
-      rankingType: 'SAVER' as RankingType,
-    },
-    flexer: {
-      userId: 6123,
-      profileImage: Photo,
-      nickname: '짠돌이부자3',
-      isHost: true,
-      rankingType: 'FLEXER' as RankingType,
-    },
-  };
-
   const members = (() => {
     const result = [];
     for (let i = 0; i < 1; i++) {
@@ -105,7 +86,7 @@ function ChatroomDetail() {
     <div>
       <PhotoPreviewBox chatroomId="1" />
       <NoticePreviewBox chatroomId="1" />
-      <RankingPreviewBox {...ranking} />
+      <RankingPreviewBox chatroomId="1" />
       <ChatMemberBox members={members} />
       <NoticeItem {...notice} hasUnderLine />
       <RankingItem {...rankings} hasUnderLine />
