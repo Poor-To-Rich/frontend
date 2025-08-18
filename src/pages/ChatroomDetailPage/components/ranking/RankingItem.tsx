@@ -1,5 +1,5 @@
 import { BaseRankingType } from '@/types/rankingType';
-import RankingPodium from '@/components/chatroom/ranking/RankingPodium';
+import RankingPodium from '@/pages/ChatroomDetailPage/components/ranking/RankingPodium';
 import clsx from 'clsx';
 
 interface Props extends BaseRankingType {

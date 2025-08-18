@@ -7,7 +7,7 @@ import { endpoints } from './endpoints';
 
 const apiClient = (() =>
   axios.create({
-    baseURL: import.meta.env.DEV ? '' : `https://${import.meta.env.VITE_API_BASE_URL}`,
+    baseURL: `https://${import.meta.env.VITE_API_BASE_URL}`,
     headers: {
       'Content-Type': 'application/json',
     },

@@ -1,5 +1,5 @@
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
-import SeeMoreButton from '@/components/chatroom/detail/SeeMoreButton';
+import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 import { BaseNoticeType } from '@/types/noticeType';
 
 interface Props {

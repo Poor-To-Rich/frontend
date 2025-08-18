@@ -1,5 +1,5 @@
 import MedalIcon from '@/components/icon/MedalIcon';
-import SeeMoreButton from '@/components/chatroom/detail/SeeMoreButton';
+import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 import PreviewRankingProfile from '@/components/profile/PreviewRankingProfile';
 import { RankingPreviewType } from '@/types/rankingType';
 

@@ -102,5 +102,6 @@ export const endpoints = {
   },
   photo: {
     uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,
+    getRecentPhotos: (chatroomId: string) => `/chatrooms/${chatroomId}/photos/preview`,
   },
 };

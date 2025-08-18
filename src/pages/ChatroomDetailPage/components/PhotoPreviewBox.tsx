@@ -1,15 +1,16 @@
 import ImageIcon from '@/components/icon/ImageIcon';
 import { useDraggableScroll } from '@/hooks/useDraggableScroll';
 import clsx from 'clsx';
-import SeeMoreButton from '@/components/chatroom/detail/SeeMoreButton';
-import { PhotoType } from '@/types/photoType';
+import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
+import useGetRecentPhotos from '@/hooks/apis/photo/useGetRecentPhotos';
 
 interface Props {
-  photos: PhotoType[];
+  chatroomId: string;
 }
 
-const PhotoPreviewBox = ({ photos }: Props) => {
-  const isEmpty = photos.length === 0;
+const PhotoPreviewBox = ({ chatroomId }: Props) => {
+  const { data: photos } = useGetRecentPhotos(chatroomId);
+  const isEmpty = photos?.length === 0;
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
 
@@ -22,7 +23,7 @@ const PhotoPreviewBox = ({ photos }: Props) => {
         </h4>
         <SeeMoreButton />
       </div>
-      {isEmpty ? (
+      {isEmpty || !photos ? (
         <div className="w-full h-32 flex items-center justify-center text-defaultGrey">사진이 없습니다</div>
       ) : (
         <div
@@ -42,7 +43,7 @@ const PhotoPreviewBox = ({ photos }: Props) => {
               alt={`photo-${photoId}`}
               draggable={false}
               className={clsx(
-                'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray',
+                'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray bg-white',
                 index === photos.length - 1 && 'mr-7',
               )}
             />

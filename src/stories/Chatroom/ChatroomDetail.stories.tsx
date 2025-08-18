@@ -1,12 +1,12 @@
-import PhotoPreviewBox from '@/components/chatroom/detail/PhotoPreviewBox';
+import PhotoPreviewBox from '@/pages/ChatroomDetailPage/components/PhotoPreviewBox';
 import Photo from '/image/default-profile-image.webp';
 import type { Meta, StoryObj } from '@storybook/react';
-import NoticePreviewBox from '@/components/chatroom/detail/NoticePreviewBox';
-import RankingPreviewBox from '@/components/chatroom/detail/RankingPreviewBox';
+import NoticePreviewBox from '@/pages/ChatroomDetailPage/components/NoticePreviewBox';
+import RankingPreviewBox from '@/pages/ChatroomDetailPage/components/RankingPreviewBox';
 import { RankingType } from '@/types/profileType';
-import ChatMemberBox from '@/components/chatroom/detail/ChatMemberBox';
-import NoticeItem from '@/components/chatroom/notice/NoticeItem';
-import RankingItem from '@/components/chatroom/ranking/RankingItem';
+import ChatMemberBox from '@/pages/ChatroomDetailPage/components/ChatMemberBox';
+import NoticeItem from '@/pages/ChatroomDetailPage/components/notice/NoticeItem';
+import RankingItem from '@/pages/ChatroomDetailPage/components/ranking/RankingItem';
 import { BaseRankingType } from '@/types/rankingType';
 import DateGroupedImageGrid from '@/components/photo/DateGroupedImageGrid';
 
