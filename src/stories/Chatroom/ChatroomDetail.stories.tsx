@@ -19,20 +19,6 @@ function ChatroomDetail() {
     return result;
   })();
 
-  const members = (() => {
-    const result = [];
-    for (let i = 0; i < 1; i++) {
-      result.push({
-        userId: 555,
-        profileImage: Photo,
-        nickname: '짠돌이부자',
-        isHost: false,
-        rankingType: 'NONE' as RankingType,
-      });
-    }
-    return result;
-  })();
-
   const notice = {
     noticeId: 1,
     preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 다들 부자됩시다',
@@ -87,7 +73,7 @@ function ChatroomDetail() {
       <PhotoPreviewBox chatroomId="1" />
       <NoticePreviewBox chatroomId="1" />
       <RankingPreviewBox chatroomId="1" />
-      <ChatMemberBox members={members} />
+      <ChatMemberBox chatroomId="1" />
       <NoticeItem {...notice} hasUnderLine />
       <RankingItem {...rankings} hasUnderLine />
       <DateGroupedImageGrid {...photoByDate} />
