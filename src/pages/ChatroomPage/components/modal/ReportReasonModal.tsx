@@ -3,20 +3,34 @@ import ModalButton from '@/components/button/modal/ModalButton';
 import CheckedCircleIcon from '@/components/icon/CheckedCircleIcon';
 import DefaultCircleIcon from '@/components/icon/DefaultCircleIcon';
 import { REPORT_REASONS_OPTIONS } from '@/constants/options';
+import { ReportChatroomMemberReq, ReportReasonType } from '@/types/chatTypes';
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const ReportReasonModal = () => {
-  const [reason, setReason] = useState<string>('');
+interface Props {
+  handleSubmit: (data: ReportChatroomMemberReq) => void;
+  closeModal: () => void;
+}
+
+const ReportReasonModal = ({ handleSubmit, closeModal }: Props) => {
+  const [reason, setReason] = useState<ReportReasonType>('INSULT');
   const [customReason, setCustomReason] = useState<string>('');
 
   return (
     <div
       className="min-w-[63%] w-fit p-10 flex flex-col items-start justify-evenly gap-6 rounded-lg bg-white relative"
       onClick={e => e.stopPropagation()}>
-      <XIconButton className="absolute top-5 left-5" />
+      <XIconButton className="absolute top-5 left-5" onClick={closeModal} />
       <p className="w-full text-center">신고 사유 선택</p>
-      <form className="w-full flex flex-col gap-4 items-start my-3">
+      <form
+        className="w-full flex flex-col gap-4 items-start my-3"
+        onSubmit={e => {
+          e.preventDefault();
+          handleSubmit({
+            reportReason: reason,
+            customReason: reason === 'CUSTOM' ? customReason : '',
+          });
+        }}>
         {REPORT_REASONS_OPTIONS.map(({ label, value }) => (
           <label
             key={value}
@@ -38,16 +52,16 @@ const ReportReasonModal = () => {
                   onChange={e => setCustomReason(e.target.value)}
                   placeholder="신고 사유를 입력하세요"
                   className="w-full h-24 p-2 border border-strokeGray rounded-md text-sm focus:outline-none resize-none overflow-y-auto custom-scrollbar"
-                  required
+                  required={reason === 'CUSTOM'}
                 />
               )}
             </div>
           </label>
         ))}
+        <div className="flex w-full justify-end gap-4">
+          <ModalButton label={'제출'} type="submit" />
+        </div>
       </form>
-      <div className="flex w-full justify-end gap-4">
-        <ModalButton label={'제출'} type="submit" />
-      </div>
     </div>
   );
 };

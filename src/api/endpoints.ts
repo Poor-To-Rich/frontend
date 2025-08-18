@@ -93,6 +93,8 @@ export const endpoints = {
       `/chatrooms/${chatroomId}/messages${cursor ? `?cursor=${cursor}` : ''}`,
     getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
     getChatroomUserRole: (chatroomId: string) => `/chatrooms/${chatroomId}/role`,
+    kickUser: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}`,
+    reportChatroomMember: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}/reports`,
   },
   notice: {
     getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,

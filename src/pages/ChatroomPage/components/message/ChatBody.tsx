@@ -7,12 +7,13 @@ import RankingMessage from '@/pages/ChatroomPage/components/message/RankingMessa
 import RankingStatusMessage from '@/pages/ChatroomPage/components/message/RankingStatusMessage';
 
 interface Props {
+  chatroomId: string;
   messages: ChatMessageUnion[];
   myUserId: number;
   users: Record<string, UserProfileType>;
 }
 
-const ChatBody = ({ messages, myUserId, users }: Props) => {
+const ChatBody = ({ chatroomId, messages, myUserId, users }: Props) => {
   const groupedMessages = groupChatMessages(messages);
 
   return (
@@ -23,6 +24,7 @@ const ChatBody = ({ messages, myUserId, users }: Props) => {
           return (
             <ChatMessageGroup
               key={group.messages[0].messageId}
+              chatroomId={chatroomId}
               messages={group.messages}
               isMine={group.senderId === myUserId}
               userProfile={user}
@@ -38,7 +40,7 @@ const ChatBody = ({ messages, myUserId, users }: Props) => {
           return <RankingMessage key={group.message.messageId} {...group.message} />;
         }
 
-        if (group.type === 'RANKING_STATUS_MESSAGE') {
+        if (group.type === 'RANKING_STATUS') {
           return <RankingStatusMessage key={group.message.messageId} {...group.message} />;
         }
 

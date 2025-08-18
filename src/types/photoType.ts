@@ -9,6 +9,5 @@ export type PhotosByDateType = {
 };
 
 export type UploadPhotoRes = {
-  chatroomId: number;
-  photo: string;
+  photoUrl: string;
 };

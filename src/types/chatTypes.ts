@@ -112,3 +112,20 @@ export type ChatroomUserRoleRes = {
   chatroomRole: UserRoleType;
   userId: number;
 };
+
+export type KickUserRes = {
+  kickedUserId: number;
+};
+
+export type ReportReasonType = 'INSULT' | 'SEXUAL' | 'SPAM' | 'FLOOD' | 'POLITICAL' | 'CUSTOM';
+
+export type ReportChatroomMemberReq = {
+  reportReason: ReportReasonType;
+  customReason?: string;
+};
+
+export type ReportChatroomMemberRes = {
+  reportedUserId: number;
+  chatroomId: number;
+  reportReason: ReportReasonType;
+};
