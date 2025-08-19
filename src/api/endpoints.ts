@@ -104,6 +104,8 @@ export const endpoints = {
     getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
     getRecentNoticeList: (chatroomId: string) => `/chatrooms/${chatroomId}/notices/preview`,
     updateRecentNoticeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    getAllNoticeList: (chatroomId: string, cursor?: number | null) =>
+      `/chatrooms/${chatroomId}/notices/all${cursor ? `?cursor=${cursor}` : ''}`,
   },
   photo: {
     uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,

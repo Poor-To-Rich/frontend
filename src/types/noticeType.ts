@@ -25,3 +25,9 @@ export type updateRecentNoticeReq = {
 export type RecentNoticeListRes = {
   notices: BaseNoticeType[];
 };
+
+export type AllNoticeListRes = {
+  hasNext: boolean;
+  nextCursor: number;
+  notices: NoticeItemType[];
+};

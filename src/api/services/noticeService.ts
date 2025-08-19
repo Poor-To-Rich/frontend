@@ -1,6 +1,6 @@
 import { fetchData } from '@/api/axios';
 import { endpoints } from '@/api/endpoints';
-import { RecentNoticeListRes, RecentNoticeType, updateRecentNoticeReq } from '@/types/noticeType';
+import { AllNoticeListRes, RecentNoticeListRes, RecentNoticeType, updateRecentNoticeReq } from '@/types/noticeType';
 
 export const getRecentNotice = async (chatroomId: string) => {
   const res = await fetchData<undefined, RecentNoticeType>('GET', endpoints.notice.getRecentNotice(chatroomId));
@@ -19,5 +19,14 @@ export const updateRecentNoticeStatus = async (chatroomId: string, body: updateR
     endpoints.notice.updateRecentNoticeStatus(chatroomId),
     body,
   );
+  return res.data;
+};
+
+export const getAllNoticeList = async (chatroomId: string, cursor?: number | null) => {
+  const res = await fetchData<undefined, AllNoticeListRes>(
+    'GET',
+    endpoints.notice.getAllNoticeList(chatroomId, cursor),
+  );
+  if (!res.data) throw new Error('No Data');
   return res.data;
 };

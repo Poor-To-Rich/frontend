@@ -1,12 +1,14 @@
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
 import useGetRecentNoticeList from '@/hooks/apis/notice/useGetRecentNoticeList';
 import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   chatroomId: string;
 }
 
 const NoticePreviewBox = ({ chatroomId }: Props) => {
+  const navigate = useNavigate();
   const { data: notices } = useGetRecentNoticeList(chatroomId);
   const isEmpty = notices?.length === 0;
 
@@ -17,7 +19,7 @@ const NoticePreviewBox = ({ chatroomId }: Props) => {
           <MegaphoneIcon />
           <span>공지</span>
         </h4>
-        <SeeMoreButton />
+        <SeeMoreButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/notices`)} />
       </div>
       {isEmpty || !notices ? (
         <div className="w-full h-32 flex items-center justify-center text-defaultGrey">공지가 없습니다</div>
