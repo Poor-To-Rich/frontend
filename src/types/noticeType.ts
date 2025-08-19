@@ -31,3 +31,11 @@ export type AllNoticeListRes = {
   nextCursor: number;
   notices: NoticeItemType[];
 };
+
+export type AddEditNoticeReq = {
+  content: string;
+};
+
+export type AddEditNoticeRes = {
+  noticeId: string;
+};

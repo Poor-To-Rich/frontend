@@ -26,7 +26,7 @@ export const stompClient = new Client({
 
     console.log('%c🔧 Debug', 'color: gray', str);
   },
-  reconnectDelay: 5000,
+  reconnectDelay: 1000,
   heartbeatIncoming: 10000,
   heartbeatOutgoing: 10000,
 

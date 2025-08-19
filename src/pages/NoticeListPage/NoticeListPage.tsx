@@ -23,7 +23,7 @@ const NoticeListPage = () => {
       <DefaultHeader
         leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
         label="공지"
-        rightButton={<PlusButton onClick={() => navigate(`/chat/chatroom/notice/add`)} />}
+        rightButton={<PlusButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/notice/add`)} />}
       />
       {chatroomId && (
         <div>
