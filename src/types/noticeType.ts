@@ -1,3 +1,5 @@
+import { UserProfileType } from './profileType';
+
 export type BaseNoticeType = {
   noticeId: number;
   preview: string;
@@ -30,6 +32,13 @@ export type AllNoticeListRes = {
   hasNext: boolean;
   nextCursor: number;
   notices: NoticeItemType[];
+};
+
+export type GetNoticeRes = {
+  noticeId: number;
+  content: string;
+  createdAt: string;
+  author: UserProfileType;
 };
 
 export type AddEditNoticeReq = {

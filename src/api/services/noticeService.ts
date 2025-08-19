@@ -7,6 +7,7 @@ import {
   AddEditNoticeReq,
   updateRecentNoticeReq,
   AddEditNoticeRes,
+  GetNoticeRes,
 } from '@/types/noticeType';
 
 export const getRecentNotice = async (chatroomId: string) => {
@@ -35,6 +36,11 @@ export const getAllNoticeList = async (chatroomId: string, cursor?: number | nul
     endpoints.notice.getAllNoticeList(chatroomId, cursor),
   );
   if (!res.data) throw new Error('No Data');
+  return res.data;
+};
+
+export const getNotice = async (chatroomId: string, noticeId: string) => {
+  const res = await fetchData<undefined, GetNoticeRes>('GET', endpoints.notice.getNotice(chatroomId, noticeId));
   return res.data;
 };
 
