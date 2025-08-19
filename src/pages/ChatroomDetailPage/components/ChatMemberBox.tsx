@@ -8,7 +8,7 @@ interface Props {
 
 const ChatMemberBox = ({ chatroomId }: Props) => {
   const { data } = useGetAllChatroomMembers(chatroomId);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const displayedMembers = showAll ? data?.members : data?.members.slice(0, 20);
 
@@ -23,7 +23,7 @@ const ChatMemberBox = ({ chatroomId }: Props) => {
           </div>
           <div className="flex flex-col p-7 gap-3 ">
             {displayedMembers.map(member => (
-              <UserProfile key={member.userId} {...member} />
+              <UserProfile key={member.userId} userProfile={member} chatroomId={chatroomId} />
             ))}
           </div>
           {data?.memberCount > 20 && (

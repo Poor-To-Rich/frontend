@@ -4,6 +4,7 @@ import { RecentNoticeListRes, RecentNoticeType, updateRecentNoticeReq } from '@/
 
 export const getRecentNotice = async (chatroomId: string) => {
   const res = await fetchData<undefined, RecentNoticeType>('GET', endpoints.notice.getRecentNotice(chatroomId));
+  if (!res.data) return null;
   return res.data;
 };
 
