@@ -13,9 +13,10 @@ import useClickOutside from '@/hooks/useClickOutside';
 interface Props {
   chatroomId: string;
   openModal: () => void;
+  isHost: boolean;
 }
 
-const ChatroomDetailHeader = ({ chatroomId, openModal }: Props) => {
+const ChatroomDetailHeader = ({ chatroomId, openModal, isHost }: Props) => {
   const navigate = useNavigate();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
@@ -43,7 +44,7 @@ const ChatroomDetailHeader = ({ chatroomId, openModal }: Props) => {
           />
           {isMenuOpen && (
             <div className="absolute right-0 top-15" ref={dropdownRef}>
-              <SingleChatroomDropdown chatroomId={chatroomId} openModal={openModal} />
+              <SingleChatroomDropdown chatroomId={chatroomId} openModal={openModal} isHost={isHost} />
             </div>
           )}
         </div>
