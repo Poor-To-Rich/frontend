@@ -108,6 +108,7 @@ export const endpoints = {
       `/chatrooms/${chatroomId}/notices/all${cursor ? `?cursor=${cursor}` : ''}`,
     getNotice: (chatroomId: string, noticeId: string) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
     updateNotice: (chatroomId: string, noticeId: string) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
+    deleteNotice: (chatroomId: string, noticeId: number) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
   },
   photo: {
     uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,

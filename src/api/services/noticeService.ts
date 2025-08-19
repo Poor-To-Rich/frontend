@@ -52,3 +52,8 @@ export const updateNotice = async (chatroomId: string, noticeId: string, body: A
   );
   return res.data;
 };
+
+export const deleteNotice = async (chatroomId: string, noticeId: number) => {
+  const res = await fetchData<undefined>('DELETE', endpoints.notice.deleteNotice(chatroomId, noticeId));
+  return res.data;
+};

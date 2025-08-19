@@ -53,7 +53,7 @@ const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking
             </p>
           )}
         </div>
-        {createdAt && noticeId && (
+        {isHost && noticeId && (
           <PostMoreButton
             ref={moreButtonRef}
             isDropDown={isDropDown}
