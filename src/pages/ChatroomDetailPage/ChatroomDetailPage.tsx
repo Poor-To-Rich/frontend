@@ -27,10 +27,10 @@ const ChatroomDetailPage = () => {
           <ChatroomDetailHeader chatroomId={chatroomId} openModal={openModal} />
           <div className="flex flex-col gap-3 px-5 py-5">
             <ChatroomProfileBox chatroomId={chatroomId} />
-            {/* <PhotoPreviewBox chatroomId={chatroomId} /> */}
+            <PhotoPreviewBox chatroomId={chatroomId} />
             <NoticePreviewBox chatroomId={chatroomId} />
-            {/* <RankingPreviewBox chatroomId={chatroomId} /> */}
-            {/* <ChatMemberBox chatroomId={chatroomId} /> */}
+            <RankingPreviewBox chatroomId={chatroomId} />
+            <ChatMemberBox chatroomId={chatroomId} />
             <div className="w-full mt-3">
               <ChatActionButton label={'채팅방 나가기'} onClick={openModal} />
             </div>
