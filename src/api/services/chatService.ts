@@ -22,6 +22,7 @@ import {
   ReportChatroomMemberReq,
   ReportChatroomMemberRes,
   AllChatroomMembersRes,
+  SearchChatroomMembers,
 } from '@/types/chatTypes';
 import { ChatRoomMessageRes } from '@/types/messageType';
 
@@ -142,6 +143,14 @@ export const getAllChatroomMembers = async (chatroomId: string) => {
   const res = await fetchData<undefined, AllChatroomMembersRes>(
     'GET',
     endpoints.chat.getAllChatroomMembers(chatroomId),
+  );
+  return res.data;
+};
+
+export const searchChatroomMembers = async (chatroomId: string, nickname: string) => {
+  const res = await fetchData<undefined, SearchChatroomMembers>(
+    'GET',
+    endpoints.chat.searchChatroomMembers(chatroomId, nickname),
   );
   return res.data;
 };

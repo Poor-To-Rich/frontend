@@ -134,3 +134,7 @@ export type AllChatroomMembersRes = {
   memberCount: number;
   members: UserProfileType[];
 };
+
+export type SearchChatroomMembers = {
+  members: UserProfileType[];
+};

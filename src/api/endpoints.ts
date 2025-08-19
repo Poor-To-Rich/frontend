@@ -96,6 +96,8 @@ export const endpoints = {
     kickUser: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}`,
     reportChatroomMember: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}/reports`,
     getAllChatroomMembers: (chatroomId: string) => `/chatrooms/${chatroomId}/members/all`,
+    searchChatroomMembers: (chatroomId: string, nickname: string) =>
+      `/chatrooms/${chatroomId}/members/search?nickname=${nickname}`,
   },
   notice: {
     getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
