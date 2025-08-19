@@ -17,7 +17,7 @@ const InputActionBox = ({ value, onChange, placeholder, buttonLabel, onSubmit }:
         onSubmit?.();
       }}>
       <input
-        className="bg-gray-100 placeholder:text-md placeholder-defaultGrey rounded-lg px-5 focus:outline-none w-full h-full"
+        className="bg-lightGray placeholder:text-md placeholder-defaultGrey rounded-lg px-5 focus:outline-none w-full h-full"
         placeholder={placeholder}
         autoComplete="off"
         value={value}

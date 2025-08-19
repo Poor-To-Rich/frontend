@@ -134,3 +134,15 @@ export type AllChatroomMembersRes = {
   memberCount: number;
   members: UserProfileType[];
 };
+
+export type SearchChatroomMembers = {
+  members: UserProfileType[];
+};
+
+export type DelegateChatroomHostReq = {
+  targetUserId: number;
+};
+
+export type DelegateChatroomHostRes = {
+  newHostUserId: number;
+};

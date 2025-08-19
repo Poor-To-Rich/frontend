@@ -109,7 +109,7 @@ function Button() {
       <br />
       <h2>DropdownMenu</h2>
       <GlobalChatroomDropDown viewMode="all" closeMenu={() => {}} openModal={() => {}} />
-      <SingleChatroomDropdown openModal={() => {}} />
+      <SingleChatroomDropdown chatroomId="1" openModal={() => {}} />
       <NoticeDropdown />
 
       <br />

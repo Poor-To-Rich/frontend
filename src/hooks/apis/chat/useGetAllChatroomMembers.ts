@@ -5,6 +5,7 @@ const useGetAllChatroomMembers = (chatroomId: string) => {
   return useQuery({
     queryKey: ['allChatroomMembers', chatroomId],
     queryFn: () => getAllChatroomMembers(chatroomId),
+    enabled: !!chatroomId,
   });
 };
 
