@@ -39,7 +39,7 @@ function Header() {
 
       <br />
       <h2>ChatroomDetailHeader</h2>
-      <ChatroomDetailHeader />
+      <ChatroomDetailHeader chatroomId="1" openModal={() => {}} />
 
       <br />
       <h2>RankingHeader</h2>

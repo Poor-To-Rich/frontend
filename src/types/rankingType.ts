@@ -1,6 +1,6 @@
 import { UserProfileType } from '@/types/profileType';
 
-export type RankingPreviewType = {
+export type RecentRankingType = {
   rankingId: number;
   rankedAt: string;
   saver: UserProfileType;

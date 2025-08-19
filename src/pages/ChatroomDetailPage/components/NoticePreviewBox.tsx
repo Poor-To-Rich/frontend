@@ -1,13 +1,14 @@
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
-import SeeMoreButton from '@/components/chatroom/detail/SeeMoreButton';
-import { BaseNoticeType } from '@/types/noticeType';
+import useGetRecentNoticeList from '@/hooks/apis/notice/useGetRecentNoticeList';
+import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 
 interface Props {
-  notices: BaseNoticeType[];
+  chatroomId: string;
 }
 
-const NoticePreviewBox = ({ notices }: Props) => {
-  const isEmpty = notices.length === 0;
+const NoticePreviewBox = ({ chatroomId }: Props) => {
+  const { data: notices } = useGetRecentNoticeList(chatroomId);
+  const isEmpty = notices?.length === 0;
 
   return (
     <div className="w-full border border-strokeGray p-7 rounded-3xl">
@@ -18,7 +19,7 @@ const NoticePreviewBox = ({ notices }: Props) => {
         </h4>
         <SeeMoreButton />
       </div>
-      {isEmpty ? (
+      {isEmpty || !notices ? (
         <div className="w-full h-32 flex items-center justify-center text-defaultGrey">공지가 없습니다</div>
       ) : (
         <div className="flex flex-col w-full gap-5">

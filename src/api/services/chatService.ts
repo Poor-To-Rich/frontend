@@ -21,6 +21,7 @@ import {
   KickUserRes,
   ReportChatroomMemberReq,
   ReportChatroomMemberRes,
+  AllChatroomMembersRes,
 } from '@/types/chatTypes';
 import { ChatRoomMessageRes } from '@/types/messageType';
 
@@ -135,4 +136,12 @@ export const reportChatroomMember = async (chatroomId: string, userId: number, b
     body,
   );
   return res;
+};
+
+export const getAllChatroomMembers = async (chatroomId: string) => {
+  const res = await fetchData<undefined, AllChatroomMembersRes>(
+    'GET',
+    endpoints.chat.getAllChatroomMembers(chatroomId),
+  );
+  return res.data;
 };

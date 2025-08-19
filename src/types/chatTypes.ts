@@ -129,3 +129,8 @@ export type ReportChatroomMemberRes = {
   chatroomId: number;
   reportReason: ReportReasonType;
 };
+
+export type AllChatroomMembersRes = {
+  memberCount: number;
+  members: UserProfileType[];
+};

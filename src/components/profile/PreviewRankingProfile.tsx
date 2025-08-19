@@ -13,7 +13,7 @@ const PreviewRankingProfile = ({ profileImage, nickname, userId, rankingType }: 
     },
     FLEXER: {
       title: '플렉스왕',
-      icon: <img src={FlexerIcon} width={30} height={30} className="self-center" />,
+      icon: <img src={FlexerIcon} width={25} height={25} className="self-center" />,
     },
   } as const;
 
