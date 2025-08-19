@@ -9,13 +9,7 @@ interface Props {
 }
 
 const PhotoPreviewBox = ({ chatroomId }: Props) => {
-  // const { data: photos } = useGetRecentPhotoList(chatroomId);
-  const photos = [
-    {
-      photoId: 101,
-      photoUrl: 'https://example.com/images/101.jpg',
-    },
-  ];
+  const { data: photos } = useGetRecentPhotoList(chatroomId);
   const isEmpty = photos?.length === 0;
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
     useDraggableScroll();
