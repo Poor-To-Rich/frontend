@@ -12,7 +12,7 @@ const DropdownMenuBase = ({ options }: Props) => {
         <button
           key={option.label}
           onClick={option.onClick}
-          className={clsx('block w-full text-left p-4 text-md rounded-md cursor-pointer', {
+          className={clsx('block w-full text-left p-4 text-md font-medium rounded-md cursor-pointer', {
             'text-sunsetRose': option.danger,
             'text-black': !option.danger,
           })}>
