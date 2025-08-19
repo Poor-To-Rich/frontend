@@ -43,7 +43,7 @@ const ChatroomDetailHeader = ({ chatroomId, openModal }: Props) => {
           />
           {isMenuOpen && (
             <div className="absolute right-0 top-15" ref={dropdownRef}>
-              <SingleChatroomDropdown openModal={openModal} />
+              <SingleChatroomDropdown chatroomId={chatroomId} openModal={openModal} />
             </div>
           )}
         </div>
