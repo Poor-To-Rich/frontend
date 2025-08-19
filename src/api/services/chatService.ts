@@ -23,6 +23,8 @@ import {
   ReportChatroomMemberRes,
   AllChatroomMembersRes,
   SearchChatroomMembers,
+  DelegateChatroomHostReq,
+  DelegateChatroomHostRes,
 } from '@/types/chatTypes';
 import { ChatRoomMessageRes } from '@/types/messageType';
 
@@ -151,6 +153,15 @@ export const searchChatroomMembers = async (chatroomId: string, nickname: string
   const res = await fetchData<undefined, SearchChatroomMembers>(
     'GET',
     endpoints.chat.searchChatroomMembers(chatroomId, nickname),
+  );
+  return res.data;
+};
+
+export const delegateChatroomHost = async (chatroomId: string, body: DelegateChatroomHostReq) => {
+  const res = await fetchData<DelegateChatroomHostReq, DelegateChatroomHostRes>(
+    'PATCH',
+    endpoints.chat.delegateChatroomHost(chatroomId),
+    body,
   );
   return res.data;
 };
