@@ -7,20 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const NoticeDetailPage = () => {
   const navigate = useNavigate();
   const { chatroomId, noticeId } = useParams();
-  //   const { data: noticeDetail } = useGetNotice(chatroomId!, noticeId!);
-
-  const noticeDetail = {
-    noticeId: 1,
-    content: `"[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요.", \n [ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요.`,
-    createdAt: '2025-07-01T15:14:00Z',
-    author: {
-      userId: 12,
-      profileImage: 'https://example.com/profiles/user-555.jpg',
-      nickname: '데굴',
-      isHost: true,
-      rankingType: 'NONE',
-    },
-  };
+  const { data: noticeDetail } = useGetNotice(chatroomId!, noticeId!);
 
   return (
     <div className="w-full min-h-screen">

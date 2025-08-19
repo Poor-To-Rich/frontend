@@ -110,7 +110,7 @@ function Button() {
       <h2>DropdownMenu</h2>
       <GlobalChatroomDropDown viewMode="all" closeMenu={() => {}} openModal={() => {}} />
       <SingleChatroomDropdown chatroomId="1" isHost openModal={() => {}} />
-      <NoticeDropdown />
+      <NoticeDropdown chatroomId="1" noticeId={1} />
 
       <br />
       <h2>아이콘 버튼</h2>
@@ -126,7 +126,7 @@ function Button() {
         <ChatroomSettingsButton />
       </div>
       <LikeButton />
-      <PostMoreButton />
+      <PostMoreButton isDropDown />
       <ChatroomMenuButton />
       <HelpTooltipButton />
       <ImageUploadButton />

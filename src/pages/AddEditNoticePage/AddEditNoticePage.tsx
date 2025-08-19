@@ -1,11 +1,13 @@
 import NoticeEditorHeader from '@/components/header/NoticeEditorHeader';
+import useGetNotice from '@/hooks/apis/notice/useGetNotice';
 import useGetUpdateNotice from '@/hooks/apis/notice/useGetUpdateNotice';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const AddEditNoticePage = () => {
   const { chatroomId, noticeId } = useParams();
-  const [noticeContent, setNoticeContent] = useState<string>('');
+  const { data: noticeDetail } = useGetNotice(chatroomId!, noticeId!);
+  const [noticeContent, setNoticeContent] = useState<string>(noticeDetail?.content ?? '');
   const { mutate: updateNotice } = useGetUpdateNotice(chatroomId!, noticeId!);
 
   const isEdit = !!noticeId;
