@@ -44,6 +44,11 @@ export const getNotice = async (chatroomId: string, noticeId: string) => {
   return res.data;
 };
 
+export const addNotice = async (chatroomId: string, body: AddEditNoticeReq) => {
+  const res = await fetchData<AddEditNoticeReq, AddEditNoticeRes>('POST', endpoints.notice.addNotice(chatroomId), body);
+  return res.data;
+};
+
 export const updateNotice = async (chatroomId: string, noticeId: string, body: AddEditNoticeReq) => {
   const res = await fetchData<AddEditNoticeReq, AddEditNoticeRes>(
     'PUT',

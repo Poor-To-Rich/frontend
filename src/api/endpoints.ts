@@ -107,6 +107,7 @@ export const endpoints = {
     getAllNoticeList: (chatroomId: string, cursor?: number | null) =>
       `/chatrooms/${chatroomId}/notices/all${cursor ? `?cursor=${cursor}` : ''}`,
     getNotice: (chatroomId: string, noticeId: string) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
+    addNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
     updateNotice: (chatroomId: string, noticeId: string) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
     deleteNotice: (chatroomId: string, noticeId: number) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
   },
