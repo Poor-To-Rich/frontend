@@ -83,6 +83,8 @@ function App() {
           <Route path="/chat/chatroom/host/delegate/:chatroomId" element={<ChatroomHostDelegatePage />} />
           <Route path="/chat/chatroom/:chatroomId/notices" element={<NoticeListPage />} />
           <Route path="/chat/chatroom/:chatroomId/notices/:noticeId" element={<NoticeDetailPage />} />
+          <Route path="/chat/chatroom/:chatroomId/notices/add" element={<AddEditNoticePage />} />
+          <Route path="/chat/chatroom/:chatroomId/notices/:noticeId/edit" element={<AddEditNoticePage />} />
           <Route
             element={
               <ChatSocketProvider>
@@ -91,8 +93,6 @@ function App() {
             }>
             <Route path="/chat" element={<ChatLobbyPage />} />
             <Route path="/chat/chatroom/:chatroomId" element={<ChatroomPage />} />
-            <Route path="/chat/chatroom/:chatroomId/notices/add" element={<AddEditNoticePage />} />
-            <Route path="/chat/chatroom/:chatroomId/notices/:noticeId/edit" element={<AddEditNoticePage />} />
           </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
