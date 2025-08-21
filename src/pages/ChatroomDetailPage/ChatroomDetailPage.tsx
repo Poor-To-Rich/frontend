@@ -24,7 +24,11 @@ const ChatroomDetailPage = () => {
     <div className="w-full min-h-screen">
       {chatroomId && (
         <>
-          <ChatroomDetailHeader chatroomId={chatroomId} openModal={openModal} />
+          <ChatroomDetailHeader
+            chatroomId={chatroomId}
+            openModal={openModal}
+            isHost={useRole?.chatroomRole === 'HOST'}
+          />
           <div className="flex flex-col gap-3 px-5 py-5">
             <ChatroomProfileBox chatroomId={chatroomId} />
             <PhotoPreviewBox chatroomId={chatroomId} />

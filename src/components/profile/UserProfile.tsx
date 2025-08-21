@@ -3,34 +3,75 @@ import CrownIcon from '@/components/icon/CrownIcon';
 import useModal from '@/hooks/useModal';
 import UserProfileModal from '@/pages/ChatroomPage/components/modal/UserProfileModal';
 import { UserProfileType } from '@/types/profileType';
+import PostMoreButton from '@/components/button/icon/PostMoreButton';
+import { ko } from 'date-fns/locale';
+import { parseServerUTC } from '@/utils/chat/timeFormta';
+import { format } from 'date-fns';
+import NoticeDropdown from '@/components/menu/NoticeDropdown';
+import { useRef } from 'react';
+import useClickOutside from '@/hooks/useClickOutside';
 
 interface Props {
   userProfile: UserProfileType;
-  chatroomId: string;
-  createAt?: string;
+  chatroomId?: string;
+  noticeId?: number;
+  createdAt?: string;
   hideRanking?: boolean;
 }
 
-const UserProfile = ({ userProfile, chatroomId, createAt, hideRanking }: Props) => {
+const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking }: Props) => {
   const { profileImage, rankingType, nickname, isHost } = userProfile;
-  const { isOpen, openModal, closeModal } = useModal();
+  const { isOpen: isUserProfile, openModal: openUserProfile, closeModal: closeUserProfile } = useModal();
+  const { isOpen: isDropDown, openModal: openDropDown, closeModal: closeDropDown } = useModal();
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const moreButtonRef = useRef<HTMLButtonElement>(null);
+
+  useClickOutside({
+    refs: [dropdownRef, moreButtonRef],
+    onClickOutside: closeDropDown,
+  });
+
   return (
-    <div className={'flex gap-5 items-center'}>
+    <div className={'flex gap-5 items-center relative'}>
       <ProfilePhoto
         photo={profileImage}
         rankingType={rankingType}
         hideRanking={hideRanking}
         className="w-20"
-        onClick={openModal}
+        onClick={openUserProfile}
       />
-      <div className="flex flex-col items-start gap-1.5">
-        <div className="flex items-center gap-2 ">
-          <p>{nickname}</p>
-          {isHost && <CrownIcon size={20} />}
+      <div className="flex-grow flex justify-between items-start">
+        <div className="flex flex-col items-start gap-1.5">
+          <div className="flex items-center gap-2 ">
+            <p>{nickname}</p>
+            {isHost && <CrownIcon size={20} />}
+          </div>
+          {createdAt && (
+            <p className="text-sm text-defaultGrey">
+              {format(parseServerUTC(createdAt), 'yyyy년 MM월 dd일 a h시 mm분', { locale: ko })}
+            </p>
+          )}
         </div>
-        {createAt && <p className="text-sm text-defaultGrey">{createAt}</p>}
+        {isHost && noticeId && (
+          <PostMoreButton
+            ref={moreButtonRef}
+            isDropDown={isDropDown}
+            onClick={() => {
+              if (isDropDown) closeDropDown();
+              else openDropDown();
+            }}
+          />
+        )}
       </div>
-      {isOpen && <UserProfileModal chatroomId={chatroomId} userProfile={userProfile} closeModal={closeModal} />}
+      {isUserProfile && chatroomId && (
+        <UserProfileModal chatroomId={chatroomId} userProfile={userProfile} closeModal={closeUserProfile} />
+      )}
+      {isDropDown && noticeId && chatroomId && (
+        <div className="absolute right-0 top-10" ref={dropdownRef}>
+          <NoticeDropdown noticeId={noticeId} chatroomId={chatroomId} />
+        </div>
+      )}
     </div>
   );
 };
