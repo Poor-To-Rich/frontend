@@ -72,7 +72,7 @@ const ChatroomPage = () => {
           prependMessageToFirstPage(chatroomId, msg.payload);
         } else if (msg.type === 'MESSAGE_READ') {
           markMessagesAsRead(chatroomId, msg.payload.userId);
-        } else if (msg.type === 'USER_UPDATED') {
+        } else if (msg.type === 'USER_UPDATED' || msg.type === 'USER_JOINED') {
           updateUserProfileInCache(chatroomId, msg.payload);
         } else if (msg.type === 'NOTICE') {
           updateRecentNoticeInCache(chatroomId, msg.payload);
