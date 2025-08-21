@@ -1,4 +1,4 @@
-import RankingPodium from '@/components/chatroom/ranking/RankingPodium';
+import RankingPodium from '@/pages/ChatroomDetailPage/components/ranking/RankingPodium';
 import { RANKING_RESULT_ANNOUNCEMENT_MESSAGE, RANKING_RESULT_NOT_AVAILABLE_MESSAGE } from '@/constants/message';
 import { RankingMessageType } from '@/types/messageType';
 

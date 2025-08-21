@@ -11,10 +11,13 @@ type Story = StoryObj<typeof UserProfile>;
 
 export const Default: Story = {
   args: {
-    profileImage: '/image/default-profile-image.webp',
-    nickname: '데굴',
-    isHost: true,
-    userId: 1,
-    rankingType: 'FLEXER',
+    chatroomId: '1',
+    userProfile: {
+      profileImage: '/image/default-profile-image.webp',
+      nickname: '데굴',
+      isHost: true,
+      userId: 1,
+      rankingType: 'FLEXER',
+    },
   },
 };

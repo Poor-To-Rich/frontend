@@ -46,7 +46,7 @@ const ChatroomCoverPage = () => {
                 isLiked={likeStatus.isLiked}
                 likeCount={likeStatus.likeCount}
               />
-              <UserProfile {...chatroomCover.hostProfile} hideRanking />
+              <UserProfile chatroomId="1" userProfile={chatroomCover.hostProfile} hideRanking />
               <div className="flex flex-col gap-5">
                 <ChatroomInfoItem label="채팅방 소개" content={chatroomCover.description} />
                 <ChatroomInfoItem

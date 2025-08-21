@@ -19,10 +19,15 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
   const renderMessageBox = (
     <div
       className={clsx(
-        'relative w-fit rounded-md px-5 py-2 whitespace-pre-line break-all',
+        'flex justify-center relative w-fit rounded-md whitespace-pre-line break-all',
+        messageType === 'TEXT' && 'px-5 py-2 ',
         isMine ? 'bg-pastelLime' : 'bg-white border border-strokeGray',
       )}>
-      {messageType === 'TEXT' ? content : <img src={content!} alt="chat image" />}
+      {messageType === 'TEXT' ? (
+        content
+      ) : (
+        <img src={content!} alt="chat image" className="w-fit aspect-auto object-contain rounded-md" />
+      )}
       {index === 0 && isMine && rankingType === 'SAVER' && (
         <img src={SaverIcon} width={25} height={25} className="absolute -top-8 right-0" />
       )}

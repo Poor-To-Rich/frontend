@@ -18,6 +18,13 @@ import {
   LikedStatusReq,
   ChatroomDetailsRes,
   ChatroomUserRoleRes,
+  KickUserRes,
+  ReportChatroomMemberReq,
+  ReportChatroomMemberRes,
+  AllChatroomMembersRes,
+  SearchChatroomMembers,
+  DelegateChatroomHostReq,
+  DelegateChatroomHostRes,
 } from '@/types/chatTypes';
 import { ChatRoomMessageRes } from '@/types/messageType';
 
@@ -117,5 +124,44 @@ export const getChatroomDetails = async (chatroomId: string) => {
 
 export const getChatroomUserRole = async (chatroomId: string) => {
   const res = await fetchData<undefined, ChatroomUserRoleRes>('GET', endpoints.chat.getChatroomUserRole(chatroomId));
+  return res.data;
+};
+
+export const kickUser = async (chatroomId: string, userId: number) => {
+  const res = await fetchData<undefined, KickUserRes>('DELETE', endpoints.chat.kickUser(chatroomId, userId));
+  return res.data;
+};
+
+export const reportChatroomMember = async (chatroomId: string, userId: number, body: ReportChatroomMemberReq) => {
+  const res = await fetchData<ReportChatroomMemberReq, ReportChatroomMemberRes>(
+    'POST',
+    endpoints.chat.reportChatroomMember(chatroomId, userId),
+    body,
+  );
+  return res;
+};
+
+export const getAllChatroomMembers = async (chatroomId: string) => {
+  const res = await fetchData<undefined, AllChatroomMembersRes>(
+    'GET',
+    endpoints.chat.getAllChatroomMembers(chatroomId),
+  );
+  return res.data;
+};
+
+export const searchChatroomMembers = async (chatroomId: string, nickname: string) => {
+  const res = await fetchData<undefined, SearchChatroomMembers>(
+    'GET',
+    endpoints.chat.searchChatroomMembers(chatroomId, nickname),
+  );
+  return res.data;
+};
+
+export const delegateChatroomHost = async (chatroomId: string, body: DelegateChatroomHostReq) => {
+  const res = await fetchData<DelegateChatroomHostReq, DelegateChatroomHostRes>(
+    'PATCH',
+    endpoints.chat.delegateChatroomHost(chatroomId),
+    body,
+  );
   return res.data;
 };

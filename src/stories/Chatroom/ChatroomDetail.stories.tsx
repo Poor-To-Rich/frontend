@@ -1,12 +1,12 @@
-import PhotoPreviewBox from '@/components/chatroom/detail/PhotoPreviewBox';
+import PhotoPreviewBox from '@/pages/ChatroomDetailPage/components/PhotoPreviewBox';
 import Photo from '/image/default-profile-image.webp';
 import type { Meta, StoryObj } from '@storybook/react';
-import NoticePreviewBox from '@/components/chatroom/detail/NoticePreviewBox';
-import RankingPreviewBox from '@/components/chatroom/detail/RankingPreviewBox';
+import NoticePreviewBox from '@/pages/ChatroomDetailPage/components/NoticePreviewBox';
+import RankingPreviewBox from '@/pages/ChatroomDetailPage/components/RankingPreviewBox';
 import { RankingType } from '@/types/profileType';
-import ChatMemberBox from '@/components/chatroom/detail/ChatMemberBox';
-import NoticeItem from '@/components/chatroom/notice/NoticeItem';
-import RankingItem from '@/components/chatroom/ranking/RankingItem';
+import ChatMemberBox from '@/pages/ChatroomDetailPage/components/ChatMemberBox';
+import NoticeItem from '@/pages/NoticeListPage/components/NoticeItem';
+import RankingItem from '@/pages/ChatroomDetailPage/components/ranking/RankingItem';
 import { BaseRankingType } from '@/types/rankingType';
 import DateGroupedImageGrid from '@/components/photo/DateGroupedImageGrid';
 
@@ -15,54 +15,6 @@ function ChatroomDetail() {
     const result = [];
     for (let i = 0; i < 6; i++) {
       result.push({ photoId: i, photoUrl: Photo });
-    }
-    return result;
-  })();
-
-  const notices = [
-    {
-      noticeId: 1,
-      preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 부자됩시다',
-    },
-    {
-      noticeId: 2,
-      preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 부자됩시다',
-    },
-    {
-      noticeId: 3,
-      preview: '[ 필독 사항 ] 수다를 걸들인 거지방 이용하실 분들 확인해 주세요 부자됩시다',
-    },
-  ];
-
-  const ranking = {
-    rankedAt: '2025-07-01T15:14:00Z',
-    rankingId: 3245,
-    saver: {
-      userId: 555,
-      profileImage: Photo,
-      nickname: '짠돌이부자',
-      isHost: true,
-      rankingType: 'SAVER' as RankingType,
-    },
-    flexer: {
-      userId: 6123,
-      profileImage: Photo,
-      nickname: '짠돌이부자3',
-      isHost: true,
-      rankingType: 'FLEXER' as RankingType,
-    },
-  };
-
-  const members = (() => {
-    const result = [];
-    for (let i = 0; i < 1; i++) {
-      result.push({
-        userId: 555,
-        profileImage: Photo,
-        nickname: '짠돌이부자',
-        isHost: false,
-        rankingType: 'NONE' as RankingType,
-      });
     }
     return result;
   })();
@@ -118,11 +70,11 @@ function ChatroomDetail() {
 
   return (
     <div>
-      <PhotoPreviewBox photos={photos} />
-      <NoticePreviewBox notices={notices} />
-      <RankingPreviewBox {...ranking} />
-      <ChatMemberBox members={members} />
-      <NoticeItem {...notice} hasUnderLine />
+      <PhotoPreviewBox chatroomId="1" />
+      <NoticePreviewBox chatroomId="1" />
+      <RankingPreviewBox chatroomId="1" />
+      <ChatMemberBox chatroomId="1" />
+      <NoticeItem chatroomId="1" {...notice} hasUnderLine />
       <RankingItem {...rankings} hasUnderLine />
       <DateGroupedImageGrid {...photoByDate} />
     </div>

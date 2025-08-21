@@ -93,12 +93,29 @@ export const endpoints = {
       `/chatrooms/${chatroomId}/messages${cursor ? `?cursor=${cursor}` : ''}`,
     getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
     getChatroomUserRole: (chatroomId: string) => `/chatrooms/${chatroomId}/role`,
+    kickUser: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}`,
+    reportChatroomMember: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}/reports`,
+    getAllChatroomMembers: (chatroomId: string) => `/chatrooms/${chatroomId}/members/all`,
+    searchChatroomMembers: (chatroomId: string, nickname: string) =>
+      `/chatrooms/${chatroomId}/members/search${nickname && `?nickname=${nickname}`}`,
+    delegateChatroomHost: (chatroomId: string) => `/chatrooms/${chatroomId}/host/delegate`,
   },
   notice: {
     getRecentNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    getRecentNoticeList: (chatroomId: string) => `/chatrooms/${chatroomId}/notices/preview`,
     updateRecentNoticeStatus: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    getAllNoticeList: (chatroomId: string, cursor?: number | null) =>
+      `/chatrooms/${chatroomId}/notices/all${cursor ? `?cursor=${cursor}` : ''}`,
+    getNotice: (chatroomId: string, noticeId: string) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
+    addNotice: (chatroomId: string) => `/chatrooms/${chatroomId}/notices`,
+    updateNotice: (chatroomId: string, noticeId: string) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
+    deleteNotice: (chatroomId: string, noticeId: number) => `/chatrooms/${chatroomId}/notices/${noticeId}`,
   },
   photo: {
     uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,
+    getRecentPhotoList: (chatroomId: string) => `/chatrooms/${chatroomId}/photos/preview`,
+  },
+  ranking: {
+    getRecentRanking: (chatroomId: string) => `/chatrooms/${chatroomId}/rankings/preview`,
   },
 };

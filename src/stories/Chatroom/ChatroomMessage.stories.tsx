@@ -58,7 +58,7 @@ function ChatroomMessage() {
         unreadBy: [],
       },
       {
-        type: 'RANKING_STATUS_MESSAGE',
+        type: 'RANKING_STATUS',
         messageId: 105,
         chatroomId: 1,
         isChatEnabled: false,
@@ -153,6 +153,7 @@ function ChatroomMessage() {
       <NoticeSection {...notice} />
       <ChatBody
         myUserId={103}
+        chatroomId="1"
         messages={previousMessagesResponse.messages as ChatMessageUnion[]}
         users={previousMessagesResponse.users as Record<string, UserProfileType>}
       />

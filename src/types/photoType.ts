@@ -1,14 +1,17 @@
-export type PhotoType = {
+export type RecentPhotosType = {
   photoId: number;
   photoUrl: string;
 };
 
 export type PhotosByDateType = {
   date: string;
-  photos: PhotoType[];
+  photos: RecentPhotosType[];
 };
 
 export type UploadPhotoRes = {
-  chatroomId: number;
-  photo: string;
+  photoUrl: string;
+};
+
+export type RecentPhotosRes = {
+  photos: RecentPhotosType[];
 };

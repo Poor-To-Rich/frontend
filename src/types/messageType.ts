@@ -36,7 +36,7 @@ export type RankingMessageType = {
 } & BaseRankingType;
 
 export type RankingStatusMessageType = {
-  type: 'RANKING_STATUS_MESSAGE';
+  type: 'RANKING_STATUS';
   messageId: number;
   chatroomId: number;
   isChatEnabled: boolean;

@@ -1,4 +1,4 @@
-import { uploadChatroomPhoto } from '@/api/services/imageService';
+import { uploadChatroomPhoto } from '@/api/services/photoService';
 import { stompClient } from '@/api/stomp';
 import { useMutation } from '@tanstack/react-query';
 
@@ -14,7 +14,7 @@ const useUploadChatroomPhoto = (
         body: JSON.stringify({
           chatroomId: Number(chatroomId),
           messageType: 'PHOTO',
-          content: data?.photo,
+          content: data?.photoUrl,
         }),
       });
       setPhotoFile(null);
