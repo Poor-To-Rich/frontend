@@ -24,7 +24,7 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
         isMine ? 'bg-pastelLime' : 'bg-white border border-strokeGray',
       )}>
       {messageType === 'TEXT' ? (
-        content
+        <p className="whitespace-pre-wrap">{content}</p>
       ) : (
         <img src={content!} alt="chat image" className="w-fit aspect-auto object-contain rounded-md" />
       )}
