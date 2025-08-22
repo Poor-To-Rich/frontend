@@ -20,14 +20,14 @@ const ChatMessageGroup = ({ chatroomId, messages, isMine, userProfile }: Props) 
   return (
     <div className="flex flex-col w-full">
       {!isMine && userProfile && (
-        <div className="flex gap-5 items-start">
+        <div className="flex gap-5 items-start w-full">
           <ProfilePhoto
             photo={userProfile.profileImage}
             rankingType={userProfile.rankingType}
             className="w-20 h-20 shrink-0 self-start cursor-pointer"
             onClick={() => openModal()}
           />
-          <div className="flex flex-col items-start gap-1.5">
+          <div className="flex flex-col items-start gap-1.5 w-full">
             <div className="flex items-center gap-2">
               <p>{userProfile.nickname}</p>
               {userProfile.isHost && <CrownIcon size={20} />}

@@ -17,7 +17,7 @@ const ChatBody = ({ chatroomId, messages, myUserId, users }: Props) => {
   const groupedMessages = groupChatMessages(messages);
 
   return (
-    <div className="flex flex-col items-center gap-10 p-5">
+    <div className="flex flex-col items-center gap-10 p-5 w-full">
       {groupedMessages.map(group => {
         if (group.type === 'GROUP') {
           const user = users[group.senderId];

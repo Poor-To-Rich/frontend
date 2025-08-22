@@ -3,15 +3,17 @@ import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
 import XIconButton from '@/components/button/icon/XIconButton';
 import SubActionButton from '@/components/button/SubActionButton';
 import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
+import { scrollToBottom } from '@/utils/chat/scrollToBottom';
 import { createFormData } from '@/utils/form/createFormData';
-import { useRef, useState } from 'react';
+import { MutableRefObject, useRef, useState } from 'react';
 
 interface Props {
   chatroomId: number;
   isClosed?: boolean;
+  scrollRef: MutableRefObject<HTMLDivElement | null>;
 }
 
-const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
+const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [isComposing, setIsComposing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -40,6 +42,8 @@ const ChatActionBox = ({ chatroomId, isClosed }: Props) => {
         content: text,
       }),
     });
+
+    scrollToBottom(scrollRef, 'instant');
 
     if (textareaRef.current) {
       textareaRef.current.value = '';

@@ -1,4 +1,6 @@
 import { ChatMessageUnion } from '@/types/messageType';
+import { scrollToBottom } from '@/utils/chat/scrollToBottom';
+import { waitForImages } from '@/utils/chat/waitForImages';
 import { MutableRefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
 interface Options {
@@ -7,7 +9,6 @@ interface Options {
   messageDeps: any[];
   isFetchingNextPage?: boolean;
   followThreshold?: number;
-  enabled?: boolean;
 }
 
 const useChatScroll = ({
@@ -16,68 +17,64 @@ const useChatScroll = ({
   messageDeps,
   isFetchingNextPage = false,
   followThreshold = 150,
-  enabled = true,
 }: Options) => {
+  const el = scrollRef.current;
   const didInitialScrollRef = useRef(false);
   const prevHeightRef = useRef(0);
-  const prevPageCountRef = useRef(0);
-
-  const scrollToBottom = (behavior: ScrollBehavior = 'auto') => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTo({ top: el.scrollHeight, behavior });
-  };
 
   const isNearBottom = (offset = followThreshold) => {
-    const el = scrollRef.current;
     if (!el) return true;
     return el.scrollHeight - el.scrollTop - el.clientHeight <= offset;
   };
 
   // 1) 최초 데이터 도착 시 1회 바닥으로 이동
   useLayoutEffect(() => {
-    if (!enabled) return;
     if (!pages || didInitialScrollRef.current) return;
 
     const total = pages?.reduce((acc, p) => acc + (p.messages?.length ?? 0), 0) ?? 0;
 
-    if (total > 0) {
+    if (total > 0 && el) {
       // DOM 페인트 이후 정확한 높이에서 스크롤
-      requestAnimationFrame(() => {
-        scrollToBottom('auto');
-        didInitialScrollRef.current = true;
+      waitForImages(el).then(() => {
+        requestAnimationFrame(() => {
+          scrollToBottom(scrollRef, 'instant');
+          didInitialScrollRef.current = true;
+        });
       });
     }
-  }, [enabled, pages]);
+  }, [pages]);
 
   // 2) 새 메시지 들어올 때 바닥 근처면 따라가기
   useEffect(() => {
-    if (!enabled) return;
-    if (!didInitialScrollRef.current) return;
-    if (isNearBottom()) scrollToBottom('smooth');
-  }, messageDeps);
+    if (!didInitialScrollRef.current || !scrollRef.current) return;
+    const el = scrollRef.current;
+
+    if (isNearBottom()) {
+      waitForImages(el).then(() => {
+        requestAnimationFrame(() => {
+          scrollToBottom(scrollRef, 'instant');
+        });
+      });
+    }
+  }, [messageDeps]);
 
   // 3) 과거 페이지 로드 시 위치 보존
   useEffect(() => {
-    if (!enabled) return;
     if (isFetchingNextPage) {
       prevHeightRef.current = scrollRef.current?.scrollHeight ?? 0;
     }
-  }, [enabled, isFetchingNextPage]);
+  }, [isFetchingNextPage]);
 
   useEffect(() => {
-    if (!enabled) return;
-    const pageCount = pages?.length ?? 0;
-    if (pageCount > prevPageCountRef.current) {
-      const el = scrollRef.current;
+    if (!isFetchingNextPage) {
       if (el && prevHeightRef.current) {
-        const now = el.scrollHeight;
-        const prev = prevHeightRef.current;
-        el.scrollTop = now - prev; // 기존 위치 유지
+        const diff = el.scrollHeight - prevHeightRef.current;
+        if (diff > 0) {
+          el.scrollTop += diff;
+        }
       }
     }
-    prevPageCountRef.current = pageCount;
-  }, [enabled, pages?.length]);
+  }, [isFetchingNextPage]);
 };
 
 export default useChatScroll;

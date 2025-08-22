@@ -4,9 +4,9 @@ import { UserProfileType } from './profileType';
 
 export type ChatroomViewModeValue = 'all' | 'joined';
 
-export type ChatroomSortOptionValue = 'popularity' | 'createdAt' | 'likes';
+export type ChatroomSortOptionValue = 'updatedAt' | 'createdAt' | 'likes';
 
-export type ChatroomSortParam = 'LIKE' | 'CREATED_AT' | 'POPULARITY';
+export type ChatroomSortParam = 'LIKE' | 'CREATED_AT' | 'UPDATED_AT';
 
 export type PublicChatroomType = {
   chatroomId: number;

@@ -49,7 +49,6 @@ const ChatroomPage = () => {
     messageDeps: [chatMessages],
     isFetchingNextPage,
     followThreshold: 150,
-    enabled: true,
   });
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
@@ -119,7 +118,7 @@ const ChatroomPage = () => {
           <ChatBody chatroomId={chatroomId} myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />
         )}
       </div>
-      <ChatActionBox chatroomId={Number(chatroomId)} isClosed={chatroomDetails?.isClosed} />
+      <ChatActionBox chatroomId={Number(chatroomId)} isClosed={chatroomDetails?.isClosed} scrollRef={scrollRef} />
     </div>
   );
 };

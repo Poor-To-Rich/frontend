@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 const ChatLobbyPage = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
-  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>('popularity');
+  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>('updatedAt');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
   const dropdownRef = useRef<HTMLDivElement>(null);
