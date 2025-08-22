@@ -18,11 +18,12 @@ const useChatScroll = ({
   isFetchingNextPage = false,
   followThreshold = 150,
 }: Options) => {
-  const el = scrollRef.current;
   const didInitialScrollRef = useRef(false);
   const prevHeightRef = useRef(0);
 
   const isNearBottom = (offset = followThreshold) => {
+    const el = scrollRef.current;
+
     if (!el) return true;
     return el.scrollHeight - el.scrollTop - el.clientHeight <= offset;
   };
@@ -31,6 +32,7 @@ const useChatScroll = ({
   useLayoutEffect(() => {
     if (!pages || didInitialScrollRef.current) return;
 
+    const el = scrollRef.current;
     const total = pages?.reduce((acc, p) => acc + (p.messages?.length ?? 0), 0) ?? 0;
 
     if (total > 0 && el) {
@@ -66,6 +68,8 @@ const useChatScroll = ({
   }, [isFetchingNextPage]);
 
   useEffect(() => {
+    const el = scrollRef.current;
+
     if (!isFetchingNextPage) {
       if (el && prevHeightRef.current) {
         const diff = el.scrollHeight - prevHeightRef.current;
