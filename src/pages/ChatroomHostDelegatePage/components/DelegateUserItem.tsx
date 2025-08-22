@@ -14,7 +14,7 @@ interface Props {
 
 const DelegateUserItem = ({ chatroomId, userProfile }: Props) => {
   const { isOpen, openModal, closeModal } = useModal();
-  const { mutate: delegateHost } = useDelegateChatroomHost(chatroomId, closeModal);
+  const { mutate: delegateHost } = useDelegateChatroomHost(chatroomId);
 
   const handleClick = () => {
     delegateHost({

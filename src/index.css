@@ -70,6 +70,12 @@
     border-color: #e6e6e6;
     border-radius: 10px;
   }
+
+  .custom-scrollbar {
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 @layer components {

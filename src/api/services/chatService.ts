@@ -163,5 +163,5 @@ export const delegateChatroomHost = async (chatroomId: string, body: DelegateCha
     endpoints.chat.delegateChatroomHost(chatroomId),
     body,
   );
-  return res.data;
+  return res;
 };

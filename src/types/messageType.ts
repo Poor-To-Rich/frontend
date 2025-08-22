@@ -8,7 +8,7 @@ export type ChatMessageType = {
   messageId: number;
   chatroomId: number;
   senderId: number;
-  messageType: 'TEXT' | 'IMAGE';
+  messageType: 'TEXT' | 'PHOTO';
   content: string;
   sentAt: string;
   unreadBy: number[];

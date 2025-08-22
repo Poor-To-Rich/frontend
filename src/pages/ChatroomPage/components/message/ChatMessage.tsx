@@ -19,12 +19,12 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
   const renderMessageBox = (
     <div
       className={clsx(
-        'flex justify-center relative w-fit rounded-md whitespace-pre-line break-all',
+        'flex justify-center relative w-fit max-w-[75%] rounded-md whitespace-pre-line break-all',
         messageType === 'TEXT' && 'px-5 py-2 ',
         isMine ? 'bg-pastelLime' : 'bg-white border border-strokeGray',
       )}>
       {messageType === 'TEXT' ? (
-        content
+        <p className="whitespace-pre-wrap">{content}</p>
       ) : (
         <img src={content!} alt="chat image" className="w-fit aspect-auto object-contain rounded-md" />
       )}
@@ -38,7 +38,7 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
   );
 
   return (
-    <div className={clsx('flex items-end gap-2.5', isMine ? 'justify-end' : 'justify-start')}>
+    <div className={clsx('flex items-end gap-2.5 w-full', isMine ? 'justify-end' : 'justify-start')}>
       {!isMine && renderMessageBox}
       <div className={clsx('flex flex-col', isMine ? 'items-end' : 'items-start')}>
         {unreadBy.length > 0 && <p className="text-sm">{unreadBy.length}</p>}

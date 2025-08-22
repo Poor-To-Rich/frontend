@@ -6,7 +6,7 @@ const useLeaveChatroom = () => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: leaveChatroom,
-    onSuccess: () => navigate(-1),
+    onSuccess: () => navigate('/chat'),
   });
 };
 

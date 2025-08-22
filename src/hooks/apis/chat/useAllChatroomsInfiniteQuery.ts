@@ -5,7 +5,7 @@ import { InfiniteData, useInfiniteQuery } from '@tanstack/react-query';
 const useAllChatroomsInfiniteQuery = (option: ChatroomSortOptionValue) => {
   const mapSortOptionToParam = (option: ChatroomSortOptionValue): ChatroomSortParam => {
     const map = {
-      popularity: 'POPULARITY',
+      updatedAt: 'UPDATED_AT',
       createdAt: 'CREATED_AT',
       likes: 'LIKE',
     } as const;
