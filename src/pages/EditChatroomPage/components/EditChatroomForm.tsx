@@ -25,7 +25,13 @@ const EditChatroomForm = () => {
   };
 
   useEffect(() => {
-    if (chatroomData) reset(chatroomData);
+    if (chatroomData) {
+      reset({
+        ...chatroomData,
+        chatroomImage: chatroomData.chatroomImage ?? undefined,
+        chatroomPassword: chatroomData.chatroomPassword ?? '',
+      });
+    }
   }, [reset, chatroomData]);
 
   return (
