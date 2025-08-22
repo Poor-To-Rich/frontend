@@ -10,7 +10,7 @@ import { MutableRefObject, useRef, useState } from 'react';
 interface Props {
   chatroomId: number;
   isClosed?: boolean;
-  scrollRef: MutableRefObject<HTMLDivElement | null>;
+  scrollRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
 const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
@@ -43,7 +43,7 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
       }),
     });
 
-    scrollToBottom(scrollRef, 'instant');
+    if (scrollRef) scrollToBottom(scrollRef, 'instant');
 
     if (textareaRef.current) {
       textareaRef.current.value = '';
