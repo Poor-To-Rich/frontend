@@ -20,12 +20,14 @@ import { useNavigate } from 'react-router-dom';
 const ChatLobbyPage = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
-  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>('popularity');
+  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>('updatedAt');
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
   const scrollPositions = useRef<{ all: number; joined: number }>({ all: 0, joined: 0 });
+
   useClickOutside({
     refs: [dropdownRef, settingsButtonRef],
     onClickOutside: () => setIsMenuOpen(false),
@@ -37,9 +39,16 @@ const ChatLobbyPage = () => {
     sessionStorage.setItem('viewMode', next);
   };
 
+  const handleSortOptionChange = (next: ChatroomSortOptionValue) => {
+    setSortOption(next);
+    sessionStorage.setItem('sortOption', next);
+  };
+
   useEffect(() => {
-    const storagedViewMode = sessionStorage.getItem('viewMode') ?? 'all';
-    setViewMode(storagedViewMode as ChatroomViewModeValue);
+    const storageViewMode = sessionStorage.getItem('viewMode') ?? 'all';
+    const storageSortOption = sessionStorage.getItem('sortOption') ?? 'updatedAt';
+    setViewMode(storageViewMode as ChatroomViewModeValue);
+    setSortOption(storageSortOption as ChatroomSortOptionValue);
   }, []);
 
   useEffect(() => {
@@ -83,7 +92,7 @@ const ChatLobbyPage = () => {
             <>
               <ChatroomSortOptions
                 sortOption={sortOption}
-                onClick={(value: ChatroomSortOptionValue) => setSortOption(value)}
+                onClick={(option: ChatroomSortOptionValue) => handleSortOptionChange(option)}
               />
               <AllChatroomsList sortOption={sortOption} />
             </>
