@@ -23,10 +23,14 @@ const ChatroomCoverPage = () => {
   const { mutate: enterChatroom, isPending: isEnterPending } = useEnterChatroom(chatroomId!);
 
   const handleEnterChatroom = () => {
-    if (chatroomCover?.hasPassword) {
-      openModal();
+    if (chatroomCover?.isJoined) {
+      navigate(`/chat/chatroom/${chatroomId}`);
     } else {
-      enterChatroom({ chatroomPassword: null });
+      if (chatroomCover?.hasPassword) {
+        openModal();
+      } else {
+        enterChatroom({ chatroomPassword: null });
+      }
     }
   };
 
