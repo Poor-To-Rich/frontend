@@ -3,12 +3,14 @@ import { useDraggableScroll } from '@/hooks/useDraggableScroll';
 import clsx from 'clsx';
 import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 import useGetRecentPhotoList from '@/hooks/apis/photo/useGetRecentPhotoList';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   chatroomId: string;
 }
 
 const PhotoPreviewBox = ({ chatroomId }: Props) => {
+  const navigate = useNavigate();
   const { data: photos } = useGetRecentPhotoList(chatroomId);
   const isEmpty = photos?.length === 0;
   const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
@@ -21,10 +23,10 @@ const PhotoPreviewBox = ({ chatroomId }: Props) => {
           <ImageIcon />
           <span>사진</span>
         </h4>
-        <SeeMoreButton />
+        <SeeMoreButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/photos`)} />
       </div>
       {isEmpty || !photos ? (
-        <div className="w-full h-32 flex items-center justify-center text-defaultGrey">사진이 없습니다</div>
+        <div className="w-full h-32 pr-7 flex items-center justify-center text-defaultGrey">사진이 없습니다</div>
       ) : (
         <div
           ref={scrollRef}

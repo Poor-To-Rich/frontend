@@ -1,17 +1,24 @@
-export type RecentPhotosType = {
+export type BasePhotoType = {
   photoId: number;
   photoUrl: string;
 };
 
 export type PhotosByDateType = {
   date: string;
-  photos: RecentPhotosType[];
+  photos: BasePhotoType[];
 };
 
 export type UploadPhotoRes = {
   photoUrl: string;
 };
 
-export type RecentPhotosRes = {
-  photos: RecentPhotosType[];
+export type RecentPhotoListRes = {
+  photos: BasePhotoType[];
+};
+
+export type AllPhotoListRes = {
+  nextCursor: string;
+  hasNext: boolean;
+  photoCount: number;
+  photosByDate: PhotosByDateType[];
 };

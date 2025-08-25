@@ -8,7 +8,7 @@ import ChatMemberBox from '@/pages/ChatroomDetailPage/components/ChatMemberBox';
 import NoticeItem from '@/pages/NoticeListPage/components/NoticeItem';
 import RankingItem from '@/pages/ChatroomDetailPage/components/ranking/RankingItem';
 import { BaseRankingType } from '@/types/rankingType';
-import DateGroupedImageGrid from '@/components/photo/DateGroupedImageGrid';
+import DateGroupedImageGrid from '@/pages/PhotoListPage/components/DateGroupedImageGrid';
 
 function ChatroomDetail() {
   const photos = (() => {
