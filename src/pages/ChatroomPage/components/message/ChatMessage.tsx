@@ -4,6 +4,9 @@ import SaverIcon from '/icon/SaverIcon.webp';
 import FlexerIcon from '/icon/FlexerIcon.webp';
 import clsx from 'clsx';
 import { formatDetailChatroomMessageTime } from '@/utils/chat/timeFormta';
+import PhotoDetailModal from '@/components/modal/photo/PhotoDetailModal';
+import { useParams } from 'react-router-dom';
+import useModal from '@/hooks/useModal';
 
 interface Props {
   index?: number;
@@ -14,7 +17,9 @@ interface Props {
 }
 
 const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) => {
+  const { chatroomId } = useParams();
   const { messageType, content, sentAt, unreadBy } = message;
+  const { isOpen, openModal, closeModal } = useModal();
 
   const renderMessageBox = (
     <div
@@ -26,7 +31,12 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
       {messageType === 'TEXT' ? (
         <p className="whitespace-pre-wrap">{content}</p>
       ) : (
-        <img src={content!} alt="chat image" className="w-fit aspect-auto object-contain rounded-md" />
+        <img
+          src={content!}
+          alt="chat image"
+          className="w-fit aspect-auto object-contain rounded-md cursor-pointer"
+          onClick={openModal}
+        />
       )}
       {index === 0 && isMine && rankingType === 'SAVER' && (
         <img src={SaverIcon} width={25} height={25} className="absolute -top-8 right-0" />
@@ -49,6 +59,9 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
         )}
       </div>
       {isMine && renderMessageBox}
+      {isOpen && messageType === 'PHOTO' && (
+        <PhotoDetailModal chatroomId={chatroomId} photoId={message.photoId} closeModal={closeModal} />
+      )}
     </div>
   );
 };

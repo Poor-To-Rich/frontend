@@ -34,7 +34,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
   const { mutate: reportChatroomMember } = useReportChatroomMember(chatroomId, userProfile.userId, closeReportModal);
 
   return (
-    <div className="fixed inset-0 z-10 flex items-stretch justify-center">
+    <div className="fixed inset-0 z-50 flex items-stretch justify-center">
       <div className="w-[500px] h-full flex justify-center items-end bg-defaultGrey relative">
         <XIconButton color="white" size={28} className="absolute top-3 left-3" onClick={closeModal} />
         <div className="w-full flex flex-col items-center gap-15">

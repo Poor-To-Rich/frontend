@@ -40,6 +40,7 @@ const ChatroomHostDelegatePage = lazy(() => import('@/pages/ChatroomHostDelegate
 const NoticeListPage = lazy(() => import('@/pages/NoticeListPage/NoticeListPage'));
 const AddEditNoticePage = lazy(() => import(`@/pages/AddEditNoticePage/AddEditNoticePage`));
 const NoticeDetailPage = lazy(() => import('@/pages/NoticeDetailPage/NoticeDetailPage'));
+const PhotoListPage = lazy(() => import('@/pages/PhotoListPage/PhotoListPage'));
 
 function App() {
   return (
@@ -85,6 +86,7 @@ function App() {
           <Route path="/chat/chatroom/:chatroomId/notices/:noticeId" element={<NoticeDetailPage />} />
           <Route path="/chat/chatroom/:chatroomId/notices/add" element={<AddEditNoticePage />} />
           <Route path="/chat/chatroom/:chatroomId/notices/:noticeId/edit" element={<AddEditNoticePage />} />
+          <Route path="/chat/chatroom/:chatroomId/photos" element={<PhotoListPage />} />
           <Route
             element={
               <ChatSocketProvider>
