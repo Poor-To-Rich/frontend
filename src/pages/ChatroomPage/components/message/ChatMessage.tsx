@@ -4,6 +4,8 @@ import SaverIcon from '/icon/SaverIcon.webp';
 import FlexerIcon from '/icon/FlexerIcon.webp';
 import clsx from 'clsx';
 import { formatDetailChatroomMessageTime } from '@/utils/chat/timeFormta';
+import PhotoDetailModal from '@/components/modal/photo/PhotoDetailModal';
+// import useModal from '@/hooks/useModal';
 
 interface Props {
   index?: number;
@@ -15,6 +17,7 @@ interface Props {
 
 const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) => {
   const { messageType, content, sentAt, unreadBy } = message;
+  // const { isOpen, openModal, closeModal } = useModal();
 
   const renderMessageBox = (
     <div
@@ -49,6 +52,7 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
         )}
       </div>
       {isMine && renderMessageBox}
+      <PhotoDetailModal />
     </div>
   );
 };

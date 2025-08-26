@@ -9,6 +9,7 @@ import { categoryHandlers } from '@/mocks/handler/categoryHandlers';
 import { chartHandlers } from '@/mocks/handler/chartHandlers';
 import { categoryLogsHandler } from '@/mocks/handler/categoryLogsHandler';
 import { chatHandlers } from '@/mocks/handler/chatHandlers';
+import { photoHandlers } from '@/mocks/handler/photoHandler';
 
 export const worker = setupWorker(
   ...loginHandlers,
@@ -21,4 +22,5 @@ export const worker = setupWorker(
   ...chartHandlers,
   categoryLogsHandler,
   ...chatHandlers,
+  ...photoHandlers,
 );

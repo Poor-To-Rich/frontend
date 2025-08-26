@@ -8,6 +8,7 @@ import PageErrorBoundary from '@/components/error/PageErrorBoundary';
 import { useEffect } from 'react';
 import useModal from '@/hooks/useModal';
 import PWAInstallModal from '@/components/modal/pwa/PWAInstallModal';
+import PhotoDetailModal from '@/components/modal/photo/PhotoDetailModal';
 
 const MainPage = () => {
   const { mainHeaderDate, setMainHeaderDate } = useHeaderDateStore();
@@ -36,6 +37,7 @@ const MainPage = () => {
         </PageErrorBoundary>
       </div>
       <TapBar page="main" />
+      <PhotoDetailModal chatroomId="7" photoId={101} />
       {isOpen && <PWAInstallModal closeModal={handleClose} />}
     </div>
   );

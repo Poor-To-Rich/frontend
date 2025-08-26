@@ -116,6 +116,7 @@ export const endpoints = {
     getRecentPhotoList: (chatroomId: string) => `/chatrooms/${chatroomId}/photos/preview`,
     getAllPhotoList: (chatroomId: string, cursor?: string | null) =>
       `/chatrooms/${chatroomId}/photos/all${cursor ? `?cursor=${cursor}` : ''}`,
+    getPhotoDetail: (chatroomId: string, photoId: number) => `/chatrooms/${chatroomId}/photos/${photoId}`,
   },
   ranking: {
     getRecentRanking: (chatroomId: string) => `/chatrooms/${chatroomId}/rankings/preview`,

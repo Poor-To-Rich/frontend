@@ -22,3 +22,17 @@ export type AllPhotoListRes = {
   photoCount: number;
   photosByDate: PhotosByDateType[];
 };
+
+export type PhotoUploadByType = {
+  userId: number;
+  nickname: string;
+};
+
+export type PhotoDetailRes = {
+  photoId: number;
+  photoUrl: string;
+  uploadedAt: string;
+  uploadedBy: PhotoUploadByType;
+  prevPhotoId?: number;
+  nextPhotoId?: number;
+};
