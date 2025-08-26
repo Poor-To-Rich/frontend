@@ -12,7 +12,7 @@ export const getRecentPhotoList = async (chatroomId: string) => {
   return res.data?.photos;
 };
 
-export const getAllPhotoList = async (chatroomId: string, cursor?: string | null) => {
+export const getAllPhotoList = async (chatroomId: string, cursor?: { date: string; id: number } | null) => {
   const res = await fetchData<undefined, AllPhotoListRes>('GET', endpoints.photo.getAllPhotoList(chatroomId, cursor));
   if (!res.data) throw new Error('No Data');
   return res.data;

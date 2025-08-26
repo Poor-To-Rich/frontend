@@ -16,11 +16,15 @@ export type RecentPhotoListRes = {
   photos: BasePhotoType[];
 };
 
+export type AllPhotosType = BasePhotoType & {
+  uploadedAt: string;
+};
+
 export type AllPhotoListRes = {
-  nextCursor: string;
+  nextCursor: { date: string; id: number };
   hasNext: boolean;
   photoCount: number;
-  photosByDate: PhotosByDateType[];
+  photos: AllPhotosType[];
 };
 
 export type PhotoUploadByType = {
