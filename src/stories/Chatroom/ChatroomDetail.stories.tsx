@@ -76,7 +76,7 @@ function ChatroomDetail() {
       <ChatMemberBox chatroomId="1" />
       <NoticeItem chatroomId="1" {...notice} hasUnderLine />
       <RankingItem {...rankings} hasUnderLine />
-      <DateGroupedImageGrid {...photoByDate} />
+      <DateGroupedImageGrid chatroomId="1" {...photoByDate} />
     </div>
   );
 }
