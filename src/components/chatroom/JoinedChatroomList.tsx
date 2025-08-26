@@ -1,7 +1,7 @@
 import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
@@ -20,6 +20,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
+  useEffect(() => {}, []);
   return (
     <div className="flex flex-col flex-grow gap-5 px-7 py-4">
       {isEmpty ? (

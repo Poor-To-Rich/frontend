@@ -5,7 +5,9 @@ export default function ChatSocketProvider({ children }: { children: ReactNode }
   useEffect(() => {
     ensureActive();
     return () => {
-      stompClient.deactivate();
+      setTimeout(() => {
+        stompClient.deactivate();
+      }, 50);
     };
   }, []);
 
