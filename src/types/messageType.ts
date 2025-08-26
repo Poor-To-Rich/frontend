@@ -3,16 +3,26 @@ import { UserProfileType } from '@/types/profileType';
 
 export type ChatMessageUnion = ChatMessageType | SystemMessageType | RankingMessageType | RankingStatusMessageType;
 
-export type ChatMessageType = {
+export type BaseChatMessage = {
   type: 'CHAT_MESSAGE';
   messageId: number;
   chatroomId: number;
-  senderId: number;
-  messageType: 'TEXT' | 'PHOTO';
   content: string;
+  senderId: number;
   sentAt: string;
   unreadBy: number[];
 };
+
+export type TextChatMessage = BaseChatMessage & {
+  messageType: 'TEXT';
+};
+
+export type PhotoChatMessage = BaseChatMessage & {
+  messageType: 'PHOTO';
+  photoId: number;
+};
+
+export type ChatMessageType = TextChatMessage | PhotoChatMessage;
 
 export type SystemMessageCategory = 'ENTER' | 'LEAVE' | 'DELEGATE' | 'DATE' | 'CLOSE';
 

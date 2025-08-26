@@ -20,10 +20,10 @@ const PhotoListPage = () => {
   return (
     <div>
       <DefaultHeader leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} label="사진" />
-      {allPhotoList && (
+      {allPhotoList && chatroomId && (
         <div>
           {allPhotoList.map(photoList => (
-            <DateGroupedImageGrid {...photoList} />
+            <DateGroupedImageGrid chatroomId={chatroomId} date={photoList.date} photos={photoList.photos} />
           ))}
           {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
         </div>
