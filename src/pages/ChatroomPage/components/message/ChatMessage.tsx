@@ -59,6 +59,7 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
         )}
       </div>
       {isMine && renderMessageBox}
+      {}
       {isOpen && messageType === 'PHOTO' && (
         <PhotoDetailModal chatroomId={chatroomId} photoId={message.photoId} closeModal={closeModal} />
       )}
