@@ -11,22 +11,26 @@ interface Props {
 const AllChatroomsList = ({ sortOption }: Props) => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useAllChatroomsInfiniteQuery(sortOption);
 
-  const observerRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useRef<HTMLLIElement | null>(null);
   const allChatrooms = data?.pages?.flatMap(page => page.chatrooms) || [];
   const isEmpty = allChatrooms?.length === 0;
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
-    <div className="flex-grow flex flex-col gap-2.5 p-5">
+    <ul className="flex-grow flex flex-col gap-2.5 p-5">
       {isEmpty ? (
-        <div className="flex-grow flex items-center justify-center text-defaultGrey">채팅방이 없습니다</div>
+        <li className="flex-grow flex items-center justify-center text-defaultGrey">채팅방이 없습니다</li>
       ) : (
-        allChatrooms.map(chatroom => <PublicChatroomItem key={chatroom.chatroomId} {...chatroom} />)
+        allChatrooms.map(chatroom => (
+          <li key={chatroom.chatroomId}>
+            <PublicChatroomItem {...chatroom} />
+          </li>
+        ))
       )}
 
-      {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
-    </div>
+      {!isEmpty && hasNextPage && <li ref={observerRef} className="h-4" />}
+    </ul>
   );
 };
 

@@ -71,3 +71,7 @@ export type TokenRes = {
 export type ProfileUpdateFormData = ProfileFormData & {
   isDefaultProfile?: boolean;
 };
+
+export type UserDetailType = ProfileFormData & {
+  userId: number;
+};
