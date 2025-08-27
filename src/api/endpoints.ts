@@ -120,5 +120,7 @@ export const endpoints = {
   },
   ranking: {
     getRecentRanking: (chatroomId: string) => `/chatrooms/${chatroomId}/rankings/preview`,
+    getAllRankingList: (chatroomId: string, cursor?: number | null) =>
+      `/chatrooms/${chatroomId}/rankings/all${cursor ? `?cursor=${cursor}` : ''}`,
   },
 };

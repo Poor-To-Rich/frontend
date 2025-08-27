@@ -3,12 +3,14 @@ import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 import PreviewRankingProfile from '@/components/profile/PreviewRankingProfile';
 import useGetRecentRanking from '@/hooks/apis/ranking/useGetRecentRanking';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   chatroomId: string;
 }
 
 const RankingPreviewBox = ({ chatroomId }: Props) => {
+  const navigate = useNavigate();
   const { data: recentRanking } = useGetRecentRanking(chatroomId);
 
   return (
@@ -21,7 +23,7 @@ const RankingPreviewBox = ({ chatroomId }: Props) => {
               <span>랭킹</span>
               <span className="text-md leading-[1.0]">{format(recentRanking.rankedAt, 'yyyy.MM.dd')}</span>
             </h4>
-            <SeeMoreButton />
+            <SeeMoreButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/rankings`)} />
           </div>
 
           {!recentRanking.saver || !recentRanking.flexer ? (
