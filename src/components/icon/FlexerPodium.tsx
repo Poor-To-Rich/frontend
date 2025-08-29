@@ -3,9 +3,15 @@ interface Props {
   height?: number | string;
 }
 
-const FlexerPodium = ({ width = 190, height = 53 }: Props) => {
+const FlexerPodium = ({ width = 170, height = 53 }: Props) => {
   return (
-    <svg width={width} height={height} viewBox="0 0 163 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width={width}
+      height={height}
+      className="sm:w-[190px] w-[160px]"
+      viewBox="0 0 163 45"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg">
       <path d="M11.6429 12H151.357L163 42H0L11.6429 12Z" fill="#A1C377" />
       <rect y="12" width="163" height="9" fill="#A1C377" />
       <path

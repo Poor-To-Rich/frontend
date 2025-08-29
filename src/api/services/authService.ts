@@ -16,6 +16,7 @@ import {
   FindUsernameRes,
   ResetPassword,
   UserRoleType,
+  UserDetailType,
 } from '@/types/authTypes';
 import CustomError from '@/utils/error/CustomError';
 import { tokenManager } from '@/utils/tokenManager';
@@ -87,7 +88,7 @@ export const refreshToken = async () => {
 };
 
 export const getUserDetails = async () => {
-  const res = await fetchData<undefined, ProfileFormData>('GET', endpoints.auth.getUserDetails);
+  const res = await fetchData<undefined, UserDetailType>('GET', endpoints.auth.getUserDetails);
   return res.data;
 };
 

@@ -40,6 +40,8 @@ const ChatroomHostDelegatePage = lazy(() => import('@/pages/ChatroomHostDelegate
 const NoticeListPage = lazy(() => import('@/pages/NoticeListPage/NoticeListPage'));
 const AddEditNoticePage = lazy(() => import(`@/pages/AddEditNoticePage/AddEditNoticePage`));
 const NoticeDetailPage = lazy(() => import('@/pages/NoticeDetailPage/NoticeDetailPage'));
+const PhotoListPage = lazy(() => import('@/pages/PhotoListPage/PhotoListPage'));
+const RankingListPage = lazy(() => import('@/pages/RankingListPage/RankingListPage'));
 
 function App() {
   return (
@@ -73,18 +75,6 @@ function App() {
           <Route path="/iteration-data" element={<IterationDataPage />} />
           <Route path="/chart" element={<ChartPage />} />
           <Route path="/chart/category-details/:categoryId" element={<CategoryDetailsPage />} />
-          <Route path="/chat/edit" element={<EditJoinedChatroomsPage />} />
-          <Route path="/chat/search" element={<SearchChatroomsPage />} />
-          <Route path="/chat/hosted" element={<HostedChatroomsPage />} />
-          <Route path="/chat/chatroom/add" element={<AddChatroomPage />} />
-          <Route path="/chat/chatroom/edit/:chatroomId" element={<EditChatroomPage />} />
-          <Route path="/chat/chatroom/cover/:chatroomId" element={<ChatroomCoverPage />} />
-          <Route path="/chat/chatroom/detail/:chatroomId" element={<ChatroomDetailPage />} />
-          <Route path="/chat/chatroom/host/delegate/:chatroomId" element={<ChatroomHostDelegatePage />} />
-          <Route path="/chat/chatroom/:chatroomId/notices" element={<NoticeListPage />} />
-          <Route path="/chat/chatroom/:chatroomId/notices/:noticeId" element={<NoticeDetailPage />} />
-          <Route path="/chat/chatroom/:chatroomId/notices/add" element={<AddEditNoticePage />} />
-          <Route path="/chat/chatroom/:chatroomId/notices/:noticeId/edit" element={<AddEditNoticePage />} />
           <Route
             element={
               <ChatSocketProvider>
@@ -92,7 +82,21 @@ function App() {
               </ChatSocketProvider>
             }>
             <Route path="/chat" element={<ChatLobbyPage />} />
+            <Route path="/chat/chatroom/cover/:chatroomId" element={<ChatroomCoverPage />} />
             <Route path="/chat/chatroom/:chatroomId" element={<ChatroomPage />} />
+            <Route path="/chat/edit" element={<EditJoinedChatroomsPage />} />
+            <Route path="/chat/search" element={<SearchChatroomsPage />} />
+            <Route path="/chat/hosted" element={<HostedChatroomsPage />} />
+            <Route path="/chat/chatroom/add" element={<AddChatroomPage />} />
+            <Route path="/chat/chatroom/edit/:chatroomId" element={<EditChatroomPage />} />
+            <Route path="/chat/chatroom/detail/:chatroomId" element={<ChatroomDetailPage />} />
+            <Route path="/chat/chatroom/host/delegate/:chatroomId" element={<ChatroomHostDelegatePage />} />
+            <Route path="/chat/chatroom/:chatroomId/notices" element={<NoticeListPage />} />
+            <Route path="/chat/chatroom/:chatroomId/notices/:noticeId" element={<NoticeDetailPage />} />
+            <Route path="/chat/chatroom/:chatroomId/notices/add" element={<AddEditNoticePage />} />
+            <Route path="/chat/chatroom/:chatroomId/notices/:noticeId/edit" element={<AddEditNoticePage />} />
+            <Route path="/chat/chatroom/:chatroomId/photos" element={<PhotoListPage />} />
+            <Route path="/chat/chatroom/:chatroomId/rankings" element={<RankingListPage />} />
           </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />

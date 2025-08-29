@@ -1,6 +1,7 @@
 import { BaseRankingType } from '@/types/rankingType';
-import RankingPodium from '@/pages/ChatroomDetailPage/components/ranking/RankingPodium';
+import RankingPodium from '@/components/ranking/RankingPodium';
 import clsx from 'clsx';
+import { format } from 'date-fns';
 
 interface Props extends BaseRankingType {
   hasUnderLine: boolean;
@@ -13,9 +14,9 @@ const RankingItem = ({ rankedAt, saverRankings, flexerRankings, hasUnderLine }: 
         <span role="img" aria-label="trophy">
           🏆
         </span>
-        {rankedAt} 랭킹
+        {format(rankedAt, 'yyyy년 MM월 dd일')} 랭킹
       </h4>
-      <div className="flex justify-between">
+      <div className="flex justify-between sm:px-10">
         <RankingPodium rankings={saverRankings} rankingType={'SAVER'} />
         <RankingPodium rankings={flexerRankings} rankingType={'FLEXER'} />
       </div>

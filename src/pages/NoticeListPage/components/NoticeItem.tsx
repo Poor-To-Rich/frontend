@@ -13,7 +13,7 @@ interface Props extends NoticeItemType {
 const NoticeItem = ({ chatroomId, noticeId, preview, createdAt, authorNickname, hasUnderLine }: Props) => {
   return (
     <Link
-      to={`/chat/chatroom/${chatroomId}/notices/notice/${noticeId}`}
+      to={`/chat/chatroom/${chatroomId}/notices/${noticeId}`}
       className={clsx('flex flex-col gap-3 p-7 cursor-pointer', hasUnderLine && 'border-b border-strokeGray')}>
       <p className="whitespace-nowrap truncate">{preview}</p>
       <p className="text-md">

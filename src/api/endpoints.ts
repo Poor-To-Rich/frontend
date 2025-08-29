@@ -114,8 +114,14 @@ export const endpoints = {
   photo: {
     uploadChatroomPhoto: (chatroomId: string) => `/chatrooms/${chatroomId}/photos`,
     getRecentPhotoList: (chatroomId: string) => `/chatrooms/${chatroomId}/photos/preview`,
+    getAllPhotoList: (chatroomId: string, cursor?: { date: string; id: number } | null) =>
+      `/chatrooms/${chatroomId}/photos/all${cursor ? `?date=${cursor.date}&id=${cursor.id}` : ''}`,
+    getPhotoDetail: (chatroomId: string, photoId: number) => `/chatrooms/${chatroomId}/photos/${photoId}`,
   },
   ranking: {
     getRecentRanking: (chatroomId: string) => `/chatrooms/${chatroomId}/rankings/preview`,
+    getAllRankingList: (chatroomId: string, cursor?: string | null) =>
+      `/chatrooms/${chatroomId}/rankings/all${cursor ? `?cursor=${cursor}` : ''}`,
+    rankingTest: (chatroomId: string, date: string) => `/chatrooms/${chatroomId}/rankings/test/calculate?date=${date}`,
   },
 };

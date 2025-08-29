@@ -11,7 +11,7 @@ const useAddChatroom = (setError: UseFormSetError<ChatroomFormDataType>) => {
   return useMutation({
     mutationFn: addChatroom,
     onSuccess: data => {
-      navigate(`/chat/chatroom/${data}`);
+      navigate(`/chat/chatroom/${data}`, { replace: true });
     },
     onError: createFormErrorHandler(setError),
   });

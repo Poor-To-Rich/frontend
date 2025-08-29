@@ -6,12 +6,11 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import { useKickUser } from '@/hooks/apis/chat/useKickUser';
 import useModal from '@/hooks/useModal';
-import { ChatroomUserRoleRes } from '@/types/chatTypes';
 import { UserProfileType } from '@/types/profileType';
-import { useQueryClient } from '@tanstack/react-query';
 import UserProfileImageModal from '@/pages/ChatroomPage/components/modal/UserProfileImageModal';
 import useReportChatroomMember from '@/hooks/apis/chat/useReportChatroomMember';
 import ReportReasonModal from '@/pages/ChatroomPage/components/modal/ReportReasonModal';
+import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 
 interface Props {
   chatroomId: string;
@@ -20,8 +19,7 @@ interface Props {
 }
 
 const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
-  const queryClient = useQueryClient();
-  const userRole = queryClient.getQueryData(['chatroomUserRole', chatroomId]) as ChatroomUserRoleRes;
+  const { data: userRole } = useGetChatroomUserRole(chatroomId);
   const {
     isOpen: isUserProfileImageModal,
     openModal: openUserProfileImageModal,
@@ -34,7 +32,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
   const { mutate: reportChatroomMember } = useReportChatroomMember(chatroomId, userProfile.userId, closeReportModal);
 
   return (
-    <div className="fixed inset-0 z-10 flex items-stretch justify-center">
+    <div className="fixed inset-0 z-50 flex items-stretch justify-center">
       <div className="w-[500px] h-full flex justify-center items-end bg-defaultGrey relative">
         <XIconButton color="white" size={28} className="absolute top-3 left-3" onClick={closeModal} />
         <div className="w-full flex flex-col items-center gap-15">
@@ -49,7 +47,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
           </div>
           <Divider weight={1.5} />
           <div className="flex gap-5 mb-30">
-            {userRole.chatroomRole === 'HOST' && <UtilityButton label="내보내기" onClick={openKickUserModal} />}
+            {userRole?.chatroomRole === 'HOST' && <UtilityButton label="내보내기" onClick={openKickUserModal} />}
             <UtilityButton label="신고하기" onClick={openReportModal} />
           </div>
         </div>

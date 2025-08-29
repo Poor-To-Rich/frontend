@@ -19,16 +19,20 @@ import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFi
 import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import useUpdateUserProfileInCache from '@/hooks/chat/useUpdateUserProfileInCache';
 import useUpdateRecentNoticeInCache from '@/hooks/chat/useUpdateRecentNoticeInCache';
+import useHandleSystemMessage from '@/hooks/chat/useHandleSystemMessage';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
+  const handleSystemMessage = useHandleSystemMessage();
   const markMessagesAsRead = useMarkMessagesAsRead();
   const updateUserProfileInCache = useUpdateUserProfileInCache();
   const updateRecentNoticeInCache = useUpdateRecentNoticeInCache();
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetChatroomMessageInfiniteQuery(chatroomId!);
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isSuccess } = useGetChatroomMessageInfiniteQuery(
+    chatroomId!,
+  );
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const { data: recentNotice } = useGetRecentNotice(chatroomId!);
@@ -69,8 +73,9 @@ const ChatroomPage = () => {
           msg.type === 'RANKING_STATUS'
         ) {
           prependMessageToFirstPage(chatroomId, msg.payload);
+          handleSystemMessage(chatroomId, msg.payload);
         } else if (msg.type === 'MESSAGE_READ') {
-          markMessagesAsRead(chatroomId, msg.payload.userId);
+          if (isSuccess) markMessagesAsRead(chatroomId, msg.payload.userId);
         } else if (msg.type === 'USER_UPDATED' || msg.type === 'USER_JOINED') {
           updateUserProfileInCache(chatroomId, msg.payload);
         } else if (msg.type === 'NOTICE') {
@@ -100,7 +105,7 @@ const ChatroomPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader
-        leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+        leftButton={<LeftArrowButton onClick={() => navigate('/chat', { replace: true })} />}
         label={
           <p className="flex max-w-[20rem] items-center justify-center gap-1 font-medium">
             <span className="truncate">{chatroomDetails?.chatroomTitle}</span>

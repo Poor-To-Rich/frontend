@@ -1,8 +1,12 @@
 import HelpIcon from '@/components/icon/HelpIcon';
 
-const HelpTooltipButton = () => {
+interface Props {
+  onClick?: () => void;
+}
+
+const HelpTooltipButton = ({ onClick }: Props) => {
   return (
-    <button className="header-item-common">
+    <button className="header-item-common" onClick={onClick}>
       <HelpIcon size={30} />
     </button>
   );

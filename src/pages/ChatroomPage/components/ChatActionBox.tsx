@@ -1,8 +1,12 @@
+import { fetchData } from '@/api/axios';
+import { endpoints } from '@/api/endpoints';
 import { stompClient } from '@/api/stomp';
 import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
 import XIconButton from '@/components/button/icon/XIconButton';
 import SubActionButton from '@/components/button/SubActionButton';
+import ModalDimmed from '@/components/modal/ModalDimmed';
 import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
+import useModal from '@/hooks/useModal';
 import { scrollToBottom } from '@/utils/chat/scrollToBottom';
 import { createFormData } from '@/utils/form/createFormData';
 import { MutableRefObject, useRef, useState } from 'react';
@@ -18,6 +22,24 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
   const [isComposing, setIsComposing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { mutate: uploadChatroomPhoto } = useUploadChatroomPhoto(String(chatroomId), setPhotoFile);
+
+  // 랭킹 테스트 관련 코드
+  const { isOpen, openModal, closeModal } = useModal();
+  const [date, setDate] = useState<string>('');
+
+  const handleTestRanking = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await fetchData<undefined>('POST', endpoints.ranking.rankingTest(String(chatroomId), date));
+    } catch (error) {
+      console.error('집계 실패:', error);
+      alert('랭킹 집계 중 오류가 발생했습니다.');
+    } finally {
+      closeModal();
+      setDate('');
+    }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -76,7 +98,11 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
           <p className="w-full h-12 mb-0.5 flex items-center justify-center">대화할 수 없는 상태입니다.</p>
         ) : (
           <>
-            <ImageUploadButton handleImageChange={handleImageChange} />
+            <div className="flex flex-col gap-2.5">
+              <SubActionButton label="랭킹" onClick={openModal} />
+              <ImageUploadButton handleImageChange={handleImageChange} />
+            </div>
+
             <textarea
               id="text"
               ref={textareaRef}
@@ -95,12 +121,28 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
               placeholder="메시지를 입력하세요"
               className="w-full h-[6rem] overflow-y-auto resize-none bg-lightGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
             />
+
             <div className="h-12 mb-0.5">
               <SubActionButton label="전송" onClick={photoFile ? handleSendPhotoMessage : handleSendTextMessage} />
             </div>
           </>
         )}
       </form>
+      {isOpen && (
+        <ModalDimmed onClose={closeModal}>
+          <form
+            className="bg-white flex items-center gap-3.5 p-10"
+            onClick={e => e.stopPropagation()}
+            onSubmit={handleTestRanking}>
+            <label>
+              날짜 <input className="h-12 border" type="text" value={date} onChange={e => setDate(e.target.value)} />
+            </label>
+            <button className="p-2.5 border " type="submit">
+              집계
+            </button>
+          </form>
+        </ModalDimmed>
+      )}
     </div>
   );
 };
