@@ -122,5 +122,6 @@ export const endpoints = {
     getRecentRanking: (chatroomId: string) => `/chatrooms/${chatroomId}/rankings/preview`,
     getAllRankingList: (chatroomId: string, cursor?: string | null) =>
       `/chatrooms/${chatroomId}/rankings/all${cursor ? `?cursor=${cursor}` : ''}`,
+    rankingTest: (chatroomId: string, date: string) => `/chatrooms/${chatroomId}/rankings/test/calculate?date=${date}`,
   },
 };
