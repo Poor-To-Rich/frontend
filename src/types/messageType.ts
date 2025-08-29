@@ -49,7 +49,7 @@ export type RankingStatusMessageType = {
   type: 'RANKING_STATUS';
   messageId: number;
   chatroomId: number;
-  isChatEnabled: boolean;
+  isRankingEnabled: boolean;
   sentAt: string;
 };
 
