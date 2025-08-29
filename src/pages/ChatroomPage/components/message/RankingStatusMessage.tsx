@@ -5,7 +5,7 @@ const RankingStatusMessage = ({ isRankingEnabled }: RankingStatusMessageType) =>
   const message = isRankingEnabled ? RANKING_ANNOUNCEMENT_MESSAGE : RANKING_DISABLED_MESSAGE;
 
   return (
-    <div className="bg-oliveGreen p-10 rounded-3xl ">
+    <div className="w-full bg-oliveGreen p-10 rounded-3xl ">
       <p className="whitespace-pre-wrap text-center text-white" dangerouslySetInnerHTML={{ __html: message }} />
     </div>
   );
