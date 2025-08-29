@@ -7,7 +7,7 @@ export const getRecentRanking = async (chatroomId: string) => {
   return res.data;
 };
 
-export const getAllRankingList = async (chatroomId: string, cursor?: number | null) => {
+export const getAllRankingList = async (chatroomId: string, cursor?: string | null) => {
   const res = await fetchData<undefined, AllRankingListRes>(
     'GET',
     endpoints.ranking.getAllRankingList(chatroomId, cursor),

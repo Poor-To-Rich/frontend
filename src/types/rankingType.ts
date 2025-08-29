@@ -16,6 +16,6 @@ export type BaseRankingType = {
 
 export type AllRankingListRes = {
   hasNext: boolean;
-  nextCursor: number;
+  nextCursor: string;
   rankings: BaseRankingType[];
 };
