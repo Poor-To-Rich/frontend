@@ -8,7 +8,6 @@ import NoticeEditorHeader from '@/components/header/NoticeEditorHeader';
 import ChatroomEditHeader from '@/components/header/ChatroomEditHeader';
 import ChartRoomHeader from '@/components/header/ChartRoomHeader';
 import ChatroomDetailHeader from '@/components/header/ChatroomDetailHeader';
-import RankingHeader from '@/components/header/RankingHeader';
 
 function Header() {
   return (
@@ -40,10 +39,6 @@ function Header() {
       <br />
       <h2>ChatroomDetailHeader</h2>
       <ChatroomDetailHeader chatroomId="1" openModal={() => {}} isHost />
-
-      <br />
-      <h2>RankingHeader</h2>
-      <RankingHeader />
     </div>
   );
 }
