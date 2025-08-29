@@ -1,10 +1,10 @@
 import UtilityButton from '@/components/button/UtilityButton';
-import DropdownIcon from '@/components/icon/DropdownIcon';
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
 import useUpdateRecentNoticeStatus from '@/hooks/apis/notice/useUpdateRecentNoticeStatus';
 import { RecentNoticeType } from '@/types/noticeType';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 
 const NoticeSection = ({ status, preview, noticeId }: RecentNoticeType) => {
   const { chatroomId } = useParams();
@@ -25,8 +25,11 @@ const NoticeSection = ({ status, preview, noticeId }: RecentNoticeType) => {
               <MegaphoneIcon />
               <p className="truncate">{preview}</p>
             </div>
-            <button className=" px-1.5 right-0 cursor-pointer" onClick={() => setIsClicked(prev => !prev)}>
-              <DropdownIcon />
+            <button className="px-1.5 right-0 cursor-pointer" onClick={() => setIsClicked(prev => !prev)}>
+              <ChevronDown
+                color="#adadad"
+                className={`transform transition-transform duration-200 ${isClicked ? 'rotate-180' : 'rotate-0'}`}
+              />
             </button>
           </div>
           {isClicked && (

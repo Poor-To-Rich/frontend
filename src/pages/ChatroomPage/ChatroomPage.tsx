@@ -105,7 +105,7 @@ const ChatroomPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader
-        leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+        leftButton={<LeftArrowButton onClick={() => navigate('/chat', { replace: true })} />}
         label={
           <p className="flex max-w-[20rem] items-center justify-center gap-1 font-medium">
             <span className="truncate">{chatroomDetails?.chatroomTitle}</span>

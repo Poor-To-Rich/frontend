@@ -6,7 +6,7 @@ import RankingPreviewBox from '@/pages/ChatroomDetailPage/components/RankingPrev
 import { RankingType } from '@/types/profileType';
 import ChatMemberBox from '@/pages/ChatroomDetailPage/components/ChatMemberBox';
 import NoticeItem from '@/pages/NoticeListPage/components/NoticeItem';
-import RankingItem from '@/pages/ChatroomDetailPage/components/ranking/RankingItem';
+import RankingItem from '@/pages/RankingListPage/components/RankingItem';
 import { BaseRankingType } from '@/types/rankingType';
 import DateGroupedImageGrid from '@/pages/PhotoListPage/components/DateGroupedImageGrid';
 

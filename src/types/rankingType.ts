@@ -9,7 +9,13 @@ export type RecentRankingType = {
 
 export type BaseRankingType = {
   rankingId?: number;
-  rankedAt?: string;
+  rankedAt: string;
   saverRankings: UserProfileType[];
   flexerRankings: UserProfileType[];
+};
+
+export type AllRankingListRes = {
+  hasNext: boolean;
+  nextCursor: string;
+  rankings: BaseRankingType[];
 };
