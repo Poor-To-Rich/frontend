@@ -27,7 +27,7 @@ export type JoinedChatroomType = {
   lastMessageTime: string;
   lastMessage?: string;
   isHost: boolean;
-  unreadMessageCount?: number | string;
+  unreadMessageCount?: number;
 };
 
 export type AllChatroomsRes = {

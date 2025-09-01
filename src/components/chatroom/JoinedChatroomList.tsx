@@ -36,7 +36,8 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
     const subscribe = () => {
       sub = stompClient.subscribe(`/sub/chat/summary/${userDetail.userId}`, res => {
         const response = JSON.parse(res.body);
-        handleUpdatedJoinedChatroom(response);
+        console.log(response);
+        handleUpdatedJoinedChatroom(response.payload);
       });
     };
 

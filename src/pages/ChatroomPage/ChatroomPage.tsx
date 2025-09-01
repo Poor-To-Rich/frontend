@@ -24,6 +24,7 @@ import useHandleSystemMessage from '@/hooks/chat/useHandleSystemMessage';
 const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
+
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
   const handleSystemMessage = useHandleSystemMessage();
   const markMessagesAsRead = useMarkMessagesAsRead();
