@@ -8,11 +8,14 @@ import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 interface PrimaryInputProps {
   label: string;
+  value?: string | number;
+  maxLength?: number;
   isPassword?: boolean;
   isPasswordVisible?: boolean;
   handleVisibleClick?: () => void;
   isRequired?: boolean;
   isPending?: boolean;
+  hasCount?: boolean;
   hasCheckIcon?: boolean;
   buttonLabel?: string;
   handleClick?: () => void;
@@ -27,11 +30,14 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
   (
     {
       label,
+      value,
+      maxLength,
       isPassword,
       isPasswordVisible,
       handleVisibleClick,
       isRequired,
       isPending,
+      hasCount,
       hasCheckIcon,
       buttonLabel,
       successMessage,
@@ -49,6 +55,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
       readOnly && 'bg-strokeGray',
       successMessage && 'border-oliveGreen!',
       errorMessage && 'border-sunsetRose!',
+      hasCount && 'pr-25',
       'input-common',
     );
 
@@ -62,7 +69,20 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
         autoComplete="off"
       />
     ) : (
-      <input ref={ref} readOnly={readOnly} {...rest} className={baseInputClass} autoComplete="off" />
+      <input
+        ref={ref}
+        readOnly={readOnly}
+        maxLength={maxLength}
+        className={baseInputClass}
+        autoComplete="off"
+        {...rest}
+        onInput={e => {
+          const target = e.target as HTMLInputElement;
+          if (maxLength && target.value.length > maxLength) {
+            target.value = target.value.slice(0, maxLength);
+          }
+        }}
+      />
     );
 
     return (
@@ -78,6 +98,11 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
               {hasCheckIcon && (
                 <span className="absolute top-1/2 -translate-y-1/2 right-3">
                   <CheckIcon color="#a1c377" />
+                </span>
+              )}
+              {hasCount && (
+                <span className="absolute top-1/2 -translate-y-1/2 right-3 text-md text-defaultGrey">
+                  ({value?.toString()?.length ?? 0}/{maxLength})
                 </span>
               )}
               {isPassword && (
