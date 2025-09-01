@@ -15,7 +15,7 @@ export const compressImage = async (file: File, maxSizeMB = 1, maxWidthOrHeight 
   });
 
   if (compressedFile.size > 5 * 1024 * 1024) {
-    throw new Error('파일 크기가 5MB를 초과했습니다.');
+    throw new Error('파일 크기는 최대 5MB까지 업로드 가능합니다');
   }
 
   return compressedFile;
