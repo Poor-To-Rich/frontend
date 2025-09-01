@@ -9,7 +9,9 @@ import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
 import useModal from '@/hooks/useModal';
 import { scrollToBottom } from '@/utils/chat/scrollToBottom';
 import { createFormData } from '@/utils/form/createFormData';
+import { compressImage } from '@/utils/image';
 import { MutableRefObject, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface Props {
   chatroomId: number;
@@ -41,11 +43,17 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (!file) return;
 
-    if (file) {
-      setPhotoFile(file);
+    try {
+      const compressedFile = await compressImage(file);
+
+      setPhotoFile(compressedFile);
+    } catch (error) {
+      console.error('압축 실패:', error);
+      toast.error(error instanceof Error ? error.message : '사진 업로드 실패');
     }
 
     e.target.value = '';

@@ -71,6 +71,7 @@ const PrimaryInput = forwardRef<HTMLInputElement, PrimaryInputProps & React.Inpu
     ) : (
       <input
         ref={ref}
+        value={value}
         readOnly={readOnly}
         maxLength={maxLength}
         className={baseInputClass}
