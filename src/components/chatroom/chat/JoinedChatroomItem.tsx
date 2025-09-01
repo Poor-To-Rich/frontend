@@ -31,13 +31,13 @@ const JoinedChatroomItem = ({
         <div className="flex flex-1 items-center gap-3 min-w-0">
           <ProfilePhoto photo={chatroomImage} className="w-25 shrink-0 cursor-pointer" />
           <div className="flex flex-col gap-1.5 flex-1 min-w-0">
-            <p className="flex gap-2.5 items-center min-w-0">
+            <div className="flex gap-2.5 items-center min-w-0">
               {isHost && <CrownIcon />}
               <div className="flex gap-1.5 items-end min-w-0">
                 <span className="truncate">{chatroomTitle}</span>
                 <span className="text-defaultGrey whitespace-nowrap">{currentMemberCount}</span>
               </div>
-            </p>
+            </div>
             <p className="text-md text-defaultGrey truncate min-w-0 whitespace-nowrap">{lastMessage}</p>
           </div>
         </div>
