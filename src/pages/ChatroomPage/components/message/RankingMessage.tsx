@@ -8,7 +8,7 @@ const RankingMessage = ({ rankedAt, rankingId, saverRankings, flexerRankings }: 
       {rankingId ? (
         <>
           <p className="text-center mb-10 font-bold">👑 {rankedAt} 👑</p>
-          <div className="flex gap-10">
+          <div className="flex justify-center gap-10">
             <RankingPodium rankings={saverRankings} rankingType={'SAVER'} />
             <RankingPodium rankings={flexerRankings} rankingType={'FLEXER'} />
           </div>

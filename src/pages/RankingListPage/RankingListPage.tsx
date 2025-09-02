@@ -17,24 +17,30 @@ const RankingListPage = () => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetAllRakingListInfiniteQuery(chatroomId!);
 
   const observerRef = useRef<HTMLLIElement | null>(null);
-  const allRankingList = data?.pages?.flatMap(page => page.rankings) || [];
+  const allRankingList = data?.pages?.flatMap(page => page.rankings ?? []) || [];
   const isEmpty = allRankingList?.length === 0;
+
+  console.log(isEmpty);
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   return (
-    <div>
+    <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader
         leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
         label="랭킹"
         rightButton={<HelpTooltipButton onClick={openModal} />}
       />
-      <ul>
-        {allRankingList.map((ranking, index) => (
-          <RankingItem {...ranking} hasUnderLine={index < allRankingList.length} />
-        ))}
-        {!isEmpty && hasNextPage && <li ref={observerRef} className="h-4" />}
-      </ul>
+      {isEmpty ? (
+        <div className="w-full flex-grow flex items-center justify-center text-defaultGrey">랭킹이 없습니다</div>
+      ) : (
+        <ul>
+          {allRankingList.map((ranking, index) => (
+            <RankingItem key={ranking.rankingId} {...ranking} hasUnderLine={index < allRankingList.length} />
+          ))}
+          {!isEmpty && hasNextPage && <li ref={observerRef} className="h-4" />}
+        </ul>
+      )}
       {isOpen && (
         <ModalDimmed onClose={closeModal}>
           <RankingInfoModal closeModal={closeModal} />

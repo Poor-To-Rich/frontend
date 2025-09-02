@@ -16,8 +16,16 @@ const PhotoPreviewBox = ({ chatroomId }: Props) => {
   const navigate = useNavigate();
   const { data: photos } = useGetRecentPhotoList(chatroomId);
   const isEmpty = photos?.length === 0;
-  const { scrollRef, handleMouseDown, handleMouseMove, handleMouseUp, handleTouchStart, handleTouchMove, handleEnd } =
-    useDraggableScroll();
+  const {
+    scrollRef,
+    movedRef,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    handleTouchStart,
+    handleTouchMove,
+    handleEnd,
+  } = useDraggableScroll();
 
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const { isOpen, openModal, closeModal } = useModal();
@@ -54,7 +62,11 @@ const PhotoPreviewBox = ({ chatroomId }: Props) => {
                 'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray bg-white',
                 index === photos.length - 1 && 'mr-7',
               )}
-              onClick={() => {
+              onClick={e => {
+                if (movedRef.current) {
+                  e.preventDefault();
+                  return;
+                }
                 setSelectedPhoto(photoId);
                 openModal();
               }}
@@ -63,7 +75,7 @@ const PhotoPreviewBox = ({ chatroomId }: Props) => {
         </div>
       )}
       {isOpen && selectedPhoto && (
-        <PhotoDetailModal chatroomId={chatroomId} photoId={selectedPhoto} closeModal={closeModal} />
+        <PhotoDetailModal chatroomId={chatroomId} photoId={selectedPhoto} closeModal={closeModal} reverseOrder />
       )}
     </div>
   );
