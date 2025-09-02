@@ -55,7 +55,7 @@ export const chatHandlers = [
         lastMessageTime: getRandomTime(),
         lastMessage: `마지막 메시지 ${id}`,
         isHost: id % 3 === 0,
-        unreadMessageCount: id % 5 === 0 ? '99+' : Math.floor(Math.random() * 10),
+        unreadMessageCount: Math.floor(Math.random() * 100),
       };
     });
 
