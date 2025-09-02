@@ -5,7 +5,7 @@ import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
 import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
 import { UsersMap } from '@/types/messageType';
@@ -37,6 +37,8 @@ const ChatroomPage = () => {
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const { data: recentNotice } = useGetRecentNotice(chatroomId!);
+
+  const [isChatDisabled, setIsChatDisabled] = useState<boolean>(false);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -74,7 +76,7 @@ const ChatroomPage = () => {
           msg.type === 'RANKING_STATUS'
         ) {
           prependMessageToFirstPage(chatroomId, msg.payload);
-          handleSystemMessage(chatroomId, msg.payload);
+          handleSystemMessage(chatroomId, msg.payload, setIsChatDisabled, userRole?.userId);
         } else if (msg.type === 'MESSAGE_READ') {
           if (isSuccess) markMessagesAsRead(chatroomId, msg.payload.userId);
         } else if (msg.type === 'USER_UPDATED' || msg.type === 'USER_JOINED') {
@@ -103,6 +105,12 @@ const ChatroomPage = () => {
     };
   }, [chatroomId]);
 
+  useEffect(() => {
+    if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
+      setIsChatDisabled(true);
+    }
+  }, [chatroomDetails, userRole]);
+
   return (
     <div className="w-full min-h-screen flex flex-col relative">
       <DefaultHeader
@@ -124,7 +132,7 @@ const ChatroomPage = () => {
           <ChatBody chatroomId={chatroomId} myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />
         )}
       </div>
-      <ChatActionBox chatroomId={Number(chatroomId)} isClosed={chatroomDetails?.isClosed} scrollRef={scrollRef} />
+      <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
     </div>
   );
 };

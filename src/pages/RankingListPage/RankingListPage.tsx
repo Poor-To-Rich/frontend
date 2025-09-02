@@ -12,9 +12,9 @@ import RankingItem from '@/pages/RankingListPage/components/RankingItem';
 
 const RankingListPage = () => {
   const navigate = useNavigate();
-  const { chatroom } = useParams();
+  const { chatroomId } = useParams();
   const { isOpen, openModal, closeModal } = useModal();
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetAllRakingListInfiniteQuery(chatroom!);
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useGetAllRakingListInfiniteQuery(chatroomId!);
 
   const observerRef = useRef<HTMLLIElement | null>(null);
   const allRankingList = data?.pages?.flatMap(page => page.rankings) || [];

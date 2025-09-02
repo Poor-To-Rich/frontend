@@ -15,11 +15,11 @@ import toast from 'react-hot-toast';
 
 interface Props {
   chatroomId: number;
-  isClosed?: boolean;
+  isChatDisabled?: boolean;
   scrollRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
-const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
+const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [isComposing, setIsComposing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -102,7 +102,7 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
       <form
         className="flex items-end w-full p-2.5 bg-white border-t border-strokeGray gap-2.5"
         onSubmit={e => e.preventDefault()}>
-        {isClosed ? (
+        {isChatDisabled ? (
           <p className="w-full h-12 mb-0.5 flex items-center justify-center">대화할 수 없는 상태입니다.</p>
         ) : (
           <>

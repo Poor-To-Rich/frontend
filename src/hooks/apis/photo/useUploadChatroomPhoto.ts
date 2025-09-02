@@ -1,8 +1,6 @@
 import { uploadChatroomPhoto } from '@/api/services/photoService';
 import { stompClient } from '@/api/stomp';
-import CustomError from '@/utils/error/CustomError';
 import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
 
 const useUploadChatroomPhoto = (
   chatroomId: string,
@@ -20,12 +18,6 @@ const useUploadChatroomPhoto = (
         }),
       });
       setPhotoFile(null);
-    },
-    onError: error => {
-      if (error instanceof CustomError) {
-        const message = error.statusCode === 413 ? '파일 크기는 최대 5MB까지 업로드 가능합니다' : error.message;
-        toast.error(message);
-      }
     },
   });
 };

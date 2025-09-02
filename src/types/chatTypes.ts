@@ -114,7 +114,7 @@ export type ChatroomUserRoleRes = {
 };
 
 export type KickUserRes = {
-  kickedUserId: number;
+  kickUserId: number;
 };
 
 export type ReportReasonType = 'INSULT' | 'SEXUAL' | 'SPAM' | 'FLOOD' | 'POLITICAL' | 'CUSTOM';

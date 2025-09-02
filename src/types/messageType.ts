@@ -24,7 +24,7 @@ export type PhotoChatMessage = BaseChatMessage & {
 
 export type ChatMessageType = TextChatMessage | PhotoChatMessage;
 
-export type SystemMessageCategory = 'ENTER' | 'LEAVE' | 'DELEGATE' | 'DATE' | 'CLOSE';
+export type SystemMessageCategory = 'ENTER' | 'LEAVE' | 'DELEGATE' | 'KICK' | 'DATE' | 'CLOSE';
 
 export type SystemMessageType = {
   type: 'SYSTEM_MESSAGE';
