@@ -33,7 +33,7 @@ const ChatBody = ({ chatroomId, messages, myUserId, users }: Props) => {
         }
 
         if (group.type === 'SYSTEM_MESSAGE') {
-          return <SystemMessage key={group.message.messageId} {...group.message} />;
+          return <SystemMessage key={group.message.messageId} myUserId={myUserId} message={group.message} />;
         }
 
         if (group.type === 'RANKING_MESSAGE') {
