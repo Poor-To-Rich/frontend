@@ -11,7 +11,7 @@ interface Props {
 const SingleChatroomDropdown = ({ chatroomId, openModal, isHost }: Props) => {
   const navigate = useNavigate();
   const options: DropDownMenuOption[] = [
-    ...(isHost ? [{ label: '방장 위임', onClick: () => navigate(`/chat/chatroom/host/delegate/${chatroomId}`) }] : []),
+    ...(isHost ? [{ label: '방장 위임', onClick: () => navigate(`/chat/chatroom/${chatroomId}/host/delegate`) }] : []),
     { label: '채팅방 나가기', danger: true, onClick: openModal },
   ];
   return <DropdownMenuBase options={options} />;

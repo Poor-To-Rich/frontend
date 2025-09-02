@@ -113,7 +113,7 @@ const ChatroomPage = () => {
             <span className="shrink-0 text-defaultGrey">{chatroomDetails?.currentMemberCount}</span>
           </p>
         }
-        rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/detail/${chatroomId}`)} />}
+        rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
       />
       <div
         ref={scrollRef}

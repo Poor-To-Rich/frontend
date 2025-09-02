@@ -16,7 +16,7 @@ import { HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/cons
 
 const ChatroomDetailPage = () => {
   const { chatroomId } = useParams();
-  const { data: useRole } = useGetChatroomUserRole(chatroomId!);
+  const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const { mutate: leaverChatroom } = useLeaveChatroom();
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -27,10 +27,10 @@ const ChatroomDetailPage = () => {
           <ChatroomDetailHeader
             chatroomId={chatroomId}
             openModal={openModal}
-            isHost={useRole?.chatroomRole === 'HOST'}
+            isHost={userRole?.chatroomRole === 'HOST'}
           />
           <div className="flex flex-col gap-3 px-5 py-5">
-            <ChatroomProfileBox chatroomId={chatroomId} />
+            <ChatroomProfileBox chatroomId={chatroomId} isHost={userRole?.chatroomRole === 'HOST'} />
             <PhotoPreviewBox chatroomId={chatroomId} />
             <NoticePreviewBox chatroomId={chatroomId} />
             <RankingPreviewBox chatroomId={chatroomId} />
@@ -44,7 +44,7 @@ const ChatroomDetailPage = () => {
       {isOpen && chatroomId && (
         <ModalDimmed onClose={closeModal}>
           (
-          {useRole?.chatroomRole === 'HOST' ? (
+          {userRole?.chatroomRole === 'HOST' ? (
             <ConsentModal
               content={HOST_LEAVE_CHATROOM_NOTICE}
               leftButtonLabel="나가기"

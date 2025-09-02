@@ -24,7 +24,7 @@ const PublicChatroomItem = ({
   const messageTimeFormat = formatPublicLastMessageTime(lastMessageTime);
   return (
     <div
-      onClick={() => navigate(`/chat/chatroom/cover/${chatroomId}`)}
+      onClick={() => navigate(`/chat/chatroom/${chatroomId}/cover`)}
       className="flex items-center gap-7 w-full min-w-0 cursor-pointer">
       <ProfilePhoto photo={chatroomImage} className="w-32 shrink-0" />
       <div className="flex flex-col gap-2.5 flex-1 min-w-0">
@@ -49,7 +49,7 @@ const PublicChatroomItem = ({
             label="편집"
             onClick={e => {
               e.stopPropagation();
-              navigate(`/chat/chatroom/edit/${chatroomId}`);
+              navigate(`/chat/chatroom/${chatroomId}/edit`);
             }}
           />
         </div>
