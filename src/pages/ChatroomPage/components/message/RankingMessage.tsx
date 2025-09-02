@@ -4,7 +4,7 @@ import { RankingMessageType } from '@/types/messageType';
 
 const RankingMessage = ({ rankedAt, rankingId, saverRankings, flexerRankings }: RankingMessageType) => {
   return (
-    <div className="bg-lightBlue rounded-3xl p-10">
+    <div className="w-full bg-lightBlue rounded-3xl p-10">
       {rankingId ? (
         <>
           <p className="text-center mb-10 font-bold">👑 {rankedAt} 👑</p>
