@@ -22,7 +22,6 @@ const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
   const [isChatDisabled, setIsChatDisabled] = useState<boolean>(false);
-  const pendingReadsRef = useRef<number[]>([]);
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isSuccess } = useGetChatroomMessageInfiniteQuery(
     chatroomId!,
@@ -31,10 +30,13 @@ const ChatroomPage = () => {
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const { data: recentNotice } = useGetRecentNotice(chatroomId!);
   const markMessagesAsRead = useMarkMessagesAsRead();
-  const handleMessage = useHandleChatMessage(chatroomId!, setIsChatDisabled, userRole?.userId, isSuccess);
+  const handleMessage = useHandleChatMessage(chatroomId!, setIsChatDisabled, userRole?.userId);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const pendingReadsRef = useRef<number[]>([]);
+  const isSuccessRef = useRef(isSuccess);
 
   const chatMessages = [...(data?.pages?.flatMap(page => page.messages) || [])].reverse();
   const chatroomUsers =
@@ -54,6 +56,10 @@ const ChatroomPage = () => {
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   useEffect(() => {
+    isSuccessRef.current = isSuccess;
+  }, [isSuccess]);
+
+  useEffect(() => {
     if (!chatroomId || !userRole) return;
 
     let sub: StompSubscription | undefined;
@@ -61,8 +67,10 @@ const ChatroomPage = () => {
     const subscribe = () => {
       sub = stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
         const msg = JSON.parse(message.body);
+        console.log(msg);
 
-        if ((!isSuccess || !data) && msg.type === 'MESSAGE_READ') {
+        if (!isSuccessRef.current && msg.type === 'MESSAGE_READ') {
+          console.log(msg.payload.userId);
           pendingReadsRef.current.push(msg.payload.userId);
         }
 
@@ -86,7 +94,7 @@ const ChatroomPage = () => {
       off();
       sub?.unsubscribe();
     };
-  }, [chatroomId, isSuccess]);
+  }, [chatroomId, userRole]);
 
   useEffect(() => {
     if (isSuccess && data && pendingReadsRef.current.length > 0) {

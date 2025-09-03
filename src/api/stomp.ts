@@ -27,8 +27,8 @@ export const stompClient = new Client({
     console.log('%c🔧 Debug', 'color: gray', str);
   },
   reconnectDelay: 1000,
-  heartbeatIncoming: 3000,
-  heartbeatOutgoing: 3000,
+  heartbeatIncoming: 30000,
+  heartbeatOutgoing: 30000,
 
   beforeConnect: () => {
     const token = tokenManager.getToken();

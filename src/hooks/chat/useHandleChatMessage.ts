@@ -9,7 +9,6 @@ export const useHandleChatMessage = (
   chatroomId: string,
   setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   userId?: number,
-  isSuccess?: boolean,
 ) => {
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
   const handleSystemMessage = useHandleSystemMessage();
@@ -19,7 +18,6 @@ export const useHandleChatMessage = (
 
   const handleMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
-    console.log(msg);
 
     switch (msg.type) {
       case 'CHAT_MESSAGE':
@@ -31,7 +29,7 @@ export const useHandleChatMessage = (
         break;
 
       case 'MESSAGE_READ':
-        if (isSuccess) markMessagesAsRead(chatroomId, msg.payload.userId);
+        markMessagesAsRead(chatroomId, msg.payload.userId);
         break;
 
       case 'USER_UPDATED':
