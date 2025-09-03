@@ -18,6 +18,7 @@ const useChatScroll = ({
   isFetchingNextPage = false,
   followThreshold = 150,
 }: Options) => {
+  const wasAtBottomRef = useRef(false);
   const didInitialScrollRef = useRef(false);
   const prevHeightRef = useRef(0);
 
@@ -28,6 +29,24 @@ const useChatScroll = ({
     return el.scrollHeight - el.scrollTop - el.clientHeight <= offset;
   };
 
+  // 📌 스크롤 이벤트로 현재 위치 추적
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const scrollHandler = () => {
+      wasAtBottomRef.current = isNearBottom();
+    };
+
+    el.addEventListener('scroll', scrollHandler);
+    // 초기 상태도 저장
+    scrollHandler();
+
+    return () => {
+      el.removeEventListener('scroll', scrollHandler);
+    };
+  }, [scrollRef, followThreshold]);
+
   // 1) 최초 데이터 도착 시 1회 바닥으로 이동
   useLayoutEffect(() => {
     if (!pages || didInitialScrollRef.current) return;
@@ -36,11 +55,11 @@ const useChatScroll = ({
     const total = pages?.reduce((acc, p) => acc + (p.messages?.length ?? 0), 0) ?? 0;
 
     if (total > 0 && el) {
-      // DOM 페인트 이후 정확한 높이에서 스크롤
       waitForImages(el).then(() => {
         requestAnimationFrame(() => {
           scrollToBottom(scrollRef, 'instant');
           didInitialScrollRef.current = true;
+          wasAtBottomRef.current = true;
         });
       });
     }
@@ -51,14 +70,14 @@ const useChatScroll = ({
     if (!didInitialScrollRef.current || !scrollRef.current) return;
     const el = scrollRef.current;
 
-    if (isNearBottom()) {
+    if (wasAtBottomRef.current) {
       waitForImages(el).then(() => {
         requestAnimationFrame(() => {
           scrollToBottom(scrollRef, 'instant');
         });
       });
     }
-  }, [messageDeps]);
+  }, [messageDeps, pages]);
 
   // 3) 과거 페이지 로드 시 위치 보존
   useEffect(() => {

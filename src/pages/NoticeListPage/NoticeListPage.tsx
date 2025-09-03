@@ -23,11 +23,13 @@ const NoticeListPage = () => {
   return (
     <div className="w-full min-h-screen flex flex-col">
       <DefaultHeader
-        leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+        leftButton={
+          <LeftArrowButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`, { replace: true })} />
+        }
         label="공지"
         rightButton={
           userRole?.chatroomRole === 'HOST' && (
-            <PlusButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/notices/add`)} />
+            <PlusButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/notices/add`, { replace: true })} />
           )
         }
       />

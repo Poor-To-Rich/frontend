@@ -24,9 +24,12 @@ const NoticePreviewBox = ({ chatroomId }: Props) => {
       {isEmpty || !notices ? (
         <div className="w-full h-32 flex items-center justify-center text-defaultGrey">공지가 없습니다</div>
       ) : (
-        <div className="flex flex-col w-full gap-5">
+        <div className="flex flex-col w-full h-32 gap-5">
           {notices.map(({ noticeId, preview }) => (
-            <p key={noticeId} className="whitespace-nowrap truncate cursor-pointer">
+            <p
+              key={noticeId}
+              className="whitespace-nowrap truncate cursor-pointer"
+              onClick={() => navigate(`/chat/chatroom/${chatroomId}/notices/${noticeId}`)}>
               {preview}
             </p>
           ))}

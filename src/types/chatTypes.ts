@@ -27,7 +27,7 @@ export type JoinedChatroomType = {
   lastMessageTime: string;
   lastMessage?: string;
   isHost: boolean;
-  unreadMessageCount?: number | string;
+  unreadMessageCount?: number;
 };
 
 export type AllChatroomsRes = {
@@ -114,7 +114,7 @@ export type ChatroomUserRoleRes = {
 };
 
 export type KickUserRes = {
-  kickedUserId: number;
+  kickUserId: number;
 };
 
 export type ReportReasonType = 'INSULT' | 'SEXUAL' | 'SPAM' | 'FLOOD' | 'POLITICAL' | 'CUSTOM';

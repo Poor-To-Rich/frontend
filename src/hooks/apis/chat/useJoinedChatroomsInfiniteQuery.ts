@@ -10,7 +10,8 @@ const useJoinedChatroomsInfiniteQuery = () => {
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : undefined),
     placeholderData: prevData => prevData,
-    staleTime: Infinity,
+    staleTime: 0,
+    gcTime: 0,
   });
 };
 

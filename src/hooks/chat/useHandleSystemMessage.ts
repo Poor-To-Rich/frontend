@@ -5,8 +5,21 @@ import { ChatroomDetailsRes } from '@/types/chatTypes';
 const useHandleSystemMessage = () => {
   const queryClient = useQueryClient();
 
-  return (chatroomId: string, newMessage: SystemMessageType) => {
-    if (newMessage.messageType === 'LEAVE' || newMessage.messageType === 'DELEGATE') {
+  return (
+    chatroomId: string,
+    newMessage: SystemMessageType,
+    setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
+    userId?: number,
+  ) => {
+    if ((newMessage.messageType === 'KICK' && userId === newMessage.userId) || newMessage.messageType === 'CLOSE') {
+      setIsChatDisabled(true);
+    }
+
+    if (
+      newMessage.messageType === 'LEAVE' ||
+      newMessage.messageType === 'KICK' ||
+      newMessage.messageType === 'DELEGATE'
+    ) {
       queryClient.setQueryData(
         ['chatroomMessages', chatroomId],
         (oldData: InfiniteData<ChatRoomMessageRes> | undefined) => {

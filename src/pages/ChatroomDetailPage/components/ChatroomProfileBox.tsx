@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
   chatroomId: string;
+  isHost: boolean;
 }
 
-const ChatroomProfileBox = ({ chatroomId }: Props) => {
+const ChatroomProfileBox = ({ chatroomId, isHost }: Props) => {
   const navigate = useNavigate();
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId);
 
@@ -22,13 +23,15 @@ const ChatroomProfileBox = ({ chatroomId }: Props) => {
               <UtilityButton
                 label="커버보기"
                 className="w-1/2"
-                onClick={() => navigate(`/chat/chatroom/cover/${chatroomId}`)}
+                onClick={() => navigate(`/chat/chatroom/${chatroomId}/cover`)}
               />
-              <UtilityButton
-                label="채팅방 편집"
-                className="w-1/2"
-                onClick={() => navigate(`/chat/chatroom/edit/${chatroomId}`)}
-              />
+              {isHost && (
+                <UtilityButton
+                  label="채팅방 편집"
+                  className="w-1/2"
+                  onClick={() => navigate(`/chat/chatroom/${chatroomId}/edit`)}
+                />
+              )}
             </div>
           </div>
         </>

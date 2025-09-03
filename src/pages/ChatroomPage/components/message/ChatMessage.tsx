@@ -38,10 +38,10 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
           onClick={openModal}
         />
       )}
-      {index === 0 && isMine && rankingType === 'SAVER' && (
+      {index === 0 && isMine && messageType === 'TEXT' && rankingType === 'SAVER' && (
         <img src={SaverIcon} width={25} height={25} className="absolute -top-8 right-0" />
       )}
-      {index === 0 && isMine && rankingType === 'FLEXER' && (
+      {index === 0 && isMine && messageType === 'TEXT' && rankingType === 'FLEXER' && (
         <img src={FlexerIcon} width={30} height={30} className="absolute -top-8 right-0" />
       )}
     </div>

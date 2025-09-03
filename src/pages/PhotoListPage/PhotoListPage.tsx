@@ -26,18 +26,23 @@ const PhotoListPage = () => {
   return (
     <div>
       <DefaultHeader leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} label="사진" />
-      {photosByDate && chatroomId && (
-        <div>
-          {photosByDate.map(photoList => (
-            <DateGroupedImageGrid
-              key={photoList.date}
-              chatroomId={chatroomId}
-              date={photoList.date}
-              photos={photoList.photos}
-            />
-          ))}
-          {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
-        </div>
+      {isEmpty ? (
+        <div className="w-full flex-grow flex items-center justify-center text-defaultGrey">사진이 없습니다</div>
+      ) : (
+        photosByDate &&
+        chatroomId && (
+          <div>
+            {photosByDate.map(photoList => (
+              <DateGroupedImageGrid
+                key={photoList.date}
+                chatroomId={chatroomId}
+                date={photoList.date}
+                photos={photoList.photos}
+              />
+            ))}
+            {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
+          </div>
+        )
       )}
     </div>
   );
