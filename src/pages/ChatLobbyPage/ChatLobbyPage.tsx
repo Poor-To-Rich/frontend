@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 const ChatLobbyPage = () => {
   const navigate = useNavigate();
   const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
-  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>('updatedAt');
+  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>();
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const { isOpen, openModal, closeModal } = useModal();
 
@@ -88,7 +88,7 @@ const ChatLobbyPage = () => {
           </div>
         </div>
         <div className="flex flex-col flex-grow overflow-y-auto">
-          {viewMode === 'all' ? (
+          {viewMode === 'all' && sortOption ? (
             <>
               <ChatroomSortOptions
                 sortOption={sortOption}

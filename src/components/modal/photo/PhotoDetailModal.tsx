@@ -10,16 +10,20 @@ interface Props {
   chatroomId?: string;
   photoId?: number;
   closeModal?: () => void;
+  reverseOrder?: boolean;
 }
 
-const PhotoDetailModal = ({ chatroomId, photoId, closeModal }: Props) => {
+const PhotoDetailModal = ({ chatroomId, photoId, closeModal, reverseOrder }: Props) => {
   const [currentPhotoId, setCurrentPhotoId] = useState<number | null>(photoId!);
   const { data: photoDetail, prefetch } = useGetPhotoDetail(chatroomId!, currentPhotoId);
 
+  const prevId = photoDetail ? (reverseOrder ? photoDetail.nextPhotoId : photoDetail.prevPhotoId) : null;
+  const nextId = photoDetail ? (reverseOrder ? photoDetail.prevPhotoId : photoDetail.nextPhotoId) : null;
+
   useEffect(() => {
-    if (photoDetail?.prevPhotoId) prefetch(photoDetail.prevPhotoId);
-    if (photoDetail?.nextPhotoId) prefetch(photoDetail.nextPhotoId);
-  }, [photoDetail]);
+    if (prevId) prefetch(prevId);
+    if (nextId) prefetch(nextId);
+  }, [prevId, nextId]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-stretch justify-center">
@@ -29,11 +33,7 @@ const PhotoDetailModal = ({ chatroomId, photoId, closeModal }: Props) => {
 
           <div className="text-white text-center absolute top-5">
             <p className="text-lg">{photoDetail.uploadedBy.nickname}</p>
-            <p className="text-sm">
-              {format(photoDetail.uploadedAt, 'yyyy년 MM월 dd일 a h시 mm분', {
-                locale: ko,
-              })}
-            </p>
+            <p className="text-sm">{format(photoDetail.uploadedAt, 'yyyy년 MM월 dd일 a h시 mm분', { locale: ko })}</p>
           </div>
 
           <div className="relative w-full h-[75%] flex justify-center items-center group overflow-hidden">
@@ -50,33 +50,25 @@ const PhotoDetailModal = ({ chatroomId, photoId, closeModal }: Props) => {
                 const velocity = info.velocity.x;
 
                 if (offset > 100 || velocity > 300) {
-                  if (photoDetail?.prevPhotoId) {
-                    setCurrentPhotoId(photoDetail.prevPhotoId);
-                  }
+                  if (prevId) setCurrentPhotoId(prevId);
                 } else if (offset < -100 || velocity < -300) {
-                  if (photoDetail?.nextPhotoId) {
-                    setCurrentPhotoId(photoDetail.nextPhotoId);
-                  }
+                  if (nextId) setCurrentPhotoId(nextId);
                 }
               }}
             />
 
-            {photoDetail.prevPhotoId && (
+            {prevId && (
               <button
                 className="absolute left-3 p-2 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                onClick={() => {
-                  setCurrentPhotoId(photoDetail.prevPhotoId!);
-                }}>
+                onClick={() => setCurrentPhotoId(prevId)}>
                 <ChevronLeft size={40} />
               </button>
             )}
 
-            {photoDetail.nextPhotoId && (
+            {nextId && (
               <button
                 className="absolute right-3 p-2 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                onClick={() => {
-                  setCurrentPhotoId(photoDetail.nextPhotoId!);
-                }}>
+                onClick={() => setCurrentPhotoId(nextId)}>
                 <ChevronRight size={40} />
               </button>
             )}

@@ -5,7 +5,7 @@ import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
 import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
 import { UsersMap } from '@/types/messageType';
@@ -15,20 +15,14 @@ import { addOnConnect, stompClient } from '@/api/stomp';
 import ChatActionBox from '@/pages/ChatroomPage/components/ChatActionBox';
 import useChatScroll from '@/hooks/chat/useChatScroll';
 import { StompSubscription } from '@stomp/stompjs';
-import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFirstPage';
+import { useHandleChatMessage } from '@/hooks/chat/useHandleChatMessage';
 import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
-import useUpdateUserProfileInCache from '@/hooks/chat/useUpdateUserProfileInCache';
-import useUpdateRecentNoticeInCache from '@/hooks/chat/useUpdateRecentNoticeInCache';
-import useHandleSystemMessage from '@/hooks/chat/useHandleSystemMessage';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
-  const prependMessageToFirstPage = usePrependMessageToFirstPage();
-  const handleSystemMessage = useHandleSystemMessage();
-  const markMessagesAsRead = useMarkMessagesAsRead();
-  const updateUserProfileInCache = useUpdateUserProfileInCache();
-  const updateRecentNoticeInCache = useUpdateRecentNoticeInCache();
+  const [isChatDisabled, setIsChatDisabled] = useState<boolean>(false);
+  const pendingReadsRef = useRef<number[]>([]);
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isSuccess } = useGetChatroomMessageInfiniteQuery(
     chatroomId!,
@@ -36,6 +30,8 @@ const ChatroomPage = () => {
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const { data: recentNotice } = useGetRecentNotice(chatroomId!);
+  const markMessagesAsRead = useMarkMessagesAsRead();
+  const handleMessage = useHandleChatMessage(chatroomId!, setIsChatDisabled, userRole?.userId, isSuccess);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -58,29 +54,19 @@ const ChatroomPage = () => {
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   useEffect(() => {
-    if (!chatroomId) return;
+    if (!chatroomId || !userRole) return;
 
     let sub: StompSubscription | undefined;
 
     const subscribe = () => {
       sub = stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
         const msg = JSON.parse(message.body);
-        console.log(msg);
-        if (
-          msg.type === 'CHAT_MESSAGE' ||
-          msg.type === 'SYSTEM_MESSAGE' ||
-          msg.type === 'RANKING_MESSAGE' ||
-          msg.type === 'RANKING_STATUS'
-        ) {
-          prependMessageToFirstPage(chatroomId, msg.payload);
-          handleSystemMessage(chatroomId, msg.payload);
-        } else if (msg.type === 'MESSAGE_READ') {
-          if (isSuccess) markMessagesAsRead(chatroomId, msg.payload.userId);
-        } else if (msg.type === 'USER_UPDATED' || msg.type === 'USER_JOINED') {
-          updateUserProfileInCache(chatroomId, msg.payload);
-        } else if (msg.type === 'NOTICE') {
-          updateRecentNoticeInCache(chatroomId, msg.payload);
+
+        if ((!isSuccess || !data) && msg.type === 'MESSAGE_READ') {
+          pendingReadsRef.current.push(msg.payload.userId);
         }
+
+        handleMessage(message);
       });
 
       stompClient.publish({
@@ -100,7 +86,22 @@ const ChatroomPage = () => {
       off();
       sub?.unsubscribe();
     };
-  }, [chatroomId]);
+  }, [chatroomId, isSuccess]);
+
+  useEffect(() => {
+    if (isSuccess && data && pendingReadsRef.current.length > 0) {
+      pendingReadsRef.current.forEach(userId => {
+        markMessagesAsRead(chatroomId!, userId);
+      });
+      pendingReadsRef.current = [];
+    }
+  }, [isSuccess, data, chatroomId]);
+
+  useEffect(() => {
+    if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
+      setIsChatDisabled(true);
+    }
+  }, [chatroomDetails, userRole]);
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
@@ -112,7 +113,7 @@ const ChatroomPage = () => {
             <span className="shrink-0 text-defaultGrey">{chatroomDetails?.currentMemberCount}</span>
           </p>
         }
-        rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/detail/${chatroomId}`)} />}
+        rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
       />
       <div
         ref={scrollRef}
@@ -123,7 +124,7 @@ const ChatroomPage = () => {
           <ChatBody chatroomId={chatroomId} myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />
         )}
       </div>
-      <ChatActionBox chatroomId={Number(chatroomId)} isClosed={chatroomDetails?.isClosed} scrollRef={scrollRef} />
+      <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
     </div>
   );
 };

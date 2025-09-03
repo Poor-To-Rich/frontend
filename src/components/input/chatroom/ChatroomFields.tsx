@@ -11,7 +11,6 @@ import RankingCheckBox from '@/components/checkbox/RankingCheckBox';
 const ChatroomFields = () => {
   const {
     control,
-    register,
     formState: { errors },
   } = useFormContext<ChatroomFormDataType>();
 
@@ -21,11 +20,19 @@ const ChatroomFields = () => {
         <Controller name="chatroomImage" control={control} render={({ field }) => <ProfileImageInput {...field} />} />
       </div>
       <div className="flex flex-col gap-3 my-15">
-        <PrimaryInput
-          {...register('chatroomTitle')}
-          label="채팅방 이름"
-          isRequired
-          errorMessage={errors.chatroomTitle?.message}
+        <Controller
+          control={control}
+          name="chatroomTitle"
+          render={({ field }) => (
+            <PrimaryInput
+              {...field}
+              label="채팅방 이름"
+              maxLength={30}
+              isRequired
+              hasCount
+              errorMessage={errors.chatroomTitle?.message}
+            />
+          )}
         />
         <Controller
           name="maxMemberCount"
@@ -67,7 +74,20 @@ const ChatroomFields = () => {
           control={control}
           render={({ field }) => <RankingCheckBox checked={field.value} onChange={field.onChange} />}
         />
-        <PrimaryInput {...register('chatroomPassword')} label="비밀번호" />
+        <Controller
+          control={control}
+          name="chatroomPassword"
+          render={({ field }) => (
+            <PrimaryInput
+              {...field}
+              label="비밀번호"
+              maxLength={20}
+              isRequired
+              hasCount
+              errorMessage={errors.chatroomTitle?.message}
+            />
+          )}
+        />
       </div>
     </div>
   );

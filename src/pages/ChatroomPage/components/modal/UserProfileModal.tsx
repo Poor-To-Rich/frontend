@@ -28,7 +28,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
   const { isOpen: isKickUserModal, openModal: openKickUserModal, closeModal: closeKickUserModal } = useModal();
   const { isOpen: isReportModal, openModal: openReportModal, closeModal: closeReportModal } = useModal();
 
-  const { mutate: kickUser } = useKickUser(chatroomId, closeKickUserModal);
+  const { mutate: kickUser } = useKickUser(chatroomId, closeKickUserModal, closeModal);
   const { mutate: reportChatroomMember } = useReportChatroomMember(chatroomId, userProfile.userId, closeReportModal);
 
   return (

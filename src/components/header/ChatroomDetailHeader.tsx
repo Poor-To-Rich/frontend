@@ -29,7 +29,7 @@ const ChatroomDetailHeader = ({ chatroomId, openModal, isHost }: Props) => {
 
   return (
     <DefaultHeader
-      leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+      leftButton={<LeftArrowButton onClick={() => navigate(`/chat/chatroom/${chatroomId}`, { replace: true })} />}
       rightButton={
         <div className="h-full flex items-center gap-3 mr-7 relative">
           <LikeButton isLiked={data?.isLiked} />

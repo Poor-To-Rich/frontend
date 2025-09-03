@@ -15,7 +15,7 @@ const DateGroupedImageGrid = ({ chatroomId, date, photos }: Props) => {
   return (
     <div className="flex flex-col p-5 gap-5">
       <h6>{format(date, 'yyyy.MM.dd')}</h6>
-      <div className="grid grid-cols-5 gap-3 justify-center">
+      <div className="grid grid-cols-3 sm:grid-cols-4 gap-3 justify-center">
         {photos.map(({ photoId, photoUrl }) => (
           <img
             key={photoId}
@@ -30,7 +30,7 @@ const DateGroupedImageGrid = ({ chatroomId, date, photos }: Props) => {
         ))}
       </div>
       {isOpen && selectedPhoto && (
-        <PhotoDetailModal chatroomId={chatroomId} photoId={selectedPhoto} closeModal={closeModal} />
+        <PhotoDetailModal chatroomId={chatroomId} photoId={selectedPhoto} closeModal={closeModal} reverseOrder />
       )}
     </div>
   );

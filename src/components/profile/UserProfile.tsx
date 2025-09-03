@@ -17,9 +17,10 @@ interface Props {
   noticeId?: number;
   createdAt?: string;
   hideRanking?: boolean;
+  hasMoreButton?: boolean;
 }
 
-const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking }: Props) => {
+const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking, hasMoreButton }: Props) => {
   const { profileImage, rankingType, nickname, isHost } = userProfile;
   const { isOpen: isUserProfile, openModal: openUserProfile, closeModal: closeUserProfile } = useModal();
   const { isOpen: isDropDown, openModal: openDropDown, closeModal: closeDropDown } = useModal();
@@ -53,7 +54,7 @@ const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking
             </p>
           )}
         </div>
-        {isHost && noticeId && (
+        {hasMoreButton && noticeId && (
           <PostMoreButton
             ref={moreButtonRef}
             isDropDown={isDropDown}

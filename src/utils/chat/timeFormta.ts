@@ -7,7 +7,8 @@ export function parseServerUTC(iso: string): Date {
   return new Date(`${clean}Z`);
 }
 
-export const formatPublicLastMessageTime = (lastMessageTime: string) => {
+export const formatPublicLastMessageTime = (lastMessageTime: string | null) => {
+  if (!lastMessageTime) return null;
   const now = new Date();
   const last = parseServerUTC(lastMessageTime);
 

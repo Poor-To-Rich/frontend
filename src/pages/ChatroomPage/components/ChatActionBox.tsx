@@ -9,15 +9,17 @@ import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
 import useModal from '@/hooks/useModal';
 import { scrollToBottom } from '@/utils/chat/scrollToBottom';
 import { createFormData } from '@/utils/form/createFormData';
+import { compressImage } from '@/utils/image';
 import { MutableRefObject, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 
 interface Props {
   chatroomId: number;
-  isClosed?: boolean;
+  isChatDisabled?: boolean;
   scrollRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
-const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
+const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [isComposing, setIsComposing] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -41,11 +43,17 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (!file) return;
 
-    if (file) {
-      setPhotoFile(file);
+    try {
+      const compressedFile = await compressImage(file);
+
+      setPhotoFile(compressedFile);
+    } catch (error) {
+      console.error('압축 실패:', error);
+      toast.error(error instanceof Error ? error.message : '사진 업로드 실패');
     }
 
     e.target.value = '';
@@ -94,7 +102,7 @@ const ChatActionBox = ({ chatroomId, isClosed, scrollRef }: Props) => {
       <form
         className="flex items-end w-full p-2.5 bg-white border-t border-strokeGray gap-2.5"
         onSubmit={e => e.preventDefault()}>
-        {isClosed ? (
+        {isChatDisabled ? (
           <p className="w-full h-12 mb-0.5 flex items-center justify-center">대화할 수 없는 상태입니다.</p>
         ) : (
           <>

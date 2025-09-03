@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
@@ -14,9 +14,25 @@ const SearchChatroomsPage = () => {
 
   const { data: searchChatrooms } = useSearchChatrooms(submittedKeyword);
 
+  useEffect(() => {
+    const storagedKeyword = sessionStorage.getItem('keyword') ?? '';
+    setKeyword(storagedKeyword);
+    setSubmittedKeyword(storagedKeyword);
+  }, []);
+
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <DefaultHeader leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} label="채팅방 검색" />
+      <DefaultHeader
+        leftButton={
+          <LeftArrowButton
+            onClick={() => {
+              navigate(-1);
+              sessionStorage.removeItem('keyword');
+            }}
+          />
+        }
+        label="채팅방 검색"
+      />
       <div className="flex flex-col flex-grow p-5 gap-5">
         <InputActionBox
           placeholder="검색어를 입력해주세요"
@@ -24,9 +40,11 @@ const SearchChatroomsPage = () => {
           value={keyword}
           onChange={e => {
             setKeyword(e.target.value);
+            setSubmittedKeyword('');
           }}
           onSubmit={() => {
             setSubmittedKeyword(keyword);
+            sessionStorage.setItem('keyword', keyword);
           }}
         />
         {!searchChatrooms || searchChatrooms.length === 0 ? (

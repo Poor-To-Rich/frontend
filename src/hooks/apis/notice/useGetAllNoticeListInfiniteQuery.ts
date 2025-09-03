@@ -9,7 +9,8 @@ const useGetAllNoticeListInfiniteQuery = (chatroomId: string) => {
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : null),
     placeholderData: prevData => prevData,
-    staleTime: Infinity,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 };
 

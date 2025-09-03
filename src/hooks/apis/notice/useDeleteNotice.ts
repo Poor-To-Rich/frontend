@@ -1,5 +1,6 @@
 import { deleteNotice } from '@/api/services/noticeService';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AllNoticeListRes, NoticeItemType } from '@/types/noticeType';
+import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 const useDeleteNotice = (chatroomId: string, noticeId: number) => {
@@ -10,7 +11,18 @@ const useDeleteNotice = (chatroomId: string, noticeId: number) => {
     mutationFn: () => deleteNotice(chatroomId, noticeId),
     onSuccess: () => {
       navigate(-1);
-      queryClient.refetchQueries({ queryKey: ['allNoticeList', chatroomId] });
+
+      queryClient.setQueryData(['allNoticeList', chatroomId], (oldData: InfiniteData<AllNoticeListRes>) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: AllNoticeListRes) => ({
+            ...page,
+            notices: page.notices.filter((notice: NoticeItemType) => notice.noticeId !== noticeId),
+          })),
+        };
+      });
     },
   });
 };

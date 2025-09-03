@@ -9,7 +9,7 @@ export const handleClickCategoryChart = (
   date: string,
   isSavings?: boolean,
 ) => {
-  navigate(`/chart/category-details/${categoryId}`, {
+  navigate(`/chart/${categoryId}/category-details`, {
     state: {
       categoryName,
       categoryId,
