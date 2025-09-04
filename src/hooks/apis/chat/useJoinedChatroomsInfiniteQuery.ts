@@ -9,8 +9,8 @@ const useJoinedChatroomsInfiniteQuery = () => {
     queryFn: async ({ pageParam = null }) => await getJoinedChatrooms(pageParam),
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : undefined),
-    staleTime: 0,
-    gcTime: 1000 * 60 * 5,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
 };
 

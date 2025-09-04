@@ -63,3 +63,5 @@ export type ChatRoomMessageRes = {
   messages: ChatMessageUnion[];
   users: UsersMap;
 };
+
+export type ChatroomUpdatedType = 'CHATROOM_MESSAGE_UPDATED' | 'CHATROOM_INFO_UPDATED';

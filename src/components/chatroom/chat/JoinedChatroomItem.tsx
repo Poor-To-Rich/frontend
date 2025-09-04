@@ -42,12 +42,12 @@ const JoinedChatroomItem = ({
             <p className="text-md text-defaultGrey truncate min-w-0 whitespace-nowrap">{lastMessage}</p>
           </div>
         </div>
-        <div className="flex flex-col items-end justify-center gap-2.5 shrink-0">
+        <div className="flex flex-col items-end justify-start gap-1.5 shrink-0">
           <time className="w-fit text-sm whitespace-nowrap">{messageTimeFormat}</time>
           {!!unreadMessageCount && unreadMessageCount > 0 && (
             <div
               className={clsx(
-                'w-fit flex items-center justify-center min-h-8 aspect-square text-sm rounded-full text-white p-1.5 pt-2',
+                'w-fit mt-2.5 flex items-center justify-center min-h-8 aspect-square text-sm rounded-full text-white p-1.5 leading-1.5',
                 unreadMessageCount && 'bg-sunsetRose',
               )}>
               {unreadMessageCount >= 100 ? '99+' : unreadMessageCount}
