@@ -5,7 +5,7 @@ import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
 import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
 import { UsersMap } from '@/types/messageType';
@@ -23,22 +23,41 @@ const ChatroomPage = () => {
   const { chatroomId } = useParams();
   const [isChatDisabled, setIsChatDisabled] = useState<boolean>(false);
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isSuccess } = useGetChatroomMessageInfiniteQuery(
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isFetching } = useGetChatroomMessageInfiniteQuery(
     chatroomId!,
   );
   const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
   const { data: userRole } = useGetChatroomUserRole(chatroomId!);
   const { data: recentNotice } = useGetRecentNotice(chatroomId!);
+
+  const processedReads = useRef(new Set<number>());
   const markMessagesAsRead = useMarkMessagesAsRead();
-  const handleMessage = useHandleChatMessage(chatroomId!, setIsChatDisabled, userRole?.userId);
+
+  const handleReadMessage = useCallback(
+    (userId: number) => {
+      if (!data && isFetching) {
+        processedReads.current.add(userId);
+      }
+      markMessagesAsRead(chatroomId!, userId);
+    },
+    [data, isFetching, chatroomId],
+  );
+
+  useEffect(() => {
+    if (data && !isFetching && processedReads.current.size > 0) {
+      processedReads.current.forEach(userId => {
+        markMessagesAsRead(chatroomId!, userId);
+      });
+      processedReads.current.clear();
+    }
+  }, [data, isFetching, chatroomId]);
+
+  const handleMessage = useHandleChatMessage(chatroomId!, setIsChatDisabled, handleReadMessage, userRole?.userId);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const pendingReadsRef = useRef<number[]>([]);
-  const isSuccessRef = useRef(isSuccess);
-
-  const chatMessages = [...(data?.pages?.flatMap(page => page.messages) || [])].reverse();
+  const chatMessages = (data?.pages?.flatMap(page => page.messages) || []).slice().reverse();
   const chatroomUsers =
     data?.pages.reduce((acc, page) => {
       return { ...acc, ...page.users };
@@ -56,24 +75,12 @@ const ChatroomPage = () => {
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   useEffect(() => {
-    isSuccessRef.current = isSuccess;
-  }, [isSuccess]);
-
-  useEffect(() => {
     if (!chatroomId || !userRole) return;
 
     let sub: StompSubscription | undefined;
 
     const subscribe = () => {
       sub = stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
-        const msg = JSON.parse(message.body);
-        console.log(msg);
-
-        if (!isSuccessRef.current && msg.type === 'MESSAGE_READ') {
-          console.log(msg.payload.userId);
-          pendingReadsRef.current.push(msg.payload.userId);
-        }
-
         handleMessage(message);
       });
 
@@ -97,15 +104,6 @@ const ChatroomPage = () => {
   }, [chatroomId, userRole]);
 
   useEffect(() => {
-    if (isSuccess && data && pendingReadsRef.current.length > 0) {
-      pendingReadsRef.current.forEach(userId => {
-        markMessagesAsRead(chatroomId!, userId);
-      });
-      pendingReadsRef.current = [];
-    }
-  }, [isSuccess, data, chatroomId]);
-
-  useEffect(() => {
     if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
       setIsChatDisabled(true);
     }
@@ -123,15 +121,24 @@ const ChatroomPage = () => {
         }
         rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
       />
-      <div
-        ref={scrollRef}
-        className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
-        {recentNotice && <NoticeSection {...recentNotice} />}
-        {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
-        {chatroomId && userRole && (
-          <ChatBody chatroomId={chatroomId} myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />
-        )}
-      </div>
+      {!chatMessages && isFetchingNextPage ? (
+        <div>fheld</div>
+      ) : (
+        <div
+          ref={scrollRef}
+          className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
+          {recentNotice && <NoticeSection {...recentNotice} />}
+          {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
+          {chatroomId && userRole && (
+            <ChatBody
+              chatroomId={chatroomId}
+              myUserId={userRole.userId}
+              messages={chatMessages}
+              users={chatroomUsers}
+            />
+          )}
+        </div>
+      )}
       <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
     </div>
   );

@@ -10,7 +10,7 @@ const useMarkMessagesAsRead = () => {
       (oldData: InfiniteData<ChatRoomMessageRes> | undefined) => {
         if (!oldData) return oldData;
 
-        return {
+        const newData = {
           ...oldData,
           pages: oldData.pages.map(page => ({
             ...page,
@@ -25,6 +25,8 @@ const useMarkMessagesAsRead = () => {
             }),
           })),
         };
+
+        return newData;
       },
     );
   };
