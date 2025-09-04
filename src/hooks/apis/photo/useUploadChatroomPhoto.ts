@@ -2,10 +2,7 @@ import { uploadChatroomPhoto } from '@/api/services/photoService';
 import { stompClient } from '@/api/stomp';
 import { useMutation } from '@tanstack/react-query';
 
-const useUploadChatroomPhoto = (
-  chatroomId: string,
-  setPhotoFile: React.Dispatch<React.SetStateAction<File | null>>,
-) => {
+const useUploadChatroomPhoto = (chatroomId: string, handleClearPhotoStatus: () => void) => {
   return useMutation({
     mutationFn: (body: FormData) => uploadChatroomPhoto(chatroomId, body),
     onSuccess: data => {
@@ -17,7 +14,7 @@ const useUploadChatroomPhoto = (
           content: data?.photoUrl,
         }),
       });
-      setPhotoFile(null);
+      handleClearPhotoStatus();
     },
   });
 };

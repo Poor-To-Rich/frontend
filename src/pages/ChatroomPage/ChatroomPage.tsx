@@ -1,107 +1,39 @@
 import ChatroomMenuButton from '@/components/button/icon/ChatroomMenuButton';
 import LeftArrowButton from '@/components/button/icon/LeftArrowButton';
 import DefaultHeader from '@/components/header/DefaultHeader';
-import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
-import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
-import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import ChatBody from '@/pages/ChatroomPage/components/message/ChatBody';
-import { UsersMap } from '@/types/messageType';
-import NoticeSection from '@/pages/ChatroomPage/components/notice/NoticeSection';
-import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
-import { addOnConnect, stompClient } from '@/api/stomp';
 import ChatActionBox from '@/pages/ChatroomPage/components/ChatActionBox';
-import useChatScroll from '@/hooks/chat/useChatScroll';
-import { StompSubscription } from '@stomp/stompjs';
-import { useHandleChatMessage } from '@/hooks/chat/useHandleChatMessage';
+import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import ChatContainer from '@/pages/ChatroomPage/components/ChatContainer';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
+import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
+import { useChatroomSubscription } from '@/hooks/chat/useChatroomSubscription';
 import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
+import { handleFetchError } from '@/utils/error/handleFetchError';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
-  const { chatroomId } = useParams();
-  const [isChatDisabled, setIsChatDisabled] = useState<boolean>(false);
+  const { chatroomId } = useParams<{ chatroomId: string }>();
+  const [isChatDisabled, setIsChatDisabled] = useState(false);
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isFetching } = useGetChatroomMessageInfiniteQuery(
-    chatroomId!,
-  );
-  const { data: chatroomDetails } = useGetChatroomDetails(chatroomId!);
-  const { data: userRole } = useGetChatroomUserRole(chatroomId!);
-  const { data: recentNotice } = useGetRecentNotice(chatroomId!);
+  const {
+    data: chatroomDetails,
+    error: chatroomDetailError,
+    isError: isChatroomDetailError,
+    isPending: isChatroomDetailPending,
+  } = useGetChatroomDetails(chatroomId!);
+  const { data: userRole, error: userRoleError, isError: isUserRoleError } = useGetChatroomUserRole(chatroomId!);
 
-  const processedReads = useRef(new Set<number>());
-  const markMessagesAsRead = useMarkMessagesAsRead();
-
-  const handleReadMessage = useCallback(
-    (userId: number) => {
-      if (!data && isFetching) {
-        processedReads.current.add(userId);
-      }
-      markMessagesAsRead(chatroomId!, userId);
-    },
-    [data, isFetching, chatroomId],
-  );
-
-  useEffect(() => {
-    if (data && !isFetching && processedReads.current.size > 0) {
-      processedReads.current.forEach(userId => {
-        markMessagesAsRead(chatroomId!, userId);
-      });
-      processedReads.current.clear();
-    }
-  }, [data, isFetching, chatroomId]);
-
-  const handleMessage = useHandleChatMessage(chatroomId!, setIsChatDisabled, handleReadMessage, userRole?.userId);
-
-  const observerRef = useRef<HTMLDivElement | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const chatMessages = (data?.pages?.flatMap(page => page.messages) || []).slice().reverse();
-  const chatroomUsers =
-    data?.pages.reduce((acc, page) => {
-      return { ...acc, ...page.users };
-    }, {} as UsersMap) ?? {};
-  const isEmpty = chatMessages?.length === 0;
+  const markMessagesAsRead = useMarkMessagesAsRead();
 
-  useChatScroll({
-    scrollRef,
-    pages: data?.pages,
-    messageDeps: [chatMessages],
-    isFetchingNextPage,
-    followThreshold: 150,
-  });
-
-  useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
-
-  useEffect(() => {
-    if (!chatroomId || !userRole) return;
-
-    let sub: StompSubscription | undefined;
-
-    const subscribe = () => {
-      sub = stompClient.subscribe(`/sub/chatroom/${chatroomId}`, message => {
-        handleMessage(message);
-      });
-
-      stompClient.publish({
-        destination: `/pub/chat/read`,
-        body: JSON.stringify({ chatroomId }),
-      });
-    };
-
-    // 1) 이미 연결돼 있으면 즉시 한 번 실행
-    if (stompClient.connected) subscribe();
-
-    // 2) 앞으로 "연결/재연결"될 때마다 다시 실행하도록 리스너 등록
-    const off = addOnConnect(subscribe);
-
-    // 언마운트 시 정리
-    return () => {
-      off();
-      sub?.unsubscribe();
-    };
-  }, [chatroomId, userRole]);
+  useChatroomSubscription(chatroomId!, userRole?.userId, setIsChatDisabled, userId =>
+    markMessagesAsRead(chatroomId!, userId),
+  );
 
   useEffect(() => {
     if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
@@ -109,37 +41,38 @@ const ChatroomPage = () => {
     }
   }, [chatroomDetails, userRole]);
 
+  if (isChatroomDetailError || isUserRoleError) {
+    return handleFetchError(chatroomDetailError || userRoleError);
+  }
+
   return (
     <div className="w-full min-h-screen flex flex-col relative">
-      <DefaultHeader
-        leftButton={<LeftArrowButton onClick={() => navigate('/chat', { replace: true })} />}
-        label={
-          <p className="flex max-w-[20rem] items-center justify-center gap-1 font-medium">
-            <span className="truncate">{chatroomDetails?.chatroomTitle}</span>
-            <span className="shrink-0 text-defaultGrey">{chatroomDetails?.currentMemberCount}</span>
-          </p>
-        }
-        rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
-      />
-      {!chatMessages && isFetchingNextPage ? (
-        <div>fheld</div>
-      ) : (
-        <div
-          ref={scrollRef}
-          className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
-          {recentNotice && <NoticeSection {...recentNotice} />}
-          {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
-          {chatroomId && userRole && (
-            <ChatBody
-              chatroomId={chatroomId}
-              myUserId={userRole.userId}
-              messages={chatMessages}
-              users={chatroomUsers}
-            />
-          )}
+      {isChatroomDetailPending ? (
+        <div className="w-full flex flex-grow justify-center items-center">
+          <LoadingSpinner size={30} />
         </div>
+      ) : (
+        <PageErrorBoundary>
+          <FetchErrorBoundary>
+            <DefaultHeader
+              leftButton={<LeftArrowButton onClick={() => navigate('/chat', { replace: true })} />}
+              label={
+                <p className="flex max-w-[20rem] items-center justify-center gap-1 font-medium">
+                  <span className="truncate">{chatroomDetails?.chatroomTitle}</span>
+                  <span className="shrink-0 text-defaultGrey">{chatroomDetails?.currentMemberCount}</span>
+                </p>
+              }
+              rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
+            />
+            <div
+              ref={scrollRef}
+              className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
+              <ChatContainer chatroomId={chatroomId!} scrollRef={scrollRef} />
+            </div>
+            <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
+          </FetchErrorBoundary>
+        </PageErrorBoundary>
       )}
-      <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
     </div>
   );
 };
