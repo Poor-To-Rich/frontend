@@ -13,6 +13,8 @@ import useModal from '@/hooks/useModal';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import ConsentModal from '@/components/modal/chat/ConsentModal';
 import { HOST_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
+import PageErrorBoundary from '@/components/error/PageErrorBoundary';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const EditChatroomPage = () => {
   const navigate = useNavigate();
@@ -41,21 +43,25 @@ const EditChatroomPage = () => {
         label="채팅방 편집"
         rightButton={<TrashButton onClick={openModal} />}
       />
-      <FormProvider {...methods}>
-        <EditChatroomForm />
-      </FormProvider>
-      {isOpen && (
-        <ModalDimmed onClose={closeModal}>
-          <ConsentModal
-            content={HOST_LEAVE_CHATROOM_NOTICE}
-            leftButtonLabel="나가기"
-            onClick={() => leaveChatroom(chatroomId!)}
-            rightButtonLabel="취소"
-            onClose={closeModal}
-            isPending={isLeavePending}
-          />
-        </ModalDimmed>
-      )}
+      <PageErrorBoundary>
+        <FetchErrorBoundary>
+          <FormProvider {...methods}>
+            <EditChatroomForm />
+          </FormProvider>
+        </FetchErrorBoundary>
+        {isOpen && (
+          <ModalDimmed onClose={closeModal}>
+            <ConsentModal
+              content={HOST_LEAVE_CHATROOM_NOTICE}
+              leftButtonLabel="나가기"
+              onClick={() => leaveChatroom(chatroomId!)}
+              rightButtonLabel="취소"
+              onClose={closeModal}
+              isPending={!isLeavePending}
+            />
+          </ModalDimmed>
+        )}
+      </PageErrorBoundary>
     </div>
   );
 };

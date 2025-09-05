@@ -1,4 +1,5 @@
 import ChatroomFormContent from '@/components/form/ChatroomFormContent';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useEditChatroom from '@/hooks/apis/chat/useEditChatroom';
 import useGetChatroom from '@/hooks/apis/chat/useGetChatroom';
 import { ChatroomFormDataType } from '@/types/chatTypes';
@@ -15,7 +16,7 @@ const EditChatroomForm = () => {
     formState: { isValid, dirtyFields },
   } = useFormContext<ChatroomFormDataType>();
   const { chatroomId } = useParams();
-  const { data: chatroomData } = useGetChatroom(chatroomId!);
+  const { data: chatroomData, isPending: isGetChatroomDataPending } = useGetChatroom(chatroomId!);
   const { mutate: editChatroom, isPending: isEditPending } = useEditChatroom(chatroomId!, setError);
 
   const onSubmit = (formData: ChatroomFormDataType) => {
@@ -33,6 +34,14 @@ const EditChatroomForm = () => {
       });
     }
   }, [reset, chatroomData]);
+
+  if (isGetChatroomDataPending) {
+    return (
+      <div className="flex flex-grow justify-center items-center">
+        <LoadingSpinner size={30} />
+      </div>
+    );
+  }
 
   return (
     <ChatroomFormContent
