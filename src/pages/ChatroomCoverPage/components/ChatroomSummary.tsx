@@ -1,23 +1,18 @@
 import LikeButton from '@/components/button/icon/LikeButton';
 import UserIcon from '@/components/icon/UserIcon';
+import useGetChatroomLikeStatus from '@/hooks/apis/chat/useGetChatroomLikeStatus';
 
 interface Props {
+  chatroomId: string;
   chatroomTitle: string;
   currentMemberCount: number;
   maxMemberCount: number;
   createdAt: string;
-  isLiked: boolean;
-  likeCount: number;
 }
 
-const ChatroomSummary = ({
-  chatroomTitle,
-  currentMemberCount,
-  maxMemberCount,
-  createdAt,
-  isLiked,
-  likeCount,
-}: Props) => {
+const ChatroomSummary = ({ chatroomId, chatroomTitle, currentMemberCount, maxMemberCount, createdAt }: Props) => {
+  const { data: likeStatus } = useGetChatroomLikeStatus(chatroomId);
+
   return (
     <div className="flex w-full justify-between">
       <div className="flex flex-col gap-1.5">
@@ -33,8 +28,8 @@ const ChatroomSummary = ({
         </div>
       </div>
       <div className="flex flex-col items-center justify-start">
-        <LikeButton isLiked={isLiked} />
-        <p className="text-sunsetRose text-md">{likeCount}</p>
+        <LikeButton isLiked={likeStatus?.isLiked} />
+        <p className="text-sunsetRose text-md">{likeStatus?.likeCount}</p>
       </div>
     </div>
   );
