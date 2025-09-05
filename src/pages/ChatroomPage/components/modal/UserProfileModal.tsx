@@ -28,8 +28,12 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
   const { isOpen: isKickUserModal, openModal: openKickUserModal, closeModal: closeKickUserModal } = useModal();
   const { isOpen: isReportModal, openModal: openReportModal, closeModal: closeReportModal } = useModal();
 
-  const { mutate: kickUser } = useKickUser(chatroomId, closeKickUserModal, closeModal);
-  const { mutate: reportChatroomMember } = useReportChatroomMember(chatroomId, userProfile.userId, closeReportModal);
+  const { mutate: kickUser, isPending: isKickUserPending } = useKickUser(chatroomId, closeKickUserModal, closeModal);
+  const { mutate: reportChatroomMember, isPending: isReportPending } = useReportChatroomMember(
+    chatroomId,
+    userProfile.userId,
+    closeReportModal,
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-stretch justify-center">
@@ -62,6 +66,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
         <ModalDimmed onClose={closeKickUserModal}>
           <DefaultModal
             content={`상대방을 내보내고 이 채팅방에 \n 더 이상 참여하지 못하게 합니다.`}
+            isPending={isKickUserPending}
             onClick={() => kickUser(userProfile.userId)}
             onClose={closeKickUserModal}
           />
@@ -69,7 +74,11 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
       )}
       {isReportModal && (
         <ModalDimmed onClose={closeReportModal}>
-          <ReportReasonModal handleSubmit={reportChatroomMember} closeModal={closeReportModal} />
+          <ReportReasonModal
+            handleSubmit={reportChatroomMember}
+            closeModal={closeReportModal}
+            isPending={isReportPending}
+          />
         </ModalDimmed>
       )}
     </div>

@@ -10,9 +10,10 @@ import { useState } from 'react';
 interface Props {
   handleSubmit: (data: ReportChatroomMemberReq) => void;
   closeModal: () => void;
+  isPending: boolean;
 }
 
-const ReportReasonModal = ({ handleSubmit, closeModal }: Props) => {
+const ReportReasonModal = ({ handleSubmit, closeModal, isPending }: Props) => {
   const [reason, setReason] = useState<ReportReasonType>('INSULT');
   const [customReason, setCustomReason] = useState<string>('');
 
@@ -59,7 +60,7 @@ const ReportReasonModal = ({ handleSubmit, closeModal }: Props) => {
           </label>
         ))}
         <div className="flex w-full justify-end gap-4">
-          <ModalButton label={'제출'} type="submit" />
+          <ModalButton label={'제출'} type="submit" isPending={isPending} />
         </div>
       </form>
     </div>
