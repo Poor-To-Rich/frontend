@@ -11,13 +11,13 @@ const HostedChatroomsPage = () => {
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
+      <DefaultHeader
+        leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
+        label="나의 채팅방"
+        rightButton={<PlusButton onClick={() => navigate('/chat/chatroom/add')} />}
+      />
       <PageErrorBoundary>
         <FetchErrorBoundary>
-          <DefaultHeader
-            leftButton={<LeftArrowButton onClick={() => navigate(-1)} />}
-            label="나의 채팅방"
-            rightButton={<PlusButton onClick={() => navigate('/chat/chatroom/add')} />}
-          />
           <HostedChatroomList />
         </FetchErrorBoundary>
       </PageErrorBoundary>
