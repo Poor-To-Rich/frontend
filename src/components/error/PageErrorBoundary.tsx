@@ -11,16 +11,12 @@ const PageFallback = ({ error }: SentryFallbackProps) => {
   }
 
   return (
-    <div className="w-full grow flex flex-col justify-center items-center gap-7">
+    <div className="w-full min-h-screen flex flex-col justify-center items-center gap-7">
       <LuFileWarning size={70} color={'gray'} />
       <h1 className="text-xl font-bold">페이지를 불러오는 데 문제가 발생했습니다.</h1>
-      <p>다시 시도하거나 홈으로 돌아가주세요.</p>
+      <p>다시 시도하거나 이전 페이지로 돌아가주세요.</p>
       <PrimaryButton label="새로고침" onClick={() => window.location.reload()} color={'bg-lightBlue text-oceanBlue'} />
-      <PrimaryButton
-        label="홈으로 이동"
-        onClick={() => (window.location.href = '/')}
-        color={'bg-strokeGray text-defaultGrey'}
-      />
+      <PrimaryButton label="이전" onClick={() => window.history.back()} color={'bg-strokeGray text-defaultGrey'} />
     </div>
   );
 };
