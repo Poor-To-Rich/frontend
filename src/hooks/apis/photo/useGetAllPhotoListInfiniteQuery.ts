@@ -15,7 +15,6 @@ const useGetAllPhotoListInfiniteQuery = (chatroomId: string) => {
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : null),
     placeholderData: prevData => prevData,
-    staleTime: Infinity,
   });
 };
 
