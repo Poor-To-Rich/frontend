@@ -14,9 +14,13 @@ const HostedChatroomList = () => {
   }
 
   return (
-    <div className="w-full flex flex-col gap-3.5 p-5">
-      {hostedChatrooms?.map(chatroom => <PublicChatroomItem {...chatroom} isEditMode />)}
-    </div>
+    <ul className="w-full flex flex-col gap-3.5 p-5">
+      {hostedChatrooms?.map(chatroom => (
+        <li key={chatroom.chatroomId}>
+          <PublicChatroomItem {...chatroom} isEditMode />
+        </li>
+      ))}
+    </ul>
   );
 };
 

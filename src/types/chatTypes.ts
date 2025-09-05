@@ -69,7 +69,7 @@ export type ChatroomIdRes = {
 };
 
 export type LeaveChatroomRes = {
-  deletedChatroomId: number;
+  deleteChatroomId: number;
 };
 
 export type ChatroomCoverType = {
