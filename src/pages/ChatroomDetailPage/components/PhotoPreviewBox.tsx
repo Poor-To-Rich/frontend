@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import useModal from '@/hooks/useModal';
 import { useState } from 'react';
 import PhotoDetailModal from '@/components/modal/photo/PhotoDetailModal';
+import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
   chatroomId: string;
@@ -14,7 +15,7 @@ interface Props {
 
 const PhotoPreviewBox = ({ chatroomId }: Props) => {
   const navigate = useNavigate();
-  const { data: photos } = useGetRecentPhotoList(chatroomId);
+  const { data: photos, isPending } = useGetRecentPhotoList(chatroomId);
   const isEmpty = photos?.length === 0;
   const {
     scrollRef,
@@ -30,9 +31,13 @@ const PhotoPreviewBox = ({ chatroomId }: Props) => {
   const [selectedPhoto, setSelectedPhoto] = useState<number | null>(null);
   const { isOpen, openModal, closeModal } = useModal();
 
+  if (isPending) {
+    return <Skeleton height="h-66" />;
+  }
+
   return (
-    <div className="w-full border border-strokeGray pl-7 py-7 rounded-3xl">
-      <div className="w-full flex justify-between items-center mb-10 pr-7">
+    <div className="w-full border border-strokeGray py-7 rounded-3xl">
+      <div className="w-full flex justify-between items-center mb-10 px-7">
         <h4 className="flex gap-1.5 items-center ">
           <ImageIcon />
           <span>사진</span>
@@ -60,6 +65,7 @@ const PhotoPreviewBox = ({ chatroomId }: Props) => {
               draggable={false}
               className={clsx(
                 'w-32 shrink-0 cursor-pointer aspect-square object-cover border border-strokeGray bg-white',
+                index === 0 && 'ml-7',
                 index === photos.length - 1 && 'mr-7',
               )}
               onClick={e => {

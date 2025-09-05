@@ -13,6 +13,7 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 import ConsentModal from '@/components/modal/chat/ConsentModal';
 import DefaultModal from '@/components/modal/DefaultModal';
 import { HOST_LEAVE_CHATROOM_NOTICE, MEMBER_LEAVE_CHATROOM_NOTICE } from '@/constants/modal';
+import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const ChatroomDetailPage = () => {
   const { chatroomId } = useParams();
@@ -30,11 +31,21 @@ const ChatroomDetailPage = () => {
             isHost={userRole?.chatroomRole === 'HOST'}
           />
           <div className="flex flex-col gap-3 px-5 py-5">
-            <ChatroomProfileBox chatroomId={chatroomId} isHost={userRole?.chatroomRole === 'HOST'} />
-            <PhotoPreviewBox chatroomId={chatroomId} />
-            <NoticePreviewBox chatroomId={chatroomId} />
-            <RankingPreviewBox chatroomId={chatroomId} />
-            <ChatMemberBox chatroomId={chatroomId} />
+            <FetchErrorBoundary>
+              <ChatroomProfileBox chatroomId={chatroomId} isHost={userRole?.chatroomRole === 'HOST'} />
+            </FetchErrorBoundary>
+            <FetchErrorBoundary>
+              <PhotoPreviewBox chatroomId={chatroomId} />
+            </FetchErrorBoundary>
+            <FetchErrorBoundary>
+              <NoticePreviewBox chatroomId={chatroomId} />
+            </FetchErrorBoundary>
+            <FetchErrorBoundary>
+              <RankingPreviewBox chatroomId={chatroomId} />
+            </FetchErrorBoundary>
+            <FetchErrorBoundary>
+              <ChatMemberBox chatroomId={chatroomId} />
+            </FetchErrorBoundary>
             <div className="w-full mt-3">
               <ChatActionButton label={'채팅방 나가기'} onClick={openModal} />
             </div>

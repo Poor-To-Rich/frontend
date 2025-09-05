@@ -1,4 +1,5 @@
 import UtilityButton from '@/components/button/UtilityButton';
+import Skeleton from '@/components/loading/Skeleton';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
 import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +11,11 @@ interface Props {
 
 const ChatroomProfileBox = ({ chatroomId, isHost }: Props) => {
   const navigate = useNavigate();
-  const { data: chatroomDetails } = useGetChatroomDetails(chatroomId);
+  const { data: chatroomDetails, isPending } = useGetChatroomDetails(chatroomId);
+
+  if (isPending) {
+    return <Skeleton height="h-50" />;
+  }
 
   return (
     <div className="w-full flex gap-10 mb-5">
