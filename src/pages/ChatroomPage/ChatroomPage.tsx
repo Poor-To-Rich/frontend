@@ -67,7 +67,7 @@ const ChatroomPage = () => {
             <div
               ref={scrollRef}
               className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
-              <ChatContainer chatroomId={chatroomId!} scrollRef={scrollRef} />
+              <ChatContainer chatroomId={chatroomId!} scrollRef={scrollRef} userRole={userRole} />
             </div>
             <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
           </FetchErrorBoundary>

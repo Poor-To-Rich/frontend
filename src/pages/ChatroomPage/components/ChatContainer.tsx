@@ -1,24 +1,23 @@
-// src/pages/ChatroomPage/components/ChatContainer.tsx
 import { useMemo, useRef } from 'react';
 import NoticeSection from './notice/NoticeSection';
 import ChatBody from './message/ChatBody';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
-import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
 import useChatScroll from '@/hooks/chat/useChatScroll';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import { UsersMap } from '@/types/messageType';
+import { ChatroomUserRoleRes } from '@/types/chatTypes';
 
 interface Props {
   chatroomId: string;
   scrollRef: React.RefObject<HTMLDivElement>;
+  userRole?: ChatroomUserRoleRes;
 }
 
-const ChatContainer = ({ chatroomId, scrollRef }: Props) => {
+const ChatContainer = ({ chatroomId, scrollRef, userRole }: Props) => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } =
     useGetChatroomMessageInfiniteQuery(chatroomId);
-  const { data: userRole } = useGetChatroomUserRole(chatroomId);
   const { data: recentNotice } = useGetRecentNotice(chatroomId);
 
   const chatMessages = useMemo(() => (data?.pages?.flatMap(page => page.messages) || []).slice().reverse(), [data]);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 
 interface UseInfiniteScrollOptions {
   observerRef: React.RefObject<Element>;
@@ -13,26 +13,34 @@ const useInfiniteScroll = ({
   hasNextPage,
   isFetchingNextPage,
   fetchNextPage,
+  threshold = 0.5,
 }: UseInfiniteScrollOptions) => {
+  const handleFetchNextPage = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   useEffect(() => {
-    if (!observerRef.current || !hasNextPage) return;
+    const currentElement = observerRef.current;
+
+    if (!currentElement || !hasNextPage) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
+        if (entry.isIntersecting) {
+          handleFetchNextPage();
         }
       },
-      { threshold: 0.5 },
+      { threshold },
     );
 
-    const current = observerRef.current;
-    observer.observe(current);
+    observer.observe(currentElement);
 
     return () => {
       observer.disconnect();
     };
-  }, [observerRef, hasNextPage, fetchNextPage, isFetchingNextPage]);
+  }, [observerRef, hasNextPage, threshold, handleFetchNextPage]);
 };
 
 export default useInfiniteScroll;
