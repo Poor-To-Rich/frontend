@@ -10,7 +10,7 @@ import { useState } from 'react';
 interface Props {
   handleSubmit: (data: ReportChatroomMemberReq) => void;
   closeModal: () => void;
-  isPending: boolean;
+  isPending?: boolean;
 }
 
 const ReportReasonModal = ({ handleSubmit, closeModal, isPending }: Props) => {
