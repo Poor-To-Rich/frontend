@@ -18,7 +18,7 @@ interface Props {
 
 const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) => {
   const { chatroomId } = useParams();
-  const { messageType, content, sentAt, unreadBy } = message;
+  const { messageType, content, sentAt, unreadBy, messageId } = message;
   const { isOpen, openModal, closeModal } = useModal();
 
   const renderMessageBox = (
@@ -48,7 +48,9 @@ const ChatMessage = ({ index, message, isMine, rankingType, showTime }: Props) =
   );
 
   return (
-    <div className={clsx('flex items-end gap-2.5 w-full', isMine ? 'justify-end' : 'justify-start')}>
+    <div
+      data-message-id={messageId}
+      className={clsx('flex items-end gap-2.5 w-full', isMine ? 'justify-end' : 'justify-start')}>
       {!isMine && renderMessageBox}
       <div className={clsx('flex flex-col', isMine ? 'items-end' : 'items-start')}>
         {unreadBy.length > 0 && <p className="text-sm">{unreadBy.length}</p>}

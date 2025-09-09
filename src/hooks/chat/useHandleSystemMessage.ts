@@ -1,6 +1,6 @@
 import { ChatRoomMessageRes, SystemMessageType } from '@/types/messageType';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
-import { ChatroomDetailsRes } from '@/types/chatTypes';
+import { ChatroomDetailsRes, ChatroomUserRoleRes } from '@/types/chatTypes';
 
 const useHandleSystemMessage = () => {
   const queryClient = useQueryClient();
@@ -11,15 +11,22 @@ const useHandleSystemMessage = () => {
     setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
     userId?: number,
   ) => {
+    if (newMessage.messageType === 'KICK' && userId === newMessage.userId) {
+      queryClient.setQueryData(['chatroomUserRole', chatroomId], (oldData: ChatroomUserRoleRes) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          chatroomRole: 'BANNED',
+        };
+      });
+    }
+
     if ((newMessage.messageType === 'KICK' && userId === newMessage.userId) || newMessage.messageType === 'CLOSE') {
       setIsChatDisabled(true);
     }
 
-    if (
-      newMessage.messageType === 'LEAVE' ||
-      newMessage.messageType === 'KICK' ||
-      newMessage.messageType === 'DELEGATE'
-    ) {
+    if (newMessage.messageType === 'LEAVE' || newMessage.messageType === 'KICK') {
       queryClient.setQueryData(
         ['chatroomMessages', chatroomId],
         (oldData: InfiniteData<ChatRoomMessageRes> | undefined) => {
@@ -50,8 +57,7 @@ const useHandleSystemMessage = () => {
       let newCurrentMemberCount = oldData.currentMemberCount;
 
       if (newMessage.messageType === 'ENTER') newCurrentMemberCount += 1;
-      else if (newMessage.messageType === 'LEAVE' || newMessage.messageType === 'DELEGATE')
-        newCurrentMemberCount = oldData.currentMemberCount -= 1;
+      else if (newMessage.messageType === 'LEAVE' || newMessage.messageType === 'KICK') newCurrentMemberCount -= 1;
 
       return {
         ...oldData,

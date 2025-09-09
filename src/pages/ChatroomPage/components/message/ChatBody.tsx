@@ -11,10 +11,11 @@ interface Props {
   messages: ChatMessageUnion[];
   myUserId: number;
   users: Record<string, UserProfileType>;
+  latestReadMessageId?: string | null;
 }
 
-const ChatBody = ({ chatroomId, messages, myUserId, users }: Props) => {
-  const groupedMessages = groupChatMessages(messages);
+const ChatBody = ({ chatroomId, messages, myUserId, users, latestReadMessageId }: Props) => {
+  const groupedMessages = groupChatMessages(messages, latestReadMessageId);
 
   return (
     <div className="flex flex-col items-center gap-7 p-5 w-full">

@@ -13,10 +13,17 @@ import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import { handleFetchError } from '@/utils/error/handleFetchError';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
+import useKickUserMessageRead from '@/hooks/apis/chat/useKickUserMessageRead';
+import { useQueryClient } from '@tanstack/react-query';
+import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
+import { useSearchParams } from 'react-router-dom';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { chatroomId } = useParams<{ chatroomId: string }>();
+  const [searchParams] = useSearchParams();
+  const latestReadMessageId = searchParams.get('latestReadMessageId');
   const [isChatDisabled, setIsChatDisabled] = useState(false);
 
   const {
@@ -26,20 +33,28 @@ const ChatroomPage = () => {
     isPending: isChatroomDetailPending,
   } = useGetChatroomDetails(chatroomId!);
   const { data: userRole, error: userRoleError, isError: isUserRoleError } = useGetChatroomUserRole(chatroomId!);
+  const { mutate: kickUserMessageRead } = useKickUserMessageRead(chatroomId!, userRole?.userId);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const markMessagesAsRead = useMarkMessagesAsRead();
 
-  useChatroomSubscription(chatroomId!, userRole?.userId, setIsChatDisabled, userId =>
-    markMessagesAsRead(chatroomId!, userId),
+  useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled, userId =>
+    markMessagesAsRead(chatroomId!, userId, latestReadMessageId),
   );
 
   useEffect(() => {
     if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
+      if (userRole?.chatroomRole === 'BANNED') {
+        kickUserMessageRead();
+      }
       setIsChatDisabled(true);
     }
-  }, [chatroomDetails, userRole]);
+
+    return () => {
+      queryClient.refetchQueries({ queryKey: joinedChatroomsQueryKey });
+    };
+  }, [chatroomDetails, userRole, kickUserMessageRead]);
 
   if (isChatroomDetailError || isUserRoleError) {
     return handleFetchError(chatroomDetailError || userRoleError);
@@ -67,7 +82,12 @@ const ChatroomPage = () => {
             <div
               ref={scrollRef}
               className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
-              <ChatContainer chatroomId={chatroomId!} scrollRef={scrollRef} userRole={userRole} />
+              <ChatContainer
+                chatroomId={chatroomId!}
+                scrollRef={scrollRef}
+                userRole={userRole}
+                latestReadMessageId={latestReadMessageId}
+              />
             </div>
             <ChatActionBox chatroomId={Number(chatroomId)} isChatDisabled={isChatDisabled} scrollRef={scrollRef} />
           </FetchErrorBoundary>
