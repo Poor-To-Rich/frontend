@@ -1,16 +1,10 @@
 import { format, isThisYear, isToday, isYesterday } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
-export function parseServerUTC(iso: string): Date {
-  const clean = iso.replace(/(\.\d{3})\d+$/, '$1').replace(/Z$/, '');
-
-  return new Date(`${clean}Z`);
-}
-
 export const formatPublicLastMessageTime = (lastMessageTime: string | null) => {
   if (!lastMessageTime) return null;
   const now = new Date();
-  const last = parseServerUTC(lastMessageTime);
+  const last = new Date(lastMessageTime);
 
   const diffMs = now.getTime() - last.getTime();
   const diffMin = Math.floor(diffMs / (1000 * 60));
@@ -22,7 +16,7 @@ export const formatPublicLastMessageTime = (lastMessageTime: string | null) => {
 };
 
 export const formatDetailLastMessageTime = (isoString: string) => {
-  const date = parseServerUTC(isoString);
+  const date = new Date(isoString);
 
   if (isToday(date)) {
     return format(date, 'a h시 mm분', { locale: ko });
@@ -36,6 +30,6 @@ export const formatDetailLastMessageTime = (isoString: string) => {
 };
 
 export const formatDetailChatroomMessageTime = (isoString: string) => {
-  const date = parseServerUTC(isoString);
+  const date = new Date(isoString);
   return format(date, 'a h시 mm분', { locale: ko });
 };

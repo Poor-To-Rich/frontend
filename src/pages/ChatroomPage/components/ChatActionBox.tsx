@@ -4,13 +4,14 @@ import { stompClient } from '@/api/stomp';
 import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
 import XIconButton from '@/components/button/icon/XIconButton';
 import SubActionButton from '@/components/button/SubActionButton';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import ModalDimmed from '@/components/modal/ModalDimmed';
 import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
 import useModal from '@/hooks/useModal';
 import { scrollToBottom } from '@/utils/chat/scrollToBottom';
 import { createFormData } from '@/utils/form/createFormData';
 import { compressImage } from '@/utils/image';
-import { MutableRefObject, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -21,9 +22,21 @@ interface Props {
 
 const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [isComposing, setIsComposing] = useState<boolean>(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  const [isCompressing, setIsCompressing] = useState<boolean>(false);
+  const [isPhotoLoading, setIsPhotoLoading] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { mutate: uploadChatroomPhoto } = useUploadChatroomPhoto(String(chatroomId), setPhotoFile);
+
+  const handleClearPhotoStatus = () => {
+    setPhotoFile(null);
+    setIsPhotoLoading(false);
+  };
+
+  const { mutate: uploadChatroomPhoto, isPending: isUploadPhotoPending } = useUploadChatroomPhoto(
+    String(chatroomId),
+    handleClearPhotoStatus,
+  );
 
   // 랭킹 테스트 관련 코드
   const { isOpen, openModal, closeModal } = useModal();
@@ -48,14 +61,18 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
     if (!file) return;
 
     try {
+      setIsPhotoLoading(true);
+      setIsCompressing(true);
       const compressedFile = await compressImage(file);
 
       setPhotoFile(compressedFile);
     } catch (error) {
       console.error('압축 실패:', error);
       toast.error(error instanceof Error ? error.message : '사진 업로드 실패');
+      setIsPhotoLoading(false);
+    } finally {
+      setIsCompressing(false);
     }
-
     e.target.value = '';
   };
 
@@ -73,7 +90,9 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
       }),
     });
 
-    if (scrollRef) scrollToBottom(scrollRef, 'instant');
+    if (scrollRef) {
+      setTimeout(() => scrollToBottom(scrollRef, 'instant'), 0);
+    }
 
     if (textareaRef.current) {
       textareaRef.current.value = '';
@@ -82,7 +101,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
 
   const handleSendPhotoMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!photoFile) return;
+    if (!photoFile || isCompressing || isUploadPhotoPending) return;
 
     const body = createFormData({
       photo: photoFile,
@@ -91,12 +110,27 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
     uploadChatroomPhoto(body);
   };
 
+  useEffect(() => {
+    if (!photoFile) return;
+
+    const previewUrl = URL.createObjectURL(photoFile);
+    setPreviewUrl(previewUrl);
+
+    return () => URL.revokeObjectURL(previewUrl);
+  }, [photoFile]);
+
   return (
     <div className="sticky bottom-0">
-      {photoFile && (
-        <div className="w-full flex justify-center bg-strokeGray/30 relative">
-          <XIconButton className="absolute right-0" onClick={() => setPhotoFile(null)} />
-          <img className="w-1/2 aspect-square object-cover" src={URL.createObjectURL(photoFile)} />
+      {isPhotoLoading && (
+        <div className="w-full aspect-[2/1] flex justify-center bg-strokeGray/30 relative">
+          <XIconButton className="absolute right-0" onClick={handleClearPhotoStatus} />
+          {photoFile && previewUrl ? (
+            <img className="w-1/2 aspect-square object-cover" src={previewUrl} />
+          ) : (
+            <div className="flex justify-center items-center flex-grow ">
+              <LoadingSpinner size={30} color="black" />
+            </div>
+          )}
         </div>
       )}
       <form
@@ -114,10 +148,8 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
             <textarea
               id="text"
               ref={textareaRef}
-              onCompositionStart={() => setIsComposing(true)}
-              onCompositionEnd={() => setIsComposing(false)}
               onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey && !isComposing) {
+                if (e.key === 'Enter' && !e.shiftKey && !(e.nativeEvent as any).isComposing) {
                   e.preventDefault();
                   if (photoFile) {
                     handleSendPhotoMessage(e as unknown as React.FormEvent);
@@ -131,7 +163,11 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
             />
 
             <div className="h-12 mb-0.5">
-              <SubActionButton label="전송" onClick={photoFile ? handleSendPhotoMessage : handleSendTextMessage} />
+              <SubActionButton
+                label="전송"
+                onClick={photoFile ? handleSendPhotoMessage : handleSendTextMessage}
+                isPending={isUploadPhotoPending}
+              />
             </div>
           </>
         )}

@@ -5,7 +5,6 @@ import UserProfileModal from '@/pages/ChatroomPage/components/modal/UserProfileM
 import { UserProfileType } from '@/types/profileType';
 import PostMoreButton from '@/components/button/icon/PostMoreButton';
 import { ko } from 'date-fns/locale';
-import { parseServerUTC } from '@/utils/chat/timeFormta';
 import { format } from 'date-fns';
 import NoticeDropdown from '@/components/menu/NoticeDropdown';
 import { useRef } from 'react';
@@ -50,7 +49,7 @@ const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking
           </div>
           {createdAt && (
             <p className="text-sm text-defaultGrey">
-              {format(parseServerUTC(createdAt), 'yyyy년 MM월 dd일 a h시 mm분', { locale: ko })}
+              {format(createdAt, 'yyyy년 MM월 dd일 a h시 mm분', { locale: ko })}
             </p>
           )}
         </div>

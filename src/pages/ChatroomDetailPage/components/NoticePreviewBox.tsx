@@ -1,4 +1,5 @@
 import MegaphoneIcon from '@/components/icon/MegaphoneIcon';
+import Skeleton from '@/components/loading/Skeleton';
 import useGetRecentNoticeList from '@/hooks/apis/notice/useGetRecentNoticeList';
 import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +10,12 @@ interface Props {
 
 const NoticePreviewBox = ({ chatroomId }: Props) => {
   const navigate = useNavigate();
-  const { data: notices } = useGetRecentNoticeList(chatroomId);
+  const { data: notices, isPending } = useGetRecentNoticeList(chatroomId);
   const isEmpty = notices?.length === 0;
+
+  if (isPending) {
+    return <Skeleton height="h-63.5" />;
+  }
 
   return (
     <div className="w-full border border-strokeGray p-7 rounded-3xl">

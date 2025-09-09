@@ -4,6 +4,7 @@ import TrashButton from '@/components/button/icon/TrashButton';
 import DefaultProfileImage from '/image/default-profile-image.webp';
 import toast from 'react-hot-toast';
 import { compressImage } from '@/utils/image';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
   value: string | File | undefined;
@@ -12,18 +13,22 @@ interface Props {
 
 const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange }, ref) => {
   const [previewUrl, setPreviewUrl] = useState<string>();
+  const [isCompressing, setIsCompressing] = useState<boolean>(false);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
+      setIsCompressing(true);
       const compressedFile = await compressImage(file);
 
       onChange(compressedFile);
     } catch (error) {
       console.error('압축 실패:', error);
       toast.error(error instanceof Error ? error.message : '사진 업로드 실패');
+    } finally {
+      setIsCompressing(false);
     }
     e.target.value = '';
   };
@@ -50,6 +55,8 @@ const ProfileImageInput = forwardRef<HTMLInputElement, Props>(({ value, onChange
     <div className="relative w-[15rem] flex justify-center items-center aspect-square rounded-2xl border border-strokeGray cursor-pointer">
       {previewUrl ? (
         <img src={previewUrl} alt="프로필 이미지" className="w-full h-full rounded-2xl object-cover" />
+      ) : isCompressing ? (
+        <LoadingSpinner size={25} />
       ) : (
         <img src={DefaultProfileImage} alt="프로필 이미지" className="w-full h-full rounded-2xl object-cover" />
       )}

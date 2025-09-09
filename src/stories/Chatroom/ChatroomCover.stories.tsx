@@ -9,12 +9,11 @@ function ChatroomCover() {
     <div>
       <CoverProfilePhoto photo={ProfileImage} />
       <ChatroomSummary
+        chatroomId="1"
         chatroomTitle="채팅을 곁들인 수다방"
         currentMemberCount={50}
         maxMemberCount={100}
         createdAt="2025.07.03"
-        likeCount={0}
-        isLiked
       />
       <ChatroomInfoItem
         label="채팅방 소개"

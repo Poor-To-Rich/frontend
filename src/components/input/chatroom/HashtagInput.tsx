@@ -14,10 +14,9 @@ interface Props {
 const HashtagInput = forwardRef<HTMLInputElement, Props>(
   ({ label, value, maxLength, isRequired, errorMessage, onChange }, ref) => {
     const [input, setInput] = useState('');
-    const [isComposing, setIsComposing] = useState<boolean>(false);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if ((e.key === ' ' || e.key === 'Enter') && !isComposing && input.trim().startsWith('#')) {
+      if ((e.key === ' ' || e.key === 'Enter') && !(e.nativeEvent as any).isComposing && input.trim().startsWith('#')) {
         e.preventDefault();
         const tag = input.trim().slice(1);
         if (tag && !value.includes(tag)) {
@@ -57,8 +56,6 @@ const HashtagInput = forwardRef<HTMLInputElement, Props>(
               }
             }}
             onKeyDown={handleKeyDown}
-            onCompositionStart={() => setIsComposing(true)}
-            onCompositionEnd={() => setIsComposing(false)}
             maxLength={maxLength}
             placeholder={value.length < maxLength ? '#태그를 입력하세요' : ''}
             ref={ref}
