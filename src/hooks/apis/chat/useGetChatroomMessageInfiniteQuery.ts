@@ -9,6 +9,7 @@ const useGetChatroomMessageInfiniteQuery = (chatroomId: string) => {
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : null),
     staleTime: 0,
+    gcTime: 0,
   });
 };
 

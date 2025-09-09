@@ -63,7 +63,13 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
             onClick={() => {
               if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
               else {
-                navigate(`/chat/chatroom/${chatroom.chatroomId}`);
+                navigate(
+                  `/chat/chatroom/${chatroom.chatroomId}${
+                    chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 10
+                      ? `?latestReadMessageId=${chatroom.latestReadMessageId}`
+                      : ''
+                  }`,
+                );
                 handleEnterChatroom(chatroom.chatroomId);
               }
             }}

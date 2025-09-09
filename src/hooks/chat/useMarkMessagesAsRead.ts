@@ -4,29 +4,29 @@ import { ChatRoomMessageRes } from '@/types/messageType';
 const useMarkMessagesAsRead = () => {
   const queryClient = useQueryClient();
 
-  return (chatroomId: string, readerId: number) => {
+  return (chatroomId: string, readerId: number, latestReadMessageId?: string | null) => {
     queryClient.setQueryData(
       ['chatroomMessages', chatroomId],
       (oldData: InfiniteData<ChatRoomMessageRes> | undefined) => {
         if (!oldData) return oldData;
 
-        const newData = {
+        return {
           ...oldData,
           pages: oldData.pages.map(page => ({
             ...page,
             messages: page.messages.map(msg => {
               if (msg.type === 'CHAT_MESSAGE') {
-                return {
-                  ...msg,
-                  unreadBy: msg.unreadBy.filter(id => id !== readerId),
-                };
+                if (!latestReadMessageId || msg.messageId <= Number(latestReadMessageId)) {
+                  return {
+                    ...msg,
+                    unreadBy: msg.unreadBy.filter(id => id !== readerId),
+                  };
+                }
               }
               return msg;
             }),
           })),
         };
-
-        return newData;
       },
     );
   };

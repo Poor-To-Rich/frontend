@@ -22,7 +22,7 @@ function minuteKeyOf(ts: string | number | Date) {
   return `${yyyy}-${mm}-${dd} ${HH}:${MM}`;
 }
 
-export function groupChatMessages(messages: ChatMessageUnion[]): GroupedMessage[] {
+export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessageId?: string | null): GroupedMessage[] {
   const result: GroupedMessage[] = [];
   let buffer: ChatMessageType[] = [];
   let bufferSenderId: number | null = null;
@@ -60,6 +60,11 @@ export function groupChatMessages(messages: ChatMessageUnion[]): GroupedMessage[
         buffer = [msg];
         bufferSenderId = msg.senderId;
         bufferMinuteKey = mk;
+      }
+
+      if (latestReadMessageId && msg.messageId === Number(latestReadMessageId)) {
+        flushBuffer();
+        result.push({ type: 'SYSTEM_MESSAGE', message: { content: '여기까지 읽으셨습니다.' } });
       }
     } else {
       flushBuffer();

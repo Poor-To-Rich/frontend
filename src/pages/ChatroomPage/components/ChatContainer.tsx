@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import NoticeSection from './notice/NoticeSection';
 import ChatBody from './message/ChatBody';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
@@ -12,11 +12,12 @@ import { ChatroomUserRoleRes } from '@/types/chatTypes';
 interface Props {
   chatroomId: string;
   scrollRef: React.RefObject<HTMLDivElement>;
+  latestReadMessageId?: string | null;
   userRole?: ChatroomUserRoleRes;
 }
 
-const ChatContainer = ({ chatroomId, scrollRef, userRole }: Props) => {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } =
+const ChatContainer = ({ chatroomId, scrollRef, latestReadMessageId, userRole }: Props) => {
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isFetching, isPending } =
     useGetChatroomMessageInfiniteQuery(chatroomId);
   const { data: recentNotice } = useGetRecentNotice(chatroomId);
 
@@ -40,9 +41,21 @@ const ChatContainer = ({ chatroomId, scrollRef, userRole }: Props) => {
     messageDeps: [chatMessages],
     isFetchingNextPage,
     followThreshold: 150,
+    latestReadMessageId,
   });
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
+
+  useEffect(() => {
+    if (!data || isFetching || isFetchingNextPage || !latestReadMessageId) return;
+
+    const allMessages = data.pages.flatMap(p => p.messages);
+    const found = allMessages.some(message => message.messageId === Number(latestReadMessageId));
+
+    if (!found && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [data, latestReadMessageId, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage]);
 
   if (isPending) {
     return (
@@ -57,7 +70,13 @@ const ChatContainer = ({ chatroomId, scrollRef, userRole }: Props) => {
       {recentNotice && <NoticeSection {...recentNotice} />}
       {!isEmpty && hasNextPage && <div ref={observerRef} className="h-4" />}
       {chatroomId && userRole && (
-        <ChatBody chatroomId={chatroomId} myUserId={userRole.userId} messages={chatMessages} users={chatroomUsers} />
+        <ChatBody
+          chatroomId={chatroomId}
+          myUserId={userRole.userId}
+          messages={chatMessages}
+          users={chatroomUsers}
+          latestReadMessageId={latestReadMessageId}
+        />
       )}
     </>
   );
