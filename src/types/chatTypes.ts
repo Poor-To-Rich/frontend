@@ -26,7 +26,7 @@ export type JoinedChatroomType = {
   currentMemberCount: number;
   lastMessageTime: string;
   lastMessage?: string;
-  latestReadMessageId: number | null;
+  latestReadMessageId?: number | null;
   isHost: boolean;
   unreadMessageCount?: number;
 };
