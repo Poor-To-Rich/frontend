@@ -3,17 +3,18 @@ import { addOnConnect, stompClient } from '@/api/stomp';
 import { StompSubscription } from '@stomp/stompjs';
 import { IMessage } from '@stomp/stompjs';
 import { useHandleChatMessage } from '@/hooks/chat/useHandleChatMessage';
+import { ChatroomUserRoleRes } from '@/types/chatTypes';
 
 export const useChatroomSubscription = (
   chatroomId: string,
-  userId: number | undefined,
+  userRole: ChatroomUserRoleRes | undefined,
   setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   onReadMessage: (userId: number) => void,
 ) => {
-  const handleMessage = useHandleChatMessage(chatroomId, setIsChatDisabled, onReadMessage, userId);
+  const handleMessage = useHandleChatMessage(chatroomId, setIsChatDisabled, onReadMessage, userRole?.userId);
 
   useEffect(() => {
-    if (!chatroomId || !userId) return;
+    if (!chatroomId || !userRole || userRole.chatroomRole === 'BANNED') return;
 
     let sub: StompSubscription | undefined;
 
@@ -40,5 +41,5 @@ export const useChatroomSubscription = (
       off();
       sub?.unsubscribe();
     };
-  }, [chatroomId, userId, handleMessage, setIsChatDisabled]);
+  }, [chatroomId, userRole, handleMessage, setIsChatDisabled]);
 };

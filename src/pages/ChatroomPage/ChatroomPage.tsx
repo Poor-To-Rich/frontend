@@ -13,6 +13,7 @@ import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import { handleFetchError } from '@/utils/error/handleFetchError';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
+import useKickUserMessageRead from '@/hooks/apis/chat/useKickUserMessageRead';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
@@ -26,20 +27,22 @@ const ChatroomPage = () => {
     isPending: isChatroomDetailPending,
   } = useGetChatroomDetails(chatroomId!);
   const { data: userRole, error: userRoleError, isError: isUserRoleError } = useGetChatroomUserRole(chatroomId!);
+  const { mutate: kickUserMessageRead } = useKickUserMessageRead(chatroomId!, userRole?.userId);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const markMessagesAsRead = useMarkMessagesAsRead();
 
-  useChatroomSubscription(chatroomId!, userRole?.userId, setIsChatDisabled, userId =>
-    markMessagesAsRead(chatroomId!, userId),
-  );
+  useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled, userId => markMessagesAsRead(chatroomId!, userId));
 
   useEffect(() => {
     if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
+      if (userRole?.chatroomRole === 'BANNED') {
+        kickUserMessageRead();
+      }
       setIsChatDisabled(true);
     }
-  }, [chatroomDetails, userRole]);
+  }, [chatroomDetails, userRole, kickUserMessageRead]);
 
   if (isChatroomDetailError || isUserRoleError) {
     return handleFetchError(chatroomDetailError || userRoleError);

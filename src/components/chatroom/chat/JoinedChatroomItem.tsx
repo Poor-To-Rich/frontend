@@ -39,7 +39,7 @@ const JoinedChatroomItem = ({
                 <span className="text-defaultGrey whitespace-nowrap">{currentMemberCount}</span>
               </div>
             </div>
-            <p className="text-md text-defaultGrey truncate min-w-0 whitespace-nowrap">{lastMessage}</p>
+            <p className="text-md text-defaultGrey truncate min-w-0 min-h-[21px] whitespace-nowrap">{lastMessage}</p>
           </div>
         </div>
         <div className="flex flex-col items-end justify-start gap-1.5 shrink-0">

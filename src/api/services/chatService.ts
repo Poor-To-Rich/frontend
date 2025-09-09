@@ -132,6 +132,11 @@ export const kickUser = async (chatroomId: string, userId: number) => {
   return res.data;
 };
 
+export const kickUserMessageRead = async (chatroomId: string) => {
+  const res = await fetchData<undefined>('DELETE', endpoints.chat.kickUserReadMessage(chatroomId));
+  return res.data;
+};
+
 export const reportChatroomMember = async (chatroomId: string, userId: number, body: ReportChatroomMemberReq) => {
   const res = await fetchData<ReportChatroomMemberReq, ReportChatroomMemberRes>(
     'POST',
