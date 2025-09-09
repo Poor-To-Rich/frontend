@@ -8,7 +8,7 @@ interface Props {
 }
 
 const SystemMessage = ({ myUserId, message }: Props) => {
-  const { messageType, content, userId } = message;
+  const { messageType, content, userId } = message!;
 
   let displayContent = content;
 

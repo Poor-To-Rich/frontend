@@ -1,13 +1,13 @@
-import { addOnConnect, stompClient } from '@/api/stomp';
 import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
-import useGetUserDetails from '@/hooks/apis/auth/useGetUserDetails';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
-import useHandleUpdateJoinedChatroom from '@/hooks/chat/useHandleUpdateJoinedChatroom';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
-import { StompSubscription } from '@stomp/stompjs';
 import { motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
+import { JoinedChatroomsRes } from '@/types/chatTypes';
 
 interface Props {
   isEditMode?: boolean;
@@ -17,42 +17,40 @@ interface Props {
 
 const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroom }: Props) => {
   const navigate = useNavigate();
-  const { data: userDetail } = useGetUserDetails();
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useJoinedChatroomsInfiniteQuery();
+  const queryClient = useQueryClient();
 
   const observerRef = useRef<HTMLLIElement | null>(null);
+
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } = useJoinedChatroomsInfiniteQuery();
+
   const joinedChatrooms = data?.pages?.flatMap(page => page.chatrooms) || [];
   const isEmpty = joinedChatrooms?.length === 0;
 
-  const handleUpdatedJoinedChatroom = useHandleUpdateJoinedChatroom();
+  const handleEnterChatroom = (chatroomId: number) => {
+    queryClient.setQueryData(joinedChatroomsQueryKey, (oldData: InfiniteData<JoinedChatroomsRes> | undefined) => {
+      if (!oldData) return oldData;
+
+      return {
+        ...oldData,
+        pages: oldData.pages.map(page => ({
+          ...page,
+          chatrooms: page.chatrooms.map(chatroom =>
+            chatroom.chatroomId === chatroomId ? { ...chatroom, unreadMessageCount: 0 } : chatroom,
+          ),
+        })),
+      };
+    });
+  };
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
-  useEffect(() => {
-    if (!userDetail?.userId) return;
-
-    let sub: StompSubscription | undefined;
-
-    const subscribe = () => {
-      sub = stompClient.subscribe(`/sub/chat/summary/${userDetail.userId}`, res => {
-        const response = JSON.parse(res.body);
-        console.log(response);
-        handleUpdatedJoinedChatroom(response.payload);
-      });
-    };
-
-    // 1) 이미 연결돼 있으면 즉시 한 번 실행
-    if (stompClient.connected) subscribe();
-
-    // 2) 앞으로 "연결/재연결"될 때마다 다시 실행하도록 리스너 등록
-    const off = addOnConnect(subscribe);
-
-    // 언마운트 시 정리
-    return () => {
-      off();
-      sub?.unsubscribe();
-    };
-  }, [userDetail]);
+  if (isPending || !data) {
+    return (
+      <div className="w-full flex flex-grow justify-center items-center">
+        <LoadingSpinner size={30} />
+      </div>
+    );
+  }
 
   return (
     <ul className="flex flex-col flex-grow gap-5 px-7 py-4">
@@ -64,7 +62,16 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
             isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
             onClick={() => {
               if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
-              else navigate(`/chat/chatroom/${chatroom.chatroomId}`);
+              else {
+                navigate(
+                  `/chat/chatroom/${chatroom.chatroomId}${
+                    chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 10
+                      ? `?latestReadMessageId=${chatroom.latestReadMessageId}`
+                      : ''
+                  }`,
+                );
+                handleEnterChatroom(chatroom.chatroomId);
+              }
             }}
           />
         </motion.li>

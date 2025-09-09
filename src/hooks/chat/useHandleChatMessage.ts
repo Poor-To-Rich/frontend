@@ -1,5 +1,4 @@
 import { usePrependMessageToFirstPage } from '@/hooks/chat/usePrependMessageToFirstPage';
-import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import useUpdateUserProfileInCache from '@/hooks/chat/useUpdateUserProfileInCache';
 import useUpdateRecentNoticeInCache from '@/hooks/chat/useUpdateRecentNoticeInCache';
 import useHandleSystemMessage from '@/hooks/chat/useHandleSystemMessage';
@@ -8,17 +7,17 @@ import { IMessage } from '@stomp/stompjs';
 export const useHandleChatMessage = (
   chatroomId: string,
   setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
+  onReadMessage: (userId: number) => void,
   userId?: number,
-  isSuccess?: boolean,
 ) => {
   const prependMessageToFirstPage = usePrependMessageToFirstPage();
   const handleSystemMessage = useHandleSystemMessage();
-  const markMessagesAsRead = useMarkMessagesAsRead();
   const updateUserProfileInCache = useUpdateUserProfileInCache();
   const updateRecentNoticeInCache = useUpdateRecentNoticeInCache();
 
   const handleMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
+
     console.log(msg);
 
     switch (msg.type) {
@@ -31,7 +30,7 @@ export const useHandleChatMessage = (
         break;
 
       case 'MESSAGE_READ':
-        if (isSuccess) markMessagesAsRead(chatroomId, msg.payload.userId);
+        onReadMessage(msg.payload.userId);
         break;
 
       case 'USER_UPDATED':

@@ -52,7 +52,7 @@ const NoticeSection = ({ status, preview, noticeId }: RecentNoticeType) => {
         </div>
       )}
       {status === 'TEMP_HIDDEN' && (
-        <div className="w-full flex justify-end sticky top-3 z-50">
+        <div className="w-full flex justify-end sticky top-3 pr-3 z-50">
           <div
             className="w-fit p-3 rounded-full bg-white border border-strokeGray cursor-pointer"
             onClick={() => updateRecentNoticeStatus({ status: 'DEFAULT' })}>

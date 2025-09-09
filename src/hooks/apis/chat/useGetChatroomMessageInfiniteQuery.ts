@@ -8,8 +8,8 @@ const useGetChatroomMessageInfiniteQuery = (chatroomId: string) => {
     queryFn: async ({ pageParam = null }) => await getChatroomMessage(chatroomId, pageParam),
     initialPageParam: null,
     getNextPageParam: lastPage => (lastPage.hasNext ? lastPage.nextCursor : null),
-    gcTime: 0,
     staleTime: 0,
+    gcTime: 0,
   });
 };
 

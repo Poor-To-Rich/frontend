@@ -94,6 +94,7 @@ export const endpoints = {
     getChatroomDetails: (chatroomId: string) => `/chatrooms/${chatroomId}/details`,
     getChatroomUserRole: (chatroomId: string) => `/chatrooms/${chatroomId}/role`,
     kickUser: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}`,
+    kickUserReadMessage: (chatroomId: string) => `/chatrooms/${chatroomId}/block-users/read`,
     reportChatroomMember: (chatroomId: string, userId: number) => `/chatrooms/${chatroomId}/members/${userId}/reports`,
     getAllChatroomMembers: (chatroomId: string) => `/chatrooms/${chatroomId}/members/all`,
     searchChatroomMembers: (chatroomId: string, nickname: string) =>

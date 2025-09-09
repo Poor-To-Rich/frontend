@@ -27,13 +27,13 @@ export type ChatMessageType = TextChatMessage | PhotoChatMessage;
 export type SystemMessageCategory = 'ENTER' | 'LEAVE' | 'DELEGATE' | 'KICK' | 'DATE' | 'CLOSE';
 
 export type SystemMessageType = {
-  type: 'SYSTEM_MESSAGE';
+  type?: 'SYSTEM_MESSAGE';
   userId?: number;
-  messageId: number;
-  chatroomId: number;
-  messageType: SystemMessageCategory;
+  messageId?: number;
+  chatroomId?: number;
+  messageType?: SystemMessageCategory;
   content: string;
-  sentAt: string;
+  sentAt?: string;
 };
 
 export type RankingType = 'SAVER' | 'FLEXER' | 'NONE';
@@ -63,3 +63,5 @@ export type ChatRoomMessageRes = {
   messages: ChatMessageUnion[];
   users: UsersMap;
 };
+
+export type ChatroomUpdatedType = 'CHATROOM_MESSAGE_UPDATED' | 'CHATROOM_INFO_UPDATED';

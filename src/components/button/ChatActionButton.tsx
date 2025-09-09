@@ -12,8 +12,11 @@ interface Props {
 
 const ChatActionButton = ({ label, isPending, hasPassword, disabled, onClick }: Props) => {
   const { colorClass, spinnerColor } = (() => {
-    if (label === '채팅 참여하기' || label === '참여중인 채팅방') {
+    if (label === '채팅 참여하기') {
       return { colorClass: 'bg-lightBlue text-oceanBlue', spinnerColor: '#81aaf6' };
+    }
+    if (label === '참여중인 채팅방') {
+      return { colorClass: 'bg-pastelLime text-oliveGreen ', spinnerColor: '#a1c377' };
     }
     if (label === '채팅방 삭제 및 나가기' || label === '채팅방 나가기') {
       return { colorClass: 'bg-pinkRed text-sunsetRose', spinnerColor: '#eb6060' };

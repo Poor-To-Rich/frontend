@@ -4,6 +4,7 @@ import PreviewRankingProfile from '@/components/profile/PreviewRankingProfile';
 import useGetRecentRanking from '@/hooks/apis/ranking/useGetRecentRanking';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
   chatroomId: string;
@@ -11,7 +12,11 @@ interface Props {
 
 const RankingPreviewBox = ({ chatroomId }: Props) => {
   const navigate = useNavigate();
-  const { data: recentRanking } = useGetRecentRanking(chatroomId);
+  const { data: recentRanking, isPending } = useGetRecentRanking(chatroomId);
+
+  if (isPending) {
+    return <Skeleton height="h-63.5" />;
+  }
 
   return (
     <div className="w-full border border-strokeGray p-7 rounded-3xl">

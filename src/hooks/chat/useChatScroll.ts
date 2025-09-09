@@ -9,6 +9,7 @@ interface Options {
   messageDeps: any[];
   isFetchingNextPage?: boolean;
   followThreshold?: number;
+  latestReadMessageId?: string | null;
 }
 
 const useChatScroll = ({
@@ -17,6 +18,7 @@ const useChatScroll = ({
   messageDeps,
   isFetchingNextPage = false,
   followThreshold = 150,
+  latestReadMessageId,
 }: Options) => {
   const wasAtBottomRef = useRef(false);
   const didInitialScrollRef = useRef(false);
@@ -47,23 +49,45 @@ const useChatScroll = ({
     };
   }, [scrollRef, followThreshold]);
 
-  // 1) 최초 데이터 도착 시 1회 바닥으로 이동
   useLayoutEffect(() => {
     if (!pages || didInitialScrollRef.current) return;
 
-    const el = scrollRef.current;
-    const total = pages?.reduce((acc, p) => acc + (p.messages?.length ?? 0), 0) ?? 0;
+    const container = scrollRef.current;
+    const total = pages.reduce((acc, p) => acc + (p.messages?.length ?? 0), 0);
 
-    if (total > 0 && el) {
-      waitForImages(el).then(() => {
+    if (total > 0 && container) {
+      waitForImages(container).then(() => {
         requestAnimationFrame(() => {
-          scrollToBottom(scrollRef, 'instant');
-          didInitialScrollRef.current = true;
-          wasAtBottomRef.current = true;
+          if (latestReadMessageId) {
+            // 특정 메시지로 이동
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            const tryScroll = () => {
+              const target = document.querySelector(`[data-message-id="${latestReadMessageId}"]`);
+              if (target) {
+                target.scrollIntoView({ behavior: 'auto', block: 'center' });
+                didInitialScrollRef.current = true;
+                wasAtBottomRef.current = false;
+                return;
+              }
+              if (attempts < maxAttempts) {
+                attempts++;
+                setTimeout(tryScroll, 50);
+              }
+            };
+
+            tryScroll();
+          } else {
+            // latestReadMessageId 없으면 맨 아래로
+            scrollToBottom(scrollRef, 'instant');
+            didInitialScrollRef.current = true;
+            wasAtBottomRef.current = true;
+          }
         });
       });
     }
-  }, [pages]);
+  }, [latestReadMessageId, pages]);
 
   // 2) 새 메시지 들어올 때 바닥 근처면 따라가기
   useEffect(() => {

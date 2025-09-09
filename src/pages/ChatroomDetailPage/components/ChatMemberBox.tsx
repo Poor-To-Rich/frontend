@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import UserProfile from '@/components/profile/UserProfile';
 import useGetAllChatroomMembers from '@/hooks/apis/chat/useGetAllChatroomMembers';
+import Skeleton from '@/components/loading/Skeleton';
 
 interface Props {
   chatroomId: string;
 }
 
 const ChatMemberBox = ({ chatroomId }: Props) => {
-  const { data } = useGetAllChatroomMembers(chatroomId);
+  const { data, isPending } = useGetAllChatroomMembers(chatroomId);
   const [showAll, setShowAll] = useState<boolean>(false);
 
   const displayedMembers = showAll ? data?.members : data?.members.slice(0, 20);
+
+  if (isPending) {
+    return <Skeleton height="h-100" />;
+  }
 
   return (
     <div className="w-full border border-strokeGray pt-7 rounded-3xl">
