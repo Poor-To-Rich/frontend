@@ -65,6 +65,7 @@ const useChatScroll = ({
 
             const tryScroll = () => {
               const target = document.querySelector(`[data-message-id="${latestReadMessageId}"]`);
+
               if (target) {
                 target.scrollIntoView({ behavior: 'auto', block: 'center' });
                 didInitialScrollRef.current = true;

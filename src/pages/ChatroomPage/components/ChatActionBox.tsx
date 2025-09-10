@@ -36,6 +36,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
   const { mutate: uploadChatroomPhoto, isPending: isUploadPhotoPending } = useUploadChatroomPhoto(
     String(chatroomId),
     handleClearPhotoStatus,
+    scrollRef,
   );
 
   // 랭킹 테스트 관련 코드

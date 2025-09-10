@@ -2,9 +2,9 @@ import RankingPodium from '@/components/ranking/RankingPodium';
 import { RANKING_RESULT_ANNOUNCEMENT_MESSAGE, RANKING_RESULT_NOT_AVAILABLE_MESSAGE } from '@/constants/message';
 import { RankingMessageType } from '@/types/messageType';
 
-const RankingMessage = ({ rankedAt, rankingId, saverRankings, flexerRankings }: RankingMessageType) => {
+const RankingMessage = ({ rankedAt, messageId, rankingId, saverRankings, flexerRankings }: RankingMessageType) => {
   return (
-    <div className="w-full bg-lightBlue rounded-3xl p-10">
+    <div data-message-id={messageId} className="w-full bg-lightBlue rounded-3xl p-10">
       {rankingId ? (
         <>
           <p className="text-center mb-10 font-bold">👑 {rankedAt} 👑</p>

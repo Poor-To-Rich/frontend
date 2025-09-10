@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { addOnConnect, stompClient } from '@/api/stomp';
 import { StompSubscription } from '@stomp/stompjs';
 import { IMessage } from '@stomp/stompjs';
@@ -11,6 +11,7 @@ export const useChatroomSubscription = (
   setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
   onReadMessage: (userId: number) => void,
 ) => {
+  const didPublishRef = useRef(false);
   const handleMessage = useHandleChatMessage(chatroomId, setIsChatDisabled, onReadMessage, userRole?.userId);
 
   useEffect(() => {
@@ -24,10 +25,13 @@ export const useChatroomSubscription = (
       });
 
       // 구독 직후 읽음 처리 발행
-      stompClient.publish({
-        destination: `/pub/chat/read`,
-        body: JSON.stringify({ chatroomId }),
-      });
+      if (!didPublishRef.current) {
+        stompClient.publish({
+          destination: `/pub/chat/read`,
+          body: JSON.stringify({ chatroomId }),
+        });
+        didPublishRef.current = true;
+      }
     };
 
     // 1) 이미 연결돼 있으면 즉시 실행

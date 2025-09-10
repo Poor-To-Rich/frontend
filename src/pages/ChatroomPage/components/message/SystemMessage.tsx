@@ -8,7 +8,7 @@ interface Props {
 }
 
 const SystemMessage = ({ myUserId, message }: Props) => {
-  const { messageType, content, userId } = message!;
+  const { messageType, content, userId, messageId } = message!;
 
   let displayContent = content;
 
@@ -28,7 +28,11 @@ const SystemMessage = ({ myUserId, message }: Props) => {
   }
 
   return (
-    <div className="w-fit bg-strokeGray text-md text-white text-center rounded-4xl px-10 py-1.5">{displayContent}</div>
+    <div
+      data-message-id={messageId}
+      className="w-fit bg-strokeGray text-md text-white text-center rounded-4xl px-10 py-1.5">
+      {displayContent}
+    </div>
   );
 };
 
