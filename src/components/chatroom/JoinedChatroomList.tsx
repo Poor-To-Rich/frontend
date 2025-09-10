@@ -68,7 +68,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
                 else {
                   navigate(
                     `/chat/chatroom/${chatroom.chatroomId}${
-                      chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 10
+                      chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 2
                         ? `?latestReadMessageId=${chatroom.latestReadMessageId}`
                         : ''
                     }`,

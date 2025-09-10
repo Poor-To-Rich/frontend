@@ -21,7 +21,9 @@ const ChatContainer = ({ chatroomId, scrollRef, latestReadMessageId, userRole }:
     useGetChatroomMessageInfiniteQuery(chatroomId);
   const { data: recentNotice } = useGetRecentNotice(chatroomId);
 
-  const chatMessages = useMemo(() => (data?.pages?.flatMap(page => page.messages) || []).slice().reverse(), [data]);
+  const chatMessages = useMemo(() => {
+    return [...(data?.pages ?? [])].reverse().flatMap(page => page.messages);
+  }, [data]);
 
   const chatroomUsers = useMemo(
     () =>

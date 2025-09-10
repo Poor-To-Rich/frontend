@@ -9,8 +9,10 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
 import useModal from '@/hooks/useModal';
 import { scrollToBottom } from '@/utils/chat/scrollToBottom';
+import { isIOSPWA } from '@/utils/deviceUtils';
 import { createFormData } from '@/utils/form/createFormData';
 import { compressImage } from '@/utils/image';
+import clsx from 'clsx';
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 
@@ -97,6 +99,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
 
     if (textareaRef.current) {
       textareaRef.current.value = '';
+      textareaRef.current.scrollTop = 0;
     }
   };
 
@@ -121,7 +124,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
   }, [photoFile]);
 
   return (
-    <div className="sticky bottom-0">
+    <div className={clsx(isIOSPWA && 'pb-[3rem]', 'sticky bottom-0')}>
       {isPhotoLoading && (
         <div className="w-full aspect-[2/1] flex justify-center bg-strokeGray/30 relative">
           <XIconButton className="absolute right-0" onClick={handleClearPhotoStatus} />
