@@ -32,7 +32,7 @@ const RankingList = () => {
       ) : (
         <ul>
           {allRankingList.map((ranking, index) => (
-            <li key={ranking.rankingId}>
+            <li key={ranking.rankedAt}>
               <RankingItem {...ranking} hasUnderLine={index < allRankingList.length} />
             </li>
           ))}
