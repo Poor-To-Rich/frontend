@@ -3,7 +3,7 @@ import TransactionDetailItem from '@/components/detailItem/TransactionDetailItem
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetIterationData from '@/hooks/apis/transaction/useGetIterationData';
-import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import useScrollToSelectedRef from '@/hooks/scroll/useScrollToSelectedRef';
 
 interface Props {
   type: IncomeExpenseType;

@@ -5,7 +5,7 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
 import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
 import useChatScroll from '@/hooks/chat/useChatScroll';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { UsersMap } from '@/types/messageType';
 import { ChatroomUserRoleRes } from '@/types/chatTypes';
 

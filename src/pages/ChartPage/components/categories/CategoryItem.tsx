@@ -33,9 +33,7 @@ const CategoryItem = ({ id, color, name, rate, amount, selectedRef, targetItem }
       </div>
       <div className="flex max-w-2/5 w-fit gap-2.5">
         <span className="whitespace-nowrap truncate">{formatNumber(amount)}원</span>
-        <div className="w-[2.4rem]">
-          <RightArrowButton />
-        </div>
+        <RightArrowButton />
       </div>
     </button>
   );

@@ -1,6 +1,6 @@
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetAllRakingListInfiniteQuery from '@/hooks/apis/ranking/useGetAllRakingListInfiniteQuery';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import RankingItem from '@/pages/RankingListPage/components/RankingItem';
 import { useRef } from 'react';
 import { useParams } from 'react-router-dom';

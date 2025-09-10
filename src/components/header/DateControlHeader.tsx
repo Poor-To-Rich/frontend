@@ -41,7 +41,9 @@ const DateControlHeader = ({ headerDate, setHeaderDate }: Props) => {
           customInput={<DateInput />}
         />
       }
-      rightButton={<RightArrowButton onClick={isMonthType ? nextMonthHandler : nextYearHandler} />}
+      rightButton={
+        <RightArrowButton className="header-item-common" onClick={isMonthType ? nextMonthHandler : nextYearHandler} />
+      }
     />
   );
 };

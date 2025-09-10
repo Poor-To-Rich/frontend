@@ -1,6 +1,6 @@
 import useGetAllNoticeListInfiniteQuery from '@/hooks/apis/notice/useGetAllNoticeListInfiniteQuery';
 import { useRef } from 'react';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import NoticeItem from '@/pages/NoticeListPage/components/NoticeItem';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 

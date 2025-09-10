@@ -1,6 +1,6 @@
 import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';

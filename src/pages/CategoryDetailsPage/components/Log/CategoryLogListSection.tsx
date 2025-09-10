@@ -1,7 +1,7 @@
 import SortingButton from '@/components/button/icon/SortingButton';
 import { useRef, useState } from 'react';
 import useCategoryLogsInfiniteQuery from '@/hooks/apis/chart/useCategoryLogsInfiniteQuery';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import CategoryLogList from '@/pages/CategoryDetailsPage/components/Log/CategoryLogList ';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import { CHART_SORTING_KEY } from '@/constants/charts';

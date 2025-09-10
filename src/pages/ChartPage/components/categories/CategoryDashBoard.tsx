@@ -1,6 +1,6 @@
 import { StackedBarCategoryChartItem } from '@/types/chartTypes';
 import CategoryItem from '@/pages/ChartPage/components/categories/CategoryItem';
-import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import useScrollToSelectedRef from '@/hooks/scroll/useScrollToSelectedRef';
 
 interface Props {
   categoryCharts: StackedBarCategoryChartItem[];

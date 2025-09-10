@@ -6,7 +6,7 @@ import { format } from 'date-fns';
 import DailySummeryItem from '@/pages/MainPage/components/daily/DailySummeryItem';
 import Skeleton from '@/components/loading/Skeleton';
 import { ko } from 'date-fns/locale';
-import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import useScrollToSelectedRef from '@/hooks/scroll/useScrollToSelectedRef';
 import { handleFetchError } from '@/utils/error/handleFetchError';
 
 const DailyTransactionList = () => {

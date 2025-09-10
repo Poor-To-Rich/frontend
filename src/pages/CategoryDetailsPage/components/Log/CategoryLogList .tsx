@@ -3,7 +3,7 @@ import { CategoryLogsType } from '@/types/chartTypes';
 import { IncomeExpenseType } from '@/types/transactionTypes';
 import Skeleton from '@/components/loading/Skeleton';
 import CategoryLogItem from '@/pages/CategoryDetailsPage/components/Log/CategoryLogItem';
-import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import useScrollToSelectedRef from '@/hooks/scroll/useScrollToSelectedRef';
 import { format } from 'date-fns';
 
 interface Props {
