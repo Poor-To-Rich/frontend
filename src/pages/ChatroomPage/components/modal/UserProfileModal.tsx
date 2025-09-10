@@ -50,12 +50,15 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
             <p className="text-white">{userProfile.nickname}</p>
           </div>
           <Divider weight={1.5} />
-          {userProfile.nickname !== '알 수 없음' && (
-            <div className="flex gap-5 mb-30">
-              {userRole?.chatroomRole === 'HOST' && <UtilityButton label="내보내기" onClick={openKickUserModal} />}
-              <UtilityButton label="신고하기" onClick={openReportModal} />
-            </div>
-          )}
+
+          <div className="flex gap-5 mb-30">
+            {userProfile.nickname !== '알 수 없음' && (
+              <>
+                {userRole?.chatroomRole === 'HOST' && <UtilityButton label="내보내기" onClick={openKickUserModal} />}
+                <UtilityButton label="신고하기" onClick={openReportModal} />
+              </>
+            )}
+          </div>
         </div>
       </div>
       {isUserProfileImageModal && (
