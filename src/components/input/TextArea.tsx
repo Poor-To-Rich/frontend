@@ -5,14 +5,23 @@ import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
 interface Props {
   label: string;
   value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   maxLength: number;
   isRequired?: boolean;
   errorMessage?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 }
 
 const TextArea = forwardRef<HTMLTextAreaElement, Props & React.TextareaHTMLAttributes<HTMLTextAreaElement>>(
-  ({ label, value, maxLength, isRequired, errorMessage, ...rest }, ref) => {
+  ({ label, value, onChange, maxLength, isRequired, errorMessage, ...rest }, ref) => {
     const length = (value ?? '').length;
+
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      const newValue = e.target.value.slice(0, maxLength);
+      onChange({
+        ...e,
+        target: { ...e.target, value: newValue },
+      } as React.ChangeEvent<HTMLTextAreaElement>);
+    };
 
     return (
       <div className="flex flex-col gap-2.5">
@@ -29,6 +38,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props & React.TextareaHTMLAttri
           {...rest}
           value={value}
           maxLength={maxLength}
+          onChange={handleChange}
         />
         <div className="w-full flex justify-between">
           {typeof errorMessage === 'string' && errorMessage && (

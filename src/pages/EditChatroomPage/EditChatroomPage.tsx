@@ -57,7 +57,7 @@ const EditChatroomPage = () => {
               onClick={() => leaveChatroom(chatroomId!)}
               rightButtonLabel="취소"
               onClose={closeModal}
-              isPending={!isLeavePending}
+              isPending={isLeavePending}
             />
           </ModalDimmed>
         )}
