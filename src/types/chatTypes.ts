@@ -85,6 +85,7 @@ export type ChatroomCoverType = {
   isJoined: boolean;
   hasPassword: boolean;
   hostProfile: UserProfileType;
+  latestReadMessageId?: number | null;
 };
 
 export type EnterChatroomReq = {

@@ -1,5 +1,5 @@
 import ImageIcon from '@/components/icon/ImageIcon';
-import { useDraggableScroll } from '@/hooks/useDraggableScroll';
+import { useDraggableScroll } from '@/hooks/scroll/useDraggableScroll';
 import clsx from 'clsx';
 import SeeMoreButton from '@/pages/ChatroomDetailPage/components/SeeMoreButton';
 import useGetRecentPhotoList from '@/hooks/apis/photo/useGetRecentPhotoList';

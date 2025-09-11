@@ -84,7 +84,7 @@ const ChatroomFields = () => {
               maxLength={20}
               isRequired
               hasCount
-              errorMessage={errors.chatroomTitle?.message}
+              errorMessage={errors.chatroomPassword?.message}
             />
           )}
         />

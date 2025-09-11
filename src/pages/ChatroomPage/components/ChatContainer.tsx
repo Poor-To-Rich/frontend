@@ -5,7 +5,7 @@ import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useGetChatroomMessageInfiniteQuery from '@/hooks/apis/chat/useGetChatroomMessageInfiniteQuery';
 import useGetRecentNotice from '@/hooks/apis/notice/useGetRecentNotice';
 import useChatScroll from '@/hooks/chat/useChatScroll';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { UsersMap } from '@/types/messageType';
 import { ChatroomUserRoleRes } from '@/types/chatTypes';
 
@@ -21,7 +21,9 @@ const ChatContainer = ({ chatroomId, scrollRef, latestReadMessageId, userRole }:
     useGetChatroomMessageInfiniteQuery(chatroomId);
   const { data: recentNotice } = useGetRecentNotice(chatroomId);
 
-  const chatMessages = useMemo(() => (data?.pages?.flatMap(page => page.messages) || []).slice().reverse(), [data]);
+  const chatMessages = useMemo(() => {
+    return [...(data?.pages ?? [])].reverse().flatMap(page => page.messages);
+  }, [data]);
 
   const chatroomUsers = useMemo(
     () =>

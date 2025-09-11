@@ -1,6 +1,6 @@
 import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -54,28 +54,32 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
 
   return (
     <ul className="flex flex-col flex-grow gap-5 px-7 py-4">
-      {joinedChatrooms.map(chatroom => (
-        <motion.li key={chatroom.chatroomId} layout>
-          <JoinedChatroomItem
-            {...chatroom}
-            isEditMode={isEditMode}
-            isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
-            onClick={() => {
-              if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
-              else {
-                navigate(
-                  `/chat/chatroom/${chatroom.chatroomId}${
-                    chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 10
-                      ? `?latestReadMessageId=${chatroom.latestReadMessageId}`
-                      : ''
-                  }`,
-                );
-                handleEnterChatroom(chatroom.chatroomId);
-              }
-            }}
-          />
-        </motion.li>
-      ))}
+      {isEmpty ? (
+        <li className="flex-grow flex items-center justify-center text-defaultGrey">참여중인 채팅방이 없습니다</li>
+      ) : (
+        joinedChatrooms.map(chatroom => (
+          <motion.li key={chatroom.chatroomId} layout>
+            <JoinedChatroomItem
+              {...chatroom}
+              isEditMode={isEditMode}
+              isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
+              onClick={() => {
+                if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
+                else {
+                  navigate(
+                    `/chat/chatroom/${chatroom.chatroomId}${
+                      chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 2
+                        ? `?latestReadMessageId=${chatroom.latestReadMessageId}`
+                        : ''
+                    }`,
+                  );
+                  handleEnterChatroom(chatroom.chatroomId);
+                }
+              }}
+            />
+          </motion.li>
+        ))
+      )}
       {!isEmpty && hasNextPage && <li ref={observerRef} className="h-4" />}
     </ul>
   );

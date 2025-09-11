@@ -10,7 +10,7 @@ interface Props {
 }
 
 const NoticeForm = ({ chatroomId, noticeId, noticeContent, handleNoticeContent }: Props) => {
-  const { data: noticeDetail, isPending } = useGetNotice(chatroomId!, noticeId!);
+  const { data: noticeDetail, isFetching } = useGetNotice(chatroomId!, noticeId!);
 
   useEffect(() => {
     if (noticeDetail) {
@@ -18,7 +18,7 @@ const NoticeForm = ({ chatroomId, noticeId, noticeContent, handleNoticeContent }
     }
   }, [noticeDetail]);
 
-  if (isPending) {
+  if (isFetching) {
     return (
       <div className="flex flex-grow items-center justify-center">
         <LoadingSpinner size={30} />

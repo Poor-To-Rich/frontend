@@ -2,7 +2,7 @@ import WeeklyOverview from '@/pages/MonthWeekPage/components/WeeklyOverview';
 import { OverviewLogType } from '@/types/reportTypes';
 import LogItem from '@/pages/MonthWeekPage/components/LogItem';
 import useOpenIndexStore from '@/stores/useOpenIndexStore';
-import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import useScrollToSelectedRef from '@/hooks/scroll/useScrollToSelectedRef';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 interface Props {

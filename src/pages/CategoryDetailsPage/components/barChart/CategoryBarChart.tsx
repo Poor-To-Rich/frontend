@@ -2,7 +2,7 @@ import { BarChart, Bar, XAxis, YAxis, LabelList, ResponsiveContainer, Tooltip } 
 import CategoryBarCustomLabel from '@/pages/CategoryDetailsPage/components/barChart/CategoryBarCustomLabel';
 import CustomizedTooltip from '@/pages/CategoryDetailsPage/components/CustomizedTooltip';
 import '@/styles/recharts-tooltip.css';
-import { useDraggableScroll } from '@/hooks/useDraggableScroll';
+import { useDraggableScroll } from '@/hooks/scroll/useDraggableScroll';
 import { CharTransactionType, monthlyAmountType } from '@/types/chartTypes';
 import { BAR_CHART_COLORS } from '@/constants/charts';
 

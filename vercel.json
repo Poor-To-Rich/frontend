@@ -32,9 +32,6 @@
       "source": "/assets/:match*",
       "destination": "/assets/:match*"
     },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/((?!assets).*)", "destination": "/index.html" }
   ]
 }
