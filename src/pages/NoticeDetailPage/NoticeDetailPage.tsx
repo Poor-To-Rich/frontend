@@ -11,12 +11,7 @@ const NoticeDetailPage = () => {
 
   return (
     <div className="w-full min-h-screen flex-col relative">
-      <DefaultHeader
-        leftButton={
-          <LeftArrowButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/notices`, { replace: true })} />
-        }
-        label="공지 상세보기"
-      />
+      <DefaultHeader leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} label="공지 상세보기" />
       <PageErrorBoundary>
         <FetchErrorBoundary>
           <NoticeContent chatroomId={chatroomId} noticeId={noticeId} />

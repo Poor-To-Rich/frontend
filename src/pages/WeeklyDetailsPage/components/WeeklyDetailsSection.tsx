@@ -3,10 +3,10 @@ import FetchingMessage from '@/components/loading/FetchingMessage';
 import TransactionSummary from '@/components/summary/TransactionSummary';
 import { useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import useGetWeeklyDetailsInfiniteQuery from '@/hooks/apis/transactions/useGetWeeklyDetailsInfiniteQuery';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import useScrollToSelectedRef from '@/hooks/useScrollToSelectedRef';
+import useScrollToSelectedRef from '@/hooks/scroll/useScrollToSelectedRef';
 
 const WeeklyDetailsSection = () => {
   const location = useLocation();

@@ -1,6 +1,8 @@
 import PublicChatroomItem from '@/components/chatroom/chat/PublicChatroomItem';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import useSearchChatrooms from '@/hooks/apis/chat/useSearchChatrooms';
+import { isIOSPWA } from '@/utils/deviceUtils';
+import clsx from 'clsx';
 
 interface Props {
   submittedKeyword: string;
@@ -24,7 +26,7 @@ const SearchChatroomList = ({ submittedKeyword }: Props) => {
           {submittedKeyword && '검색된 채팅방이 없습니다'}
         </div>
       ) : (
-        <ul className="flex flex-col gap-3.5">
+        <ul className={clsx(isIOSPWA && 'pb-5', 'flex flex-col gap-3.5')}>
           {searchChatrooms.map(chatroom => (
             <li key={chatroom.chatroomId}>
               <PublicChatroomItem {...chatroom} />

@@ -11,15 +11,15 @@ interface Props {
 }
 
 const ChatActionButton = ({ label, isPending, hasPassword, disabled, onClick }: Props) => {
-  const { colorClass, spinnerColor } = (() => {
+  const { colorClass, iconColor } = (() => {
     if (label === '채팅 참여하기') {
-      return { colorClass: 'bg-lightBlue text-oceanBlue', spinnerColor: '#81aaf6' };
+      return { colorClass: 'bg-lightBlue text-oceanBlue', iconColor: '#81aaf6' };
     }
     if (label === '참여중인 채팅방') {
-      return { colorClass: 'bg-pastelLime text-oliveGreen ', spinnerColor: '#a1c377' };
+      return { colorClass: 'bg-pastelLime text-oliveGreen ', iconColor: '#a1c377' };
     }
     if (label === '채팅방 삭제 및 나가기' || label === '채팅방 나가기') {
-      return { colorClass: 'bg-pinkRed text-sunsetRose', spinnerColor: '#eb6060' };
+      return { colorClass: 'bg-pinkRed text-sunsetRose', iconColor: '#eb6060' };
     }
     return { colorClass: '' };
   })();
@@ -33,12 +33,12 @@ const ChatActionButton = ({ label, isPending, hasPassword, disabled, onClick }: 
       disabled={isPending || disabled}
       onClick={onClick}>
       <div className="flex items-center gap-2">
-        {hasPassword && <LockKeyIcon />}
+        {hasPassword && <LockKeyIcon color={iconColor} />}
         <span className={isPending ? 'invisible' : 'visible'}>{label}</span>
       </div>
       {isPending && (
         <span className="absolute inset-0 flex items-center justify-center">
-          <LoadingSpinner size={20} color={spinnerColor} />
+          <LoadingSpinner size={20} color={iconColor} />
         </span>
       )}
     </button>

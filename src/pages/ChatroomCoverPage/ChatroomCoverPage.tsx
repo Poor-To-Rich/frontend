@@ -8,7 +8,6 @@ import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 const ChatroomCoverPage = () => {
   const navigate = useNavigate();
   const { chatroomId } = useParams();
-
   return (
     <div className="w-full min-h-screen flex flex-col">
       <DefaultHeader leftButton={<LeftArrowButton onClick={() => navigate(-1)} />} />

@@ -2,7 +2,7 @@ import DateGroupedImageGrid from '@/pages/PhotoListPage/components/DateGroupedIm
 import { groupBy } from 'lodash';
 import { useRef } from 'react';
 import useGetAllPhotoListInfiniteQuery from '@/hooks/apis/photo/useGetAllPhotoListInfiniteQuery';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { useParams } from 'react-router-dom';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 

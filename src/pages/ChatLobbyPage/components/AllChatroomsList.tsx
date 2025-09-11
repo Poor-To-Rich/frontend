@@ -1,6 +1,6 @@
 import { ChatroomSortOptionValue } from '@/types/chatTypes';
 import PublicChatroomItem from '@/components/chatroom/chat/PublicChatroomItem';
-import useInfiniteScroll from '@/hooks/useInfiniteScroll';
+import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import useAllChatroomsInfiniteQuery from '@/hooks/apis/chat/useAllChatroomsInfiniteQuery';
 import { useRef } from 'react';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';

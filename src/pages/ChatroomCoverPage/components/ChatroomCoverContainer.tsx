@@ -11,6 +11,8 @@ import ModalDimmed from '@/components/modal/ModalDimmed';
 import useModal from '@/hooks/useModal';
 import PasswordVerifyModal from '@/pages/ChatroomCoverPage/components/modal/PasswordVerifyModal';
 import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { isIOSPWA } from '@/utils/deviceUtils';
 
 interface Props {
   chatroomId?: string;
@@ -25,7 +27,11 @@ const ChatroomCoverContainer = ({ chatroomId }: Props) => {
 
   const handleEnterChatroom = () => {
     if (chatroomCover?.isJoined) {
-      navigate(`/chat/chatroom/${chatroomId}`);
+      navigate(
+        `/chat/chatroom/${chatroomId}${
+          chatroomCover.latestReadMessageId ? `?latestReadMessageId=${chatroomCover.latestReadMessageId}` : ''
+        }`,
+      );
     } else {
       if (chatroomCover?.hasPassword) {
         openModal();
@@ -56,7 +62,7 @@ const ChatroomCoverContainer = ({ chatroomId }: Props) => {
             createdAt={format(chatroomCover.createdAt, 'yyyy.MM.dd')}
           />
 
-          <UserProfile chatroomId={chatroomId} userProfile={chatroomCover.hostProfile} hideRanking />
+          <UserProfile chatroomId={chatroomId} userProfile={chatroomCover.hostProfile} hideRanking hideProfileModal />
 
           <div className="flex flex-col gap-5">
             <ChatroomInfoItem label="채팅방 소개" content={chatroomCover.description} />
@@ -67,7 +73,7 @@ const ChatroomCoverContainer = ({ chatroomId }: Props) => {
           </div>
         </div>
       </div>
-      <div className="p-5 mt-10">
+      <div className={clsx(isIOSPWA && 'pb-10', 'p-5 mt-10')}>
         <ChatActionButton
           label={chatroomCover.isJoined ? '참여중인 채팅방' : '채팅 참여하기'}
           hasPassword={chatroomCover.hasPassword}

@@ -17,9 +17,18 @@ interface Props {
   createdAt?: string;
   hideRanking?: boolean;
   hasMoreButton?: boolean;
+  hideProfileModal?: boolean;
 }
 
-const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking, hasMoreButton }: Props) => {
+const UserProfile = ({
+  userProfile,
+  chatroomId,
+  noticeId,
+  createdAt,
+  hideRanking,
+  hasMoreButton,
+  hideProfileModal,
+}: Props) => {
   const { profileImage, rankingType, nickname, isHost } = userProfile;
   const { isOpen: isUserProfile, openModal: openUserProfile, closeModal: closeUserProfile } = useModal();
   const { isOpen: isDropDown, openModal: openDropDown, closeModal: closeDropDown } = useModal();
@@ -39,7 +48,9 @@ const UserProfile = ({ userProfile, chatroomId, noticeId, createdAt, hideRanking
         rankingType={rankingType}
         hideRanking={hideRanking}
         className="w-20"
-        onClick={openUserProfile}
+        onClick={() => {
+          if (!hideProfileModal) openUserProfile();
+        }}
       />
       <div className="flex-grow flex justify-between items-start">
         <div className="flex flex-col items-start gap-1.5">
