@@ -27,7 +27,11 @@ const ChatroomCoverContainer = ({ chatroomId }: Props) => {
 
   const handleEnterChatroom = () => {
     if (chatroomCover?.isJoined) {
-      navigate(`/chat/chatroom/${chatroomId}`);
+      navigate(
+        `/chat/chatroom/${chatroomId}${
+          chatroomCover.latestReadMessageId ? `?latestReadMessageId=${chatroomCover.latestReadMessageId}` : ''
+        }`,
+      );
     } else {
       if (chatroomCover?.hasPassword) {
         openModal();
