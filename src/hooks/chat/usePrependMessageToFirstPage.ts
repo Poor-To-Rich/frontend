@@ -13,10 +13,10 @@ export const usePrependMessageToFirstPage = () => {
         return {
           ...oldData,
           pages: oldData.pages.map((page, idx) => {
-            if (idx === 0) {
+            if (idx === oldData.pages.length - 1) {
               return {
                 ...page,
-                messages: [newMessage, ...page.messages],
+                messages: [...page.messages, newMessage],
               };
             }
             return page;
