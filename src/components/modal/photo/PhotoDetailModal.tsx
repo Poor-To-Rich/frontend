@@ -22,7 +22,7 @@ const PhotoDetailModal = ({ chatroomId, photoId, closeModal, reverseOrder }: Pro
   const { data: photoDetail, prefetch } = useGetPhotoDetail(chatroomId!, currentPhotoId);
 
   const [scale, setScale] = useState(1);
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(window.innerWidth < 768);
 
   const prevId = photoDetail ? (reverseOrder ? photoDetail.nextPhotoId : photoDetail.prevPhotoId) : null;
   const nextId = photoDetail ? (reverseOrder ? photoDetail.prevPhotoId : photoDetail.nextPhotoId) : null;
