@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import XIconButton from '@/components/button/icon/XIconButton';
 import UtilityButton from '@/components/button/UtilityButton';
 import Divider from '@/components/Divider';
@@ -20,6 +21,7 @@ interface Props {
 
 const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
   const { data: userRole } = useGetChatroomUserRole(chatroomId);
+
   const {
     isOpen: isUserProfileImageModal,
     openModal: openUserProfileImageModal,
@@ -35,7 +37,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
     closeReportModal,
   );
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-stretch justify-center">
       <div className="w-[500px] h-full flex justify-center items-end bg-defaultGrey relative">
         <XIconButton color="white" size={28} className="absolute top-3 left-3" onClick={closeModal} />
@@ -61,12 +63,14 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
           </div>
         </div>
       </div>
+
       {isUserProfileImageModal && (
         <UserProfileImageModal
           closeUserProfileImageModal={closeUserProfileImageModal}
           profileImage={userProfile.profileImage}
         />
       )}
+
       {isKickUserModal && (
         <ModalDimmed onClose={closeKickUserModal}>
           <DefaultModal
@@ -77,6 +81,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
           />
         </ModalDimmed>
       )}
+
       {isReportModal && (
         <ModalDimmed onClose={closeReportModal}>
           <ReportReasonModal
@@ -86,7 +91,8 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
           />
         </ModalDimmed>
       )}
-    </div>
+    </div>,
+    document.body,
   );
 };
 

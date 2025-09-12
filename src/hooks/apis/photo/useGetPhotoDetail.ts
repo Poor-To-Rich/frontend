@@ -8,16 +8,16 @@ const useGetPhotoDetail = (chatroomId: string, photoId: number | null) => {
     queryKey: ['photoDetail', chatroomId, photoId],
     queryFn: () => getPhotoDetail(chatroomId, photoId!),
     enabled: !!photoId,
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 5 * 1000 * 60,
+    gcTime: 10 * 1000 * 60,
   });
 
   const prefetch = (targetPhotoId: number) => {
     return queryClient.prefetchQuery({
       queryKey: ['photoDetail', chatroomId, targetPhotoId],
       queryFn: () => getPhotoDetail(chatroomId, targetPhotoId),
-      staleTime: Infinity,
-      gcTime: Infinity,
+      staleTime: 5 * 1000 * 60,
+      gcTime: 10 * 1000 * 60,
     });
   };
 
