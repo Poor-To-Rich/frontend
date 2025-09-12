@@ -38,7 +38,7 @@ const EditJoinedChatroomsPage = () => {
         onLeftClick={() => navigate('/chat')}
         onRightClick={clearSelectedStatus}
       />
-      <div className="flex-grow pr-5">
+      <div className="flex flex-col flex-grow pr-5">
         <JoinedChatroomList
           isEditMode
           selectedChatrooms={selectedChatrooms}
