@@ -99,7 +99,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
 
     if (textareaRef.current) {
       textareaRef.current.value = '';
-      textareaRef.current.scrollTop = 0;
+      textareaRef.current.focus();
     }
   };
 
@@ -124,7 +124,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
   }, [photoFile]);
 
   return (
-    <div className={clsx(isIOSPWA && 'pb-[3rem]', 'sticky bottom-0')}>
+    <div className={clsx(isIOSPWA && 'pb-[3rem]', 'sticky bottom-0 ')}>
       {isPhotoLoading && (
         <div className="w-full aspect-[2/1] flex justify-center bg-strokeGray/30 relative">
           <XIconButton className="absolute right-0" onClick={handleClearPhotoStatus} />
@@ -153,7 +153,9 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
               id="text"
               ref={textareaRef}
               onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey && !(e.nativeEvent as any).isComposing) {
+                const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+
+                if (!isMobile && e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
                   if (photoFile) {
                     handleSendPhotoMessage(e as unknown as React.FormEvent);
@@ -163,7 +165,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
                 }
               }}
               placeholder="메시지를 입력하세요"
-              className="w-full h-[6rem] overflow-y-auto resize-none bg-lightGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
+              className="w-full min-h-[3rem] max-h-[6rem] overflow-y-auto resize-none bg-lightGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
             />
 
             <div className="h-12 mb-0.5">

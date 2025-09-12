@@ -82,7 +82,6 @@ const ChatroomFields = () => {
               {...field}
               label="비밀번호"
               maxLength={20}
-              isRequired
               hasCount
               errorMessage={errors.chatroomPassword?.message}
             />

@@ -5,6 +5,10 @@ export const usePrependMessageToFirstPage = () => {
   const queryClient = useQueryClient();
 
   return (chatroomId: string, newMessage: ChatMessageUnion) => {
+    if (newMessage.type === 'CHAT_MESSAGE' && newMessage.messageType === 'PHOTO') {
+      queryClient.invalidateQueries({ queryKey: ['photoDetail', chatroomId] });
+    }
+
     queryClient.setQueryData(
       ['chatroomMessages', chatroomId],
       (oldData: InfiniteData<ChatRoomMessageRes> | undefined) => {
@@ -13,7 +17,7 @@ export const usePrependMessageToFirstPage = () => {
         return {
           ...oldData,
           pages: oldData.pages.map((page, idx) => {
-            if (idx === oldData.pages.length - 1) {
+            if (idx === 0) {
               return {
                 ...page,
                 messages: [...page.messages, newMessage],

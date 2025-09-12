@@ -2,9 +2,13 @@ import XIconButton from '@/components/button/icon/XIconButton';
 import useGetPhotoDetail from '@/hooks/apis/photo/useGetPhotoDetail';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+import PhotoNavButton from '@/components/modal/photo/PhotoNavButton';
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import clsx from 'clsx';
 
 interface Props {
   chatroomId?: string;
@@ -17,65 +21,97 @@ const PhotoDetailModal = ({ chatroomId, photoId, closeModal, reverseOrder }: Pro
   const [currentPhotoId, setCurrentPhotoId] = useState<number | null>(photoId!);
   const { data: photoDetail, prefetch } = useGetPhotoDetail(chatroomId!, currentPhotoId);
 
+  const [scale, setScale] = useState(1);
+  const [showNav, setShowNav] = useState(false);
+
   const prevId = photoDetail ? (reverseOrder ? photoDetail.nextPhotoId : photoDetail.prevPhotoId) : null;
   const nextId = photoDetail ? (reverseOrder ? photoDetail.prevPhotoId : photoDetail.nextPhotoId) : null;
+
+  const handleClick = () => {
+    if (window.innerWidth < 768) {
+      setShowNav(prev => !prev);
+    }
+  };
+
+  const handleNavButtonClick = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setCurrentPhotoId(id);
+  };
 
   useEffect(() => {
     if (prevId) prefetch(prevId);
     if (nextId) prefetch(nextId);
   }, [prevId, nextId]);
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50 flex items-stretch justify-center">
       {photoDetail && (
-        <div className="w-[500px] h-full flex flex-col justify-center items-center bg-black relative">
-          <XIconButton color="white" size={28} className="absolute top-3 left-3" onClick={closeModal} />
+        <div
+          onClick={handleClick}
+          className="w-[500px] h-full flex flex-col justify-center items-center bg-black relative">
+          <div className="relative w-full h-full flex justify-center items-center group overflow-hidden">
+            <div
+              className={clsx(
+                'absolute top-0 left-0 w-full p-2 bg-black/50 text-white transition-opacity duration-300 z-50',
+                showNav ? 'opacity-100' : 'opacity-0 md:opacity-0 md:group-hover:opacity-100',
+              )}>
+              <XIconButton color="white" size={28} className="absolute top-3 left-3" onClick={closeModal} />
 
-          <div className="text-white text-center absolute top-5">
-            <p className="text-lg">{photoDetail.uploadedBy.nickname}</p>
-            <p className="text-sm">{format(photoDetail.uploadedAt, 'yyyy년 MM월 dd일 a h시 mm분', { locale: ko })}</p>
-          </div>
+              <div className="text-center">
+                <p className="text-lg">{photoDetail.uploadedBy.nickname}</p>
+                <p className="text-sm">
+                  {format(photoDetail.uploadedAt, 'yyyy년 MM월 dd일 a h시 mm분', { locale: ko })}
+                </p>
+              </div>
+            </div>
 
-          <div className="relative w-full h-[75%] flex justify-center items-center group overflow-hidden">
-            <motion.img
-              key={photoDetail.photoId}
-              src={photoDetail.photoUrl}
-              alt="이미지"
-              className="w-full max-h-full object-contain"
-              drag="x"
-              dragElastic={1}
+            <motion.div
+              key={currentPhotoId}
+              drag={scale === 1 ? 'x' : false}
               dragConstraints={{ left: 0, right: 0 }}
               onDragEnd={(_, info) => {
-                const offset = info.offset.x;
-                const velocity = info.velocity.x;
-
-                if (offset > 100 || velocity > 300) {
-                  if (prevId) setCurrentPhotoId(prevId);
-                } else if (offset < -100 || velocity < -300) {
-                  if (nextId) setCurrentPhotoId(nextId);
+                if (scale === 1) {
+                  if (info.offset.x > 100 && prevId) setCurrentPhotoId(prevId);
+                  else if (info.offset.x < -100 && nextId) setCurrentPhotoId(nextId);
                 }
               }}
-            />
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="w-full h-full flex items-center justify-center">
+              <TransformWrapper
+                initialScale={1}
+                minScale={1}
+                maxScale={3}
+                wheel={{ step: 0.2 }}
+                pinch={{ step: 5 }}
+                doubleClick={{ disabled: true }}
+                panning={{
+                  velocityDisabled: true,
+                  lockAxisX: scale > 1 ? false : true,
+                  lockAxisY: scale > 1 ? false : true,
+                }}
+                onTransformed={ref => setScale(ref.state.scale)}>
+                <TransformComponent wrapperClass="w-full h-full flex items-center justify-center">
+                  <img src={photoDetail.photoUrl} alt="이미지" className="max-w-full max-h-[90vh] object-contain" />
+                </TransformComponent>
+              </TransformWrapper>
+            </motion.div>
 
             {prevId && (
-              <button
-                className="absolute left-3 p-2 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                onClick={() => setCurrentPhotoId(prevId)}>
+              <PhotoNavButton position="left" showNav={showNav} onClick={e => handleNavButtonClick(e, prevId)}>
                 <ChevronLeft size={40} />
-              </button>
+              </PhotoNavButton>
             )}
-
             {nextId && (
-              <button
-                className="absolute right-3 p-2 bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                onClick={() => setCurrentPhotoId(nextId)}>
+              <PhotoNavButton position="right" showNav={showNav} onClick={e => handleNavButtonClick(e, nextId)}>
                 <ChevronRight size={40} />
-              </button>
+              </PhotoNavButton>
             )}
           </div>
         </div>
       )}
-    </div>
+    </div>,
+    document.body,
   );
 };
 

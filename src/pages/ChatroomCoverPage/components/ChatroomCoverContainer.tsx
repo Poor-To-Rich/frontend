@@ -29,7 +29,9 @@ const ChatroomCoverContainer = ({ chatroomId }: Props) => {
     if (chatroomCover?.isJoined) {
       navigate(
         `/chat/chatroom/${chatroomId}${
-          chatroomCover.latestReadMessageId ? `?latestReadMessageId=${chatroomCover.latestReadMessageId}` : ''
+          chatroomCover.latestReadMessageId && (chatroomCover.unreadMessageCount ?? 0) > 2
+            ? `?latestReadMessageId=${chatroomCover.latestReadMessageId}`
+            : ''
         }`,
       );
     } else {
