@@ -41,7 +41,8 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
     bufferMinuteKey = null;
   };
 
-  const addReadMessage = (messageId: number, latestReadMessageId?: string | null) => {
+  const addReadMessage = (messageId: number | undefined, latestReadMessageId?: string | null) => {
+    if (!messageId) return;
     if (latestReadMessageId && messageId === Number(latestReadMessageId)) {
       flushBuffer();
       result.push({ type: 'SYSTEM_MESSAGE', message: { content: '여기까지 읽으셨습니다.' } });
@@ -49,6 +50,8 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
   };
 
   for (const message of messages) {
+    addReadMessage(message.messageId, latestReadMessageId);
+
     if (message.type === 'CHAT_MESSAGE') {
       const msg = message as ChatMessageType;
       const mk = minuteKeyOf(msg.sentAt);
@@ -57,8 +60,6 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
         buffer = [msg];
         bufferSenderId = msg.senderId;
         bufferMinuteKey = mk;
-
-        addReadMessage(msg.messageId, latestReadMessageId);
 
         continue;
       }
@@ -71,8 +72,6 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
         bufferSenderId = msg.senderId;
         bufferMinuteKey = mk;
       }
-
-      addReadMessage(msg.messageId, latestReadMessageId);
     } else {
       flushBuffer();
 

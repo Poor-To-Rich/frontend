@@ -80,6 +80,7 @@ export type ChatroomCoverType = {
   description: string;
   hashtags?: string[];
   currentMemberCount: number;
+  unreadMessageCount: number;
   maxMemberCount: number;
   createdAt: string;
   isJoined: boolean;
