@@ -45,5 +45,5 @@ export const useChatroomSubscription = (
       off();
       sub?.unsubscribe();
     };
-  }, [chatroomId, userRole, handleMessage, setIsChatDisabled]);
+  }, [chatroomId, userRole, setIsChatDisabled]);
 };

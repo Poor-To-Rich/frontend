@@ -17,6 +17,8 @@ import useKickUserMessageRead from '@/hooks/apis/chat/useKickUserMessageRead';
 import { useQueryClient } from '@tanstack/react-query';
 import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
 import { useSearchParams } from 'react-router-dom';
+import clsx from 'clsx';
+import { isIOSPWA } from '@/utils/deviceUtils';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
@@ -81,7 +83,10 @@ const ChatroomPage = () => {
             />
             <div
               ref={scrollRef}
-              className="w-full relative flex-grow overflow-y-auto h-[calc(100svh-118.3px)] custom-scrollbar">
+              className={clsx(
+                'w-full relative flex-grow overflow-y-auto custom-scrollbar',
+                isIOSPWA ? 'h-[calc(100svh-148.3px)]' : 'h-[calc(100svh-118.3px)]',
+              )}>
               <ChatContainer
                 chatroomId={chatroomId!}
                 scrollRef={scrollRef}

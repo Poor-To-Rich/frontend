@@ -11,6 +11,14 @@ const useHandleSystemMessage = () => {
     setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
     userId?: number,
   ) => {
+    if ((newMessage.messageType === 'KICK' && userId === newMessage.userId) || newMessage.messageType === 'CLOSE') {
+      setIsChatDisabled(true);
+    }
+
+    if (newMessage.messageType === 'CLOSE') {
+      queryClient.refetchQueries({ queryKey: ['chatroomMessages', chatroomId] });
+    }
+
     if (newMessage.messageType === 'KICK' && userId === newMessage.userId) {
       queryClient.setQueryData(['chatroomUserRole', chatroomId], (oldData: ChatroomUserRoleRes) => {
         if (!oldData) return oldData;
@@ -20,10 +28,6 @@ const useHandleSystemMessage = () => {
           chatroomRole: 'BANNED',
         };
       });
-    }
-
-    if ((newMessage.messageType === 'KICK' && userId === newMessage.userId) || newMessage.messageType === 'CLOSE') {
-      setIsChatDisabled(true);
     }
 
     if (newMessage.messageType === 'LEAVE' || newMessage.messageType === 'KICK') {
