@@ -2,7 +2,7 @@ import { ChatroomSortOptionValue } from '@/types/chatTypes';
 import PublicChatroomItem from '@/components/chatroom/chat/PublicChatroomItem';
 import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import useAllChatroomsInfiniteQuery from '@/hooks/apis/chat/useAllChatroomsInfiniteQuery';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 
 interface Props {
@@ -10,13 +10,24 @@ interface Props {
 }
 
 const AllChatroomsList = ({ sortOption }: Props) => {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } = useAllChatroomsInfiniteQuery(sortOption);
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending, isSuccess } =
+    useAllChatroomsInfiniteQuery(sortOption);
 
   const observerRef = useRef<HTMLLIElement | null>(null);
   const allChatrooms = data?.pages?.flatMap(page => page.chatrooms) || [];
   const isEmpty = allChatrooms?.length === 0;
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
+
+  useLayoutEffect(() => {
+    if (!isSuccess || isFetchingNextPage) return;
+
+    const savedY = sessionStorage.getItem('chatListScrollY-all');
+    if (!savedY) return;
+
+    const y = Number(savedY);
+    window.scrollTo(0, y);
+  }, [isSuccess, isFetchingNextPage]);
 
   if (isPending || !data) {
     return (

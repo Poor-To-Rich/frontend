@@ -27,6 +27,7 @@ const vitestConfig = {
 
 // https://vite.dev/config/
 export default defineConfig({
+  cacheDir: 'node_modules/.vite-cache',
   plugins: [
     react(),
     svgr(),

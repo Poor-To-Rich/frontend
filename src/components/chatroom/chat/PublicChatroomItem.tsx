@@ -22,10 +22,14 @@ const PublicChatroomItem = ({
 }: Props) => {
   const navigate = useNavigate();
   const messageTimeFormat = formatPublicLastMessageTime(lastMessageTime);
+
+  const handleClick = () => {
+    sessionStorage.setItem('chatListScrollY-all', String(window.scrollY));
+    navigate(`/chat/chatroom/${chatroomId}/cover`);
+  };
+
   return (
-    <div
-      onClick={() => navigate(`/chat/chatroom/${chatroomId}/cover`)}
-      className="flex items-center gap-7 w-full min-w-0 cursor-pointer">
+    <div onClick={handleClick} className="flex items-center gap-7 w-full min-w-0 cursor-pointer">
       <ProfilePhoto photo={chatroomImage} className="w-32 shrink-0" />
       <div className="flex flex-col gap-2.5 flex-1 min-w-0">
         <p className="truncate">{chatroomTitle}</p>

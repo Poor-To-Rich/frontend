@@ -14,15 +14,12 @@ import { handleFetchError } from '@/utils/error/handleFetchError';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 import useKickUserMessageRead from '@/hooks/apis/chat/useKickUserMessageRead';
-import { useQueryClient } from '@tanstack/react-query';
-import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { isIOSPWA } from '@/utils/deviceUtils';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { chatroomId } = useParams<{ chatroomId: string }>();
   const [searchParams] = useSearchParams();
   const latestReadMessageId = searchParams.get('latestReadMessageId');
@@ -52,10 +49,6 @@ const ChatroomPage = () => {
       }
       setIsChatDisabled(true);
     }
-
-    return () => {
-      queryClient.refetchQueries({ queryKey: joinedChatroomsQueryKey });
-    };
   }, [chatroomDetails, userRole, kickUserMessageRead]);
 
   if (isChatroomDetailError || isUserRoleError) {
@@ -72,7 +65,14 @@ const ChatroomPage = () => {
         <PageErrorBoundary>
           <FetchErrorBoundary>
             <DefaultHeader
-              leftButton={<LeftArrowButton onClick={() => navigate('/chat', { replace: true })} />}
+              leftButton={
+                <LeftArrowButton
+                  onClick={() => {
+                    navigate('/chat', { replace: true });
+                    sessionStorage.removeItem('keyword');
+                  }}
+                />
+              }
               label={
                 <p className="flex max-w-[20rem] items-center justify-center gap-1 font-medium">
                   <span className="truncate">{chatroomDetails?.chatroomTitle}</span>

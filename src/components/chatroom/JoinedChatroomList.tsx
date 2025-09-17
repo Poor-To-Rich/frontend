@@ -2,7 +2,7 @@ import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
 import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { motion } from 'framer-motion';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
@@ -19,9 +19,11 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const listRef = useRef<HTMLUListElement | null>(null);
   const observerRef = useRef<HTMLLIElement | null>(null);
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } = useJoinedChatroomsInfiniteQuery();
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending, isSuccess } =
+    useJoinedChatroomsInfiniteQuery();
 
   const joinedChatrooms = data?.pages?.flatMap(page => page.chatrooms) || [];
   const isEmpty = joinedChatrooms?.length === 0;
@@ -44,6 +46,16 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
+  useLayoutEffect(() => {
+    if (!isSuccess || isFetchingNextPage) return;
+
+    const savedY = sessionStorage.getItem('chatListScrollY-joined');
+    if (!savedY) return;
+
+    const y = Number(savedY);
+    window.scrollTo(0, y);
+  }, [isSuccess, isFetchingNextPage]);
+
   if (isPending || !data) {
     return (
       <div className="w-full flex flex-grow justify-center items-center">
@@ -53,7 +65,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
   }
 
   return (
-    <ul className="flex flex-col flex-grow gap-5 px-7 py-4">
+    <ul ref={listRef} className="flex flex-col flex-grow gap-5 px-7 py-4">
       {isEmpty ? (
         <li className="flex-grow flex items-center justify-center text-defaultGrey">참여중인 채팅방이 없습니다</li>
       ) : (
@@ -64,6 +76,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
               isEditMode={isEditMode}
               isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
               onClick={() => {
+                sessionStorage.setItem('chatListScrollY-joined', String(window.scrollY));
                 if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
                 else {
                   navigate(
