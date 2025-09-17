@@ -1,6 +1,7 @@
 import SubActionButton from '@/components/button/SubActionButton';
 import UserIcon from '@/components/icon/UserIcon';
 import ProfilePhoto from '@/components/photo/ProfilePhoto';
+import { ALL_CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
 import { PublicChatroomType } from '@/types/chatTypes';
 import { formatPublicLastMessageTime } from '@/utils/chat/timeFormta';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +25,7 @@ const PublicChatroomItem = ({
   const messageTimeFormat = formatPublicLastMessageTime(lastMessageTime);
 
   const handleClick = () => {
-    sessionStorage.setItem('chatListScrollY-all', String(window.scrollY));
+    sessionStorage.setItem(ALL_CHATROOM_SCROLL_KEY, String(window.scrollY));
     navigate(`/chat/chatroom/${chatroomId}/cover`);
   };
 

@@ -2,8 +2,10 @@ import { ChatroomSortOptionValue } from '@/types/chatTypes';
 import PublicChatroomItem from '@/components/chatroom/chat/PublicChatroomItem';
 import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import useAllChatroomsInfiniteQuery from '@/hooks/apis/chat/useAllChatroomsInfiniteQuery';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { ALL_CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
+import { useScrollRestore } from '@/hooks/scroll/useScrollRestore';
 
 interface Props {
   sortOption: ChatroomSortOptionValue;
@@ -18,16 +20,7 @@ const AllChatroomsList = ({ sortOption }: Props) => {
   const isEmpty = allChatrooms?.length === 0;
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
-
-  useLayoutEffect(() => {
-    if (!isSuccess || isFetchingNextPage) return;
-
-    const savedY = sessionStorage.getItem('chatListScrollY-all');
-    if (!savedY) return;
-
-    const y = Number(savedY);
-    window.scrollTo(0, y);
-  }, [isSuccess, isFetchingNextPage]);
+  useScrollRestore({ storageKey: ALL_CHATROOM_SCROLL_KEY, enabled: isSuccess && isFetchingNextPage });
 
   if (isPending || !data) {
     return (

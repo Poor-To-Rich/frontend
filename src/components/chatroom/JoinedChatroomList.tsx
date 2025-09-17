@@ -2,12 +2,14 @@ import JoinedChatroomItem from '@/components/chatroom/chat/JoinedChatroomItem';
 import useJoinedChatroomsInfiniteQuery from '@/hooks/apis/chat/useJoinedChatroomsInfiniteQuery';
 import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { motion } from 'framer-motion';
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
 import { JoinedChatroomsRes } from '@/types/chatTypes';
+import { useScrollRestore } from '@/hooks/scroll/useScrollRestore';
+import { JOINED_CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
 
 interface Props {
   isEditMode?: boolean;
@@ -28,7 +30,17 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
   const joinedChatrooms = data?.pages?.flatMap(page => page.chatrooms) || [];
   const isEmpty = joinedChatrooms?.length === 0;
 
-  const handleEnterChatroom = (chatroomId: number) => {
+  const handleEnterChatroom = (
+    chatroomId: number,
+    latestReadMessageId?: number | null,
+    unreadMessageCount?: number,
+  ) => {
+    navigate(
+      `/chat/chatroom/${chatroomId}${
+        latestReadMessageId && (unreadMessageCount ?? 0) > 2 ? `?latestReadMessageId=${latestReadMessageId}` : ''
+      }`,
+    );
+
     queryClient.setQueryData(joinedChatroomsQueryKey, (oldData: InfiniteData<JoinedChatroomsRes> | undefined) => {
       if (!oldData) return oldData;
 
@@ -45,16 +57,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
   };
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
-
-  useLayoutEffect(() => {
-    if (!isSuccess || isFetchingNextPage) return;
-
-    const savedY = sessionStorage.getItem('chatListScrollY-joined');
-    if (!savedY) return;
-
-    const y = Number(savedY);
-    window.scrollTo(0, y);
-  }, [isSuccess, isFetchingNextPage]);
+  useScrollRestore({ storageKey: JOINED_CHATROOM_SCROLL_KEY, enabled: isSuccess && isFetchingNextPage });
 
   if (isPending || !data) {
     return (
@@ -76,17 +79,10 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
               isEditMode={isEditMode}
               isChecked={selectedChatrooms?.some(room => room.id === chatroom.chatroomId)}
               onClick={() => {
-                sessionStorage.setItem('chatListScrollY-joined', String(window.scrollY));
+                sessionStorage.setItem(JOINED_CHATROOM_SCROLL_KEY, String(window.scrollY));
                 if (isEditMode && handleSelectChatroom) handleSelectChatroom(chatroom.chatroomId, chatroom.isHost);
                 else {
-                  navigate(
-                    `/chat/chatroom/${chatroom.chatroomId}${
-                      chatroom.latestReadMessageId && (chatroom.unreadMessageCount ?? 0) > 2
-                        ? `?latestReadMessageId=${chatroom.latestReadMessageId}`
-                        : ''
-                    }`,
-                  );
-                  handleEnterChatroom(chatroom.chatroomId);
+                  handleEnterChatroom(chatroom.chatroomId, chatroom.latestReadMessageId, chatroom.unreadMessageCount);
                 }
               }}
             />
