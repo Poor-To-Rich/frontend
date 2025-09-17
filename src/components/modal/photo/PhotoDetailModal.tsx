@@ -92,7 +92,7 @@ const PhotoDetailModal = ({ chatroomId, photoId, closeModal, reverseOrder }: Pro
                 }}
                 onTransformed={ref => setScale(ref.state.scale)}>
                 <TransformComponent wrapperClass="w-full h-full flex items-center justify-center">
-                  <img src={photoDetail.photoUrl} alt="이미지" className="max-w-full max-h-[90vh] object-contain" />
+                  <img src={photoDetail.photoUrl} alt="이미지" className="max-w-full max-h-[100vh] object-contain" />
                 </TransformComponent>
               </TransformWrapper>
             </motion.div>
