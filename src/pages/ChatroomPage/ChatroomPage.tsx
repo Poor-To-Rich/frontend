@@ -9,7 +9,6 @@ import { useEffect, useRef, useState } from 'react';
 import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import { useChatroomSubscription } from '@/hooks/chat/useChatroomSubscription';
-import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import { handleFetchError } from '@/utils/error/handleFetchError';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
@@ -36,11 +35,7 @@ const ChatroomPage = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const markMessagesAsRead = useMarkMessagesAsRead();
-
-  useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled, userId =>
-    markMessagesAsRead(chatroomId!, userId, latestReadMessageId),
-  );
+  useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled);
 
   useEffect(() => {
     if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
