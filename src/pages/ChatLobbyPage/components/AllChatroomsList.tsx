@@ -20,7 +20,11 @@ const AllChatroomsList = ({ sortOption }: Props) => {
   const isEmpty = allChatrooms?.length === 0;
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
-  useScrollRestore({ storageKey: ALL_CHATROOM_SCROLL_KEY, enabled: isSuccess && isFetchingNextPage });
+  useScrollRestore({
+    storageKey: ALL_CHATROOM_SCROLL_KEY,
+    isSuccess,
+    isFetchingNextPage,
+  });
 
   if (isPending || !data) {
     return (

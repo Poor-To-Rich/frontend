@@ -57,7 +57,7 @@ const JoinedChatroomList = ({ isEditMode, selectedChatrooms, handleSelectChatroo
   };
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
-  useScrollRestore({ storageKey: JOINED_CHATROOM_SCROLL_KEY, enabled: isSuccess && isFetchingNextPage });
+  useScrollRestore({ storageKey: JOINED_CHATROOM_SCROLL_KEY, isSuccess, isFetchingNextPage });
 
   if (isPending || !data) {
     return (

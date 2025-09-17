@@ -2,17 +2,18 @@ import { useLayoutEffect } from 'react';
 
 interface UseScrollRestoreProps {
   storageKey: string;
-  enabled: boolean;
+  isSuccess: boolean;
+  isFetchingNextPage: boolean;
 }
 
-export const useScrollRestore = ({ storageKey, enabled }: UseScrollRestoreProps) => {
+export const useScrollRestore = ({ storageKey, isSuccess, isFetchingNextPage }: UseScrollRestoreProps) => {
   useLayoutEffect(() => {
-    if (!enabled) return;
+    if (!isSuccess || isFetchingNextPage) return;
 
     const savedY = sessionStorage.getItem(storageKey);
     if (!savedY) return;
 
     const y = Number(savedY);
     window.scrollTo(0, y);
-  }, [enabled, storageKey]);
+  }, [isSuccess, isFetchingNextPage, storageKey]);
 };
