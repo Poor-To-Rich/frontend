@@ -130,7 +130,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
               onKeyDown={e => {
                 const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
 
-                if (!isMobile && e.key === 'Enter' && !e.shiftKey) {
+                if (!isMobile && e.key === 'Enter' && !e.shiftKey && !(e.nativeEvent as any).isComposing) {
                   e.preventDefault();
                   if (photoFile) {
                     handleSendPhotoMessage(e as unknown as React.FormEvent);
