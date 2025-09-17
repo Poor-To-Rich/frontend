@@ -1,13 +1,9 @@
-import { fetchData } from '@/api/axios';
-import { endpoints } from '@/api/endpoints';
 import { stompClient } from '@/api/stomp';
 import ImageUploadButton from '@/components/button/icon/ImageUploadButton';
 import XIconButton from '@/components/button/icon/XIconButton';
 import SubActionButton from '@/components/button/SubActionButton';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
-import ModalDimmed from '@/components/modal/ModalDimmed';
 import useUploadChatroomPhoto from '@/hooks/apis/photo/useUploadChatroomPhoto';
-import useModal from '@/hooks/useModal';
 import { scrollToBottom } from '@/utils/chat/scrollToBottom';
 import { isIOSPWA } from '@/utils/deviceUtils';
 import { createFormData } from '@/utils/form/createFormData';
@@ -40,24 +36,6 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
     handleClearPhotoStatus,
     scrollRef,
   );
-
-  // 랭킹 테스트 관련 코드
-  const { isOpen, openModal, closeModal } = useModal();
-  const [date, setDate] = useState<string>('');
-
-  const handleTestRanking = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      await fetchData<undefined>('POST', endpoints.ranking.rankingTest(String(chatroomId), date));
-    } catch (error) {
-      console.error('집계 실패:', error);
-      alert('랭킹 집계 중 오류가 발생했습니다.');
-    } finally {
-      closeModal();
-      setDate('');
-    }
-  };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -144,10 +122,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
           <p className="w-full h-12 mb-0.5 flex items-center justify-center">대화할 수 없는 상태입니다.</p>
         ) : (
           <>
-            <div className="flex flex-col gap-2.5">
-              <SubActionButton label="랭킹" onClick={openModal} />
-              <ImageUploadButton handleImageChange={handleImageChange} />
-            </div>
+            <ImageUploadButton handleImageChange={handleImageChange} />
 
             <textarea
               id="text"
@@ -155,7 +130,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
               onKeyDown={e => {
                 const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
 
-                if (!isMobile && e.key === 'Enter' && !e.shiftKey) {
+                if (!isMobile && e.key === 'Enter' && !e.shiftKey && !(e.nativeEvent as any).isComposing) {
                   e.preventDefault();
                   if (photoFile) {
                     handleSendPhotoMessage(e as unknown as React.FormEvent);
@@ -178,21 +153,6 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
           </>
         )}
       </form>
-      {isOpen && (
-        <ModalDimmed onClose={closeModal}>
-          <form
-            className="bg-white flex items-center gap-3.5 p-10"
-            onClick={e => e.stopPropagation()}
-            onSubmit={handleTestRanking}>
-            <label>
-              날짜 <input className="h-12 border" type="text" value={date} onChange={e => setDate(e.target.value)} />
-            </label>
-            <button className="p-2.5 border " type="submit">
-              집계
-            </button>
-          </form>
-        </ModalDimmed>
-      )}
     </div>
   );
 };

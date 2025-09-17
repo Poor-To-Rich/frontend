@@ -50,8 +50,6 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
   };
 
   for (const message of messages) {
-    addReadMessage(message.messageId, latestReadMessageId);
-
     if (message.type === 'CHAT_MESSAGE') {
       const msg = message as ChatMessageType;
       const mk = minuteKeyOf(msg.sentAt);
@@ -60,6 +58,8 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
         buffer = [msg];
         bufferSenderId = msg.senderId;
         bufferMinuteKey = mk;
+
+        addReadMessage(message.messageId, latestReadMessageId);
 
         continue;
       }
@@ -72,6 +72,8 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
         bufferSenderId = msg.senderId;
         bufferMinuteKey = mk;
       }
+
+      addReadMessage(message.messageId, latestReadMessageId);
     } else {
       flushBuffer();
 
@@ -82,6 +84,8 @@ export function groupChatMessages(messages: ChatMessageUnion[], latestReadMessag
       } else if (message.type === 'RANKING_STATUS') {
         result.push({ type: 'RANKING_STATUS', message: message as RankingStatusMessageType });
       }
+
+      addReadMessage(message.messageId, latestReadMessageId);
     }
   }
 
