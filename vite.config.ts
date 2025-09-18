@@ -6,6 +6,7 @@ import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/postcss';
 import { VitePWA } from 'vite-plugin-pwa';
 import fs from 'fs';
+import os from 'os';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -27,7 +28,7 @@ const vitestConfig = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  cacheDir: 'node_modules/.vite-cache',
+  cacheDir: path.join(os.tmpdir(), 'vite-cache'),
   plugins: [
     react(),
     svgr(),

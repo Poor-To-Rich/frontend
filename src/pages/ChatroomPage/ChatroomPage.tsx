@@ -16,6 +16,7 @@ import useKickUserMessageRead from '@/hooks/apis/chat/useKickUserMessageRead';
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { isIOSPWA } from '@/utils/deviceUtils';
+import { CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
@@ -34,6 +35,27 @@ const ChatroomPage = () => {
   const { mutate: kickUserMessageRead } = useKickUserMessageRead(chatroomId!, userRole?.userId);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleSaveScrollPosition = () => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const items = container.querySelectorAll<HTMLElement>('[data-message-id]');
+
+    const parentRect = container.getBoundingClientRect();
+    let topVisibleId: string | null = null;
+
+    items.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const isVisible = rect.bottom > parentRect.top && rect.top < parentRect.bottom;
+
+      if (isVisible) {
+        const id = item.dataset.messageId!;
+        if (!topVisibleId) topVisibleId = id;
+      }
+    });
+
+    sessionStorage.setItem(CHATROOM_SCROLL_KEY, String(topVisibleId));
+  };
 
   useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled);
 
@@ -65,6 +87,7 @@ const ChatroomPage = () => {
                   onClick={() => {
                     navigate('/chat', { replace: true });
                     sessionStorage.removeItem('keyword');
+                    sessionStorage.removeItem(CHATROOM_SCROLL_KEY);
                   }}
                 />
               }
@@ -74,7 +97,14 @@ const ChatroomPage = () => {
                   <span className="shrink-0 text-defaultGrey">{chatroomDetails?.currentMemberCount}</span>
                 </p>
               }
-              rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
+              rightButton={
+                <ChatroomMenuButton
+                  onClick={() => {
+                    navigate(`/chat/chatroom/${chatroomId}/detail`);
+                    handleSaveScrollPosition();
+                  }}
+                />
+              }
             />
             <div
               ref={scrollRef}

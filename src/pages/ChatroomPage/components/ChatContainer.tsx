@@ -8,6 +8,7 @@ import useChatScroll from '@/hooks/chat/useChatScroll';
 import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import { UsersMap } from '@/types/messageType';
 import { ChatroomUserRoleRes } from '@/types/chatTypes';
+import { CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
 
 interface Props {
   chatroomId: string;
@@ -49,12 +50,18 @@ const ChatContainer = ({ chatroomId, scrollRef, latestReadMessageId, userRole }:
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
 
   useEffect(() => {
-    if (!data || isFetching || isFetchingNextPage || !latestReadMessageId) return;
+    if (!data || isFetching || isFetchingNextPage) return;
+    if (!hasNextPage) return;
 
     const allMessages = data.pages.flatMap(p => p.messages);
-    const found = allMessages.some(message => message.messageId === Number(latestReadMessageId));
 
-    if (!found && hasNextPage) {
+    const savedScrollId = sessionStorage.getItem(CHATROOM_SCROLL_KEY);
+    const targetId = savedScrollId || latestReadMessageId;
+
+    if (!targetId) return;
+
+    const found = allMessages.some(msg => msg.messageId === Number(targetId));
+    if (!found) {
       fetchNextPage();
     }
   }, [data, latestReadMessageId, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage]);
