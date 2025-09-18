@@ -15,7 +15,6 @@ const GlobalFallback = ({ error }: SentryFallbackProps) => {
   if (isChunkLoadError) {
     return (
       <div className="w-full min-h-screen flex flex-col justify-center items-center gap-5">
-        <BiShocked size={75} color="gray" />
         <h2 className="text-xl font-bold">새 버전이 배포되었습니다.</h2>
         <p>최신 버전으로 새로고침 해주세요.</p>
         <PrimaryButton label="새로고침" onClick={() => window.location.reload()} color="bg-lightBlue text-oceanBlue" />
