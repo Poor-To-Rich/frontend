@@ -29,7 +29,7 @@ export default function ChatSocketProvider({ children }: { children: ReactNode }
     const subscribe = () => {
       sub = stompClient.subscribe(`/sub/chat/summary/${userDetail.userId}`, res => {
         const response = JSON.parse(res.body);
-        console.log(response);
+
         handleUpdatedJoinedChatroom(response.type, response.payload);
       });
     };

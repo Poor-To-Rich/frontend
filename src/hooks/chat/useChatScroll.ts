@@ -87,8 +87,6 @@ const useChatScroll = ({
     if (!el) return;
 
     const scrollHandler = () => {
-      console.log(isNearBottom());
-
       wasAtBottomRef.current = isNearBottom();
     };
 

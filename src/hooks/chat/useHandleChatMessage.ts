@@ -19,7 +19,7 @@ export const useHandleChatMessage = (
   const handleMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
 
-    console.log(msg);
+    // console.log(msg);
 
     switch (msg.type) {
       case 'CHAT_MESSAGE':
