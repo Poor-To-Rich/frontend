@@ -4,19 +4,27 @@ import useInfiniteScroll from '@/hooks/scroll/useInfiniteScroll';
 import useAllChatroomsInfiniteQuery from '@/hooks/apis/chat/useAllChatroomsInfiniteQuery';
 import { useRef } from 'react';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
+import { ALL_CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
+import { useScrollRestore } from '@/hooks/scroll/useScrollRestore';
 
 interface Props {
   sortOption: ChatroomSortOptionValue;
 }
 
 const AllChatroomsList = ({ sortOption }: Props) => {
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } = useAllChatroomsInfiniteQuery(sortOption);
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isPending, isSuccess } =
+    useAllChatroomsInfiniteQuery(sortOption);
 
   const observerRef = useRef<HTMLLIElement | null>(null);
   const allChatrooms = data?.pages?.flatMap(page => page.chatrooms) || [];
   const isEmpty = allChatrooms?.length === 0;
 
   useInfiniteScroll({ observerRef, hasNextPage, isFetchingNextPage, fetchNextPage });
+  useScrollRestore({
+    storageKey: ALL_CHATROOM_SCROLL_KEY,
+    isSuccess,
+    isFetchingNextPage,
+  });
 
   if (isPending || !data) {
     return (

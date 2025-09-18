@@ -15,16 +15,30 @@ const HashtagInput = forwardRef<HTMLInputElement, Props>(
   ({ label, value, maxLength, isRequired, errorMessage, onChange }, ref) => {
     const [input, setInput] = useState('');
 
+    const addTag = () => {
+      const raw = input.trim();
+      if (!raw) return;
+
+      const tag = raw.startsWith('#') ? raw.slice(1) : raw;
+
+      if (tag && !value.includes(tag)) {
+        onChange([...value, tag]);
+      }
+      setInput('');
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if ((e.key === ' ' || e.key === 'Enter') && !(e.nativeEvent as any).isComposing && input.trim().startsWith('#')) {
+      if ((e.key === ' ' || e.key === 'Enter') && !(e.nativeEvent as any).isComposing) {
         e.preventDefault();
-        const tag = input.trim().slice(1);
-        if (tag && !value.includes(tag)) {
-          onChange([...value, tag]);
-        }
-        setInput('');
+        addTag();
       } else if (e.key === 'Backspace' && input === '') {
         onChange(value.slice(0, -1));
+      }
+    };
+
+    const handleCompositionEnd = () => {
+      if (input.endsWith(' ')) {
+        addTag();
       }
     };
 
@@ -56,6 +70,7 @@ const HashtagInput = forwardRef<HTMLInputElement, Props>(
               }
             }}
             onKeyDown={handleKeyDown}
+            onCompositionEnd={handleCompositionEnd}
             maxLength={maxLength}
             placeholder={value.length < maxLength ? '#태그를 입력하세요' : ''}
             ref={ref}

@@ -9,20 +9,17 @@ import { useEffect, useRef, useState } from 'react';
 import useGetChatroomDetails from '@/hooks/apis/chat/useGetChatroomDetails';
 import useGetChatroomUserRole from '@/hooks/apis/chat/useGetChatroomUserRole';
 import { useChatroomSubscription } from '@/hooks/chat/useChatroomSubscription';
-import useMarkMessagesAsRead from '@/hooks/chat/useMarkMessagesAsRead';
 import { handleFetchError } from '@/utils/error/handleFetchError';
 import LoadingSpinner from '@/components/loading/LoadingSpinner';
 import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 import useKickUserMessageRead from '@/hooks/apis/chat/useKickUserMessageRead';
-import { useQueryClient } from '@tanstack/react-query';
-import { joinedChatroomsQueryKey } from '@/constants/queryKeys';
 import { useSearchParams } from 'react-router-dom';
 import clsx from 'clsx';
 import { isIOSPWA } from '@/utils/deviceUtils';
+import { CHATROOM_SCROLL_KEY } from '@/constants/storageKeys';
 
 const ChatroomPage = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { chatroomId } = useParams<{ chatroomId: string }>();
   const [searchParams] = useSearchParams();
   const latestReadMessageId = searchParams.get('latestReadMessageId');
@@ -39,11 +36,28 @@ const ChatroomPage = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const markMessagesAsRead = useMarkMessagesAsRead();
+  const handleSaveScrollPosition = () => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const items = container.querySelectorAll<HTMLElement>('[data-message-id]');
 
-  useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled, userId =>
-    markMessagesAsRead(chatroomId!, userId, latestReadMessageId),
-  );
+    const parentRect = container.getBoundingClientRect();
+    let topVisibleId: string | null = null;
+
+    items.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const isVisible = rect.bottom > parentRect.top && rect.top < parentRect.bottom;
+
+      if (isVisible) {
+        const id = item.dataset.messageId!;
+        if (!topVisibleId) topVisibleId = id;
+      }
+    });
+
+    sessionStorage.setItem(CHATROOM_SCROLL_KEY, String(topVisibleId));
+  };
+
+  useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled);
 
   useEffect(() => {
     if (chatroomDetails?.isClosed || userRole?.chatroomRole === 'BANNED') {
@@ -52,10 +66,6 @@ const ChatroomPage = () => {
       }
       setIsChatDisabled(true);
     }
-
-    return () => {
-      queryClient.refetchQueries({ queryKey: joinedChatroomsQueryKey });
-    };
   }, [chatroomDetails, userRole, kickUserMessageRead]);
 
   if (isChatroomDetailError || isUserRoleError) {
@@ -72,14 +82,29 @@ const ChatroomPage = () => {
         <PageErrorBoundary>
           <FetchErrorBoundary>
             <DefaultHeader
-              leftButton={<LeftArrowButton onClick={() => navigate('/chat', { replace: true })} />}
+              leftButton={
+                <LeftArrowButton
+                  onClick={() => {
+                    navigate('/chat', { replace: true });
+                    sessionStorage.removeItem('keyword');
+                    sessionStorage.removeItem(CHATROOM_SCROLL_KEY);
+                  }}
+                />
+              }
               label={
                 <p className="flex max-w-[20rem] items-center justify-center gap-1 font-medium">
                   <span className="truncate">{chatroomDetails?.chatroomTitle}</span>
                   <span className="shrink-0 text-defaultGrey">{chatroomDetails?.currentMemberCount}</span>
                 </p>
               }
-              rightButton={<ChatroomMenuButton onClick={() => navigate(`/chat/chatroom/${chatroomId}/detail`)} />}
+              rightButton={
+                <ChatroomMenuButton
+                  onClick={() => {
+                    navigate(`/chat/chatroom/${chatroomId}/detail`);
+                    handleSaveScrollPosition();
+                  }}
+                />
+              }
             />
             <div
               ref={scrollRef}

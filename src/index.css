@@ -66,15 +66,14 @@
     background: #888;
   }
 
+  .custom-scrollbar {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .custom-color-input::-webkit-color-swatch {
     border-color: #e6e6e6;
     border-radius: 10px;
-  }
-
-  .custom-scrollbar {
-    overscroll-behavior: contain;
-    scrollbar-gutter: stable;
-    -webkit-overflow-scrolling: touch;
   }
 }
 
