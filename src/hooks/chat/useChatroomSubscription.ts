@@ -9,10 +9,9 @@ export const useChatroomSubscription = (
   chatroomId: string,
   userRole: ChatroomUserRoleRes | undefined,
   setIsChatDisabled: React.Dispatch<React.SetStateAction<boolean>>,
-  onReadMessage: (userId: number) => void,
 ) => {
   const didPublishRef = useRef(false);
-  const handleMessage = useHandleChatMessage(chatroomId, setIsChatDisabled, onReadMessage, userRole?.userId);
+  const handleMessage = useHandleChatMessage(chatroomId, setIsChatDisabled, userRole?.userId);
 
   useEffect(() => {
     if (!chatroomId || !userRole || userRole.chatroomRole === 'BANNED') return;

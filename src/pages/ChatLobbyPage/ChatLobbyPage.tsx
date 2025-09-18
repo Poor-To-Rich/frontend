@@ -7,7 +7,7 @@ import ChatroomViewModeToggle from '@/components/button/toggle/ChatroomViewModeT
 import DefaultHeader from '@/components/header/DefaultHeader';
 import TapBar from '@/components/tapbar/TapBar';
 import { ChatroomSortOptionValue, ChatroomViewModeValue } from '@/types/chatTypes';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import AllChatroomsList from '@/pages/ChatLobbyPage/components/AllChatroomsList';
 import JoinedChatroomList from '@/components/chatroom/JoinedChatroomList';
 import GlobalChatroomDropDown from '@/components/menu/GlobalChatroomDropDown';
@@ -21,15 +21,18 @@ import FetchErrorBoundary from '@/components/error/FetchErrorBoundary';
 
 const ChatLobbyPage = () => {
   const navigate = useNavigate();
-  const [viewMode, setViewMode] = useState<ChatroomViewModeValue>('all');
-  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>();
+  const [viewMode, setViewMode] = useState<ChatroomViewModeValue>(
+    (sessionStorage.getItem('viewMode') ?? 'all') as ChatroomViewModeValue,
+  );
+  const [sortOption, setSortOption] = useState<ChatroomSortOptionValue>(
+    (sessionStorage.getItem('sortOption') ?? 'updatedAt') as ChatroomSortOptionValue,
+  );
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const { isOpen, openModal, closeModal } = useModal();
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
-  const scrollPositions = useRef<{ all: number; joined: number }>({ all: 0, joined: 0 });
 
   useClickOutside({
     refs: [dropdownRef, settingsButtonRef],
@@ -37,7 +40,7 @@ const ChatLobbyPage = () => {
   });
 
   const handleViewModeChange = (next: ChatroomViewModeValue) => {
-    scrollPositions.current[viewMode] = window.scrollY;
+    sessionStorage.setItem(`chatListScrollY-${viewMode}`, String(window.scrollY));
     setViewMode(next);
     sessionStorage.setItem('viewMode', next);
   };
@@ -46,19 +49,6 @@ const ChatLobbyPage = () => {
     setSortOption(next);
     sessionStorage.setItem('sortOption', next);
   };
-
-  useEffect(() => {
-    const storageViewMode = sessionStorage.getItem('viewMode') ?? 'all';
-    const storageSortOption = sessionStorage.getItem('sortOption') ?? 'updatedAt';
-    setViewMode(storageViewMode as ChatroomViewModeValue);
-    setSortOption(storageSortOption as ChatroomSortOptionValue);
-  }, []);
-
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      window.scrollTo(0, scrollPositions.current[viewMode]);
-    });
-  }, [viewMode]);
 
   return (
     <div className="w-full min-h-screen flex flex-col relative">
