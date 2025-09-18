@@ -28,10 +28,7 @@
       "source": "/chart/:match*",
       "destination": "https://api.poortorich.site/chart/:match*"
     },
-    {
-      "source": "/assets/:match*",
-      "destination": "/assets/:match*"
-    },
-    { "source": "/((?!assets).*)", "destination": "/index.html" }
+
+    { "source": "/:match*", "destination": "/index.html" }
   ]
 }
