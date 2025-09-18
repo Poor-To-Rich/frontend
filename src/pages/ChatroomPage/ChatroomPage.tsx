@@ -42,19 +42,22 @@ const ChatroomPage = () => {
     const items = container.querySelectorAll<HTMLElement>('[data-message-id]');
 
     const parentRect = container.getBoundingClientRect();
-    let topVisibleId: string | null = null;
+    let firstVisibleId: string | null = null;
+    let lastVisibleId: string | null = null;
 
     items.forEach(item => {
       const rect = item.getBoundingClientRect();
-      const isVisible = rect.bottom > parentRect.top && rect.top < parentRect.bottom;
+      const visibleHeight = Math.min(rect.bottom, parentRect.bottom) - Math.max(rect.top, parentRect.top);
+      const ratio = visibleHeight / rect.height;
 
-      if (isVisible) {
+      if (ratio >= 0.5) {
         const id = item.dataset.messageId!;
-        if (!topVisibleId) topVisibleId = id;
+        if (!firstVisibleId) firstVisibleId = id;
+        lastVisibleId = id;
       }
     });
 
-    sessionStorage.setItem(CHATROOM_SCROLL_KEY, String(topVisibleId));
+    sessionStorage.setItem(CHATROOM_SCROLL_KEY, JSON.stringify({ first: firstVisibleId, last: lastVisibleId }));
   };
 
   useChatroomSubscription(chatroomId!, userRole, setIsChatDisabled);
