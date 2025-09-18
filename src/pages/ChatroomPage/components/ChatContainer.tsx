@@ -51,17 +51,21 @@ const ChatContainer = ({ chatroomId, scrollRef, latestReadMessageId, userRole }:
 
   useEffect(() => {
     if (!data || isFetching || isFetchingNextPage) return;
-    if (!hasNextPage) return;
 
-    const allMessages = data.pages.flatMap(p => p.messages);
+    const savedScrollRange = sessionStorage.getItem(CHATROOM_SCROLL_KEY);
+    let targetId: string | null = latestReadMessageId ?? null;
 
-    const savedScrollId = sessionStorage.getItem(CHATROOM_SCROLL_KEY);
-    const targetId = savedScrollId || latestReadMessageId;
+    if (!targetId && savedScrollRange) {
+      const { first } = JSON.parse(savedScrollRange) as { first: string | null; last: string | null };
+      targetId = first ?? null;
+    }
 
     if (!targetId) return;
 
+    const allMessages = data.pages.flatMap(p => p.messages);
     const found = allMessages.some(msg => msg.messageId === Number(targetId));
-    if (!found) {
+
+    if (!found && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [data, latestReadMessageId, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage]);

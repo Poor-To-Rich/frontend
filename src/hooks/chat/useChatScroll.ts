@@ -32,22 +32,46 @@ const useChatScroll = ({
     return el.scrollHeight - el.scrollTop - el.clientHeight <= offset;
   };
 
-  // 📌 특정 messageId로 스크롤 이동 (재시도 포함)
-  const scrollToMessage = (id: string, block: ScrollLogicalPosition = 'center') => {
+  // 📌 특정 messageId로 스크롤 이동 (재시도 + 성공 시점 콜백)
+  const scrollToMessage = (id: string, block: ScrollLogicalPosition = 'center', onSuccess?: () => void) => {
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 20;
+    const targetId = String(id);
 
     const tryScroll = () => {
-      const target = document.querySelector<HTMLElement>(`[data-message-id="${id}"]`);
+      const target = document.querySelector<HTMLElement>(`[data-message-id="${targetId}"]`);
       if (target) {
         target.scrollIntoView({ behavior: 'auto', block });
-        didInitialScrollRef.current = true;
-        wasAtBottomRef.current = false;
+        onSuccess?.();
         return;
       }
       if (attempts < maxAttempts) {
         attempts++;
-        setTimeout(tryScroll, 50);
+        setTimeout(tryScroll, 100);
+      }
+    };
+
+    tryScroll();
+  };
+
+  // 📌 last 보정 (anchor 성공 이후에만 실행)
+  const scrollToLast = (id: string, onSuccess?: () => void) => {
+    let attempts = 0;
+    const maxAttempts = 20;
+
+    const tryScroll = () => {
+      const lastEl = document.querySelector<HTMLElement>(`[data-message-id="${String(id)}"]`);
+      if (lastEl) {
+        const rect = lastEl.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const offset = rect.bottom - viewportHeight;
+        window.scrollBy(0, offset);
+        onSuccess?.();
+        return;
+      }
+      if (attempts < maxAttempts) {
+        attempts++;
+        setTimeout(tryScroll, 100);
       }
     };
 
@@ -80,15 +104,40 @@ const useChatScroll = ({
     const total = pages.reduce((acc, p) => acc + (p.messages?.length ?? 0), 0);
 
     if (total > 0 && container) {
-      const savedScrollId = sessionStorage.getItem(CHATROOM_SCROLL_KEY);
+      const savedScrollRange = sessionStorage.getItem(CHATROOM_SCROLL_KEY);
 
       waitForImages(container).then(() => {
         requestAnimationFrame(() => {
           if (latestReadMessageId) {
-            scrollToMessage(latestReadMessageId, 'center');
-          } else if (savedScrollId) {
-            scrollToMessage(savedScrollId, 'start');
+            // 👉 특정 메시지 anchor
+            scrollToMessage(latestReadMessageId, 'center', () => {
+              didInitialScrollRef.current = true;
+            });
+          } else if (savedScrollRange) {
+            try {
+              const { first, last } = JSON.parse(savedScrollRange) as {
+                first: string | null;
+                last: string | null;
+              };
+
+              if (first) {
+                // 👉 먼저 anchor로 이동
+                scrollToMessage(first, 'start', () => {
+                  if (last) {
+                    // 👉 anchor 성공한 뒤에만 last 보정 실행
+                    scrollToLast(last, () => {
+                      didInitialScrollRef.current = true;
+                    });
+                  } else {
+                    didInitialScrollRef.current = true;
+                  }
+                });
+              }
+            } catch (e) {
+              console.error('restoreScrollPosition parse error', e);
+            }
           } else {
+            // 👉 저장된 위치도 없으면 맨 아래로
             scrollToBottom(scrollRef, 'instant');
             didInitialScrollRef.current = true;
             wasAtBottomRef.current = true;
