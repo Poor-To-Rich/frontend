@@ -43,11 +43,14 @@ const useChatScroll = ({
       if (target) {
         target.scrollIntoView({ behavior: 'auto', block });
         onSuccess?.();
+        didInitialScrollRef.current = true;
         return;
       }
       if (attempts < maxAttempts) {
         attempts++;
         setTimeout(tryScroll, 100);
+      } else {
+        didInitialScrollRef.current = true;
       }
     };
 
@@ -149,6 +152,7 @@ const useChatScroll = ({
 
   // 2) 새 메시지 들어올 때 바닥 근처면 따라가기
   useEffect(() => {
+    console.log('didInitialScrollRef.current', didInitialScrollRef.current);
     if (!didInitialScrollRef.current || !scrollRef.current) return;
     const el = scrollRef.current;
 
