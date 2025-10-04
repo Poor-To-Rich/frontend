@@ -37,6 +37,8 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
     closeReportModal,
   );
 
+  const isMine = userRole?.userId === userProfile.userId;
+
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-stretch justify-center">
       <div className="w-[500px] h-full flex justify-center items-end bg-defaultGrey relative">
@@ -54,7 +56,7 @@ const UserProfileModal = ({ chatroomId, userProfile, closeModal }: Props) => {
           <Divider weight={1.5} />
 
           <div className="flex gap-5 mb-30">
-            {userProfile.nickname !== '알 수 없음' && (
+            {userProfile.nickname !== '알 수 없음' && !isMine && (
               <>
                 {userRole?.chatroomRole === 'HOST' && <UtilityButton label="내보내기" onClick={openKickUserModal} />}
                 <UtilityButton label="신고하기" onClick={openReportModal} />
