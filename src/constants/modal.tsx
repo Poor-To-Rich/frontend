@@ -31,3 +31,8 @@ export const rankingDescriptions = [
     <span className="text-sunsetRose">(후보 인원이 2명 미만인 경우에는 랭킹 제공 X)</span>
   </>,
 ];
+
+export const ACCOUNT_MERGE_CONFIRM = `같은 이메일로 가입된 계정이 있습니다. 
+기존 계정과 통합하시겠습니까? 
+통합을 원하지 않는 경우 기존 계정을 탈퇴한 뒤 다시 가입해주세요.
+`;
