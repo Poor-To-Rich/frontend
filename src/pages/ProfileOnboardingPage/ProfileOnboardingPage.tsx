@@ -18,12 +18,8 @@ const ProfileOnboardingPage = () => {
   const isMergeRequired = state.userRole === 'KAKAO_EXISTING_USER_PENDING';
   const [isModalOpen, setIsModalOpen] = useState<boolean>(isMergeRequired);
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-
   const { mutate: logout } = useLogout();
-  const { mutate: revertUserDetails } = useRevertOnboardingUserDetails(handleModalClose);
+  const { mutate: revertUserDetails } = useRevertOnboardingUserDetails(logout);
   const methods = useForm<ProfileFormData>({
     resolver: zodResolver(profileSchema),
     mode: 'onChange',
