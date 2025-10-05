@@ -77,7 +77,12 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
 
     if (textareaRef.current) {
       textareaRef.current.value = '';
-      textareaRef.current.focus();
+      textareaRef.current.style.height = 'auto';
+
+      // 🔹 모바일 placeholder 잘림 방지
+      textareaRef.current.style.display = 'none';
+      void textareaRef.current.offsetHeight;
+      textareaRef.current.style.display = '';
     }
   };
 
@@ -126,7 +131,13 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
 
             <textarea
               id="text"
+              rows={1}
               ref={textareaRef}
+              onInput={e => {
+                const el = e.currentTarget;
+                el.style.height = 'auto';
+                el.style.height = `${Math.min(el.scrollHeight, 96)}px`;
+              }}
               onKeyDown={e => {
                 const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
 
@@ -140,7 +151,7 @@ const ChatActionBox = ({ chatroomId, isChatDisabled, scrollRef }: Props) => {
                 }
               }}
               placeholder="메시지를 입력하세요"
-              className="w-full min-h-[3rem] max-h-[6rem] overflow-y-auto resize-none bg-lightGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
+              className="w-full max-h-[6rem] overflow-y-auto resize-none bg-lightGray rounded-lg px-3 py-2 outline-none placeholder-defaultGrey custom-scrollbar"
             />
 
             <div className="h-12 mb-0.5">
