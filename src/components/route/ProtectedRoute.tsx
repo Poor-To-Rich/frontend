@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
 
   const isOnboardingRoute = location.pathname === '/onboarding/profile';
 
-  if ((userRole === 'USER' || userRole === 'KAKAO_EXISTING_USER_PENDING') && !isOnboardingRoute) {
+  if ((userRole === 'PENDING' || userRole === 'KAKAO_EXISTING_USER_PENDING') && !isOnboardingRoute) {
     return <Navigate to="/onboarding/profile" state={{ userRole: userRole }} replace />;
   }
 
