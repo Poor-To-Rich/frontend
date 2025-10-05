@@ -131,6 +131,11 @@ export const updateOnboardingUserDetails = async (body: FormData) => {
   return res;
 };
 
+export const revertOnboardingUserDetails = async () => {
+  const res = await fetchData<undefined>('PATCH', endpoints.auth.revertOnboardingUserDetails);
+  return res;
+};
+
 export const getUserRole = async () => {
   const res = await fetchData<undefined, UserRoleType>('GET', endpoints.auth.getUserRole);
   if (res.data) return res.data.role;

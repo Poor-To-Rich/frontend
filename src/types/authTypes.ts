@@ -41,7 +41,7 @@ export const emailPurposeList = ['register', 'changeEmail', 'findUsername', 'cha
 export type EmailPurposeType = (typeof emailPurposeList)[number];
 
 export type UserRoleType = {
-  role: 'USER' | 'ADMIN' | 'TEST' | 'PENDING';
+  role: 'USER' | 'ADMIN' | 'TEST' | 'PENDING' | 'KAKAO_EXISTING_USER_PENDING';
 };
 
 export type SendEmailReq = { email: string; purpose: EmailPurposeType; username?: string };
